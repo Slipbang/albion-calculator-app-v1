@@ -22,7 +22,7 @@ export const GMItemSelector = React.memo(() => {
 
             <StyledWorkBench>
                 <div className={styles.wrapper}>
-                    <WorkBenchTypeSelector calculatorType={calculatorType}/>
+                    <WorkBenchTypeSelector />
 
                     <WorkBenchHeader />
 
@@ -32,7 +32,7 @@ export const GMItemSelector = React.memo(() => {
 
                     <WorkBenchSelectors />
 
-                    <WorkBenchItemSelector calculatorType={calculatorType}/>
+                    <WorkBenchItemSelector />
                 </div>
             </StyledWorkBench>
         </>

@@ -52,6 +52,7 @@ import {
     GMProfitSliceActions,
 } from "../../../../../store/GMProfit/gm-profit-slice";
 import {ICraftingItemClass, TItemTypeSelected} from "../../../../../types/craftItemsType";
+import {selectCalculatorType} from "../../../../../store/interface/interface-selector";
 
 interface IWorkBenchButton {
     workBenchType: ICraftingItemClass;
@@ -148,8 +149,8 @@ const workBenchNodeSelectorButtons: TWorkBenchNodeSelectorButtons = {
     'food': []
 }
 
-const WorkBenchTypeSelector = ({calculatorType}: {calculatorType: TCalcProps}) => {
-
+const WorkBenchTypeSelector = () => {
+    const calculatorType = useSelector(selectCalculatorType);
     const workBenchTypeButtonRef = useRef<HTMLButtonElement>(null);
     const dispatchAction = useAppDispatch();
 

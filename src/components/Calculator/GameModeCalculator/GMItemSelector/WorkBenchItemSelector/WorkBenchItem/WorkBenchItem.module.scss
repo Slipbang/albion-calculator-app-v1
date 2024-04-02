@@ -1,0 +1,81 @@
+.itemBox {
+  margin: 10px auto 10px auto;
+  justify-content: flex-start;
+  grid-template-areas:
+              "A B B B  B B B B  B B B B"
+              "A C C C  C C C C  C C C C"
+              "A C C C  C C C C  C C C C"
+              "A C C C  C C C C  C C C C"
+              "D D D D  D D D D  D D D D ";
+
+  .itemImage {
+    position: static;
+    margin: -5px 0 5px 5px;
+    grid-area: A;
+
+    img {
+      width: 75px;
+      height: 75px;
+    }
+  }
+
+  .itemName {
+    margin-left: -30px;
+    width: 165px;
+    height: 22px;
+    grid-area: B;
+    padding-left: 35px;
+    align-items: center;
+    font-weight: 700;
+    color: rgb(96, 67, 47);
+  }
+
+  .resourcesBox {
+    grid-area: C;
+    display: flex;
+    margin-top: 5px;
+
+    img{
+      width: 40px;
+      height: 40px;
+    }
+
+    p {
+      margin: 0 4px 4px 4px;
+      background-color: rgb(210, 187, 139);
+      text-align: center;
+      font-size: 11px;
+    }
+  }
+
+  .hrStyles {
+    grid-area: D;
+    border: none;
+    height: 2px;
+    background-color: rgb(182,147,116);
+    width: 260px;
+  }
+}
+
+.itemBox:hover{
+
+  .itemImage{
+    scale: 1.1;
+  }
+
+  .itemName{
+    background-color: rgb(189,149,112);
+    color: white;
+  }
+}
+
+.itemBox:active{
+  .itemImage{
+    scale: 1.2;
+  }
+}
+
+.backgroundSkeleton {
+  background: linear-gradient(rgb(210, 187, 139), rgb(210, 187, 139)) center/70% 70%;
+  background-repeat:no-repeat;
+}
