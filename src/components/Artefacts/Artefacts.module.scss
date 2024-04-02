@@ -1,0 +1,15 @@
+.artefacts {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  margin: 115px auto 20px auto;
+  color: rgb(96, 67, 47);
+  font-weight: 700;
+  align-items: center;
+}
+
+@media (max-width: 1300px) {
+  .artefacts{
+    margin: 85px auto 20px auto;
+  }
+}

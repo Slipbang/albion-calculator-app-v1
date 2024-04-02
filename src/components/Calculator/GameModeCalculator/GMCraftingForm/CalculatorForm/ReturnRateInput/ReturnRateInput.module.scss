@@ -1,0 +1,33 @@
+.returnRateInput {
+  display: flex;
+  margin: 7px 10px;
+  align-items: center;
+
+  .resourceLabel{
+    width: 110px;
+    display: flex;
+    justify-content: flex-end;
+
+    p {
+      margin-right: 30px;
+      font-weight: 700;
+    }
+  }
+
+  p {
+    font-size: 13px;
+    margin-right: 10px;
+  }
+
+  input[type='number']{
+    background-color: transparent;
+    border: none;
+    padding-top: 4px;
+    padding-bottom: 2px;
+    width: auto;
+
+  }
+  input[type='number']::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+}

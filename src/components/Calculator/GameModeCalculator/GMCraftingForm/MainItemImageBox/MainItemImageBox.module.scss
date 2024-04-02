@@ -1,0 +1,21 @@
+.itemImage {
+  img {
+    position: absolute;
+    width: 147px;
+    height: 147px;
+    top: -9px;
+    left: -9px;
+    background: linear-gradient(rgb(210, 187, 139), rgb(210, 187, 139)) center/73% 73%;
+    background-repeat:no-repeat;
+  }
+
+  p {
+    position: fixed;
+    top: 20px;
+    left: 150px;
+    z-index: 9999;
+    font-size: 18px;
+    font-weight: 700;
+    color: rgb(89, 60, 40);
+  }
+}

@@ -1,0 +1,17 @@
+.totalPrice{
+  display: flex;
+  z-index: 9998;
+
+  .totalPriceLabel{
+    width: 104px;
+    display: flex;
+    justify-content: flex-end;
+
+    p {
+      margin-left: 38px;
+      margin-right: 20px;
+      font-size: 16px;
+    }
+  }
+
+}

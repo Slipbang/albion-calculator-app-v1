@@ -1,0 +1,30 @@
+.totalPrice{
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 371px;
+  left: 10px;
+  color: rgb(89, 60, 40);
+
+  .totalPriceLabel{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 115px;
+
+    p {
+      font-size: 12px;
+      font-weight: 1000;
+      margin-right: 11px;
+    }
+  }
+
+  .totalPriceInt{
+    line-height: 12px;
+    height: 14px;
+    font-weight: 700;
+    background-color: rgb(161,153,108);
+    padding: 0 5px 0 5px;
+    font-size: 16px;
+  }
+}

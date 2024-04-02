@@ -1,0 +1,56 @@
+.wrapper{
+  .boxContent {
+    display: flex;
+    margin-top: 15px;
+    margin-left: 10px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+}
+
+.selectPercentStyle {
+  border-radius: 10px;
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  border: 2px solid transparent;
+  width: 114px;
+  height: 13px;
+  cursor: pointer;
+  background-color: rgb(242, 190, 147);
+
+  p {
+    font-size: 13px;
+    line-height: 11px;
+    text-align: center;
+  }
+
+  .percentSelector {
+    margin-left: -3px;
+    width: 118px;
+    margin-top: -3px;
+    background-color: rgb(242, 190, 147);
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 4px solid rgb(183, 144, 108);
+  }
+
+  .customPercentOption {
+    padding: 5px 0;
+  }
+
+  .customPercentOptionSelected {
+    padding: 5px 0;
+    background-color: rgb(183, 144, 108);
+  }
+
+  .customPercentOption:hover {
+    background-color: rgb(145, 105, 72);
+    color: white;
+  }
+}
+
+.selectPercentStyle:hover{
+  border-color: white;
+}

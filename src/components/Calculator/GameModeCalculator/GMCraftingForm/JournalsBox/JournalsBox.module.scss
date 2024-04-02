@@ -1,0 +1,32 @@
+.journalPrice{
+  position: absolute;
+  top: 50px;
+  left: 150px;
+
+  p{
+    line-height: 12px;
+    height: 14px;
+    font-weight: 700;
+    color: rgb(89, 60, 40);
+    margin-right: 10px;
+    font-size: 16px;
+  }
+
+  button{
+    margin-right: 10px;
+  }
+
+  input[type='number']{
+    border: none;
+    font-size: 16px;
+    width: 70px;
+    font-weight: 700;
+    background-color: rgb(161,153,108);
+    padding: 0 5px 0 5px;
+    color: rgb(89, 60, 40);
+  }
+
+  input[type='number']::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+}

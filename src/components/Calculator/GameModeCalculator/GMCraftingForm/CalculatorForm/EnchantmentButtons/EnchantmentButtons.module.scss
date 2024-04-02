@@ -1,0 +1,17 @@
+.enchantmentButtons {
+  display: flex;
+  align-items: center;
+  margin: 7px 5px;
+
+  .enchantmentLabel {
+    display: flex;
+    justify-content: flex-end;
+    width: 115px;
+
+    p {
+      margin-right: 30px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+  }
+}

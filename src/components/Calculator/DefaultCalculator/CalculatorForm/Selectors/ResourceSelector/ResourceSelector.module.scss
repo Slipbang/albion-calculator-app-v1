@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  margin-top: 10px;
+  width: 125px;
+  justify-content: space-between;
+
+  p {
+    align-items: center;
+    display: flex;
+    margin: 10px;
+  }
+
+  .resourceSelector{
+    display: flex;
+    z-index: 9999;
+
+    .resourceButtonSelector{
+      position: absolute;
+      width: 350px;
+      margin-left: 80px;
+    }
+    .resourceButtonSelectorHidden{
+      display: none;
+    }
+  }
+}
+
+.backgroundSkeleton {
+  background: linear-gradient(rgb(210, 187, 139), rgb(210, 187, 139)) center/73% 73%;
+  background-repeat:no-repeat;
+}

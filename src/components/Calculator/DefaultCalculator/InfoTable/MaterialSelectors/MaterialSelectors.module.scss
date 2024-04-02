@@ -1,0 +1,39 @@
+.materialSelector{
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: end;
+  margin-bottom: 5px;
+
+  div {
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+  }
+
+  input[type='number']{
+    width: 101px;
+    padding-left: 5px;
+    background-color: rgb(235, 198, 159);
+    color: rgb(96, 67, 47);
+    margin-left: -2px;
+  }
+
+  input[type='checkbox']{
+    margin-left: 3px;
+    width: 18px;
+    height: 18px;
+  }
+
+  select{
+    width: 130px;
+    margin-left: -1px;
+    background-color: rgb(235, 198, 159);
+    color: rgb(96, 67, 47);
+  }
+
+  p {
+    margin-right: 12px;
+  }
+}

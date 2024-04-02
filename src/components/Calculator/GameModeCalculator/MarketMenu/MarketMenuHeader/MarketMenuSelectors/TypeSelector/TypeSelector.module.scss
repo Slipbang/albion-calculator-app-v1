@@ -1,0 +1,45 @@
+.selectItemTypeStyle {
+  z-index: 9999;
+  border-radius: 10px;
+  position: fixed;
+  top: 4px;
+  left: 91px;
+  border: 2px solid transparent;
+  width: 115px;
+  height: 10px;
+  cursor: pointer;
+  background-color: rgb(242, 190, 147);
+
+  .itemTypeSelector {
+    margin-left: -3px;
+    width: 118px;
+    margin-top: -5px;
+    background-color: rgb(242, 190, 147);
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 4px solid rgb(183, 144, 108);
+  }
+}
+
+.selectItemTypeStyle:hover{
+  border-color: white;
+}
+
+.customOption {
+  padding: 5px 5px 5px 10px;
+}
+
+.customOption:hover {
+  background-color: rgb(145, 105, 72);
+  color: white;
+}
+
+.customOptionSelected {
+  padding: 5px 5px 5px 10px;
+  background-color: rgb(183, 144, 108);
+}
+
+.customOptionSelected:hover {
+  background-color: rgb(145, 105, 72);
+  color: white;
+}

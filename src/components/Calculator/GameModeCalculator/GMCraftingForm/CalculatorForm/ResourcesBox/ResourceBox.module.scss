@@ -1,0 +1,26 @@
+.resourcesBox {
+  display: flex;
+  margin-left: 115px;
+  font-size: 12px;
+  text-align: center;
+
+  img {
+    width: 58px;
+    height: 58px;
+    background: linear-gradient(rgb(210, 187, 139), rgb(210, 187, 139)) center/73% 73%;
+    background-repeat:no-repeat;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .resourceQuantityBox{
+    display: flex;
+    flex-direction: row;
+    padding: 0 5px;
+    margin: 0 5px;
+    background-color: rgb(210, 187, 139);
+  }
+}

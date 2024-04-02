@@ -1,0 +1,42 @@
+.inputRangeWrapper{
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+
+  .amountLabel {
+    display: flex;
+    justify-content: flex-end;
+    width: 109px;
+  }
+
+  div{
+    position: absolute;
+    top: 88px;
+    left: 124px;
+    width: 254px;
+    z-index: 9999;
+  }
+
+  input[type='number']{
+    position: absolute;
+    color: rgb(167,133,58);
+    width: 38px;
+    top: 5px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    z-index: 9999;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  input[type='number']::-webkit-inner-spin-button,::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  p{
+    margin-right: 25px;
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,29 @@
+.calculatorForm {
+    margin: 10px 15px;
+    color: rgb(91,64,45);
+    font-weight: 500;
+
+    .headerStyles{
+        padding-top: 10px;
+        text-align: center;
+    }
+
+    select{
+        margin-left: 10px;
+    }
+    img{
+        width: 65px;
+        height: 65px;
+        cursor: pointer;
+        filter: drop-shadow(3px 3px 6px black);
+        -webkit-user-drag: none;
+        user-select: none;
+    }
+}
+
+.errorStyles{
+    color: red;
+    margin-left: 10px;
+    margin-top: 15px;
+}
+

@@ -1,0 +1,44 @@
+.fullScreenLinks {
+  display: flex;
+  height: 65px;
+  text-align: center;
+  line-height: 60px;
+  vertical-align: middle;
+
+  a {
+    display: inline-block;
+    box-sizing: border-box;
+    font-size: 20px;
+    width: 180px;
+    height: 65px;
+  }
+
+  .link {
+    color: wheat;
+    text-decoration: none;
+  }
+
+  .link:hover {
+    background-color: rgb(113, 16, 0);
+  }
+
+  .activeLink {
+    max-width: 100%;
+    width: 180px;
+    height: 65px;
+
+    font-size: 20px;
+    color: wheat;
+    text-decoration: underline;
+  }
+
+  .activeLink:hover {
+    background-color: rgb(113, 16, 0);
+  }
+}
+
+@media (max-width: 1100px) {
+  .fullScreenLinks {
+    display: none;
+  }
+}

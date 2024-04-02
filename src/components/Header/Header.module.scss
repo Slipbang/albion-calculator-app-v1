@@ -1,0 +1,50 @@
+.header {
+  box-sizing: border-box;
+  z-index: 9999;
+  top: 0;
+  width: 100%;
+  position: fixed;
+  background-color: #531405;
+  color: wheat;
+  height: 65px;
+  display: flex;
+  justify-content: space-between;
+
+  h1 {
+    height: 100%;
+    width: 220px;
+    text-align: center;
+    line-height: 60px;
+    vertical-align: middle;
+  }
+
+  button {
+    filter: drop-shadow(2px 2px 3px black);
+    margin: auto 1rem auto 15px;
+    border-radius: 5px;
+    min-width: 50px;
+    height: 21px;
+  }
+}
+
+.headerTextStyles{
+  margin-left: -25%;
+}
+
+.headerTextStyles::after{
+    content: 'Albion Toolkit';
+}
+
+@media (max-width: 1100px) {
+  .headerTextStyles{
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 550px) {
+  .headerTextStyles::after{
+    content: 'AToolkit';
+  }
+
+}
+

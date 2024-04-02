@@ -1,0 +1,29 @@
+.wrapper{
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 115px;
+  justify-content: space-between;
+
+  .itemTierSelector{
+    display: flex;
+    z-index: 9999;
+
+    .itemTierButtonSelector{
+      position: absolute;
+      margin-left: 75px;
+      width: 325px;
+      height: 65px;
+    }
+
+    .itemTierButtonSelectorHidden{
+      display: none;
+    }
+  }
+}
+
+.backgroundSkeleton {
+  background: linear-gradient(rgb(210, 187, 139), rgb(210, 187, 139)) center/73% 73%;
+  background-repeat:no-repeat;
+}

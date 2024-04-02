@@ -1,0 +1,56 @@
+.wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.defaultCalculatorWrapper {
+  position: absolute;
+  top: 20%;
+
+  width: 522px;
+  height: 522px;
+  transition: all 0.5s ease-in-out;
+  z-index: 2;
+}
+
+.defaultCalculatorWrapperOpened{
+  transform: translate(-261px, 0);
+}
+
+.defaultCalculatorWrapperHidden {
+  transform: translate(0, -1000px);
+}
+
+.craftTableStyles{
+  transition: all 0.5s ease-in-out;
+}
+
+.craftTableOpenedStyles{
+  transform: translate(510px,0);
+}
+
+.pulseLoader {
+  position: absolute;
+  border-color: red;
+  align-self: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+@media (max-height: 935px) {
+  .wrapper{
+    height: 960px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .wrapper{
+    width: 1150px;
+  }
+}

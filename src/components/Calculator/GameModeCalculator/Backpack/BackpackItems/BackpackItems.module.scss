@@ -1,0 +1,10 @@
+.wrapper {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  width: 385px;
+  height: 500px;
+}

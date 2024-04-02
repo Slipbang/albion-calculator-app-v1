@@ -1,0 +1,50 @@
+.inputRange {
+  display: flex;
+  align-items: center;
+  margin: 7px 10px;
+
+  .quantityLabel {
+    display: flex;
+    justify-content: flex-end;
+    width: 112px;
+
+    p {
+      margin-right: 30px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+  }
+
+  .inputQuantityBox{
+    position: absolute;
+    width: 187px;
+    top: -2px;
+    left: 135px;
+    z-index: 9999;
+  }
+
+  input[type='number'] {
+    outline: none;
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    font-size: 12px;
+    width: 40px;
+    position: absolute;
+    top: -11px;
+    z-index: 9999;
+    text-align: center;
+    color: rgb(167,133,58);
+  }
+
+  input[type='number']::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  p {
+    font-size: 13px;
+    font-weight: 700;
+    margin-right: 30px;
+  }
+}

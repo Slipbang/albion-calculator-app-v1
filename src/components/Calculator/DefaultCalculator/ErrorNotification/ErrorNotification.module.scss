@@ -1,0 +1,35 @@
+.notificationBox {
+  z-index: 5;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 400px;
+  height: 200px;
+  border: 4px solid rgb(96, 67, 47);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(235, 198, 159);
+
+  button {
+    right: 10px;
+    top: 10px;
+  }
+
+  div {
+    border: 2px solid rgb(96, 67, 47);
+    width: 392px;
+    height: 192px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p{
+      font-size: 24px;
+      font-weight: 600;
+      color: rgb(96, 67, 47);
+    }
+  }
+
+}

@@ -1,0 +1,59 @@
+.wrapper{
+  z-index: 4;
+  color: rgb(96, 67, 47);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+
+  .closeButtonStyles{
+    height: 27px;
+    width: 27px;
+    right: 2px;
+    bottom: 2px;
+    position: absolute;
+    button {
+      right: 0;
+      top: 0;
+    }
+  }
+  table{
+    white-space: normal;
+    border-collapse: collapse;
+    background-color: rgb(235, 198, 159);
+    border: 2px solid #f6f5f1;
+    text-align: center;
+
+    overflow: auto;
+
+    img{
+      width: 65px;
+      height: 65px;
+      filter: drop-shadow(5px 5px 6px black);
+    }
+    td{
+      padding: 5px;
+      border: 2px solid #f6f5f1;
+      cursor: pointer;
+    }
+    thead{
+      th{
+        padding: 8px;
+        border: 2px solid #f6f5f1;
+        max-width: 100px;
+      }
+    }
+  }
+}
+
+.infoTableTooltip {
+  hr{
+    border: none;
+    height: 1px;
+    background-color: rgb(96, 67, 47);
+    margin-top: 5px;
+  }
+  hr:not(hr:last-child) {
+    margin-bottom: -10px;
+  }
+}

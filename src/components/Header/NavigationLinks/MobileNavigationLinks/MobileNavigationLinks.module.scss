@@ -1,0 +1,59 @@
+.lowWidthScreenNavigation {
+  z-index: 9997;
+  text-align: center;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 65px;
+  background-color: #531405;
+
+  a {
+    display: inline-block;
+    text-align: center;
+    line-height: 60px;
+    vertical-align: middle;
+    font-size: 20px;
+    width: 180px;
+  }
+
+  .link {
+    color: wheat;
+    text-decoration: none;
+  }
+
+  .activeLink {
+    color: wheat;
+    text-decoration: underline;
+  }
+
+  .link:hover {
+    background-color: rgb(113, 16, 0);
+  }
+
+  .activeLink:hover {
+    background-color: rgb(113, 16, 0);
+  }
+}
+
+.mobileLinks {
+  display: none;
+
+  svg {
+    width: 180px;
+    height: 65px;
+  }
+
+  svg:hover {
+    background-color: rgb(113, 16, 0);
+  }
+
+  svg:active {
+    background-color: rgb(113, 16, 0);
+  }
+}
+
+@media (max-width: 1100px) {
+  .mobileLinks {
+    display: inline;
+  }
+}

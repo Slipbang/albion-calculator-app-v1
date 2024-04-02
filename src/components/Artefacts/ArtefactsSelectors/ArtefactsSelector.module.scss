@@ -1,0 +1,28 @@
+.wrapper{
+  margin: 10px 0;
+  position: absolute;
+  top: 115px;
+  left: 75px;
+  width: 300px;
+  //background-color: #ebc69f;
+  //padding: 10px;
+  //border-radius: 15px;
+  //filter: drop-shadow(5px 5px 6px black);
+
+  p {
+    margin-right: 15px;
+  }
+
+  div{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 1300px) {
+  .wrapper {
+    position: inherit;
+  }
+}

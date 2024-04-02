@@ -1,0 +1,14 @@
+.calculatorForm {
+  position: fixed;
+  top: 139px;
+  left: 20px;
+  height: 210px;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  p {
+    color: rgb(89, 60, 40);
+  }
+}

@@ -1,0 +1,39 @@
+.transportationFormStyles {
+  width: 315px;
+  position: absolute;
+  top: 110px;
+  left: 30px;
+  display: flex;
+  flex-direction: column;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    p {
+      color: rgb(96, 67, 47);
+      font-weight: 700;
+    }
+  }
+
+  select {
+    margin: 5px;
+    width: 145px;
+  }
+
+  input {
+    margin: 5px;
+  }
+}
+
+@media (max-width: 1750px) {
+  .transportationFormStyles {
+    position: initial;
+    margin: 85px auto 0 auto;
+  }
+}
+
+
+
+

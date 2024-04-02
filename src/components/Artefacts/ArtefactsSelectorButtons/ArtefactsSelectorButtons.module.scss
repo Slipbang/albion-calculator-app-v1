@@ -1,0 +1,21 @@
+.buttonsBox {
+  position: fixed;
+  top: 115px;
+  right: 85px;
+  filter: drop-shadow(5px 5px 6px black);
+  cursor: pointer;
+  z-index: 5;
+  width: 230px;
+  height: 165px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px auto;
+}
+
+@media (max-width: 1300px) {
+  .buttonsBox {
+    position: inherit;
+  }
+}

@@ -1,0 +1,88 @@
+import {ICraftItem} from "../../../../../types/craftItemsType";
+
+interface IMainNodesItems extends ICraftItem {
+    index: number;
+}
+
+export const mainNodesItems: IMainNodesItems[] = [
+    {
+        itemId: 'MAIN_SWORD',
+        itemNode: 'sword',
+        itemClass: 'warrior',
+        itemType: 'warriorWeapon',
+        itemExample: true,
+        METALBAR: 16,
+        LEATHER: 8,
+        index: 0,
+    },
+    {
+        itemId: 'MAIN_FIRESTAFF',
+        itemNode: 'fireStaff',
+        itemType: 'mageWeapon',
+        itemClass: 'mage',
+        itemExample: true,
+        PLANKS: 16,
+        METALBAR: 8,
+        index: 1,
+    },
+    {
+        itemId: '2H_BOW',
+        itemNode: 'bow',
+        itemType: 'hunterWeapon',
+        itemClass: 'hunter',
+        PLANKS: 32,
+        itemExample: true,
+        index: 2,
+    },
+    {
+        itemId: 'ARMOR_PLATE_SET1',
+        itemNode: 'plateArmor',
+        itemType: 'armor',
+        itemClass: 'warrior',
+        itemExample: true,
+        METALBAR: 16,
+        foodConsumption: 28.8,
+        index: 3,
+    },
+    {
+        itemId: 'HEAD_PLATE_SET1',
+        itemNode: 'plateHelmet',
+        itemType: 'helmet',
+        itemClass: 'warrior',
+        itemExample: true,
+        METALBAR: 8,
+        foodConsumption: 14.4,
+        index: 4,
+    },
+    {
+        itemId: 'SHOES_PLATE_SET1',
+        itemNode: 'plateShoes',
+        itemType: 'shoes',
+        itemClass: 'warrior',
+        itemExample: true,
+        METALBAR: 8,
+        foodConsumption: 14.4,
+        index: 5,
+    },
+    {
+        itemId: 'OFF_SHIELD',
+        itemNode: 'shield',
+        itemType: 'offHand',
+        itemClass: 'warrior',
+        itemExample: true,
+        PLANKS: 4,
+        METALBAR: 4,
+        foodConsumption: 14.4,
+        index: 6,
+    },
+    {
+        itemId: 'BAG',
+        itemNode: 'bag',
+        itemType: 'tools',
+        itemClass: 'toolmaker',
+        itemExample: true,
+        LEATHER: 8,
+        CLOTH: 8,
+        index: 7,
+    },
+]

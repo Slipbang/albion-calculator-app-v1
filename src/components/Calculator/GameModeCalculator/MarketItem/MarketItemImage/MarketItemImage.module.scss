@@ -1,0 +1,12 @@
+.itemImage{
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 80px;
+  height: 80px;
+  margin: 5px;
+  filter: drop-shadow(3px 3px 6px black);
+  cursor: pointer;
+  background: linear-gradient(rgb(210, 187, 139), rgb(210, 187, 139)) center/70% 70%;
+  background-repeat:no-repeat;
+}

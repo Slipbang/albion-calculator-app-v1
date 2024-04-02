@@ -1,0 +1,85 @@
+.artefactPrice {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 338px;
+  left: 12px;
+  color: rgb(89, 60, 40);
+
+  .artefactsLabel {
+    width: 120px;
+    display: flex;
+    margin-top: -2px;
+    justify-content: flex-end;
+
+
+    p {
+      font-size: 12px;
+      font-weight: 1000;
+      margin-right: 17px;
+    }
+  }
+
+  input[type='number'] {
+    border: none;
+    font-size: 16px;
+    width: 70px;
+    font-weight: 700;
+    background-color: rgb(161, 153, 108);
+    padding: 0 5px 0 5px;
+    color: rgb(89, 60, 40);
+  }
+
+  input[type='number']::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+
+  .artefactSelectCity {
+    display: flex;
+    align-items: center;
+    background-color: rgb(161, 153, 108);
+
+    .loader {
+      padding: 3px;
+    }
+
+    p {
+      line-height: 12px;
+      height: 14px;
+      font-weight: 700;
+      padding: 0 5px 0 5px;
+      font-size: 16px;
+    }
+
+    .artefactSelector {
+      z-index: 2;
+      cursor: pointer;
+
+
+      .selectedArtefactCity {
+        display: flex;
+        align-items: center;
+        height: 20px;
+      }
+
+      .artefactOptions {
+        position: absolute;
+        border: 2px solid rgb(89, 60, 40);
+        top: 30px;
+        cursor: pointer;
+        background-color: rgb(242, 190, 147);
+        min-width: 190px;
+
+        .cityList {
+          display: flex;
+          align-items: center;
+          padding: 5px;
+        }
+
+        .cityList:hover {
+          background-color: rgb(161, 153, 108);
+        }
+      }
+    }
+  }
+}
