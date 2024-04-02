@@ -16,7 +16,7 @@ import {TCraftItems} from "../../../../../../store/Items/craftItems";
 import {useAppDispatch} from "../../../../../../store";
 import {GMProfitSliceActions, ISelectedWorkBenchItem} from "../../../../../../store/GMProfit/gm-profit-slice";
 import {defineArtefactsName} from "../../../../Definers/defineArtefactsName";
-import {selectFoodTax} from "../../../../../../store/GMProfit/gm-profit-selectors";
+import TotalFoodTax from "./TotalFoodTax/TotalFoodTax";
 
 type TCraftItemsKeys = keyof Omit<TCraftItems, 'itemName'>;
 
@@ -27,7 +27,6 @@ interface IWorkBenchItemProps {
 const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
     const {itemId, itemTier, itemNode, itemImage, artefactItemId, itemName, enchantment, foodConsumption} = item;
 
-    const foodTax = useSelector(selectFoodTax);
     const inputSearch = useSelector(selectInputIS);
     const selectedNode = useSelector(selectNodeIS);
     const selectedTier = useSelector(selectTierIS);
@@ -81,17 +80,6 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
 
         return artefactsQuantity;
     }
-
-    const calculateFoodTax = (foodConsumption: number, itemTier: number): number => {
-
-        if (calculatorType === 'resource') {
-            return Math.floor(foodConsumption * (foodTax / 100));
-        } else {
-            return Math.floor(foodConsumption! * Math.pow(2, itemTier - 4) * (foodTax / 100));
-        }
-    }
-
-    const totalFoodTax = calculateFoodTax(foodConsumption!, itemTier);
 
     const {artefactName} = defineArtefactsName({artefactId: artefactItemId!});
     const artefactsQuantity = calculateArtefactsQuantityHandler(artefactItemId!, itemNode, itemTier);
@@ -150,7 +138,11 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
                         draggable={false}
                         alt="sil"
                     />
-                    <p>{totalFoodTax?.toLocaleString('en')}</p>
+                    <TotalFoodTax
+                        calculatorType={calculatorType}
+                        foodConsumption={foodConsumption!}
+                        itemTier={itemTier}
+                    />
                 </span>
 
                 {matsKeys.map(key => {
