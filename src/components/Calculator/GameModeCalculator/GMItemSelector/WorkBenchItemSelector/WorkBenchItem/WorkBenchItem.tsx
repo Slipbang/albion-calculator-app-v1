@@ -24,8 +24,7 @@ interface IWorkBenchItemProps {
     item: TCraftItems;
 }
 
-const WorkBenchItem = (props: IWorkBenchItemProps) => {
-    const {item} = props;
+const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
     const {itemId, itemTier, itemNode, itemImage, artefactItemId, itemName, enchantment, foodConsumption} = item;
 
     const foodTax = useSelector(selectFoodTax);
@@ -59,19 +58,6 @@ const WorkBenchItem = (props: IWorkBenchItemProps) => {
             && (!!inputSearch.trim() ? itemName.toLowerCase().match(inputSearch.toLowerCase()) : true));
     }
 
-    const resetEnchantmentHandler = (itemId: string, enchantment: string) => {
-        if (calculatorType === 'resource' && !itemId!.includes('STONEBLOCK')) {
-            dispatchAction(interfaceSliceActions.setMaterialEnchantmentCF(enchantment!));
-            dispatchAction(interfaceSliceActions.setItemEnchantmentCF(''));
-            dispatchAction(interfaceSliceActions.setEnchantmentNumCF(enchantment?.split('@')[1]!));
-        }
-        if (calculatorType === 'items' || (calculatorType === 'resource' && itemId!.includes('STONEBLOCK'))) {
-            dispatchAction(interfaceSliceActions.setEnchantmentButtons(dummyEnchantmentButtons))
-            dispatchAction(interfaceSliceActions.setMaterialEnchantmentCF(''));
-            dispatchAction(interfaceSliceActions.setItemEnchantmentCF(''));
-            dispatchAction(interfaceSliceActions.setEnchantmentNumCF(''));
-        }
-    }
 
     const defineFontSize = (itemName: string) => {
         return itemName.length > 18 ? 10 : itemName.length > 14 ? 12 : 16
@@ -110,7 +96,7 @@ const WorkBenchItem = (props: IWorkBenchItemProps) => {
     const {artefactName} = defineArtefactsName({artefactId: artefactItemId!});
     const artefactsQuantity = calculateArtefactsQuantityHandler(artefactItemId!, itemNode, itemTier);
 
-    let itemKeys = Object.keys(item) as TCraftItemsKeys[];
+    const itemKeys = Object.keys(item) as TCraftItemsKeys[];
 
     let matsKeys: TCraftItemsKeys[] = [];
 
@@ -119,6 +105,20 @@ const WorkBenchItem = (props: IWorkBenchItemProps) => {
             matsKeys.push(key);
         }
     })
+
+    const resetEnchantmentHandler = (itemId: string, enchantment: string) => {
+        if (calculatorType === 'resource' && !itemId!.includes('STONEBLOCK')) {
+            dispatchAction(interfaceSliceActions.setMaterialEnchantmentCF(enchantment!));
+            dispatchAction(interfaceSliceActions.setItemEnchantmentCF(''));
+            dispatchAction(interfaceSliceActions.setEnchantmentNumCF(enchantment?.split('@')[1]!));
+        }
+        if (calculatorType === 'items' || (calculatorType === 'resource' && itemId!.includes('STONEBLOCK'))) {
+            dispatchAction(interfaceSliceActions.setEnchantmentButtons(dummyEnchantmentButtons))
+            dispatchAction(interfaceSliceActions.setMaterialEnchantmentCF(''));
+            dispatchAction(interfaceSliceActions.setItemEnchantmentCF(''));
+            dispatchAction(interfaceSliceActions.setEnchantmentNumCF(''));
+        }
+    }
 
     const imgRoute = 'https://render.albiononline.com/v1/item/';
 
@@ -154,7 +154,7 @@ const WorkBenchItem = (props: IWorkBenchItemProps) => {
                 </span>
 
                 {matsKeys.map(key => {
-                    return item[key] &&
+                    return !!item[key] &&
                         <span
                             key={key}
                         >

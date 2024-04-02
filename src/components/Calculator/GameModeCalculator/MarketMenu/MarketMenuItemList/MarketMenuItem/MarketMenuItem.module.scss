@@ -1,0 +1,40 @@
+.materialItem {
+  display: flex;
+  width: 380px;
+  align-items: center;
+  justify-content: space-between;
+
+  .itemName{
+    width: 140px;
+    font-weight: 700;
+    color: rgb(91,64,45);
+  }
+
+  .itemImg {
+    display: inherit;
+    margin: 5px;
+
+    img{
+      height: 80px;
+      width: 80px;
+      cursor: pointer;
+      filter: drop-shadow(6px 6px 6px black);
+    }
+
+    .itemQuantity{
+      width: 25px;
+      height: 12px;
+      position: absolute;
+      left: 53px;
+      margin-top: 52px;
+      display: flex;
+      justify-content: center;
+
+      p{
+        font-size: 9px;
+        color: white;
+        z-index: 9999
+      }
+    }
+  }
+}

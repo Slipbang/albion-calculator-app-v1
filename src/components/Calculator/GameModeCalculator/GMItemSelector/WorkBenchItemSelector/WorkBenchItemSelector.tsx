@@ -14,7 +14,7 @@ const WorkBenchItemSelector = () => {
 
     return <StyledThumb>
         <div className={styles.wrapper}>
-            {craftingItems === deferredCraftingItems && deferredCraftingItems.map(item => <WorkBenchItem item={{...item}} />)}
+            {craftingItems === deferredCraftingItems && deferredCraftingItems.map(item => <WorkBenchItem key={item.itemId} item={{...item}} />)}
             {craftingItems !== deferredCraftingItems && Array.from({length: 10}).map((_, index) => (
                 <div key={index} style={{margin: '10px 0 10px 0',}}>
                     <WorkBenchItemsLoader/>

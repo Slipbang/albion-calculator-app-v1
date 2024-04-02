@@ -12,7 +12,6 @@ import {ICraftItem, TCraftItemType, TCraftItemTypes, TItemNode} from "../../../.
 import {profitSliceActions} from "../../../../../../store/profit/profit-slice";
 import {TCalcProps} from "../../../../../../types/calculatorPropsType";
 import {useSelector} from "react-redux";
-import {selectCraftTableVisibility} from "../../../../../../store/interface/interface-selector";
 import {selectItemSelector} from "../../../../../../store/profit/profit-selectors";
 import {useAppDispatch} from "../../../../../../store";
 import {ISelectedLanguage} from "../../../../../../types/languageTypes";
