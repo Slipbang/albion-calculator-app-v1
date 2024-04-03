@@ -17,7 +17,8 @@ interface IInitialState {
         isCraftingFormVisible: boolean;
         isMarketItemVisible: boolean;
         isCraftTableShown: boolean;
-        isInfoTableShown:boolean;
+        isInfoTableShown: boolean;
+        isItemSelectorShown: boolean;
     };
 
     GMItemSelector: {
@@ -66,6 +67,7 @@ const initialState: IInitialState = {
         isMarketItemVisible: false,
         isCraftTableShown: false,
         isInfoTableShown: false,
+        isItemSelectorShown: false,
     },
 
     GMItemSelector: {
@@ -110,7 +112,7 @@ const interfaceSlice = createSlice({
     initialState,
     reducers: {
         toggleCraftTableVisibility(state, action: PayloadAction<boolean | undefined>) {
-            if (!action.payload) {
+            if (action.payload === undefined) {
                 state.global.isCraftTableShown = !state.global.isCraftTableShown;
             } else {
                 state.global.isCraftTableShown = action.payload;
@@ -140,6 +142,13 @@ const interfaceSlice = createSlice({
             state.global.isMarketMenuShown = initialState.global.isMarketMenuShown;
             state.global.isCraftTableShown = initialState.global.isCraftTableShown;
             state.global.gameMode = !state.global.gameMode;
+        },
+        toggleItemSelectorVisibility(state, action: PayloadAction<boolean | undefined>){
+            if (action.payload === undefined) {
+                state.global.isItemSelectorShown = !state.global.isItemSelectorShown;
+            } else {
+                state.global.isItemSelectorShown = action.payload;
+            }
         },
         setSelectedTierIS(state, action: PayloadAction<IOptions>){
             state.GMItemSelector.selectedTierIS = action.payload;

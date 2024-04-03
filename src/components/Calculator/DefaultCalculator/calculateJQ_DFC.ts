@@ -1,6 +1,6 @@
-import {TCraftItemTypes} from "../../../types/craftItemsType";
+import {TCraftObjectTypes} from "../../../types/craftItemsType";
 
-const calculateJQ_DFC = (itemType: TCraftItemTypes, selectedItemTier: string) => {
+const calculateJQ_DFC = (itemType: TCraftObjectTypes, selectedItemTier: string) => {
     let journalsQuantity = 0;
     const itemTier = +selectedItemTier.split('T')[1];
     let defaultFoodConsumption = 0;

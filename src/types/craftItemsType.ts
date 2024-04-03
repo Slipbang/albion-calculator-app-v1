@@ -1,4 +1,4 @@
-export type TCraftItemTypes = '2H' | 'MAIN' | 'BAG' | 'CAPE' | 'ARMOR' | 'HEAD' | 'SHOES' | 'OFF';
+export type TCraftObjectTypes = '2H' | 'MAIN' | 'BAG' | 'CAPE' | 'ARMOR' | 'HEAD' | 'SHOES' | 'OFF';
 
 export type TResourceType = 'METALBAR' | 'LEATHER' | 'CLOTH' | 'PLANKS' | 'STONEBLOCK' | 'ORE' | 'WOOD' | 'HIDE' | 'FIBER' | 'ROCK';
 
@@ -55,7 +55,7 @@ export interface ICraftItem {
 }
 
 export type TItems = {
-    [key in TCraftItemTypes]: ICraftItem[]
+    [key in TCraftObjectTypes]: ICraftItem[]
 }
 
 export interface IConsumedMaterials {

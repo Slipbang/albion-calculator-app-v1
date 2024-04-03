@@ -31,7 +31,6 @@ const CalculatorForm = React.memo(() => {
                 {calculatorType === 'items' &&
                     <>
                         <ItemSelector
-                            calculatorType={calculatorType}
                             calculatorFormStrings={calculatorFormStrings}
                             selectedLanguage={selectedLanguage}
                         />

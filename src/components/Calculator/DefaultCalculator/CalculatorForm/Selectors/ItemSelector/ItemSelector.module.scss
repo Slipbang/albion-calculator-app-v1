@@ -8,35 +8,10 @@
 
   .itemTypeSelector {
     display: flex;
-    //z-index: 9999;
-
-    .itemTypeButtonSelector {
-      position: absolute;
-      margin-left: 80px;
-      transition: all 0.5s ease-in-out;
-      z-index: 1;
-    }
-
-    .itemTypeButtonSelectorHidden {
-      position: absolute;
-      margin-left: 80px;
-      display: none;
-      z-index: 1;
-    }
-
-    .itemNodeButtonSelector {
-      display: initial;
-      position: absolute;
-      top: 60px;
-      margin-left: -65px;
-      z-index: 1;
-    }
   }
 }
 
-.backgroundSkeleton {
+.imgLoaderBackground {
   background: linear-gradient(rgb(210, 187, 139), rgb(210, 187, 139)) center/73% 73%;
-  //background: linear-gradient(rgb(96, 67, 47), rgb(96, 67, 47)) center/73% 73%;
   background-repeat:no-repeat;
-
 }

@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {v4 as uuidv4} from 'uuid';
 import {TCalcProps} from "../../types/calculatorPropsType";
-import {TCraftItemType, TCraftItemTypes, TResourceType, TTier} from "../../types/craftItemsType";
+import {TCraftItemType, TCraftObjectTypes, TResourceType, TTier} from "../../types/craftItemsType";
 import {calculateJQ_DFC} from "../../components/Calculator/DefaultCalculator/calculateJQ_DFC";
 
 export interface IItemName {
@@ -95,7 +95,7 @@ interface IInitialState {
             }
         },
         selectedItem: {
-            selectedItemType: TCraftItemTypes;
+            selectedItemType: TCraftObjectTypes;
             selectedItemTier: TTier;
             foodConsumption: number,
             selectedItemBodyId: string;
@@ -214,7 +214,7 @@ const profitSlice = createSlice({
         setSelectedNode(state, action: PayloadAction<string>) {
             state.itemSelector.itemNode = action.payload;
         },
-        setSelected(state, action: PayloadAction<{ type: TCalcProps; selectedType?: TCraftItemTypes; journalId?: string; emptyJournalId?: string; selectedItem?: string; itemName: {ru: string, en: string} , artefactId?: string; selectedResourceId?: string, resourceTier?: TTier, foodConsumption?: number}>) {
+        setSelected(state, action: PayloadAction<{ type: TCalcProps; selectedType?: TCraftObjectTypes; journalId?: string; emptyJournalId?: string; selectedItem?: string; itemName: {ru: string, en: string} , artefactId?: string; selectedResourceId?: string, resourceTier?: TTier, foodConsumption?: number}>) {
             if (action.payload.type === 'resource') {
                 state.selected.selectedResource = {
                     ...state.selected.selectedResource,
@@ -227,7 +227,7 @@ const profitSlice = createSlice({
             if (action.payload.type === 'items') {
                 state.selected.selectedItem = {
                     ...state.selected.selectedItem,
-                    selectedItemType: action.payload.selectedType as TCraftItemTypes,
+                    selectedItemType: action.payload.selectedType as TCraftObjectTypes,
                     selectedItemBodyId: action.payload.selectedItem!,
                     foodConsumption: action.payload.foodConsumption!,
                     journalId: action.payload.journalId!,

@@ -7,7 +7,8 @@ export const selectErrors = (state: RootState) => state.profit.errors;
 export const selectPercent = (state: RootState) => state.profit.percent;
 export const selectItem = (state: RootState) => state.profit.selected.selectedItem;
 export const selectResource = (state: RootState) => state.profit.selected.selectedResource;
-export const selectItemSelector = (state: RootState) => state.profit.itemSelector;
+export const selectItemType = (state: RootState) => state.profit.itemSelector.itemType;
+export const selectItemNode = (state: RootState) => state.profit.itemSelector.itemNode;
 export const selectCraftedItemData = (state: RootState) => state.profit.craftedItemData;
 
 

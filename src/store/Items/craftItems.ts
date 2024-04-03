@@ -1,7 +1,5 @@
-import {TCraftItemTypes, TItems, TItemNode} from "../../types/craftItemsType";
-import {
-    backpackCell
-} from "../../components/Calculator/GameModeCalculator/Backpack/BackpackImgReexports/BackpackImgReexports";
+import {TCraftObjectTypes, TItems, TItemNode} from "../../types/craftItemsType";
+import {backpackCell} from "../../components/Calculator/GameModeCalculator/Backpack/BackpackImgReexports/BackpackImgReexports";
 
 export const craftItems: TItems = {
     "MAIN": [
@@ -3120,7 +3118,7 @@ export const craftItems: TItems = {
     ],
 };
 
-const itemTypeKeys = Object.keys(craftItems) as TCraftItemTypes[];
+const objectTypeKeys = Object.keys(craftItems) as TCraftObjectTypes[];
 
 export type TCraftItems = {
     divFactor?: number;
@@ -3181,7 +3179,7 @@ const huntersCraftItems: TCraftItems[] = [];
 const mageCraftItems: TCraftItems[] = [];
 const toolmakerCraftItems: TCraftItems[] = [];
 
-itemTypeKeys.forEach(itemTypeKey => craftItems[itemTypeKey].forEach(itemForSelect => [4, 5, 6, 7, 8].forEach(itemTier => {
+objectTypeKeys.forEach(itemTypeKey => craftItems[itemTypeKey].forEach(itemForSelect => [4, 5, 6, 7, 8].forEach(itemTier => {
 
     const {artefactItemId, itemClass, itemNode, CLOTH, LEATHER, PLANKS, METALBAR, STONEBLOCK, foodConsumption, itemName} = itemForSelect;
 

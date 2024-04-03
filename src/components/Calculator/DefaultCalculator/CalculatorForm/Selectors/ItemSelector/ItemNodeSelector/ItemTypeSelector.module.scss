@@ -1,0 +1,11 @@
+.itemTypeButtonSelector {
+  position: absolute;
+  margin-left: 80px;
+  transition: all 0.5s ease-in-out;
+  z-index: 1;
+}
+
+.imgLoaderBackground {
+  background: linear-gradient(rgb(210, 187, 139), rgb(210, 187, 139)) center/73% 73%;
+  background-repeat:no-repeat;
+}

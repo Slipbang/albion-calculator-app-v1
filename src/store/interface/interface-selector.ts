@@ -7,6 +7,7 @@ export const selectCraftingFormVisibility = (state: RootState) => state.interfac
 export const selectMarketItemVisibility = (state: RootState) => state.interface.global.isMarketItemVisible;
 export const selectCraftTableVisibility = (state: RootState) => state.interface.global.isCraftTableShown;
 export const selectInfoTableVisibility = (state: RootState) => state.interface.global.isInfoTableShown;
+export const selectItemSelectorVisibility = (state: RootState) => state.interface.global.isItemSelectorShown;
 
 export const selectNodeIS = (state: RootState) => state.interface.GMItemSelector.selectedNodeIS;
 export const selectTierIS = (state: RootState) => state.interface.GMItemSelector.selectedTierIS;
