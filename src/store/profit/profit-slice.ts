@@ -35,6 +35,10 @@ export interface ITableData {
     itemName?: IItemName;
     tier: string
     artefactId?: string | null;
+    queryMatsParams?: string;
+    queryItemsParams?: string;
+    queryJournalsParams?: string;
+
 }
 
 

@@ -14,6 +14,7 @@ import {useAppDispatch} from "../../../../../../store";
 import {interfaceSliceActions} from "../../../../../../store/interface/interface-slice";
 import styles from './ItemPriceSelector.module.scss'
 import {selectLanguage} from "../../../../../../store/language/language-selector";
+import {selectServerId} from "../../../../../../store/queryParams/query-params-selectors";
 
 const ItemPriceSelector = () => {
     const dispatchAction = useAppDispatch();
@@ -25,6 +26,7 @@ const ItemPriceSelector = () => {
     const ownItemPrice = useSelector(selectOwnItemPriceMI);
     const selectedMarketItem = useSelector(selectMarketItem);
     const {itemId} = selectedMarketItem;
+    const serverId = useSelector(selectServerId);
 
     const setOwnItemPriceHandler = (value: number) => {
         if (value >= 0) {
@@ -39,7 +41,7 @@ const ItemPriceSelector = () => {
     }] = useLazyGetItemsDataQuery();
 
     const fetchDataHandler = () => {
-        fetchItemsData({itemsParams: itemId!, isBlackMarket: (marketAction === 'sell' && itemId !== null)});
+        fetchItemsData({itemsParams: itemId!, isBlackMarket: (marketAction === 'sell' && itemId !== null), serverId});
     }
 
     const setItemPriceHandler = (value: number) => {
@@ -50,7 +52,7 @@ const ItemPriceSelector = () => {
         if (!!isPriceFetched) {
             fetchDataHandler();
         }
-    }, [isPriceFetched]);
+    }, [isPriceFetched, serverId]);
 
     return (
         <div className={styles.itemPrice}>

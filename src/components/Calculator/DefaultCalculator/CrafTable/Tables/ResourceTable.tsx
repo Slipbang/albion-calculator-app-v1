@@ -1,5 +1,4 @@
 import StyledDefaultButton from "../../../StyledComponentsCommon/StyledDefaultButton";
-import React from "react";
 import {useSelector} from "react-redux";
 import {selectCraftResourcesList} from "../../../../../store/profit/profit-selectors";
 import {ISelectedLanguage} from "../../../../../types/languageTypes";
@@ -7,18 +6,16 @@ import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {ITableData, profitSliceActions} from "../../../../../store/profit/profit-slice";
 import {interfaceSliceActions} from "../../../../../store/interface/interface-slice";
 import {useAppDispatch} from "../../../../../store";
-import {IQueryItemsParams} from "../../../../../store/api/api";
 
 interface IResourceTableProps {
     alertTableStyles: string;
     deleteLiHandler: (type: string, id: string) => void;
     craftTableStrings: ISelectedLanguage['craftTableStrings'];
     calculatorType: TCalcProps;
-    fetchMaterialsData?: ({itemsParams, isBlackMarket}: IQueryItemsParams) => void;
 }
 
 const ResourceTable = (props: IResourceTableProps) => {
-    const {alertTableStyles, craftTableStrings, calculatorType, deleteLiHandler, fetchMaterialsData} = props;
+    const {alertTableStyles, craftTableStrings, calculatorType, deleteLiHandler} = props;
 
     const craftResourcesList = useSelector(selectCraftResourcesList);
     const dispatchAction = useAppDispatch();
@@ -37,8 +34,7 @@ const ResourceTable = (props: IResourceTableProps) => {
 
         const queryMatsParams = `${craftedMaterial}${subMats}${mainMats}`;
 
-        fetchMaterialsData!({itemsParams: queryMatsParams, isBlackMarket: false});
-        dispatchAction(profitSliceActions.setCraftedItem(item));
+        dispatchAction(profitSliceActions.setCraftedItem({...item, queryMatsParams}));
         dispatchAction(interfaceSliceActions.setInfoTableVisibility(true));
     }
 

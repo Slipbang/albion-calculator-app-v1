@@ -13,16 +13,9 @@ import ItemTable from "./Tables/ItemTable";
 import ResourceTable from "./Tables/ResourceTable";
 import CraftTableButton from "./Buttons/CraftTableButton";
 import {selectCalculatorType} from "../../../../store/interface/interface-selector";
-import {IQueryItemsParams} from "../../../../store/api/api";
 
-interface ICraftTableProps {
-    fetchItemsData?: ({itemsParams, isBlackMarket}: IQueryItemsParams) => void;
-    fetchMaterialsData?: ({itemsParams, isBlackMarket}: IQueryItemsParams) => void;
-    fetchArtefactsData?: ({itemsParams, isBlackMarket}: IQueryItemsParams) => void;
-    fetchJournalsData?: ({itemsParams, isBlackMarket}: IQueryItemsParams) => void;
-}
 
-const CraftTable = React.memo((props: ICraftTableProps) => {
+const CraftTable = React.memo(() => {
     const calculatorType = useSelector(selectCalculatorType);
 
     const dispatchAction = useAppDispatch();
@@ -45,7 +38,6 @@ const CraftTable = React.memo((props: ICraftTableProps) => {
                         alertTableStyles={styles.alertTable}
                         calculatorType={calculatorType}
                         deleteLiHandler={deleteLiHandler}
-                        fetchMaterialsData={props.fetchMaterialsData}
                     />
                 }
 
@@ -55,7 +47,6 @@ const CraftTable = React.memo((props: ICraftTableProps) => {
                         craftTableStrings={craftTableStrings}
                         deleteLiHandler={deleteLiHandler}
                         calculatorType={calculatorType}
-                        {...props}
                     />
                 }
             </div>

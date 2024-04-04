@@ -21,6 +21,7 @@ export interface IQueryTransportationParams{
 export interface IQueryItemsParams {
     itemsParams: string;
     isBlackMarket: boolean;
+    serverId: string;
 }
 
 export const albionApi = createApi({
@@ -32,11 +33,11 @@ export const albionApi = createApi({
         getTransportationsData: build.query<TransportationData[], IQueryTransportationParams>({
             query: ({from, to, count, skip, profitSort, checkSort, serverId}) => ({
                 url: `transportations/sort?from=${from}&to=${to}&count=${count}&skip=${skip}&sort=${checkSort}${profitSort}&serverId=${serverId}`,
-            })
+            }),
         }),
         getItemsData: build.query<IItemsData[], IQueryItemsParams>({
-            query: ({itemsParams, isBlackMarket}) => ({
-                url: `data?items=${itemsParams}&locations=${!!isBlackMarket ? 'Black%20Market,' : ''}Thetford,Bridgewatch,Lymhurst,Caerleon,Martlock,Fort%20Sterling,Brecilien&serverId=aod_west`,
+            query: ({itemsParams, isBlackMarket, serverId}) => ({
+                url: `data?items=${itemsParams}&locations=${!!isBlackMarket ? 'Black%20Market,' : ''}Thetford,Bridgewatch,Lymhurst,Caerleon,Martlock,Fort%20Sterling,Brecilien&serverId=${serverId}`,
             })
         }),
     })

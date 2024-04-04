@@ -17,6 +17,7 @@ import {
     selectArtefactPriceFetchedStateCF, selectItemsQuantityCF,
     selectOwnArtefactPriceCF
 } from "../../../../../store/interface/interface-selector";
+import {selectServerId} from "../../../../../store/queryParams/query-params-selectors";
 
 const ArtefactsBox = () => {
     const dispatchAction = useAppDispatch();
@@ -26,6 +27,7 @@ const ArtefactsBox = () => {
     const ownArtefactPrice = useSelector(selectOwnArtefactPriceCF);
     const selectedWorkBenchItem = useSelector(selectWorkBenchItem);
     const fetchedArtefactPrice = useSelector(selectArtefactPriceCF);
+    const serverId = useSelector(selectServerId);
 
     const {artefactItemId} = selectedWorkBenchItem;
 
@@ -49,7 +51,7 @@ const ArtefactsBox = () => {
     }] = useLazyGetItemsDataQuery();
 
     const fetchArtefactsDataHandler = () => {
-        fetchArtefactsData({itemsParams: artefactItemId!, isBlackMarket: false});
+        fetchArtefactsData({itemsParams: artefactItemId!, isBlackMarket: false, serverId});
     }
 
     const setIsArtefactPriceFetchedHandler = () => {
@@ -66,7 +68,7 @@ const ArtefactsBox = () => {
 
     useEffect(() => {
         fetchArtefactsDataHandler()
-    }, [artefactItemId])
+    }, [artefactItemId, serverId])
 
     return (
         <>

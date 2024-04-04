@@ -10,6 +10,7 @@ import {TClass} from "../../../types/artefactTypes";
 import {TArtefactData} from "../../../types/artefactTypes";
 import {artefactsClassesKeys} from "../../../store/artefacts/artefact-slice";
 import {useGetItemsDataQuery} from "../../../store/api/api";
+import {selectServerId} from "../../../store/queryParams/query-params-selectors";
 
 const useArtefacts = () => {
     const artefacts = useSelector(selectArtefacts);
@@ -17,6 +18,7 @@ const useArtefacts = () => {
     const selectedClass = useSelector(selectArtefactsClass);
     const selectedTier = useSelector(selectArtefactsTier);
     const selectedSort = useSelector(selectArtefactsSort);
+    const serverId = useSelector(selectServerId)
 
     const artefactsValidation = (classKey: TClass) => {
         if (selectedClass === 'allClasses') return true;
@@ -48,7 +50,7 @@ const useArtefacts = () => {
         isError: isErrorArtefacts,
         data: artefactsPriceData,
         refetch: reFetchFunction,
-    } = useGetItemsDataQuery({itemsParams: artefactsQueryParams, isBlackMarket: false}, {
+    } = useGetItemsDataQuery({itemsParams: artefactsQueryParams, isBlackMarket: false, serverId}, {
         refetchOnReconnect: true,
     });
 

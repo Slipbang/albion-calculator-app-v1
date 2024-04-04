@@ -56,11 +56,11 @@ const TransportationItem = (props: TransportationData) => {
         }
 
 
-        return 'Can\'t find item name :(';
+        return 'Can\'t find name :(';
     }
 
     const copyTextHandler = (title: string) => {
-        navigator.clipboard.writeText(title).then(() => setWasCopied(true)).then(() => setTimeout(() => setWasCopied(false), 1000))
+        navigator.clipboard.writeText(title).then(() => setWasCopied(true)).then(() => setTimeout(() => setWasCopied(false), 1000));
     }
 
     let itemName = searchName(itemIdTo);
@@ -82,11 +82,11 @@ const TransportationItem = (props: TransportationData) => {
                         {!wasCopied ? itemName : `${isSelectedRu ? 'Скопировано!' : 'Copied!'}`}
                     </h4>
                 </td>
-                <td>{normalizedPriceFrom.toLocaleString()}</td>
-                <td>{normalizedPriceTo.toLocaleString()}</td>
-                <td>{profit.toLocaleString()}</td>
+                <td>{normalizedPriceFrom.toLocaleString('en')}</td>
+                <td>{normalizedPriceTo.toLocaleString('en')}</td>
+                <td>{profit.toLocaleString('en')}</td>
                 <td>{`${((((normalizedPriceTo - normalizedPriceTo * 0.065) - normalizedPriceFrom)) * 100 / normalizedPriceFrom).toFixed(0)}%`}</td>
-                <td>{`${Math.floor(averageItemsTo).toLocaleString()} ${isSelectedRu ? 'ед/сут' : 'un/d'}`}</td>
+                <td>{`${Math.floor(averageItemsTo).toLocaleString('en')} ${isSelectedRu ? 'ед/сут' : 'un/d'}`}</td>
             </tr>
         </>
     )

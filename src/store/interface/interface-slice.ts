@@ -1,13 +1,12 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {
-    enchantmentOptions,
-    IOptions,
-    nodeOptions,
-    tierOptions,
-    typeOptions
-} from "../Options/CustomSelecrorsOptions";
+import {enchantmentOptions, IOptions, nodeOptions, tierOptions, typeOptions} from "../Options/CustomSelecrorsOptions";
 import {TCalcProps} from "../../types/calculatorPropsType";
 import {dummyEnchantmentButtons, IEnchantmentButton} from "./DummyEnchantmentButtons/DummyEnchantmentButtons";
+
+export interface ICount {
+    left: number;
+    right: number;
+}
 
 interface IInitialState {
     global: {
@@ -19,6 +18,10 @@ interface IInitialState {
         isCraftTableShown: boolean;
         isInfoTableShown: boolean;
         isItemSelectorShown: boolean;
+    };
+
+    DefaultCalculator: {
+        swiperCount: ICount;
     };
 
     GMItemSelector: {
@@ -70,6 +73,13 @@ const initialState: IInitialState = {
         isItemSelectorShown: false,
     },
 
+    DefaultCalculator: {
+        swiperCount: {
+            left: 0,
+            right: 5,
+        }
+    },
+
     GMItemSelector: {
         selectedNodeIS: nodeOptions['tanner']['resources']![0],
         selectedTierIS: tierOptions[0],
@@ -118,123 +128,136 @@ const interfaceSlice = createSlice({
                 state.global.isCraftTableShown = action.payload;
             }
         },
-        setEnchantmentButtons(state, action: PayloadAction<IEnchantmentButton[]>){
+        setSwiperCount(state, action: PayloadAction<{ isLeft: boolean }>) {
+            if (action.payload.isLeft) {
+                state.DefaultCalculator.swiperCount = {
+                    left: +state.DefaultCalculator.swiperCount.left - 1,
+                    right: +state.DefaultCalculator.swiperCount.right - 1,
+                }
+            } else {
+                state.DefaultCalculator.swiperCount = {
+                    left: +state.DefaultCalculator.swiperCount.left + 1,
+                    right: +state.DefaultCalculator.swiperCount.right + 1,
+                }
+            }
+        },
+        setEnchantmentButtons(state, action: PayloadAction<IEnchantmentButton[]>) {
             state.GMCraftingForm.enchantmentButtons = action.payload;
         },
-        setCalculatorType(state, action: PayloadAction<TCalcProps>){
+        setCalculatorType(state, action: PayloadAction<TCalcProps>) {
             state.global.calculatorType = action.payload;
         },
-        setIsCraftingFormVisible(state, action: PayloadAction<boolean>){
+        setIsCraftingFormVisible(state, action: PayloadAction<boolean>) {
             state.global.isCraftingFormVisible = action.payload;
         },
-        toggleMarketMenuShown(state){
+        toggleMarketMenuShown(state) {
             state.global.isMarketMenuShown = !state.global.isMarketMenuShown;
         },
-        setMarketItemVisibility(state, action: PayloadAction<boolean>){
+        setMarketItemVisibility(state, action: PayloadAction<boolean>) {
             state.global.isMarketItemVisible = action.payload;
         },
-        setInfoTableVisibility(state, action: PayloadAction<boolean>){
+        setInfoTableVisibility(state, action: PayloadAction<boolean>) {
             state.global.isInfoTableShown = action.payload;
         },
-        toggleGameMode(state){
+        toggleGameMode(state) {
             state.global.isCraftingFormVisible = initialState.global.isCraftingFormVisible;
             state.global.isMarketItemVisible = initialState.global.isMarketItemVisible;
             state.global.isMarketMenuShown = initialState.global.isMarketMenuShown;
             state.global.isCraftTableShown = initialState.global.isCraftTableShown;
             state.global.gameMode = !state.global.gameMode;
         },
-        toggleItemSelectorVisibility(state, action: PayloadAction<boolean | undefined>){
+        toggleItemSelectorVisibility(state, action: PayloadAction<boolean | undefined>) {
             if (action.payload === undefined) {
                 state.global.isItemSelectorShown = !state.global.isItemSelectorShown;
             } else {
                 state.global.isItemSelectorShown = action.payload;
             }
         },
-        setSelectedTierIS(state, action: PayloadAction<IOptions>){
+        setSelectedTierIS(state, action: PayloadAction<IOptions>) {
             state.GMItemSelector.selectedTierIS = action.payload;
         },
-        setSelectedNodeIS(state, action: PayloadAction<IOptions>){
+        setSelectedNodeIS(state, action: PayloadAction<IOptions>) {
             state.GMItemSelector.selectedNodeIS = action.payload;
         },
-        setInputSearchIS(state, action: PayloadAction<string>){
+        setInputSearchIS(state, action: PayloadAction<string>) {
             state.GMItemSelector.inputSearchIS = action.payload;
         },
-        setSelectedTierMM(state, action: PayloadAction<IOptions>){
+        setSelectedTierMM(state, action: PayloadAction<IOptions>) {
             state.MarketMenu.selectedTierMM = action.payload;
         },
-        setSelectedItemTypeMM(state, action: PayloadAction<IOptions>){
+        setSelectedItemTypeMM(state, action: PayloadAction<IOptions>) {
             state.MarketMenu.selectedItemTypeMM = action.payload;
         },
-        setSelectedEnchantmentMM(state, action: PayloadAction<IOptions>){
+        setSelectedEnchantmentMM(state, action: PayloadAction<IOptions>) {
             state.MarketMenu.selectedEnchantmentMM = action.payload;
         },
-        setInputSearchMM(state, action: PayloadAction<string>){
+        setInputSearchMM(state, action: PayloadAction<string>) {
             state.MarketMenu.inputSearchMM = action.payload;
         },
-        resetMarketMenuSelectors(state){
+        resetMarketMenuSelectors(state) {
             state.MarketMenu.selectedTierMM = initialState.MarketMenu.selectedTierMM;
             state.MarketMenu.selectedItemTypeMM = initialState.MarketMenu.selectedItemTypeMM;
             state.MarketMenu.selectedEnchantmentMM = initialState.MarketMenu.selectedEnchantmentMM;
             state.MarketMenu.inputSearchMM = initialState.MarketMenu.inputSearchMM;
         },
-        setItemsQuantityCF(state, action: PayloadAction<number>){
+        setItemsQuantityCF(state, action: PayloadAction<number>) {
             state.GMCraftingForm.itemsQuantityCF = action.payload;
         },
-        setMaterialEnchantmentCF(state, action: PayloadAction<string>){
+        setMaterialEnchantmentCF(state, action: PayloadAction<string>) {
             state.GMCraftingForm.materialEnchantmentCF = action.payload;
         },
-        setItemEnchantmentCF(state, action: PayloadAction<string>){
+        setItemEnchantmentCF(state, action: PayloadAction<string>) {
             state.GMCraftingForm.itemEnchantmentCF = action.payload;
         },
-        setEnchantmentNumCF(state, action: PayloadAction<string>){
+        setEnchantmentNumCF(state, action: PayloadAction<string>) {
             state.GMCraftingForm.enchantmentNumCF = action.payload;
         },
-        setReturnPercentCF(state, action: PayloadAction<number>){
+        setReturnPercentCF(state, action: PayloadAction<number>) {
             state.GMCraftingForm.returnPercentCF = action.payload;
         },
-        setIsJournalsUsedCF(state, action: PayloadAction<boolean | undefined> ){
-            if (action?.payload === undefined){
+        setIsJournalsUsedCF(state, action: PayloadAction<boolean | undefined>) {
+            if (action?.payload === undefined) {
                 state.GMCraftingForm.isJournalUsedCF = !state.GMCraftingForm.isJournalUsedCF;
             } else {
                 state.GMCraftingForm.isJournalUsedCF = action.payload;
             }
         },
-        setOwnJournalPriceCF(state, action: PayloadAction<number>){
+        setOwnJournalPriceCF(state, action: PayloadAction<number>) {
             state.GMCraftingForm.ownJournalPriceCF = action.payload;
         },
-        setIsJournalPriceFetchedCF(state){
+        setIsJournalPriceFetchedCF(state) {
             state.GMCraftingForm.isJournalPriceFetchedCF = !state.GMCraftingForm.isJournalPriceFetchedCF;
         },
-        setIsArtefactPriceFetchedCF(state,  action: PayloadAction<boolean | undefined> ){
-            if (action?.payload === undefined){
+        setIsArtefactPriceFetchedCF(state, action: PayloadAction<boolean | undefined>) {
+            if (action?.payload === undefined) {
                 state.GMCraftingForm.isArtefactPriceFetchedCF = !state.GMCraftingForm.isArtefactPriceFetchedCF;
             } else {
                 state.GMCraftingForm.isArtefactPriceFetchedCF = action.payload;
             }
         },
-        setOwnArtefactPriceCF(state, action: PayloadAction<number>){
+        setOwnArtefactPriceCF(state, action: PayloadAction<number>) {
             state.GMCraftingForm.ownArtefactPriceCF = action.payload;
         },
-        setJournalPriceCF(state, action: PayloadAction<number>){
+        setJournalPriceCF(state, action: PayloadAction<number>) {
             state.GMCraftingForm.journalPriceCF = action.payload;
         },
-        setArtefactPriceCF(state, action: PayloadAction<number>){
+        setArtefactPriceCF(state, action: PayloadAction<number>) {
             state.GMCraftingForm.artefactPriceCF = action.payload;
         },
-        setItemQuantityMI(state, action: PayloadAction<number>){
+        setItemQuantityMI(state, action: PayloadAction<number>) {
             state.MarketItem.itemQuantityMI = action.payload;
         },
-        setIsPriceFetchedMI(state, action: PayloadAction<boolean | undefined>){
+        setIsPriceFetchedMI(state, action: PayloadAction<boolean | undefined>) {
             if (action?.payload === undefined) {
                 state.MarketItem.isPriceFetchedMI = !state.MarketItem.isPriceFetchedMI;
             } else {
                 state.MarketItem.isPriceFetchedMI = action.payload;
             }
         },
-        setOwnItemPriceMI(state, action: PayloadAction<number>){
+        setOwnItemPriceMI(state, action: PayloadAction<number>) {
             state.MarketItem.ownItemPriceMI = action.payload;
         },
-        setItemPriceMI(state, action: PayloadAction<number>){
+        setItemPriceMI(state, action: PayloadAction<number>) {
             state.MarketItem.itemPriceMI = action.payload;
         }
     },

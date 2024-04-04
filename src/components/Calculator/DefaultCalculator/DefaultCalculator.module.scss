@@ -33,16 +33,6 @@
   transform: translate(510px,0);
 }
 
-.pulseLoader {
-  position: absolute;
-  border-color: red;
-  align-self: center;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 5;
-}
-
 @media (max-height: 935px) {
   .wrapper{
     height: 960px;

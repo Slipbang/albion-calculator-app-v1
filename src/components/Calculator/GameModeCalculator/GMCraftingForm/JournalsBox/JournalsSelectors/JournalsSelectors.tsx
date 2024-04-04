@@ -18,6 +18,7 @@ import {
     selectJournalUsageCF,
     selectOwnJournalPriceCF
 } from "../../../../../../store/interface/interface-selector";
+import {selectServerId} from "../../../../../../store/queryParams/query-params-selectors";
 
 const JournalsSelectors = () => {
 
@@ -32,6 +33,7 @@ const JournalsSelectors = () => {
     const ownJournalPrice = useSelector(selectOwnJournalPriceCF);
     const isJournalPriceFetched = useSelector(selectJournalPriceFetchedStateCF);
     const selectedWorkBenchItem = useSelector(selectWorkBenchItem);
+    const serverId = useSelector(selectServerId);
 
 
     const {emptyJournalId} = useJournals({isJournalUsed, selectedWorkBenchItem, itemsQuantity, enchantmentNum});
@@ -43,7 +45,7 @@ const JournalsSelectors = () => {
     }] = useLazyGetItemsDataQuery();
 
     const fetchJournalsDataHandler = () => {
-        fetchJournalsData({itemsParams: emptyJournalId, isBlackMarket: false});
+        fetchJournalsData({itemsParams: emptyJournalId, isBlackMarket: false, serverId});
     }
 
     const setIsJournalPriceFetchedHandler = () => {
@@ -60,7 +62,7 @@ const JournalsSelectors = () => {
 
     useEffect(() => {
         fetchJournalsDataHandler();
-    }, [emptyJournalId])
+    }, [emptyJournalId, serverId])
 
     return <>
         {isJournalUsed &&

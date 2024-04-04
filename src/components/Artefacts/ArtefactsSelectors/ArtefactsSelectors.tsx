@@ -26,8 +26,6 @@ const ArtefactsSelectors = React.memo(({refetchHandler}:{refetchHandler: () => v
         dispatchAction(artefactActions.setArtefactsTier(event.target.value as TArtefactsTier));
     }
 
-    //needs refactoring
-
     return (
         <div className={styles.wrapper}>
             <div>

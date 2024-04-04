@@ -1,5 +1,4 @@
 import StyledDefaultButton from "../../../StyledComponentsCommon/StyledDefaultButton";
-import React from "react";
 import {ITableData, profitSliceActions} from "../../../../../store/profit/profit-slice";
 import {useSelector} from "react-redux";
 import {selectCraftItemsList} from "../../../../../store/profit/profit-selectors";
@@ -7,16 +6,12 @@ import {ISelectedLanguage} from "../../../../../types/languageTypes";
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {useAppDispatch} from "../../../../../store";
 import {interfaceSliceActions} from "../../../../../store/interface/interface-slice";
-import {IQueryItemsParams} from "../../../../../store/api/api";
+import {selectServerId} from "../../../../../store/QueryParams/query-params-selectors";
 
 
 interface TItemTableProps {
     alertTableStyles: string;
     craftTableStrings: ISelectedLanguage['craftTableStrings'];
-    fetchItemsData?: ({itemsParams, isBlackMarket}: IQueryItemsParams) => void;
-    fetchMaterialsData?: ({itemsParams, isBlackMarket}: IQueryItemsParams) => void;
-    fetchArtefactsData?: ({itemsParams, isBlackMarket}: IQueryItemsParams) => void;
-    fetchJournalsData?: ({itemsParams, isBlackMarket}: IQueryItemsParams) => void;
     calculatorType: TCalcProps;
     deleteLiHandler: (type: string, id: string) => void;
 }
@@ -25,10 +20,6 @@ const ItemTable = (props: TItemTableProps) => {
     const {
         alertTableStyles,
         craftTableStrings,
-        fetchArtefactsData,
-        fetchMaterialsData,
-        fetchItemsData,
-        fetchJournalsData,
         calculatorType,
         deleteLiHandler,
     } = props;
@@ -56,16 +47,15 @@ const ItemTable = (props: TItemTableProps) => {
         const queryItemsParams = `${items}`;
         const queryMatsParams = `${subMats}${mainMats}`;
         const queryJournalsParams = `${journals}`;
-        const queryArtefactsParams = `${artefactId}`;
 
-        if (!!artefactId) {
-            fetchArtefactsData!({itemsParams: queryArtefactsParams, isBlackMarket: false});
-        }
-
-        fetchJournalsData!({itemsParams: queryJournalsParams, isBlackMarket: false})
-        fetchItemsData!({itemsParams: queryItemsParams, isBlackMarket: true});
-        fetchMaterialsData!({itemsParams: queryMatsParams, isBlackMarket: false});
-        dispatchAction(profitSliceActions.setCraftedItem(item));
+        // if (!!artefactId) {
+        //     fetchArtefactsData!({itemsParams: queryArtefactsParams, isBlackMarket: false, serverId});
+        // }
+        //
+        // fetchJournalsData!({itemsParams: queryJournalsParams, isBlackMarket: false, serverId});
+        // fetchItemsData!({itemsParams: queryItemsParams, isBlackMarket: true, serverId});
+        // fetchMaterialsData!({itemsParams: queryMatsParams, isBlackMarket: false, serverId});
+        dispatchAction(profitSliceActions.setCraftedItem({...item, queryMatsParams, queryItemsParams, queryJournalsParams}));
         dispatchAction(interfaceSliceActions.setInfoTableVisibility(true));
     }
 

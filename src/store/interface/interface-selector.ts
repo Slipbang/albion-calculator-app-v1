@@ -9,6 +9,8 @@ export const selectCraftTableVisibility = (state: RootState) => state.interface.
 export const selectInfoTableVisibility = (state: RootState) => state.interface.global.isInfoTableShown;
 export const selectItemSelectorVisibility = (state: RootState) => state.interface.global.isItemSelectorShown;
 
+export const selectSwiperCount = (state: RootState) => state.interface.DefaultCalculator.swiperCount;
+
 export const selectNodeIS = (state: RootState) => state.interface.GMItemSelector.selectedNodeIS;
 export const selectTierIS = (state: RootState) => state.interface.GMItemSelector.selectedTierIS;
 export const selectInputIS = (state: RootState) => state.interface.GMItemSelector.inputSearchIS;

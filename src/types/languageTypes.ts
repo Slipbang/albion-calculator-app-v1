@@ -134,6 +134,11 @@ interface IGMCraftingFormStrings {
     foodTaxInfoIconText: string;
 }
 
+interface IHeaderStrings {
+    server: string;
+    language: string;
+}
+
 export interface ISelectedLanguage {
     craftTableStrings: ICraftTableStrings;
     calculatorFormStrings: ICalculatorFormStrings;
@@ -146,6 +151,7 @@ export interface ISelectedLanguage {
     marketMenuStrings: IMarketMenuStrings;
     GMItemSelectorStings: IGMItemSelectorStings;
     GMCraftingFormStrings: IGMCraftingFormStrings;
+    headerStrings: IHeaderStrings;
 }
 
 export interface ILanguage {

@@ -68,8 +68,8 @@ const language: ILanguage = {
         transportationFormStrings: {
             server: 'Сервер:',
             from: 'из:',
-            albionWest: 'Западный Альбион (Вашингтон)',
-            albionEast: 'Восточный Альбион (Сингапур)',
+            albionWest: 'Америка (Вашингтон)',
+            albionEast: 'Азия (Сингапур)',
             into: 'в:',
             sortBy: 'Сортировать по:',
             percentageProfit: 'Прибыли в процентах',
@@ -127,6 +127,10 @@ const language: ILanguage = {
             totalPriceLabel: 'Цена в серебре:',
             foodTaxInfoIconText: 'Цены за станок с учетом зачарования.'
         },
+        headerStrings: {
+            server: 'Сервер',
+            language: 'Язык',
+        }
     },
     en:{
         craftTableStrings: {
@@ -254,6 +258,10 @@ const language: ILanguage = {
             totalPriceLabel: 'Silver Cost:',
             foodTaxInfoIconText: 'Food tax including enchantment.',
         },
+        headerStrings: {
+            server: 'Server',
+            language: 'Language',
+        }
     }
 };
 export default language;

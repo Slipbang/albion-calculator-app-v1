@@ -6,6 +6,8 @@ import styles from './ItemNodeSelector.module.scss';
 import {profitSliceActions} from "../../../../../../../../store/profit/profit-slice";
 import {useAppDispatch} from "../../../../../../../../store";
 import Items from "./Items/Items";
+import {useSelector} from "react-redux";
+import {selectItemType} from "../../../../../../../../store/profit/profit-selectors";
 
 const objectTypeKeys = Object.keys(craftItems) as TCraftObjectTypes[];
 
@@ -18,6 +20,8 @@ const ItemNodeSelector = (props: IItemNodeSelectorProps) => {
     const {typeOfTypeSelector, selectedItemTier} = props;
     const dispatchAction = useAppDispatch();
 
+    const itemType = useSelector(selectItemType);
+
     const selectItemNodeHandler = (selectedNode: TItemNode) => {
         dispatchAction(profitSliceActions.setSelectedNode(selectedNode))
     }
@@ -26,13 +30,14 @@ const ItemNodeSelector = (props: IItemNodeSelectorProps) => {
     const srcRoute = 'https://render.albiononline.com/v1/item/';
 
     return (
-        <div className={styles.itemNodeButtonSelector}>
-            <img
-                src={arrowDown}
-                alt=''
-                style={{width: '50px', height: '11px', marginLeft: '7px'}}
-            />
-            {objectTypeKeys.map(itemTypeKey => craftItems[itemTypeKey].map((itemForNodeSelect) => {
+        <>
+            {typeOfTypeSelector === itemType && <div className={styles.itemNodeButtonSelector}>
+                <img
+                    src={arrowDown}
+                    alt=''
+                    style={{width: '50px', height: '11px', marginLeft: '7px'}}
+                />
+                {objectTypeKeys.map(itemTypeKey => craftItems[itemTypeKey].map((itemForNodeSelect) => {
                     let itemBodyId: string;
                     if ((itemTypeKey === 'BAG' && itemForNodeSelect.itemId !== 'INSIGHT') || itemTypeKey === 'CAPE') {
                         itemBodyId = itemForNodeSelect.itemId;
@@ -44,29 +49,29 @@ const ItemNodeSelector = (props: IItemNodeSelectorProps) => {
                         <div
                             key={`${selectedItemTier}_${itemBodyId}`}
                             style={{display: 'flex'}}
+                            onClick={event => event.stopPropagation()}
                         >
-                            <div
+                            <img
+                                className={styles.imgLoaderBackground}
+                                src={`${srcRoute}${selectedItemTier}_${itemBodyId}`}
+                                alt=""
                                 title={itemForNodeSelect.itemNode}
                                 onClick={(event) => {
                                     selectItemNodeHandler(itemForNodeSelect.itemNode!)
                                     event.stopPropagation();
-                                }}>
-                                <img
-                                    className={styles.imgLoaderBackground}
-                                    src={`${srcRoute}${selectedItemTier}_${itemBodyId}`}
-                                    alt=""
-                                />
-                            </div>
+                                }}
+                            />
 
                             {/*селектор определенной вещи*/}
-                            {<Items
+                            <Items
                                 imgLoaderBackground={styles.imgLoaderBackground}
                                 itemNodeOfNodeSelector={itemForNodeSelect.itemNode!}
                                 selectedItemTier={selectedItemTier}
-                            />}
+                            />
                         </div>
                 }))}
-        </div>
+            </div>}
+        </>
 
     )
 }

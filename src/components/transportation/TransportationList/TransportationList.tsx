@@ -1,7 +1,7 @@
 import styles from './TransportationList.module.scss';
 
 import {useSelector} from "react-redux";
-import {selectTransportation} from "../../../store/transportation/transportation-selectors";
+import {selectTransportation} from "../../../store/queryParams/query-params-selectors";
 import {useGetTransportationsDataQuery} from "../../../store/api/api";
 import {selectLanguage} from "../../../store/language/language-selector";
 import TransportationItem from "./TransportationItem/TransportationItem";

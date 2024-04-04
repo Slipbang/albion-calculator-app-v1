@@ -1,19 +1,13 @@
 import {NavLink} from "react-router-dom";
-import {useState} from "react";
 import {links} from "../NavigationLinks";
 import styles from './MobileNavigationLinks.module.scss';
+import {useSelector} from "react-redux";
+import {selectLanguage} from "../../../../store/language/language-selector";
 
-const MobileNavigationLinks = ({selectedLanguage}: {selectedLanguage: 'ru' | 'en'}) => {
-
-    const [isMenuShown, setIsMenuShown] = useState(false);
-
-    return <div
-        className={styles.mobileLinks}
-        onMouseEnter={() => setIsMenuShown(true)}
-        onMouseLeave={() => setIsMenuShown(false)}
-    >
+const MobileNavigationLinks = () => {
+    const {selectedLanguage} = useSelector(selectLanguage);
+    return <div className={styles.mobileLinks}>
         <svg
-            onTouchStart={() => setIsMenuShown(prevState => !prevState)}
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -34,20 +28,20 @@ const MobileNavigationLinks = ({selectedLanguage}: {selectedLanguage: 'ru' | 'en
             />
         </svg>
 
-        {isMenuShown && <ul className={styles.lowWidthScreenNavigation}>
+        {<ul className={styles.lowWidthScreenNavigation}>
             {links.map(({link, linkName}) =>
 
                 <li key={link}>
                     <NavLink
                         className={({isActive}) => isActive ? styles.activeLink : styles.link}
                         to={link}
-                        onClick={() => setIsMenuShown(false)}
                     >
                         {linkName?.[selectedLanguage]}
                     </NavLink>
                 </li>
             )}
         </ul>}
+
     </div>
 }
 

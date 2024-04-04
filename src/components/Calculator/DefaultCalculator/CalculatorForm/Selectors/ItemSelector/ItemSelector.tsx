@@ -1,17 +1,17 @@
 import {interfaceSliceActions} from "../../../../../../store/interface/interface-slice";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 import {useAppDispatch} from "../../../../../../store";
-import {ISelectedLanguage} from "../../../../../../types/languageTypes";
+import {ISelectedLanguage, TSelectedLanguage} from "../../../../../../types/languageTypes";
 import styles from './ItemSelector.module.scss';
 import SelectedItemImage from "./SelectedItemImage/SelectedItemImage";
-import ItemTypeSelector from "./ItemNodeSelector/ItemTypeSelector";
+import ItemTypeSelector from "./ItemTypeSelector/ItemTypeSelector";
 import {useSelector} from "react-redux";
 import {selectItemSelectorVisibility} from "../../../../../../store/interface/interface-selector";
 
 
 interface IItemSelectorProps {
     calculatorFormStrings: ISelectedLanguage['calculatorFormStrings'];
-    selectedLanguage: 'ru' | 'en';
+    selectedLanguage: TSelectedLanguage;
 }
 
 const ItemSelector = (props: IItemSelectorProps) => {

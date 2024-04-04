@@ -2,7 +2,7 @@
   z-index: 9997;
   text-align: center;
   position: fixed;
-  display: flex;
+  display: none;
   flex-direction: column;
   top: 65px;
   background-color: #531405;
@@ -42,13 +42,15 @@
     width: 180px;
     height: 65px;
   }
+}
 
-  svg:hover {
+.mobileLinks:hover{
+  svg {
     background-color: rgb(113, 16, 0);
   }
 
-  svg:active {
-    background-color: rgb(113, 16, 0);
+  .lowWidthScreenNavigation {
+    display: flex;
   }
 }
 

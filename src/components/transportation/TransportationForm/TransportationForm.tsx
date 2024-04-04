@@ -3,11 +3,11 @@ import {ChangeEventHandler} from "react";
 import styles from "./TransportationForm.module.scss";
 
 import {useAppDispatch} from "../../../store";
-import {transportationSliceActions} from "../../../store/transportation/transportation-slice";
+import {queryParamsSliceActions} from "../../../store/queryParams/queryParamsSlice";
 import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../store/language/language-selector";
 import {cityOptions} from "../../../store/Options/CityOptions";
-import {selectTransportation} from "../../../store/transportation/transportation-selectors";
+import {selectTransportation} from "../../../store/queryParams/query-params-selectors";
 import {TSortCheckParams, TSortProfitParams} from "../../../store/api/api";
 
 const TransportationForm = () => {
@@ -17,26 +17,21 @@ const TransportationForm = () => {
     const {language} = useSelector(selectLanguage);
     const {transportationFormStrings} = language;
 
-
-    const selectServerHandler: ChangeEventHandler<HTMLSelectElement> = (event) => {
-        dispatchAction(transportationSliceActions.setServer(event.target.value));
-    };
-
     const selectFromHandler: ChangeEventHandler<HTMLSelectElement> = (event) => {
-        dispatchAction(transportationSliceActions.setCityFrom(event.target.value));
+        dispatchAction(queryParamsSliceActions.setCityFrom(event.target.value));
     };
 
     const selectToHandler: ChangeEventHandler<HTMLSelectElement> = (event) => {
-        dispatchAction(transportationSliceActions.setCityTo(event.target.value));
+        dispatchAction(queryParamsSliceActions.setCityTo(event.target.value));
     };
 
     const selectSortHandler: ChangeEventHandler<HTMLSelectElement> = (event) => {
-        dispatchAction(transportationSliceActions.setProfitSort(event.target.value as TSortProfitParams))
+        dispatchAction(queryParamsSliceActions.setProfitSort(event.target.value as TSortProfitParams))
     };
 
     const checkByTimeHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
         const checkSort = (event.target.checked ? event.target.value : '') as TSortCheckParams;
-        dispatchAction(transportationSliceActions.setCheckSort(checkSort));
+        dispatchAction(queryParamsSliceActions.setCheckSort(checkSort));
     }
 
     return (
@@ -61,17 +56,6 @@ const TransportationForm = () => {
                     <option value="BY_PERCENTAGE_PROFIT">{transportationFormStrings.percentageProfit}</option>
                     <option value="BY_PROFIT">{transportationFormStrings.silverProfit}</option>
                     <option value="BY_PROFIT_VOLUME">{transportationFormStrings.profitVolume}</option>
-                </select>
-            </div>
-
-            <div>
-                <p>{transportationFormStrings.server}</p>
-                <select
-                    id="server"
-                    onChange={(event) => selectServerHandler(event)}
-                >
-                    <option value="aod_west">{transportationFormStrings.albionWest}</option>
-                    <option value="aod_east">{transportationFormStrings.albionEast}</option>
                 </select>
             </div>
 

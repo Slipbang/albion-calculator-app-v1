@@ -32,7 +32,6 @@ const Items = (props: IItemsProps) => {
     const selectItemHandler = ({itemType, selectedItem}: { itemType: TCraftObjectTypes, selectedItem: ICraftItem }) => {
         const {itemId, artefactItemId, foodConsumption, itemClass, itemName} = selectedItem;
 
-
         let journalBodyId = '';
 
         switch (itemClass) {
@@ -50,7 +49,7 @@ const Items = (props: IItemsProps) => {
         }
 
         const journalId = `${journalBodyId}_FULL`;
-        const emptyJournalId = `${journalBodyId}_EMPTY`
+        const emptyJournalId = `${journalBodyId}_EMPTY`;
 
         dispatchAction(interfaceSliceActions.toggleItemSelectorVisibility(false));
 
@@ -106,24 +105,20 @@ const Items = (props: IItemsProps) => {
                             imgHref = `${itemTypeKey}_${itemToSelect.itemId}`;
                         }
                         return itemToSelect.itemNode === itemNode && itemToSelect.itemType === itemType && !itemToSelect.itemId.includes('ROYAL') && (
-
-                            <span
+                            <img
                                 key={`${itemTypeKey}_${itemToSelect.itemId}`}
                                 title={itemToSelect.itemName?.[selectedLanguage]}
+                                className={imgLoaderBackground}
+                                src={`${srcRoute}${selectedItemTier}_${imgHref}`}
+                                alt=""
                                 onClick={(event) => {
-                                    event.stopPropagation()
+                                    event.stopPropagation();
                                     selectItemHandler({
                                         itemType: itemTypeKey,
                                         selectedItem: itemToSelect,
                                     })
                                 }}
-                            >
-                        <img
-                            className={imgLoaderBackground}
-                            src={`${srcRoute}${selectedItemTier}_${imgHref}`}
-                            alt=""
-                        />
-                    </span>
+                            />
                         )
                     }))}
                 </>}

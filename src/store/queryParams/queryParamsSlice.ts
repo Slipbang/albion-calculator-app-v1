@@ -1,9 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {TSortCheckParams, TSortProfitParams} from "../api/api";
 
-// export type TSortProfitParams = 'BY_PERCENTAGE_PROFIT' | 'BY_PROFIT' | 'BY_PROFIT_VOLUME';
-// export type TSortCheckParams = ',BY_LAST_TIME_CHECKED' | '';
-
 export type TQueryParams = {
     serverId: string;
     from: string;
@@ -24,7 +21,7 @@ const initialState: TQueryParams = {
     checkSort: 'BY_LAST_TIME_CHECKED,',
 }
 
-const transportationSlice = createSlice({
+const queryParamsSlice = createSlice({
     name: '@transportation',
     initialState,
     reducers: {
@@ -46,5 +43,5 @@ const transportationSlice = createSlice({
     }
 })
 
-export const transportationSliceActions = transportationSlice.actions;
-export default transportationSlice;
+export const queryParamsSliceActions = queryParamsSlice.actions;
+export default queryParamsSlice;
