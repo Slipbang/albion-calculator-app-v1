@@ -7,6 +7,8 @@ import {TSelectedLanguage} from "../../../types/languageTypes";
 import {IOptions} from "../../../store/Options/CustomSelecrorsOptions";
 import {selectServerId} from "../../../store/queryParams/query-params-selectors";
 import {queryParamsSliceActions} from "../../../store/queryParams/queryParamsSlice";
+import {selectThemeState} from "../../../store/interface/interface-selector";
+import {interfaceSliceActions} from "../../../store/interface/interface-slice";
 
 interface ILanguageOptions {
     label: string,
@@ -46,6 +48,10 @@ const Settings = () => {
     const {selectedLanguage, language} = useSelector(selectLanguage);
     const {headerStrings} = language;
 
+    const selectThemeHandler = () => {
+        dispatchAction(interfaceSliceActions.setIstThemeDark());
+    }
+
     const serverId = useSelector(selectServerId);
 
     const selectServerHandler = (value: string) => {
@@ -59,6 +65,16 @@ const Settings = () => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.settings}>
+                <div className={styles.theme}
+                     onClick={() => selectThemeHandler()}
+                >
+                    <div className={styles.sun}>
+                        <div className={styles.star1}>★</div>
+                        <div className={styles.star2}>★</div>
+                    </div>
+                    <div className={styles.moon}></div>
+                </div>
+
                 <div className={styles.selectors}>
                     <p>{headerStrings.server}</p>
                     <div className={styles.options}>

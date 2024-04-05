@@ -18,6 +18,7 @@ interface IInitialState {
         isCraftTableShown: boolean;
         isInfoTableShown: boolean;
         isItemSelectorShown: boolean;
+        isThemeDark: boolean;
     };
 
     DefaultCalculator: {
@@ -71,6 +72,7 @@ const initialState: IInitialState = {
         isCraftTableShown: false,
         isInfoTableShown: false,
         isItemSelectorShown: false,
+        isThemeDark: false,
     },
 
     DefaultCalculator: {
@@ -121,6 +123,9 @@ const interfaceSlice = createSlice({
     name: '@profit',
     initialState,
     reducers: {
+        setIstThemeDark(state){
+            state.global.isThemeDark = !state.global.isThemeDark;
+        },
         toggleCraftTableVisibility(state, action: PayloadAction<boolean | undefined>) {
             if (action.payload === undefined) {
                 state.global.isCraftTableShown = !state.global.isCraftTableShown;

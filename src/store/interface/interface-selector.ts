@@ -8,6 +8,7 @@ export const selectMarketItemVisibility = (state: RootState) => state.interface.
 export const selectCraftTableVisibility = (state: RootState) => state.interface.global.isCraftTableShown;
 export const selectInfoTableVisibility = (state: RootState) => state.interface.global.isInfoTableShown;
 export const selectItemSelectorVisibility = (state: RootState) => state.interface.global.isItemSelectorShown;
+export const selectThemeState = (state: RootState) => state.interface.global.isThemeDark;
 
 export const selectSwiperCount = (state: RootState) => state.interface.DefaultCalculator.swiperCount;
 

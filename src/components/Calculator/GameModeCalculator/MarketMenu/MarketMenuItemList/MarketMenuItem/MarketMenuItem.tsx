@@ -9,12 +9,18 @@ import {
     selectTierMM
 } from "../../../../../../store/interface/interface-selector";
 import {selectMarketAction} from "../../../../../../store/GMProfit/gm-profit-selectors";
-import {selectLanguage} from "../../../../../../store/language/language-selector";
 import {GMProfitSliceActions} from "../../../../../../store/GMProfit/gm-profit-slice";
 import {interfaceSliceActions} from "../../../../../../store/interface/interface-slice";
 import styles from './MarketMenuItem.module.scss';
+import {TSelectedLanguage} from "../../../../../../types/languageTypes";
 
-const MarketMenuItem = ({item, index}: { item: IBagCell, index: number }) => {
+interface IMarketMenuItemProps {
+    item: IBagCell;
+    index: number;
+    selectedLanguage: TSelectedLanguage;
+}
+
+const MarketMenuItem = ({item, index, selectedLanguage}: IMarketMenuItemProps) => {
     const {itemId, itemImage, itemTier, itemNode, itemEnchantmentNum, itemEnchantment, itemName, itemQuantity} = item;
     const dispatchAction = useAppDispatch();
 
@@ -23,19 +29,18 @@ const MarketMenuItem = ({item, index}: { item: IBagCell, index: number }) => {
     const selectedEnchantment = useSelector(selectEnchantmentMM);
     const inputSearch = useSelector(selectInputMM);
     const marketActionSelected = useSelector(selectMarketAction);
-    const {selectedLanguage} = useSelector(selectLanguage);
     const isRuSelected = selectedLanguage === 'ru';
 
     const setMarketItemHandler = (selectedMarketItem: IBagCell) => {
-        dispatchAction(GMProfitSliceActions.setSelectedMarketItem(selectedMarketItem))
-        dispatchAction(interfaceSliceActions.setMarketItemVisibility(true))
+        dispatchAction(GMProfitSliceActions.setSelectedMarketItem(selectedMarketItem));
+        dispatchAction(interfaceSliceActions.setMarketItemVisibility(true));
     }
 
     const validateItemHandler = (type: string, enchantment: string, tier: string, title: string) => {
         return (selectedItemType.value !== '' ? selectedItemType.value.includes(type) : true)
             && selectedEnchantment.value.includes(enchantment || '0')
             && selectedTier.value.includes(tier)
-            && title.toLowerCase().match(inputSearch.toLowerCase())
+            && title.toLowerCase().match(inputSearch.toLowerCase());
     }
 
     return (

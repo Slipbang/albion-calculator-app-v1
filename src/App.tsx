@@ -1,23 +1,22 @@
 import {useEffect} from "react";
 
-import './App.scss';
-
 import Header from "./components/Header/Header";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import CalculatorPage from "./pages/CalculatorPage";
 import TransportationPage from "./pages/TransportationPage";
 import ArtefactsPage from "./pages/ArtefactsPage";
+import Theme from "./components/Theme/Theme";
 
 function App() {
-
     const navigate = useNavigate();
     useEffect(() => {
         navigate('/calculator')
     },[])
 
     return (
-        <div className="App">
+        <div>
             <Header/>
+            <Theme />
             <Routes>
                 <Route path='/calculator' element={<CalculatorPage />}/>
                 <Route path='/artefacts' element={<ArtefactsPage />}/>

@@ -6,16 +6,21 @@ import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {ITableData, profitSliceActions} from "../../../../../store/profit/profit-slice";
 import {interfaceSliceActions} from "../../../../../store/interface/interface-slice";
 import {useAppDispatch} from "../../../../../store";
+import {srcRoute} from "../../../../../store/api/api";
+import styles from './TableStyles.module.scss';
 
 interface IResourceTableProps {
-    alertTableStyles: string;
     deleteLiHandler: (type: string, id: string) => void;
     craftTableStrings: ISelectedLanguage['craftTableStrings'];
     calculatorType: TCalcProps;
 }
 
 const ResourceTable = (props: IResourceTableProps) => {
-    const {alertTableStyles, craftTableStrings, calculatorType, deleteLiHandler} = props;
+    const {
+        craftTableStrings,
+        calculatorType,
+        deleteLiHandler
+    } = props;
 
     const craftResourcesList = useSelector(selectCraftResourcesList);
     const dispatchAction = useAppDispatch();
@@ -38,13 +43,7 @@ const ResourceTable = (props: IResourceTableProps) => {
         dispatchAction(interfaceSliceActions.setInfoTableVisibility(true));
     }
 
-    const srcRoute = 'https://render.albiononline.com/v1/item/';
-
-    return <>
-        {craftResourcesList.length === 0 && <div className={alertTableStyles}>
-            <div>{craftTableStrings.alert}</div>
-        </div>}
-
+    return <div className={styles.tableStyle} data-notification={craftTableStrings.alert}>
         {craftResourcesList.length > 0 && <table>
             <thead>
             <tr>
@@ -94,7 +93,7 @@ const ResourceTable = (props: IResourceTableProps) => {
             )}
             </tbody>
         </table>}
-    </>
+    </div>
 }
 
 export default ResourceTable;

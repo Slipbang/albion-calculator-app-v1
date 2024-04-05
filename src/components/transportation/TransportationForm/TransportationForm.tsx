@@ -7,12 +7,15 @@ import {queryParamsSliceActions} from "../../../store/queryParams/queryParamsSli
 import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../store/language/language-selector";
 import {cityOptions} from "../../../store/Options/CityOptions";
-import {selectTransportation} from "../../../store/queryParams/query-params-selectors";
+import {selectTransportationQueryParams} from "../../../store/queryParams/query-params-selectors";
 import {TSortCheckParams, TSortProfitParams} from "../../../store/api/api";
+import {selectThemeState} from "../../../store/interface/interface-selector";
 
 const TransportationForm = () => {
-    const {from, to, profitSort} = useSelector(selectTransportation);
+    const {from, to, profitSort} = useSelector(selectTransportationQueryParams);
     const dispatchAction = useAppDispatch();
+
+    const isDark = useSelector(selectThemeState);
 
     const {language} = useSelector(selectLanguage);
     const {transportationFormStrings} = language;
@@ -35,7 +38,7 @@ const TransportationForm = () => {
     }
 
     return (
-        <div className={styles.transportationFormStyles}>
+        <div className={styles.transportationFormStyles} data-theme={isDark ? 'dark' : 'light'}>
             <div>
                 <p>{transportationFormStrings.sortByLastChecked}</p>
                 <input

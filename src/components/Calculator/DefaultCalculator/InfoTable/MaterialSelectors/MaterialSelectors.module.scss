@@ -15,9 +15,10 @@
   input[type='number']{
     width: 101px;
     padding-left: 5px;
-    background-color: rgb(235, 198, 159);
-    color: rgb(96, 67, 47);
+    background-color: var(--background-color-table);
+    color: var(--color-table-text);
     margin-left: -2px;
+    transition: 1s ease background-color, 1s ease color;
   }
 
   input[type='checkbox']{
@@ -29,8 +30,9 @@
   select{
     width: 130px;
     margin-left: -1px;
-    background-color: rgb(235, 198, 159);
-    color: rgb(96, 67, 47);
+    background-color: var(--background-color-table);
+    color: var(--color-table-text);
+    transition: 1s ease background-color, 1s ease color;
   }
 
   p {

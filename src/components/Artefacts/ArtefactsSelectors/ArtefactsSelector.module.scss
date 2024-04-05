@@ -10,7 +10,13 @@
   //filter: drop-shadow(5px 5px 6px black);
 
   p {
+    color: var(--color-table-text);
     margin-right: 15px;
+  }
+
+  select {
+    background-color: var(--background-color-table);
+    color: var(--color-table-text);
   }
 
   div{

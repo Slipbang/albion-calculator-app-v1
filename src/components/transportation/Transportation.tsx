@@ -1,13 +1,15 @@
 import TransportationForm from "./TransportationForm/TransportationForm";
-import TransportationList from "./TransportationList/TransportationList";
+import TransportationTable from "./TransportationList/TransportationTable";
 import styles from './Transportation.module.scss';
 
 const Transportation = () => {
 
-    return <div className={styles.wrapper}>
-        <TransportationForm />
-        <TransportationList />
-    </div>
+    return (
+        <div className={styles.wrapper}>
+            <TransportationForm />
+            <TransportationTable />
+        </div>
+    )
 }
 
 export default Transportation;

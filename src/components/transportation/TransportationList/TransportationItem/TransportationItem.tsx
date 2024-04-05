@@ -7,6 +7,7 @@ import {IItemType, TransportationData, TTransportationItemTypes} from "../../../
 import {transportationItems} from "../../../../store/Items/transportationItems";
 import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../../store/language/language-selector";
+import {srcRoute} from "../../../../store/api/api";
 
 const TransportationItem = (props: TransportationData) => {
     const [wasCopied, setWasCopied] = useState(false)
@@ -72,7 +73,7 @@ const TransportationItem = (props: TransportationData) => {
                 <td>
                     <img
                         draggable={false}
-                        src={`https://render.albiononline.com/v1/item/${itemIdTo}`}
+                        src={`${srcRoute}${itemIdTo}`}
                         alt=''
                         title={itemName}
                     />

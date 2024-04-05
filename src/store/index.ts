@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
     GMProfit: GMProfitSlice.reducer,
     language: languageSwitcherSlice.reducer,
     artefacts: artefactSlice.reducer,
-    transportation: queryParamsSlice.reducer,
+    transportationQueryParams: queryParamsSlice.reducer,
     [albionApi.reducerPath]: albionApi.reducer,
 })
 

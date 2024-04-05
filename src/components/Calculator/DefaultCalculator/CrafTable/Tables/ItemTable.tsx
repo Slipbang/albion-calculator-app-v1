@@ -6,11 +6,10 @@ import {ISelectedLanguage} from "../../../../../types/languageTypes";
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {useAppDispatch} from "../../../../../store";
 import {interfaceSliceActions} from "../../../../../store/interface/interface-slice";
-import {selectServerId} from "../../../../../store/QueryParams/query-params-selectors";
-
+import {srcRoute} from "../../../../../store/api/api";
+import styles from './TableStyles.module.scss';
 
 interface TItemTableProps {
-    alertTableStyles: string;
     craftTableStrings: ISelectedLanguage['craftTableStrings'];
     calculatorType: TCalcProps;
     deleteLiHandler: (type: string, id: string) => void;
@@ -18,7 +17,6 @@ interface TItemTableProps {
 
 const ItemTable = (props: TItemTableProps) => {
     const {
-        alertTableStyles,
         craftTableStrings,
         calculatorType,
         deleteLiHandler,
@@ -48,24 +46,11 @@ const ItemTable = (props: TItemTableProps) => {
         const queryMatsParams = `${subMats}${mainMats}`;
         const queryJournalsParams = `${journals}`;
 
-        // if (!!artefactId) {
-        //     fetchArtefactsData!({itemsParams: queryArtefactsParams, isBlackMarket: false, serverId});
-        // }
-        //
-        // fetchJournalsData!({itemsParams: queryJournalsParams, isBlackMarket: false, serverId});
-        // fetchItemsData!({itemsParams: queryItemsParams, isBlackMarket: true, serverId});
-        // fetchMaterialsData!({itemsParams: queryMatsParams, isBlackMarket: false, serverId});
         dispatchAction(profitSliceActions.setCraftedItem({...item, queryMatsParams, queryItemsParams, queryJournalsParams}));
         dispatchAction(interfaceSliceActions.setInfoTableVisibility(true));
     }
 
-    const srcRoute = 'https://render.albiononline.com/v1/item/';
-
-    return <>
-        {craftItemsList.length === 0 && <div className={alertTableStyles}>
-            <div>{craftTableStrings.alert}</div>
-        </div>}
-
+    return <div className={styles.tableStyle} data-notification={craftTableStrings.alert}>
         {craftItemsList.length > 0 &&
             <table>
                 <thead>
@@ -139,7 +124,7 @@ const ItemTable = (props: TItemTableProps) => {
                 </tbody>
             </table>
         }
-    </>
+    </div>
 }
 
 export default ItemTable;

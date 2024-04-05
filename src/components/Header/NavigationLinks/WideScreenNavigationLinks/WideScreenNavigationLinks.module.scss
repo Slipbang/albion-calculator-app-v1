@@ -14,12 +14,12 @@
   }
 
   .link {
-    color: wheat;
+    color: var(--color);
     text-decoration: none;
   }
 
   .link:hover {
-    background-color: rgb(113, 16, 0);
+    background-color: var(--header-color-hovered);
   }
 
   .activeLink {
@@ -28,12 +28,12 @@
     height: 65px;
 
     font-size: 20px;
-    color: wheat;
+    color: var(--color);
     text-decoration: underline;
   }
 
   .activeLink:hover {
-    background-color: rgb(113, 16, 0);
+    background-color: var(--header-color-hovered);
   }
 }
 

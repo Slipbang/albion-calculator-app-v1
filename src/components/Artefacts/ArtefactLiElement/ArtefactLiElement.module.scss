@@ -5,11 +5,34 @@
   width: 450px;
   height: 60px;
   box-shadow: 3px 3px 10px black;
-  background-color: rgb(235, 198, 159);
-  border-radius: 10px;
+  background-color: var(--background-color-table);
+  border-radius: var(--border-radius-artefacts);
+  border: var(--border-artefacts);
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  transition: 0.5s ease border-radius, 1s ease background-color, 1s ease border;
+
+  button {
+    cursor: pointer;
+    margin: 10px;
+  }
+
+  p {
+    padding: 5px;
+    cursor: pointer;
+    color: var(--color-table-text);
+    transition: 1s ease color;
+  }
+
+  p:hover {
+    scale: 1.1;
+  }
+
+  p:active {
+    scale: 1.2;
+  }
 
   .imageBox {
     width: 68px;
@@ -31,24 +54,6 @@
       color: rgb(235, 198, 159);
     }
   }
-
-  button {
-    cursor: pointer;
-    margin: 10px;
-  }
-
-  p {
-    padding: 5px;
-    cursor: pointer;
-  }
-
-  p:hover {
-    scale: 1.1;
-  }
-
-  p:active {
-    scale: 1.2;
-  }
 }
 
 .spinnerStyles{
@@ -58,7 +63,7 @@
 }
 
 .checkedArtefact{
-  filter: drop-shadow(1px 1px 3px lightgreen);
+  filter: drop-shadow(1px 1px 3px var(--isChecked-color));
 }
 
 .artefactsTooltip {
@@ -66,9 +71,10 @@
   table{
     white-space: normal;
     border-collapse: collapse;
-    background-color: rgb(235, 198, 159);
+    background-color: var(--background-color-table);
     border: 2px solid #f6f5f1;
     text-align: center;
+    color: var(--color-table-text);
 
     overflow: auto;
     margin-bottom: 10px;

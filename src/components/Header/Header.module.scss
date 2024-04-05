@@ -4,8 +4,8 @@
   top: 0;
   width: 100%;
   position: fixed;
-  background-color: #531405;
-  color: wheat;
+  background-color: var(--header-color);
+  color: var(--color);
   height: 65px;
   display: flex;
   justify-content: space-between;
@@ -32,6 +32,7 @@
 }
 
 .headerTextStyles::after{
+  color: rgb(242,184,59);
     content: 'Albion Toolkit';
 }
 

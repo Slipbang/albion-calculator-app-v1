@@ -10,6 +10,7 @@ import {ISelectedLanguage} from "../../../../../../types/languageTypes";
 import styles from './ResourceSelector.module.scss';
 import {ICraftItem, TTier} from "../../../../../../types/craftItemsType";
 import {defineMaterials} from "../../../../Definers/defineMaterials";
+import {srcRoute} from "../../../../../../store/api/api";
 
 interface IResourceSelectorProps {
     calculatorType: TCalcProps;
@@ -76,8 +77,6 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
     const isMaterial = (item: ICraftItem) => {
         return 'METALBAR' in item || 'LEATHER' in item || 'CLOTH' in item || 'PLANKS' in item || 'STONEBLOCK' in item;
     }
-
-    const srcRoute = 'https://render.albiononline.com/v1/item/';
 
     return (
         <div className={styles.wrapper}>

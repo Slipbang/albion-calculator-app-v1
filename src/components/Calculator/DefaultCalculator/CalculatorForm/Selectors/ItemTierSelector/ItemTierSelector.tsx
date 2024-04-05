@@ -6,6 +6,7 @@ import {ISelectedLanguage, TSelectedLanguage} from "../../../../../../types/lang
 import {useDefineSelectorImg} from "../../Hooks/useDefineSelectorImg";
 import styles from './ItemTierSelector.module.scss'
 import {TTier} from "../../../../../../types/craftItemsType";
+import {srcRoute} from "../../../../../../store/api/api";
 
 interface IItemTierSelectorProps {
     calculatorFormStrings: ISelectedLanguage['calculatorFormStrings'];
@@ -39,8 +40,6 @@ const ItemTierSelector = (props: IItemTierSelectorProps) => {
     const selectItemTierHandler = (tier: TTier) => {
         dispatchAction(profitSliceActions.setSelectedItemTier(tier))
     }
-
-    const srcRoute = 'https://render.albiononline.com/v1/item/';
 
     return (
         <div className={styles.wrapper}>

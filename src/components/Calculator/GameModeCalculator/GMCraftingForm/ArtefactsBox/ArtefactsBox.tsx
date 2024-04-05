@@ -89,7 +89,6 @@ const ArtefactsBox = () => {
                         onClick={() => {
                             setIsArtefactPriceFetchedHandler();
                             !isArtefactPriceFetched && fetchArtefactsDataHandler();
-
                         }}
                     />
                     {isArtefactPriceFetched &&

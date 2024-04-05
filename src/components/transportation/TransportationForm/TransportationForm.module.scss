@@ -1,5 +1,5 @@
 .transportationFormStyles {
-  width: 315px;
+  width: 318px;
   position: absolute;
   top: 110px;
   left: 30px;
@@ -12,18 +12,24 @@
     justify-content: flex-end;
 
     p {
-      color: rgb(96, 67, 47);
+      color: var(--color-table-text);
       font-weight: 700;
+      transition: 1s ease color;
     }
   }
 
   select {
     margin: 5px;
     width: 145px;
+    background-color: var(--background-color-table);
+    color: var(--color-table-text);
+    transition: 1s ease background-color,  1s ease color;
   }
 
-  input {
+  input[type=checkbox] {
     margin: 5px;
+    width: 18px;
+    height: 18px;
   }
 }
 

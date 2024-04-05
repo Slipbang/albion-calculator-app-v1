@@ -14,6 +14,7 @@ import ItemNodeSelector from "./ItemNodeSelector/ItemNodeSelector";
 import {useSelector} from "react-redux";
 import SwipeButton from "./SwipeButton/SwipeButton";
 import {selectSwiperCount} from "../../../../../../../store/interface/interface-selector";
+import {srcRoute} from "../../../../../../../store/api/api";
 
 
 const ItemTypeSelector = () => {
@@ -28,8 +29,6 @@ const ItemTypeSelector = () => {
         dispatchAction(profitSliceActions.setSelectedType(selectedType));
         dispatchAction(profitSliceActions.setSelectedNode(selectedNode));
     }
-
-    const srcRoute = 'https://render.albiononline.com/v1/item/';
 
     return (
         <>

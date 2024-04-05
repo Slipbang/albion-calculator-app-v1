@@ -1,5 +1,6 @@
 import {useSelector} from "react-redux";
 import {selectItem} from "../../../../../store/profit/profit-selectors";
+import {srcRoute} from "../../../../../store/api/api";
 
 const useDefineSelectorImg = () => {
     const selectedItem = useSelector(selectItem);
@@ -7,8 +8,8 @@ const useDefineSelectorImg = () => {
     const {selectedItemBodyId, selectedItemTier, selectedItemType, itemName} = selectedItem;
 
     const selectorImg = ((selectedItemType === 'BAG' && selectedItemBodyId !== 'INSIGHT') || selectedItemType === 'CAPE')
-        ? `https://render.albiononline.com/v1/item/${selectedItemTier}_${selectedItemBodyId}`
-        : `https://render.albiononline.com/v1/item/${selectedItemTier}_${selectedItemType}_${selectedItemBodyId}`;
+        ? `${srcRoute}${selectedItemTier}_${selectedItemBodyId}`
+        : `${srcRoute}${selectedItemTier}_${selectedItemType}_${selectedItemBodyId}`;
 
     return {
         itemName,

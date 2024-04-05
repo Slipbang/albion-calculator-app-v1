@@ -448,7 +448,6 @@ export const materials: ICraftItem[] = [
     },
 ]
 
-
 export const marketItems: IBagCell[] = [];
 export const metalbarItems: TCraftItems[] = [];
 export const planksItems: TCraftItems[] = [];
@@ -530,7 +529,7 @@ materials.forEach(material => ['', '_LEVEL1@1', '_LEVEL2@2', '_LEVEL3@3', '_LEVE
         HIDE,
         itemTier: itemTierNum,
         foodConsumption,
-        defaultFoodConsumption: 1.8,
+        defaultFoodConsumption,
         enchantment: itemEnchantment,
     }
 

@@ -2,14 +2,17 @@
   width: 500px;
   display: flex;
   flex-direction: column;
-  margin: 115px auto 20px auto;
-  color: rgb(96, 67, 47);
+  margin: 0 auto;
+  padding: 115px 0 20px 0;
+  color: var(--color-table-text);
   font-weight: 700;
   align-items: center;
+
+  transition: 0.5s ease color;
 }
 
 @media (max-width: 1300px) {
   .artefacts{
-    margin: 85px auto 20px auto;
+    padding: 85px 0 20px 0;
   }
 }

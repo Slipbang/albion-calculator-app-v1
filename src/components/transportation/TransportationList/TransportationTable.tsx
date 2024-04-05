@@ -1,20 +1,25 @@
-import styles from './TransportationList.module.scss';
+import styles from "./TransportationTable.module.scss";
 
 import {useSelector} from "react-redux";
-import {selectTransportation} from "../../../store/queryParams/query-params-selectors";
+import {
+    selectTransportationQueryParams,
+} from "../../../store/queryParams/query-params-selectors";
 import {useGetTransportationsDataQuery} from "../../../store/api/api";
 import {selectLanguage} from "../../../store/language/language-selector";
 import TransportationItem from "./TransportationItem/TransportationItem";
 
 import {PacmanLoader} from "react-spinners";
+import {selectThemeState} from "../../../store/interface/interface-selector";
 
-const TransportationList = () => {
+const TransportationTable = () => {
 
     const {selectedLanguage, language} = useSelector(selectLanguage);
     const {transportationListStrings} = language;
     const isSelectedRu = selectedLanguage === 'ru';
 
-    const {from, to, count, skip, serverId, profitSort, checkSort} = useSelector(selectTransportation);
+    const isDark = useSelector(selectThemeState);
+
+    const {from, to, count, skip, serverId, profitSort, checkSort} = useSelector(selectTransportationQueryParams);
 
     const {
         isFetching,
@@ -25,7 +30,7 @@ const TransportationList = () => {
     });
 
     return (
-        <div className={styles.tableStyles}>
+        <div className={styles.tableStyles} data-theme={isDark ? 'dark' : 'light'}>
             {!isFetching && !isError &&
                 <table>
                     <thead>
@@ -65,7 +70,7 @@ const TransportationList = () => {
             {!!isFetching &&
                 <PacmanLoader
                     className={styles.spinnerStyles}
-                    color={"rgb(235, 198, 159)"}
+                    color={isDark ? "white" : 'rgb(235, 198, 159)'}
                     loading={isFetching}
                     size={50}
                     aria-label="Loading Spinner"
@@ -76,4 +81,4 @@ const TransportationList = () => {
     )
 }
 
-export default TransportationList;
+export default TransportationTable;

@@ -11,6 +11,8 @@ import {IItemsData} from "../../../types/InfoTableTypes";
 import {ClockLoader} from "react-spinners";
 import {artefactsPrices} from "./artefactsPricesClass";
 import {ISelectedLanguage} from "../../../types/languageTypes";
+import {selectThemeState} from "../../../store/interface/interface-selector";
+import {srcRoute} from "../../../store/api/api";
 
 type artefactsArgsTuple = [
     artefactsStrings: ISelectedLanguage['artefactsStrings'],
@@ -37,6 +39,8 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
     const {language, selectedLanguage} = useSelector(selectLanguage);
     const {artefactsStrings} = language;
 
+    const isDark = useSelector(selectThemeState);
+
     const fullArtefactId = `${selectedTier}_${artefactId}`;
 
     const dispatchAction = useAppDispatch();
@@ -60,7 +64,7 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
     const artefactTable = new artefactsPrices(...artefactsArgs);
 
     return (
-        <>
+        <div  data-theme={isDark ? 'dark' : 'light'}>
             <li
                 key={id}
                 className={styles.listElem}
@@ -73,11 +77,11 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
                     <img
                         draggable={false}
                         alt=""
-                        src={`https://render.albiononline.com/v1/item/${fullArtefactId}`}
+                        src={`${srcRoute}${fullArtefactId}`}
                     />
                     <ClockLoader
                         className={styles.spinnerStyles}
-                        color={"rgb(235, 198, 159)"}
+                        color="rgb(235, 198, 159)"
                         loading={isArtefactsFetching}
                         size={15}
                         aria-label="Loading Spinner"
@@ -101,13 +105,13 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
                 style={{
                     filter: 'drop-shadow(2px 2px 2px black)',
                     borderRadius: '10px 10px',
-                    backgroundColor: 'wheat',
-                    color: 'rgb(96, 67, 47)',
+                    backgroundColor: `${isDark ? 'rgb(58,58,58)' : 'wheat'}`,
+                    color: `${isDark ? 'white' : 'rgb(96, 67, 47)'}`,
                     fontSize: 'inherit',
                     zIndex: 6,
                 }}
             />
-        </>
+        </div>
     )
 })
 

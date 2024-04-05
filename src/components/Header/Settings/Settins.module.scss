@@ -1,5 +1,6 @@
 .wrapper {
   width: 140px;
+  user-select: none;
 
   display: flex;
   align-items: center;
@@ -17,7 +18,7 @@
 
     .selectors{
       display: flex;
-      background-color: #531405;
+      background-color: var(--header-color);
       justify-content: center;
       text-align: center;
       align-items: center;
@@ -25,7 +26,7 @@
       height: 65px;
     }
     .selectors:hover{
-      background-color: rgb(113, 16, 0);
+      background-color: var(--header-color-hovered);
 
       .options {
         display: flex;
@@ -33,7 +34,7 @@
     }
 
     .options {
-      background-color: #531405;
+      background-color: var(--header-color);
       position: fixed;
       display: none;
       flex-direction: column;
@@ -45,8 +46,74 @@
         padding: 5px;
       }
       p:hover {
-        background-color: rgb(113, 16, 0);
+        background-color: var(--header-color-hovered);
       }
+    }
+  }
+
+  .theme {
+    width: 75px;
+    height: 65px;
+    margin-left: -75px;
+    background-color: var(--background-theme);
+    overflow: hidden;
+    position: absolute;
+    transition: 1s ease background-color;
+
+    .sun {
+      z-index: 2;
+      position: absolute;
+      top: var(--top);
+      left: var(--left);
+      width: 29px;
+      height: 29px;
+      background-color: #ffd044;
+      transform: var(--scale);
+      border-radius: 50%;
+      transition: 0.5s ease top, 0.5s ease left, 0.5s ease transform;
+
+      .star1{
+        position: absolute;
+        top: -5px;
+        left: -8px;
+        font-size: 54px;
+        line-height: 28px;
+        color: #ffd044;
+      }
+
+      .star2{
+        position: absolute;
+        top: -4px;
+        left: -5px;
+        font-size: 54px;
+        line-height: 28px;
+        color: #ffd044;
+        transform: rotateZ(36deg);
+      }
+    }
+    .moon {
+      z-index: 1;
+      position: absolute;
+      bottom: var(--bottom);
+      right: 8px;
+      width: 40px;
+      height: 40px;
+      background-color: var(--background-color-moon);
+      border-radius: 50%;
+      transition: 0.5s ease bottom, 1s ease background-color;
+    }
+
+    .moon:before{
+      content: "";
+      position: absolute;
+      top: -12px;
+      left: -17px;
+      width: 40px;
+      height: 40px;
+      background-color: var(--background-theme);
+      border-radius: 50%;
+
+      transition: 1s ease background-color;
     }
   }
 }
@@ -64,3 +131,4 @@
     display: flex;
   }
 }
+

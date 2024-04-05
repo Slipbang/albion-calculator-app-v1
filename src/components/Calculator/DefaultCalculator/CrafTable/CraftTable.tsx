@@ -35,7 +35,6 @@ const CraftTable = React.memo(() => {
                 {calculatorType === "resource" &&
                     <ResourceTable
                         craftTableStrings={craftTableStrings}
-                        alertTableStyles={styles.alertTable}
                         calculatorType={calculatorType}
                         deleteLiHandler={deleteLiHandler}
                     />
@@ -43,7 +42,6 @@ const CraftTable = React.memo(() => {
 
                 {calculatorType === "items" &&
                     <ItemTable
-                        alertTableStyles={styles.alertTable}
                         craftTableStrings={craftTableStrings}
                         deleteLiHandler={deleteLiHandler}
                         calculatorType={calculatorType}

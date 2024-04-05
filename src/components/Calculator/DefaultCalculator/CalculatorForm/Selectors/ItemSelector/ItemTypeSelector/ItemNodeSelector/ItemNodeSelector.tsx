@@ -8,6 +8,7 @@ import {useAppDispatch} from "../../../../../../../../store";
 import Items from "./Items/Items";
 import {useSelector} from "react-redux";
 import {selectItemType} from "../../../../../../../../store/profit/profit-selectors";
+import {srcRoute} from "../../../../../../../../store/api/api";
 
 const objectTypeKeys = Object.keys(craftItems) as TCraftObjectTypes[];
 
@@ -25,9 +26,6 @@ const ItemNodeSelector = (props: IItemNodeSelectorProps) => {
     const selectItemNodeHandler = (selectedNode: TItemNode) => {
         dispatchAction(profitSliceActions.setSelectedNode(selectedNode))
     }
-
-
-    const srcRoute = 'https://render.albiononline.com/v1/item/';
 
     return (
         <>

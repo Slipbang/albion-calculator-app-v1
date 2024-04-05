@@ -10,6 +10,7 @@ import {selectCalculatorType} from "../../../../../../../../../store/interface/i
 import {selectItemNode, selectItemType} from "../../../../../../../../../store/profit/profit-selectors";
 import {arrowRight} from "../../../../../../DefaultCalculatorImgReexports/DefaultCalculatorImgReexports";
 import {interfaceSliceActions} from "../../../../../../../../../store/interface/interface-slice";
+import {srcRoute} from "../../../../../../../../../store/api/api";
 
 const objectTypeKeys = Object.keys(craftItems) as TCraftObjectTypes[];
 
@@ -82,8 +83,6 @@ const Items = (props: IItemsProps) => {
             subDivFactor: subMaterialQuantity
         }));
     }
-
-    const srcRoute = 'https://render.albiononline.com/v1/item/';
 
     return (
         <>

@@ -1,0 +1,48 @@
+.theme{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: var(--background-theme);
+  z-index: -5;
+
+  transition: 1s ease background-color;
+
+}
+
+[data-theme="dark"] {
+  --color: rgb(208,186,173);
+  --header-color: rgb(23,23,23);
+  --header-color-hovered: rgb(103,95,90);
+  --background-theme: rgb(58,58,58);
+  --background-color-moon: #f6f5f1;
+  --bottom: 18px;
+  --top: 4px;
+  --left: 23px;
+  --scale: scale(0.3);
+
+  --background-color-table: rgb(103,95,90);
+  --color-table-text: white;
+
+  --border-radius-artefacts: none;
+  --border-artefacts: 1px solid white;
+  --isChecked-color: red;
+}
+
+[data-theme="light"] {
+  --color: wheat;
+  --header-color: #531405;
+  --header-color-hovered: rgb(113, 16, 0);
+  --background-theme: #f6f5f1;
+  --background-color-moon: rgb(58,58,58);
+  --bottom: -52px;
+  --top: 8px;
+  --left: 13px;
+  --scale: scale(1);
+
+  --background-color-table: rgb(235, 198, 159);
+  --color-table-text: rgb(96, 67, 47);
+
+  --border-radius-artefacts: 10px;
+  --border-artefacts: none;
+  --isChecked-color: lightgreen;
+}

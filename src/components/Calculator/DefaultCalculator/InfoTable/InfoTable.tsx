@@ -14,10 +14,11 @@ import {IItemName, ISpentQuantityPerItem} from "../../../../store/profit/profit-
 import {defineArtefactsName} from "../../Definers/defineArtefactsName";
 import MaterialSelectors from "./MaterialSelectors/MaterialSelectors";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../types/languageTypes";
-import {useLazyGetItemsDataQuery} from "../../../../store/api/api";
+import {srcRoute, useLazyGetItemsDataQuery} from "../../../../store/api/api";
 import {selectServerId} from "../../../../store/queryParams/query-params-selectors";
 import {PulseLoader} from "react-spinners";
 import ErrorNotification from "../ErrorNotification/ErrorNotification";
+import {selectThemeState} from "../../../../store/interface/interface-selector";
 
 type ICraftInfoTuple = [
     itemName: IItemName,
@@ -136,6 +137,8 @@ const InfoTable = () => {
 
     const dispatchAction = useAppDispatch();
 
+    const isDark = useSelector(selectThemeState);
+
     const {selectedLanguage, language} = useSelector(selectLanguage);
     const {infoTableStrings} = language;
 
@@ -209,12 +212,10 @@ const InfoTable = () => {
         tier,
     ];
 
-    const srcRoute = 'https://render.albiononline.com/v1/item/';
-
     return (
         <>
             {(!isItemFetching && !isMaterialsFetching && !isArtefactsFetching && !isJournalsFetching && !isErrorItems && !isErrorMaterials && !isErrorArtefacts && !isErrorJournals) &&
-                <div className={styles.wrapper}>
+                <div className={styles.wrapper} data-theme={isDark ? 'dark' : 'light'}>
                     <MaterialSelectors
                         mainMatsId={mainMatsId}
                         subMatsId={subMatsId!}
@@ -358,8 +359,8 @@ const InfoTable = () => {
                         style={{
                             filter: 'drop-shadow(5px 5px 6px black)',
                             borderRadius: '10px 10px',
-                            backgroundColor: 'wheat',
-                            color: 'black',
+                            backgroundColor: `${isDark ? 'rgb(58,58,58)' : 'wheat'}`,
+                            color: `${isDark ? 'white' : 'black'}`,
                             fontSize: 'inherit',
                             zIndex: 9999
                         }}
@@ -368,13 +369,13 @@ const InfoTable = () => {
 
             {(isItemFetching || isMaterialsFetching || isArtefactsFetching || isJournalsFetching) &&
                 <PulseLoader
-                    color={'rgb(235, 198, 159)'}
+                    color={isDark ? 'white' : 'rgb(235, 198, 159)'}
                     className={styles.pulseLoader}
                     size={60}
                     aria-label='Loading Spinner'
                     data-testid='loader'
                 />}
-            {(isErrorItems || isErrorArtefacts || isErrorMaterials || isErrorJournals) && <ErrorNotification/>}
+            {(isErrorItems || isErrorArtefacts || isErrorMaterials || isErrorJournals) && <ErrorNotification isDark={isDark}/>}
         </>
     )
 }

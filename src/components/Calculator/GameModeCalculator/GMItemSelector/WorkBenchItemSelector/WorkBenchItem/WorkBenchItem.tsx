@@ -17,6 +17,7 @@ import {useAppDispatch} from "../../../../../../store";
 import {GMProfitSliceActions, ISelectedWorkBenchItem} from "../../../../../../store/GMProfit/gm-profit-slice";
 import {defineArtefactsName} from "../../../../Definers/defineArtefactsName";
 import TotalFoodTax from "./TotalFoodTax/TotalFoodTax";
+import {srcRoute} from "../../../../../../store/api/api";
 
 type TCraftItemsKeys = keyof Omit<TCraftItems, 'itemName'>;
 
@@ -108,8 +109,6 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
         }
     }
 
-    const imgRoute = 'https://render.albiononline.com/v1/item/';
-
     return (
         <div
             key={itemId}
@@ -152,7 +151,7 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
                         >
                             <img
                                 className={styles.backgroundSkeleton}
-                                src={`${imgRoute}T${calculateMatsTier(itemTier, +item[key]!)}_${key}${defineEnchantment(enchantment!, itemTier, +item[key]!)}`}
+                                src={`${srcRoute}T${calculateMatsTier(itemTier, +item[key]!)}_${key}${defineEnchantment(enchantment!, itemTier, +item[key]!)}`}
                                 draggable={false}
                                 alt=''
                                 title={key}
@@ -165,7 +164,7 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
                     <span>
                             <img
                                 className={styles.backgroundSkeleton}
-                                src={`${imgRoute}${artefactItemId}`}
+                                src={`${srcRoute}${artefactItemId}`}
                                 draggable={false}
                                 title={artefactName?.[selectedLanguage] || ''}
                                 alt=''

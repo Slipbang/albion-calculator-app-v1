@@ -1,10 +1,12 @@
 .wrapper{
   z-index: 4;
-  color: rgb(96, 67, 47);
+  color: var(--color-table-text);
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%,-50%);
+
+  transition: 1s ease color;
 
   .closeButtonStyles{
     height: 27px;
@@ -20,11 +22,12 @@
   table{
     white-space: normal;
     border-collapse: collapse;
-    background-color: rgb(235, 198, 159);
+    background-color: var(--background-color-table);
     border: 2px solid #f6f5f1;
     text-align: center;
-
     overflow: auto;
+
+    transition: 1s ease background-color;
 
     img{
       width: 65px;
@@ -54,13 +57,14 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 5;
+  color: rgb(235, 198, 159);
 }
 
 .infoTableTooltip {
   hr{
     border: none;
     height: 1px;
-    background-color: rgb(96, 67, 47);
+    background-color: var(--color-table-text);
     margin-top: 5px;
   }
   hr:not(hr:last-child) {

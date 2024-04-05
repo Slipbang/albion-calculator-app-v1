@@ -5,7 +5,7 @@
   display: none;
   flex-direction: column;
   top: 65px;
-  background-color: #531405;
+  background-color: var(--header-color);
 
   a {
     display: inline-block;
@@ -17,21 +17,21 @@
   }
 
   .link {
-    color: wheat;
+    color: var(--color);
     text-decoration: none;
   }
 
   .activeLink {
-    color: wheat;
+    color: var(--color);
     text-decoration: underline;
   }
 
   .link:hover {
-    background-color: rgb(113, 16, 0);
+    background-color: var(--header-color-hovered);
   }
 
   .activeLink:hover {
-    background-color: rgb(113, 16, 0);
+    background-color: var(--header-color-hovered);
   }
 }
 
@@ -46,7 +46,7 @@
 
 .mobileLinks:hover{
   svg {
-    background-color: rgb(113, 16, 0);
+    background-color: var(--header-color-hovered);
   }
 
   .lowWidthScreenNavigation {

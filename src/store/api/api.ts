@@ -3,7 +3,8 @@ import {createApi,fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 
 import {IItemsData} from "../../types/InfoTableTypes";
 
-const URL = 'https://albion-profit-calculator.com/api';
+export const srcRoute = 'https://render.albiononline.com/v1/item/';
+const baseUrl = 'https://albion-profit-calculator.com/api';
 
 export type TSortProfitParams = 'BY_PERCENTAGE_PROFIT' | 'BY_PROFIT' | 'BY_PROFIT_VOLUME';
 export type TSortCheckParams = 'BY_LAST_TIME_CHECKED,' | '';
@@ -27,7 +28,7 @@ export interface IQueryItemsParams {
 export const albionApi = createApi({
     reducerPath: 'albion/api',
     baseQuery: fetchBaseQuery({
-        baseUrl: URL,
+        baseUrl,
     }),
     endpoints: build => ({
         getTransportationsData: build.query<TransportationData[], IQueryTransportationParams>({
