@@ -2,15 +2,29 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import language from "../Items/language";
 import {ISelectedLanguage, TSelectedLanguage} from "../../types/languageTypes";
 
+const defineLanguage = (): TSelectedLanguage => {
+    const systemLanguage = navigator.language.split('-')[0];
+
+    if (systemLanguage === 'en' || systemLanguage === 'ru'){
+        return systemLanguage;
+    }
+
+    return 'en';
+}
+
+const systemLanguage = defineLanguage();
 
 interface IInitialState {
     language: ISelectedLanguage;
     selectedLanguage: TSelectedLanguage;
 }
 
-const initialLanguageState: IInitialState = {language: language.ru, selectedLanguage: "ru"};
+const initialLanguageState: IInitialState = {
+    language: language[systemLanguage],
+    selectedLanguage: systemLanguage,
+};
 
-const languageSwitcherSlice = createSlice({
+const languageSlice = createSlice({
     name: 'languageSlice',
     initialState: initialLanguageState,
     reducers: {
@@ -21,5 +35,5 @@ const languageSwitcherSlice = createSlice({
     }
 });
 
-export const languageSwitcherActions = languageSwitcherSlice.actions;
-export default languageSwitcherSlice;
+export const languageSwitcherActions = languageSlice.actions;
+export default languageSlice;

@@ -2,27 +2,30 @@ import {useState} from "react";
 
 import styles from "./TransportationItem.module.scss";
 
-import {IItemType, TransportationData, TTransportationItemTypes} from "../../../../types/transportationTypes";
+import {TransportationData, TTransportationItemTypes} from "../../../../types/transportationTypes";
 
 import {transportationItems} from "../../../../store/Items/transportationItems";
-import {useSelector} from "react-redux";
-import {selectLanguage} from "../../../../store/language/language-selector";
 import {srcRoute} from "../../../../store/api/api";
+import {IItemName} from "../../../../store/profit/profit-slice";
+import {ISelectedLanguage, TSelectedLanguage} from "../../../../types/languageTypes";
 
-const TransportationItem = (props: TransportationData) => {
-    const [wasCopied, setWasCopied] = useState(false)
+interface ITransportationItemProps {
+    transportationData: TransportationData;
+    language: ISelectedLanguage['transportationTableStrings'];
+    selectedLanguage: TSelectedLanguage;
+}
+
+const TransportationItem = ({transportationData, language, selectedLanguage}: ITransportationItemProps) => {
     const {
         normalizedPrice: normalizedPriceFrom,
-    } = props.from;
+    } = transportationData.from;
     const {
         itemId: itemIdTo,
         normalizedPrice: normalizedPriceTo,
         averageItems: averageItemsTo
-    } = props.to;
+    } = transportationData.to;
 
-    const {selectedLanguage} = useSelector(selectLanguage);
-
-    const isSelectedRu: boolean = selectedLanguage === 'ru';
+    const [wasCopied, setWasCopied] = useState(false);
 
     function searchName(itemIdTo: string) {
 
@@ -40,7 +43,7 @@ const TransportationItem = (props: TransportationData) => {
         const itemIdMain = reservedItemTo.split(`${itemType}_`);
 
         const itemIdBody = itemIdMain[1];
-        let itemObject: IItemType[] = [];
+        let itemName: IItemName | undefined;
 
         const allowedTypes =
             ['2H', 'MAIN', 'BAG', 'CAPE', 'CAPEITEM', 'ARMOR', 'HEAD', 'SHOES', 'OFF',
@@ -49,13 +52,12 @@ const TransportationItem = (props: TransportationData) => {
                 'RELIC', 'SHARD', 'JOURNAL' ];
 
         if (allowedTypes.includes(itemType)) {
-            itemObject = transportationItems[`${itemType}`]?.filter(elem => elem.itemId === itemIdBody);
+            itemName = transportationItems[itemType]?.find(elem => elem.itemId === itemIdBody)?.itemName;
         }
 
-        if (itemObject !== undefined && itemObject.length > 0) {
-            return `${itemObject[0].itemName[selectedLanguage]} ${itemTier}.${itemEnchantment}`;
+        if (itemName !== undefined) {
+            return `${itemName[selectedLanguage]} ${itemTier}.${itemEnchantment}`;
         }
-
 
         return 'Can\'t find name :(';
     }
@@ -64,8 +66,8 @@ const TransportationItem = (props: TransportationData) => {
         navigator.clipboard.writeText(title).then(() => setWasCopied(true)).then(() => setTimeout(() => setWasCopied(false), 1000));
     }
 
-    let itemName = searchName(itemIdTo);
-    let profit = Math.floor((normalizedPriceTo - normalizedPriceTo * 0.065) - +normalizedPriceFrom);
+    const itemName = searchName(itemIdTo);
+    const profit = Math.floor((normalizedPriceTo - normalizedPriceTo * 0.065) - +normalizedPriceFrom);
 
     return (
         <>
@@ -80,14 +82,14 @@ const TransportationItem = (props: TransportationData) => {
                 </td>
                 <td>
                     <h4 onClick={() => copyTextHandler(itemName)}>
-                        {!wasCopied ? itemName : `${isSelectedRu ? 'Скопировано!' : 'Copied!'}`}
+                        {!wasCopied ? itemName : language.copyAlert}
                     </h4>
                 </td>
                 <td>{normalizedPriceFrom.toLocaleString('en')}</td>
                 <td>{normalizedPriceTo.toLocaleString('en')}</td>
                 <td>{profit.toLocaleString('en')}</td>
                 <td>{`${((((normalizedPriceTo - normalizedPriceTo * 0.065) - normalizedPriceFrom)) * 100 / normalizedPriceFrom).toFixed(0)}%`}</td>
-                <td>{`${Math.floor(averageItemsTo).toLocaleString('en')} ${isSelectedRu ? 'ед/сут' : 'un/d'}`}</td>
+                <td>{`${Math.floor(averageItemsTo).toLocaleString('en')} ${language.unPerDay}`}</td>
             </tr>
         </>
     )

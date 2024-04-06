@@ -78,7 +78,7 @@ interface IArtefactsStrings {
     artefactsTier: string,
 }
 
-interface ITransportationListStrings {
+interface ITransportationTableStrings {
     requestError: string;
     item: string;
     itemName: string;
@@ -86,6 +86,8 @@ interface ITransportationListStrings {
     profit: string;
     percentageProfit: string;
     dailyTurnover: string;
+    copyAlert: string;
+    unPerDay: string;
 
 }
 
@@ -145,7 +147,7 @@ export interface ISelectedLanguage {
     infoTableStrings: IInfoTableStrings;
     artefactsStrings: IArtefactsStrings;
     transportationFormStrings: ITransportationFormStrings;
-    transportationListStrings: ITransportationListStrings;
+    transportationTableStrings: ITransportationTableStrings;
     backpackString: IBackpackString;
     marketItemStings: IMarketItemStings;
     marketMenuStrings: IMarketMenuStrings;

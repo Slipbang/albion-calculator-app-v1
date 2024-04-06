@@ -77,7 +77,7 @@ const language: ILanguage = {
             profitVolume: 'Прибыли в объеме',
             sortByLastChecked: 'Сортировка по последней проверкe:',
         },
-        transportationListStrings: {
+        transportationTableStrings: {
             requestError: 'Ошибка запроса, обновите страницу!',
             item: 'Предмет',
             itemName: 'Наименование',
@@ -85,6 +85,8 @@ const language: ILanguage = {
             profit: 'Прибыль',
             percentageProfit: 'Прибыль в %',
             dailyTurnover: 'Суточный оборот',
+            copyAlert: 'Скопировано!',
+            unPerDay: 'ед/сут',
         },
         backpackString: {
             gatherButton: 'Собрать',
@@ -208,7 +210,7 @@ const language: ILanguage = {
             profitVolume: 'Profit volume',
             sortByLastChecked: 'Sort by last checked:',
         },
-        transportationListStrings: {
+        transportationTableStrings: {
             requestError: 'Request error, please refresh the page!',
             item: 'Item',
             itemName: 'Item Name',
@@ -216,6 +218,8 @@ const language: ILanguage = {
             profit: 'Profit',
             percentageProfit: 'Percentage profit',
             dailyTurnover: 'Daily turnover',
+            copyAlert: 'Copied!',
+            unPerDay: 'un/d',
         },
         backpackString: {
             gatherButton: 'Stack',

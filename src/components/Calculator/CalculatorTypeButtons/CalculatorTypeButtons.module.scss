@@ -24,6 +24,15 @@
   .GMToggleButton{
     cursor: pointer;
 
+    .gameModeOffImg{
+      width: 48px;
+      height: 26px;
+      position: absolute;
+      top: 74px;
+      left: 92px;
+      z-index: 1;
+    }
+
     img:first-child {
       z-index: 2;
       width: 233px;
@@ -41,6 +50,7 @@
       left: -15px;
       font-weight: 700;
       font-size: 17px;
+      transition: 0.4s ease color;
     }
 
     .removeSword{
@@ -114,21 +124,6 @@
 }
 
 .backgroundSkeleton {
-  animation: loading 1.5s infinite;
-}
-
-@keyframes loading {
-  0% {
-    background: linear-gradient(rgb(96, 67, 47), rgb(96, 67, 47)) center/73% 73%;
-    background-repeat:no-repeat;
-  }
-  50% {
-    background: linear-gradient(rgb(210, 187, 139), rgb(210, 187, 139)) center/73% 73%;
-    background-repeat:no-repeat;
-  }
-
-  100% {
-    background: linear-gradient(rgb(96, 67, 47), rgb(96, 67, 47)) center/73% 73%;
-    background-repeat:no-repeat;
-  }
+  background: linear-gradient(rgb(210, 187, 139), rgb(210, 187, 139)) center/73% 73%;
+  background-repeat:no-repeat;
 }

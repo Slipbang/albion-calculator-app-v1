@@ -11,7 +11,7 @@ import {IItemsData} from "../../../types/InfoTableTypes";
 import {ClockLoader} from "react-spinners";
 import {artefactsPrices} from "./artefactsPricesClass";
 import {ISelectedLanguage} from "../../../types/languageTypes";
-import {selectThemeState} from "../../../store/interface/interface-selector";
+import {selectTheme} from "../../../store/interface/interface-selector";
 import {srcRoute} from "../../../store/api/api";
 
 type artefactsArgsTuple = [
@@ -39,7 +39,8 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
     const {language, selectedLanguage} = useSelector(selectLanguage);
     const {artefactsStrings} = language;
 
-    const isDark = useSelector(selectThemeState);
+    const theme = useSelector(selectTheme);
+    const isDark = theme === 'dark';
 
     const fullArtefactId = `${selectedTier}_${artefactId}`;
 
@@ -64,7 +65,7 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
     const artefactTable = new artefactsPrices(...artefactsArgs);
 
     return (
-        <div  data-theme={isDark ? 'dark' : 'light'}>
+        <div  data-theme={theme}>
             <li
                 key={id}
                 className={styles.listElem}

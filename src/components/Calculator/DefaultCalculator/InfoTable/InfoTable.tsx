@@ -18,7 +18,7 @@ import {srcRoute, useLazyGetItemsDataQuery} from "../../../../store/api/api";
 import {selectServerId} from "../../../../store/queryParams/query-params-selectors";
 import {PulseLoader} from "react-spinners";
 import ErrorNotification from "../ErrorNotification/ErrorNotification";
-import {selectThemeState} from "../../../../store/interface/interface-selector";
+import {selectTheme} from "../../../../store/interface/interface-selector";
 
 type ICraftInfoTuple = [
     itemName: IItemName,
@@ -137,7 +137,8 @@ const InfoTable = () => {
 
     const dispatchAction = useAppDispatch();
 
-    const isDark = useSelector(selectThemeState);
+    const theme = useSelector(selectTheme);
+    const isDark = theme === 'dark';
 
     const {selectedLanguage, language} = useSelector(selectLanguage);
     const {infoTableStrings} = language;
@@ -215,7 +216,7 @@ const InfoTable = () => {
     return (
         <>
             {(!isItemFetching && !isMaterialsFetching && !isArtefactsFetching && !isJournalsFetching && !isErrorItems && !isErrorMaterials && !isErrorArtefacts && !isErrorJournals) &&
-                <div className={styles.wrapper} data-theme={isDark ? 'dark' : 'light'}>
+                <div className={styles.wrapper} data-theme={theme}>
                     <MaterialSelectors
                         mainMatsId={mainMatsId}
                         subMatsId={subMatsId!}
@@ -375,7 +376,7 @@ const InfoTable = () => {
                     aria-label='Loading Spinner'
                     data-testid='loader'
                 />}
-            {(isErrorItems || isErrorArtefacts || isErrorMaterials || isErrorJournals) && <ErrorNotification isDark={isDark}/>}
+            {(isErrorItems || isErrorArtefacts || isErrorMaterials || isErrorJournals) && <ErrorNotification theme={theme}/>}
         </>
     )
 }

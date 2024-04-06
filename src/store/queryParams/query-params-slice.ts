@@ -11,8 +11,19 @@ export type TQueryParams = {
     checkSort: TSortCheckParams;
 }
 
+const defineServer = () => {
+    const storageServer = localStorage.getItem('AOD-Server-Id');
+    if (storageServer === 'aod_west' || storageServer === 'aod_east') {
+        return storageServer;
+    }
+
+    return 'aod_west'
+}
+
+const serverId = defineServer();
+
 const initialState: TQueryParams = {
-    serverId: 'aod_west',
+    serverId: serverId,
     from: 'Fort Sterling',
     to: 'Black Market',
     count: 20,
@@ -27,6 +38,7 @@ const queryParamsSlice = createSlice({
     reducers: {
         setServer(state, action: PayloadAction<string>){
             state.serverId = action.payload;
+            localStorage.setItem('AOD-Server-Id', action.payload)
         },
         setCityFrom(state, action: PayloadAction<string>){
             state.from = action.payload;

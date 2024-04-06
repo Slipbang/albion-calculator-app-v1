@@ -8,6 +8,8 @@ export interface ICount {
     right: number;
 }
 
+export type TTheme = 'dark' | 'light';
+
 interface IInitialState {
     global: {
         gameMode: boolean;
@@ -18,7 +20,7 @@ interface IInitialState {
         isCraftTableShown: boolean;
         isInfoTableShown: boolean;
         isItemSelectorShown: boolean;
-        isThemeDark: boolean;
+        theme: TTheme;
     };
 
     DefaultCalculator: {
@@ -62,6 +64,17 @@ interface IInitialState {
     };
 }
 
+const defineTheme = (): TTheme => {
+    const themeStorage = localStorage.getItem('AT-web-interface-theme');
+    if (themeStorage === 'dark' || themeStorage === 'light'){
+        return themeStorage as TTheme;
+    }
+
+    return 'light';
+}
+
+const theme = defineTheme();
+
 const initialState: IInitialState = {
     global: {
         gameMode: true,
@@ -72,7 +85,7 @@ const initialState: IInitialState = {
         isCraftTableShown: false,
         isInfoTableShown: false,
         isItemSelectorShown: false,
-        isThemeDark: false,
+        theme: theme,
     },
 
     DefaultCalculator: {
@@ -123,8 +136,16 @@ const interfaceSlice = createSlice({
     name: '@profit',
     initialState,
     reducers: {
-        setIstThemeDark(state){
-            state.global.isThemeDark = !state.global.isThemeDark;
+        setTheme(state){
+            switch (state.global.theme){
+                case 'dark':
+                    state.global.theme = "light";
+                    break;
+                case 'light':
+                    state.global.theme = "dark";
+                    break;
+            }
+            localStorage.setItem("AT-web-interface-theme", state.global.theme);
         },
         toggleCraftTableVisibility(state, action: PayloadAction<boolean | undefined>) {
             if (action.payload === undefined) {

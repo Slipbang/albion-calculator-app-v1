@@ -1,25 +1,32 @@
 import styles from "./TransportationTable.module.scss";
 
 import {useSelector} from "react-redux";
-import {
-    selectTransportationQueryParams,
-} from "../../../store/queryParams/query-params-selectors";
+import {selectTransportationQueryParams,} from "../../../store/queryParams/query-params-selectors";
 import {useGetTransportationsDataQuery} from "../../../store/api/api";
 import {selectLanguage} from "../../../store/language/language-selector";
 import TransportationItem from "./TransportationItem/TransportationItem";
 
 import {PacmanLoader} from "react-spinners";
-import {selectThemeState} from "../../../store/interface/interface-selector";
+import {selectTheme} from "../../../store/interface/interface-selector";
 
 const TransportationTable = () => {
 
     const {selectedLanguage, language} = useSelector(selectLanguage);
-    const {transportationListStrings} = language;
+    const {transportationTableStrings} = language;
     const isSelectedRu = selectedLanguage === 'ru';
 
-    const isDark = useSelector(selectThemeState);
+    const theme = useSelector(selectTheme);
+    const isDark = theme === 'dark';
 
-    const {from, to, count, skip, serverId, profitSort, checkSort} = useSelector(selectTransportationQueryParams);
+    const {
+        from,
+        to,
+        count,
+        skip,
+        serverId,
+        profitSort,
+        checkSort
+    } = useSelector(selectTransportationQueryParams);
 
     const {
         isFetching,
@@ -30,16 +37,16 @@ const TransportationTable = () => {
     });
 
     return (
-        <div className={styles.tableStyles} data-theme={isDark ? 'dark' : 'light'}>
+        <div className={styles.tableStyles} data-theme={theme}>
             {!isFetching && !isError &&
                 <table>
                     <thead>
                     <tr>
-                        <th>{transportationListStrings.item}</th>
-                        <th>{transportationListStrings.itemName}</th>
+                        <th>{transportationTableStrings.item}</th>
+                        <th>{transportationTableStrings.itemName}</th>
                         <th>{isSelectedRu ? `Цена ${from}` : `${from} price`}</th>
                         <th>{isSelectedRu ? `Цена ${to}` : `${to} price`}</th>
-                        <th title={transportationListStrings.excludingTax}>{transportationListStrings.profit}
+                        <th title={transportationTableStrings.excludingTax}>{transportationTableStrings.profit}
                             <svg
                                 version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                                 xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 496.304 496.303"
@@ -51,17 +58,18 @@ const TransportationTable = () => {
                             </svg>
 
                         </th>
-                        <th>{transportationListStrings.percentageProfit}</th>
-                        <th>{transportationListStrings.dailyTurnover}</th>
+                        <th>{transportationTableStrings.percentageProfit}</th>
+                        <th>{transportationTableStrings.dailyTurnover}</th>
                     </tr>
                     </thead>
                     <tbody>
                     {!isFetching && !isError && !!data &&
-                        data.map(({to, from}) =>
+                        data.map(data =>
                             <TransportationItem
-                                key={to.itemId}
-                                from={from}
-                                to={to}
+                                key={data.to.itemId}
+                                transportationData={data}
+                                selectedLanguage={selectedLanguage}
+                                language={transportationTableStrings}
                             />
                         )
                     }
@@ -76,7 +84,7 @@ const TransportationTable = () => {
                     aria-label="Loading Spinner"
                     data-testid="loader"
                 />}
-            {!!isError && <div className={styles.errorStyles}>{transportationListStrings.requestError}</div>}
+            {!!isError && <div className={styles.errorStyles}>{transportationTableStrings.requestError}</div>}
         </div>
     )
 }

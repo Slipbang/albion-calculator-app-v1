@@ -4,18 +4,19 @@ import MobileNavigationLinks from "./NavigationLinks/MobileNavigationLinks/Mobil
 import WideScreenNavigationLinks from "./NavigationLinks/WideScreenNavigationLinks/WideScreenNavigationLinks";
 import Settings from "./Settings/Settins";
 import {useSelector} from "react-redux";
-import {selectThemeState} from "../../store/interface/interface-selector";
+import {selectTheme} from "../../store/interface/interface-selector";
 
 const Header = () => {
 
-    const isDark = useSelector(selectThemeState);
+    const theme = useSelector(selectTheme);
     return (
-        <div className={styles.header} data-theme={isDark ? 'dark' : 'light'}>
+        <div className={styles.header} data-theme={theme}>
             <MobileNavigationLinks />
 
             <WideScreenNavigationLinks />
 
             <h1 className={styles.headerTextStyles}></h1>
+
 
             <Settings />
         </div>

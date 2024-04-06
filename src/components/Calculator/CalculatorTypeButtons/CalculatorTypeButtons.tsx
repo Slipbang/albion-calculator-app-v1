@@ -1,7 +1,7 @@
 import {interfaceSliceActions} from "../../../store/interface/interface-slice";
-import {gameModeOff, gameModeOn} from "../CommonImgReexports/CommonImgReexports";
+import {gameModeOff_L, gameModeOff_D, gameModeOn} from "../CommonImgReexports/CommonImgReexports";
 import {useSelector} from "react-redux";
-import {selectCalculatorType, selectGameMode} from "../../../store/interface/interface-selector";
+import {selectCalculatorType, selectGameMode, selectTheme} from "../../../store/interface/interface-selector";
 import {useAppDispatch} from "../../../store";
 import {TCalcProps} from "../../../types/calculatorPropsType";
 import styles from './CalculatorTypeButtons.module.scss';
@@ -34,6 +34,8 @@ const selectors: ISelector[] = [
 const CalculatorTypeButtons = React.memo(() => {
     const dispatchAction = useAppDispatch();
 
+    const theme = useSelector(selectTheme);
+    const isDark = theme === 'dark';
     const calculatorType = useSelector(selectCalculatorType);
     const gameMode = useSelector(selectGameMode);
 
@@ -44,6 +46,17 @@ const CalculatorTypeButtons = React.memo(() => {
 
     const toggleStyles = () => {
         dispatchAction(interfaceSliceActions.toggleGameMode())
+    }
+
+    const defineColor = () => {
+        if (!!gameMode || !!isDark) {
+            return 'white'
+        }
+        if (!gameMode && !isDark) {
+            return 'black'
+        }
+
+        return 'black'
     }
 
     return (
@@ -57,7 +70,7 @@ const CalculatorTypeButtons = React.memo(() => {
                             draggable={false}
                             src={src}
                             title={type}
-                            className={calculatorType === type ? `${styles.isSelected} ${styles.backgroundSkeleton}` : `${styles.isNotSelected} ${styles.backgroundSkeleton}`}
+                            className={`${styles.backgroundSkeleton} ${calculatorType === type ? styles.isSelected : styles.isNotSelected}`}
                             onClick={() => {
                                 selectCalculatorTypeHandler(type);
                             }}
@@ -78,12 +91,12 @@ const CalculatorTypeButtons = React.memo(() => {
                     />
                     <p
                         className={!gameMode ? styles.scaleP : ''}
-                        style={{color: `${!!gameMode ? 'white' : 'black'}`}}>Game Mode:</p>
+                        style={{color: defineColor()}}>Game Mode:</p>
                     <img
                         draggable={false}
-                        src={gameModeOff}
+                        src={isDark ? gameModeOff_D : gameModeOff_L}
                         alt='off'
-                        style={{width: '48px', height: '26px', position: "absolute", top: '74px', left: '92px', zIndex: 1}}
+                        className={styles.gameModeOffImg}
                     />
                 </div>
             </div>

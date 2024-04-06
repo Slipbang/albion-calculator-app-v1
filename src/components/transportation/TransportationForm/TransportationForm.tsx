@@ -3,19 +3,19 @@ import {ChangeEventHandler} from "react";
 import styles from "./TransportationForm.module.scss";
 
 import {useAppDispatch} from "../../../store";
-import {queryParamsSliceActions} from "../../../store/queryParams/queryParamsSlice";
+import {queryParamsSliceActions} from "../../../store/queryParams/query-params-slice";
 import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../store/language/language-selector";
 import {cityOptions} from "../../../store/Options/CityOptions";
 import {selectTransportationQueryParams} from "../../../store/queryParams/query-params-selectors";
 import {TSortCheckParams, TSortProfitParams} from "../../../store/api/api";
-import {selectThemeState} from "../../../store/interface/interface-selector";
+import {selectTheme} from "../../../store/interface/interface-selector";
 
 const TransportationForm = () => {
     const {from, to, profitSort} = useSelector(selectTransportationQueryParams);
     const dispatchAction = useAppDispatch();
 
-    const isDark = useSelector(selectThemeState);
+    const theme = useSelector(selectTheme);
 
     const {language} = useSelector(selectLanguage);
     const {transportationFormStrings} = language;
@@ -38,7 +38,7 @@ const TransportationForm = () => {
     }
 
     return (
-        <div className={styles.transportationFormStyles} data-theme={isDark ? 'dark' : 'light'}>
+        <div className={styles.transportationFormStyles} data-theme={theme}>
             <div>
                 <p>{transportationFormStrings.sortByLastChecked}</p>
                 <input

@@ -27,7 +27,7 @@ const ItemTable = (props: TItemTableProps) => {
     const craftItemsList = useSelector(selectCraftItemsList);
 
     const fetchItemDataHandler = (item: ITableData) => {
-        let {itemId, mainMatsId, subMatsId, artefactId, journalId, emptyJournalId} = item!;
+        let {itemId, mainMatsId, subMatsId, journalId, emptyJournalId} = item!;
         let items = `${itemId},`;
         let subMats = !!subMatsId ? `${subMatsId},` : '';
         let mainMats = `${mainMatsId},`;

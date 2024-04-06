@@ -1,11 +1,11 @@
 import {useSelector} from "react-redux";
-import {selectThemeState} from "../../store/interface/interface-selector";
+import {selectTheme} from "../../store/interface/interface-selector";
 import styles from './Theme.module.scss'
 
 export const Theme = () => {
-    const isDark = useSelector(selectThemeState);
+    const theme = useSelector(selectTheme);
 
-    return <div className={styles.theme} data-theme={isDark ? 'dark' : 'light'}/>
+    return <div className={styles.theme} data-theme={theme}/>
 }
 
 export default Theme;

@@ -6,10 +6,10 @@ import React, {ChangeEventHandler} from "react";
 import {artefactActions, TArtefactsTier} from "../../../store/artefacts/artefact-slice";
 import {selectArtefactsTier} from "../../../store/artefacts/artefact-selectors";
 import StyledCompleteResetButton from "../../Calculator/StyledComponentsCommon/StyledСompleteResetButton";
-import {selectThemeState} from "../../../store/interface/interface-selector";
+import {selectTheme} from "../../../store/interface/interface-selector";
 
 const ArtefactsSelectors = React.memo(({refetchHandler}:{refetchHandler: () => void}) => {
-    const isDark = useSelector(selectThemeState);
+    const theme = useSelector(selectTheme);
     const {language} = useSelector(selectLanguage);
     const selectedTier = useSelector(selectArtefactsTier);
     const {artefactsStrings} = language;
@@ -31,7 +31,7 @@ const ArtefactsSelectors = React.memo(({refetchHandler}:{refetchHandler: () => v
     return (
         <div
             className={styles.wrapper}
-            data-theme={isDark ? 'dark' : 'light'}
+            data-theme={theme}
         >
             <div>
                 <p>{artefactsStrings.sortLabel}</p>

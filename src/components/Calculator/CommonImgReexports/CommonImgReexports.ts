@@ -26,7 +26,8 @@ import scrollbarArrowUp from '../../../images/craftingAssets/commonAssets/scroll
 import scrollbarArrowDown from '../../../images/craftingAssets/commonAssets/scrollbarArrowDown.png';
 import scrollbarBody from '../../../images/craftingAssets/commonAssets/scrollbarBody.png';
 import gameModeOn from '../../../images/craftingAssets/commonAssets/gameModeOn.png';
-import gameModeOff from '../../../images/craftingAssets/commonAssets/gameModeOff.png';
+import gameModeOff_L from '../../../images/craftingAssets/commonAssets/gameModeOff_L.png';
+import gameModeOff_D from '../../../images/craftingAssets/commonAssets/gameModeOff_D.png';
 import defaultButton from '../../../images/craftingAssets/commonAssets/defaultButton.png';
 import defaultButtonClicked from '../../../images/craftingAssets/commonAssets/defaultButtonClicked.png';
 import defaultButtonHovered from '../../../images/craftingAssets/commonAssets/defaultButtonHovered.png';
@@ -60,7 +61,8 @@ export {
     scrollbarArrowDown,
     scrollbarBody,
     gameModeOn,
-    gameModeOff,
+    gameModeOff_L,
+    gameModeOff_D,
     defaultButton,
     defaultButtonClicked,
     defaultButtonHovered,

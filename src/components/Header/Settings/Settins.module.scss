@@ -1,22 +1,35 @@
 .wrapper {
-  width: 140px;
+  width: 75px;
+  height: 65px;
   user-select: none;
-
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  z-index: 9999;
 
-  svg {
-    margin: 0 10px;
-    width: 45px;
-    height: 45px;
+  .settingsSVG {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: 0.3s ease opacity;
+    z-index: 0;
+    width: 65px;
+    height: 65px;
+    svg {
+      margin: 0 10px;
+      width: 45px;
+      height: 45px;
+    }
   }
 
   .settings {
-    display: none;
+    position: fixed;
+    right: 0;
+    display: flex;
     cursor: pointer;
+    transform: translate(225px, 0);
+    transition: 0.3s ease transform;
 
-    .selectors{
+    .selectors {
       display: flex;
       background-color: var(--header-color);
       justify-content: center;
@@ -25,7 +38,8 @@
       width: 75px;
       height: 65px;
     }
-    .selectors:hover{
+
+    .selectors:hover {
       background-color: var(--header-color-hovered);
 
       .options {
@@ -45,75 +59,81 @@
       p {
         padding: 5px;
       }
+
       p:hover {
         background-color: var(--header-color-hovered);
       }
     }
-  }
 
-  .theme {
-    width: 75px;
-    height: 65px;
-    margin-left: -75px;
-    background-color: var(--background-theme);
-    overflow: hidden;
-    position: absolute;
-    transition: 1s ease background-color;
+    .themeWrapper {
+      position: static;
+      width: 75px;
 
-    .sun {
-      z-index: 2;
-      position: absolute;
-      top: var(--top);
-      left: var(--left);
-      width: 29px;
-      height: 29px;
-      background-color: #ffd044;
-      transform: var(--scale);
-      border-radius: 50%;
-      transition: 0.5s ease top, 0.5s ease left, 0.5s ease transform;
-
-      .star1{
+      .theme {
+        width: 75px;
+        height: 65px;
+        background-color: var(--background-theme);
+        overflow: hidden;
         position: absolute;
-        top: -5px;
-        left: -8px;
-        font-size: 54px;
-        line-height: 28px;
-        color: #ffd044;
+        transition: 1s ease background-color;
+
+        .sun {
+          z-index: 2;
+          position: absolute;
+          top: var(--top);
+          left: var(--left);
+          width: 29px;
+          height: 29px;
+          background-color: #ffd044;
+          transform: var(--scale);
+          border-radius: 50%;
+          transition: 0.5s ease top, 0.5s ease left, 0.5s ease transform;
+
+          .star1 {
+            position: absolute;
+            top: -5px;
+            left: -8px;
+            font-size: 54px;
+            line-height: 28px;
+            color: #ffd044;
+          }
+
+          .star2 {
+            position: absolute;
+            top: -4px;
+            left: -5px;
+            font-size: 54px;
+            line-height: 28px;
+            color: #ffd044;
+            transform: rotateZ(36deg);
+          }
+        }
+
+        .moon {
+          z-index: 1;
+          position: absolute;
+          bottom: var(--bottom);
+          right: 8px;
+          width: 40px;
+          height: 40px;
+          background-color: var(--background-color-moon);
+          border-radius: 50%;
+          transition: 0.5s ease bottom, 1s ease background-color;
+        }
+
+        .moon:before {
+          content: "";
+          position: absolute;
+          top: -12px;
+          left: -17px;
+          width: 40px;
+          height: 40px;
+          background-color: var(--background-theme);
+          border-radius: 50%;
+
+          transition: 1s ease background-color;
+        }
       }
-
-      .star2{
-        position: absolute;
-        top: -4px;
-        left: -5px;
-        font-size: 54px;
-        line-height: 28px;
-        color: #ffd044;
-        transform: rotateZ(36deg);
-      }
-    }
-    .moon {
-      z-index: 1;
-      position: absolute;
-      bottom: var(--bottom);
-      right: 8px;
-      width: 40px;
-      height: 40px;
-      background-color: var(--background-color-moon);
-      border-radius: 50%;
-      transition: 0.5s ease bottom, 1s ease background-color;
-    }
-
-    .moon:before{
-      content: "";
-      position: absolute;
-      top: -12px;
-      left: -17px;
-      width: 40px;
-      height: 40px;
-      background-color: var(--background-theme);
-      border-radius: 50%;
-
-      transition: 1s ease background-color;
     }
   }
 }
@@ -123,12 +143,15 @@
 }
 
 .wrapper:hover {
-  .settingsSVG {
-    display: none;
-  }
-
   .settings {
-    display: flex;
+    transform: translate(0, 0);
+    transition: 0.3s ease transform;
   }
 }
 
+.wrapper:active {
+  .settings {
+    transform: translate(0, 0);
+    transition: 0.3s ease transform;
+  }
+}
