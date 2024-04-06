@@ -49,8 +49,10 @@ const Settings = () => {
                          onClick={() => selectThemeHandler()}
                     >
                         <div className={styles.sun}>
-                            <div className={styles.star1}>★</div>
-                            <div className={styles.star2}>★</div>
+                            <div className={styles.starWrap}>
+                                <div className={styles.star1}>★</div>
+                                <div className={styles.star2}>★</div>
+                            </div>
                         </div>
                         <div className={styles.moon}></div>
                     </div>

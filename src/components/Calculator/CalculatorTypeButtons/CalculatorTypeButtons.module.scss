@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
+
+.pirataOneRegular {
+  font-family: "Pirata One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 .wrapper{
   user-select: none;
   z-index: 2;
@@ -25,15 +34,14 @@
     cursor: pointer;
 
     .gameModeOffImg{
-      width: 48px;
-      height: 26px;
-      position: absolute;
-      top: 74px;
-      left: 92px;
-      z-index: 1;
+      font-size: 28px;
+
+      font-family: "Pirata One", system-ui;
+      font-weight: 400;
+      font-style: normal;
     }
 
-    img:first-child {
+    .sword {
       z-index: 2;
       width: 233px;
       height: 72px;
@@ -43,12 +51,16 @@
       filter: drop-shadow(3px 3px 6px black);
     }
 
-    p {
+    .gmText {
+      width: 138px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       z-index: 2;
-      position: absolute;
-      top: 74px;
-      left: -15px;
       font-weight: 700;
+      position: absolute;
+      top: 67px;
+      left: -15px;
       font-size: 17px;
       transition: 0.4s ease color;
     }

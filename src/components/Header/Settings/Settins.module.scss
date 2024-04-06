@@ -89,23 +89,29 @@
           border-radius: 50%;
           transition: 0.5s ease top, 0.5s ease left, 0.5s ease transform;
 
-          .star1 {
+          .starWrap{
             position: absolute;
-            top: -5px;
-            left: -8px;
-            font-size: 54px;
-            line-height: 28px;
-            color: #ffd044;
-          }
+            top: -22px;
+            width: 54px;
+            height: 54px;
+            display: flex;
 
-          .star2 {
-            position: absolute;
-            top: -4px;
-            left: -5px;
-            font-size: 54px;
-            line-height: 28px;
-            color: #ffd044;
-            transform: rotateZ(36deg);
+            .star1 {
+              position: absolute;
+              top: -5px;
+              left: -8px;
+              font-size: 54px;
+              color: #ffd044;
+            }
+
+            .star2 {
+              position: absolute;
+              top: -4px;
+              left: -5px;
+              font-size: 54px;
+              color: #ffd044;
+              transform: rotateZ(36deg);
+            }
           }
         }
 
