@@ -294,43 +294,78 @@ const InfoTable = () => {
                                         data-tooltip-html={brecilienInfo.title}
 
                                     >
-                                        {brecilienInfo.totalProfit.toLocaleString('en')}
+                                        <div>
+                                            {brecilienInfo.totalProfit.toLocaleString('en')}
+                                        </div>
+                                        <div>
+                                            {brecilienInfo.profitPerItem.toLocaleString('en')}
+                                        </div>
                                     </td>
                                     <td
                                         data-tooltip-id="info-table-tooltip-data-html"
                                         data-tooltip-html={caerleonInfo.title}
                                     >
-                                        {caerleonInfo.totalProfit.toLocaleString('en')}
+                                        <div>
+                                            {caerleonInfo.totalProfit.toLocaleString('en')}
+                                        </div>
+                                        <div>
+                                            {caerleonInfo.profitPerItem.toLocaleString('en')}
+                                        </div>
                                     </td>
                                     <td
                                         data-tooltip-id="info-table-tooltip-data-html"
                                         data-tooltip-html={fortSterlingInfo.title}
                                     >
-                                        {fortSterlingInfo.totalProfit.toLocaleString('en')}
+                                        <div>
+                                            {fortSterlingInfo.totalProfit.toLocaleString('en')}
+                                        </div>
+                                        <div>
+                                            {fortSterlingInfo.profitPerItem.toLocaleString('en')}
+                                        </div>
                                     </td>
                                     <td
                                         data-tooltip-id="info-table-tooltip-data-html"
                                         data-tooltip-html={bridgewatchInfo.title}
                                     >
-                                        {bridgewatchInfo.totalProfit.toLocaleString('en')}
+                                        <div>
+                                            {bridgewatchInfo.totalProfit.toLocaleString('en')}
+                                        </div>
+                                        <div>
+                                            {bridgewatchInfo.profitPerItem.toLocaleString('en')}
+                                        </div>
                                     </td>
                                     <td
                                         data-tooltip-id="info-table-tooltip-data-html"
                                         data-tooltip-html={martlockInfo.title}
                                     >
-                                        {martlockInfo.totalProfit.toLocaleString('en')}
+                                        <div>
+                                            {martlockInfo.totalProfit.toLocaleString('en')}
+                                        </div>
+                                        <div>
+                                            {martlockInfo.profitPerItem.toLocaleString('en')}
+                                        </div>
                                     </td>
                                     <td
                                         data-tooltip-id="info-table-tooltip-data-html"
                                         data-tooltip-html={thetfordInfo.title}
                                     >
-                                        {thetfordInfo.totalProfit.toLocaleString('en')}
+                                        <div>
+                                            {thetfordInfo.totalProfit.toLocaleString('en')}
+                                        </div>
+                                        <div>
+                                            {thetfordInfo.profitPerItem.toLocaleString('en')}
+                                        </div>
                                     </td>
                                     <td
                                         data-tooltip-id="info-table-tooltip-data-html"
                                         data-tooltip-html={lymhurstInfo.title}
                                     >
-                                        {lymhurstInfo.totalProfit.toLocaleString('en')}
+                                        <div>
+                                            {lymhurstInfo.totalProfit.toLocaleString('en')}
+                                        </div>
+                                        <div>
+                                            {lymhurstInfo.profitPerItem.toLocaleString('en')}
+                                        </div>
 
                                         {!!resourceId && (!resourceId?.includes('STONEBLOCK') ? index === 4 : index === 3) &&
                                             <div className={styles.closeButtonStyles}>
@@ -341,7 +376,12 @@ const InfoTable = () => {
                                         data-tooltip-id="info-table-tooltip-data-html"
                                         data-tooltip-html={blackMarketInfo.title}
                                     >
-                                        {blackMarketInfo.totalProfit.toLocaleString('en')}
+                                        <div>
+                                            {blackMarketInfo.totalProfit.toLocaleString('en')}
+                                        </div>
+                                        <div>
+                                            {blackMarketInfo.profitPerItem.toLocaleString('en')}
+                                        </div>
 
                                         {!!itemId && index === 4 && <div className={styles.closeButtonStyles}>
                                             <StyledCloseButton onClick={() => closeInfoTableHandler()}/>

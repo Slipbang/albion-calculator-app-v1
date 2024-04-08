@@ -19,25 +19,27 @@ const GameModeCalculator = () => {
     const isMarketMenuShown = useSelector(selectMarketMenuShown);
     const gameMode = useSelector(selectGameMode);
 
-    return <div className={styles.wrapper}>
-        <CalculatorTypeButtons />
+    return (
+        <div className={styles.wrapper}>
+            <CalculatorTypeButtons />
 
-        {!!isMarketItemVisible && <MarketItem/>}
+            {!!isMarketItemVisible && <MarketItem/>}
 
-        {!!isCraftingFormVisible && <GMCraftingForm />}
+            {!!isCraftingFormVisible && <GMCraftingForm />}
 
-        <div className={!!gameMode ? styles.GMItemSelectorWrapper : `${styles.GMItemSelectorWrapper} ${styles.GMItemSelectorWrapperHidden}`}>
-            <GMItemSelector />
-        </div>
+            <div className={!!gameMode ? styles.GMItemSelectorWrapper : `${styles.GMItemSelectorWrapper} ${styles.GMItemSelectorWrapperHidden}`}>
+                <GMItemSelector />
+            </div>
 
-        <div className={!!gameMode ? styles.backpackWrapper : `${styles.backpackWrapper} ${styles.backpackWrapperHidden}`}>
-            <Backpack />
+            <div className={!!gameMode ? styles.backpackWrapper : `${styles.backpackWrapper} ${styles.backpackWrapperHidden}`}>
+                <Backpack />
 
-            <div className={isMarketMenuShown ? `${styles.marketMenuWrapper} ${styles.marketMenuShown}` : styles.marketMenuWrapper}>
-                <MarketMenu/>
+                <div className={isMarketMenuShown ? `${styles.marketMenuWrapper} ${styles.marketMenuShown}` : styles.marketMenuWrapper}>
+                    <MarketMenu/>
+                </div>
             </div>
         </div>
-    </div>
+    )
 }
 
 export default GameModeCalculator;

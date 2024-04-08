@@ -141,6 +141,21 @@ interface IHeaderStrings {
     language: string;
 }
 
+interface INotFoundStings {
+    notFound: string;
+    returnTitle: string;
+}
+
+interface IHomeStrings {
+    artefacts: string;
+    craftCalculator: string;
+    transportation: string;
+    artefactsDescription: string;
+    craftCalculatorDescription: string;
+    transportationDescription: string;
+    language: string;
+}
+
 export interface ISelectedLanguage {
     craftTableStrings: ICraftTableStrings;
     calculatorFormStrings: ICalculatorFormStrings;
@@ -154,11 +169,12 @@ export interface ISelectedLanguage {
     GMItemSelectorStings: IGMItemSelectorStings;
     GMCraftingFormStrings: IGMCraftingFormStrings;
     headerStrings: IHeaderStrings;
+    notFoundStings: INotFoundStings;
+    homeStrings: IHomeStrings;
 }
 
-export interface ILanguage {
-    ru: ISelectedLanguage;
-    en: ISelectedLanguage
-}
+export type TSelectedLanguage = 'ru' | 'en';
 
-export type TSelectedLanguage = 'ru' | 'en'
+export type TLanguage = {
+    [key in TSelectedLanguage]: ISelectedLanguage;
+}

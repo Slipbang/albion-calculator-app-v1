@@ -14,22 +14,20 @@
   }
 
   .link {
-    color: var(--color);
+    color: #d7cecc;
     text-decoration: none;
   }
 
   .link:hover {
     background-color: var(--header-color-hovered);
+    text-shadow: 0 0 7px #fff;
+    color: #ffdfbc;
   }
 
   .activeLink {
-    max-width: 100%;
-    width: 180px;
-    height: 65px;
-
-    font-size: 20px;
-    color: var(--color);
-    text-decoration: underline;
+    color: #ffdfbc;
+    text-decoration: none;
+    text-shadow: 0 0 7px #fff;
   }
 
   .activeLink:hover {

@@ -27,23 +27,30 @@
   }
 }
 
-.headerTextStyles{
+.headerLink{
+  text-decoration: none;
   margin-left: -25%;
 }
 
-.headerTextStyles::after{
+.headerLink:hover{
+  h1 {
+    scale: 1.1;
+  }
+}
+
+.headerTextStyles:after{
   color: rgb(242,184,59);
-    content: 'Albion Toolkit';
+  content: 'Albion Toolkit';
 }
 
 @media (max-width: 1100px) {
-  .headerTextStyles{
+  .headerLink{
     margin-left: 0;
   }
 }
 
 @media (max-width: 550px) {
-  .headerTextStyles::after{
+  .headerTextStyles:after{
     content: 'AToolkit';
   }
 

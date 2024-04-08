@@ -17,17 +17,20 @@
   }
 
   .link {
-    color: var(--color);
+    color: #d7cecc;
     text-decoration: none;
   }
 
   .activeLink {
-    color: var(--color);
-    text-decoration: underline;
+    text-decoration: none;
+    text-shadow: 0 0 7px #fff;
+    color: #ffdfbc;
   }
 
   .link:hover {
     background-color: var(--header-color-hovered);
+    text-shadow: 0 0 7px #fff;
+    color: #ffdfbc;
   }
 
   .activeLink:hover {

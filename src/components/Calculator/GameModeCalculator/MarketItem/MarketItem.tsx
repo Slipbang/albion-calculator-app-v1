@@ -11,7 +11,6 @@ import MaxItemQuantity from "./MaxItemQuantity/MaxItemQuantity";
 import ItemName from "./ItemName/ItemName";
 import MarketItemForm from "./MarketItemForm/MarketItemForm";
 
-
 const MarketItem = () => {
     const dispatchAction = useAppDispatch();
 
