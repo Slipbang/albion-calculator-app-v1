@@ -6,13 +6,15 @@ import React from "react";
 
 const WorkBenchSelectors = () => {
 
-    return <StyledWorkBenchSelector>
-        <TierSelector />
+    return (
+        <StyledWorkBenchSelector>
+            <TierSelector/>
 
-        <NodeSelector />
+            <NodeSelector/>
 
-        <ResetButton />
-    </StyledWorkBenchSelector>
+            <ResetButton/>
+        </StyledWorkBenchSelector>
+    )
 }
 
 export default WorkBenchSelectors;

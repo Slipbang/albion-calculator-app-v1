@@ -16,7 +16,7 @@ const MarketMenuToggleButton = () => {
     }
     return <StyledMarketMenuButton
         $isMarketMenuShown={isMarketMenuShown}
-        onClick={() => toggleMarketMenuVisibilityHandler()}
+        onClick={toggleMarketMenuVisibilityHandler}
     />
 }
 

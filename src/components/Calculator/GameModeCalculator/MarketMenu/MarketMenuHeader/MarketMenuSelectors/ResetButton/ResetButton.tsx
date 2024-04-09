@@ -19,7 +19,6 @@ const ResetButton = () => {
 
     const resetSelectorsHandler = () => dispatchAction(interfaceSliceActions.resetMarketMenuSelectors());
 
-
     const wereInputsChanged = () => {
         return selectedTier.value !== tierOptions[0].value
             || selectedEnchantment.value !== enchantmentOptions[0].value
@@ -27,9 +26,11 @@ const ResetButton = () => {
             || inputSearch.length > 0
     }
 
-    return <>
-        {wereInputsChanged() && <StyledResetButton $top={3} $right={4} onClick={() => resetSelectorsHandler()}/>}
-    </>
+    return (
+        <>
+            {wereInputsChanged() && <StyledResetButton $top={3} $right={4} onClick={() => resetSelectorsHandler()}/>}
+        </>
+    )
 }
 
 export default ResetButton;

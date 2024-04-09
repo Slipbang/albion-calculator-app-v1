@@ -1,4 +1,3 @@
-import StyledImageBox from "../../../StyledComponentsCommon/StyledImageBox";
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {useSelector} from "react-redux";
 import {selectWorkBenchItem} from "../../../../../store/GMProfit/gm-profit-selectors";

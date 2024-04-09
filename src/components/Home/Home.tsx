@@ -50,7 +50,6 @@ const Home = () => {
 
             <footer>
                 <div className={styles.language}>
-                    <p>{homeStrings.language}</p>
 
                     <ul>
                         {languageOptions.map(({label,value}) => {
@@ -59,6 +58,7 @@ const Home = () => {
                         })}
                     </ul>
 
+                    <p>{homeStrings.language}</p>
                 </div>
 
                 <a href='https://www.albion-online-data.com' target='_blank'>Powered by Albion Online Data Project</a>

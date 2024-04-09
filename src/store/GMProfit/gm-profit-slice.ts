@@ -1,25 +1,19 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {leatherItems, marketItems} from "../Items/materials";
-import {
-    emptyBagCell,
-    IBagCell,
-    TCraftItems,
-} from '../Items/craftItems';
+
 import {IConsumedMaterials, ICraftingItemClass, TItemTypeSelected} from "../../types/craftItemsType";
 import {
     tannerAvatar,
     tannerWorkerAvatar
 } from "../../components/Calculator/GameModeCalculator/GMItemSelector/GMItemSelectorImgReexports/GMItemSelectorImgReexports";
+import {emptyBagCell, IBagCell, marketItems, IGMCraftItem} from "../Items/workBenchSelectorItems_marketItems";
 
-export interface ISelectedWorkBenchItem extends TCraftItems{
+export interface ISelectedWorkBenchItem extends IGMCraftItem{
     artefactsQuantity?: number;
 }
 
 export type TMarketActions = 'buy' | 'sell';
 
-
 interface IInitialState {
-    craftingItems: TCraftItems[];
     workBenchTypeSelected: ICraftingItemClass,
     workBenchAvatar: string;
     workBenchWorkerAvatar: string;
@@ -38,7 +32,7 @@ const initialState: IInitialState = {
     workBenchTypeSelected: 'tanner',
     workBenchAvatar: tannerAvatar,
     workBenchWorkerAvatar: tannerWorkerAvatar,
-    craftingItems: leatherItems,
+
     backpackItems: Array.from({length: 48}, () => emptyBagCell),
     selectedWorkBenchItem: {
         itemId: '',
@@ -76,11 +70,10 @@ const GMProfitSlice = createSlice({
     name: '@GMProfit',
     initialState,
     reducers: {
-        setWorkBenchTypeSelected(state, action: PayloadAction<{workBenchType: ICraftingItemClass, workBenchAvatar: string, workBenchWorkerAvatar: string, craftingItems: TCraftItems[]}>){
+        setWorkBenchTypeSelected(state, action: PayloadAction<{workBenchType: ICraftingItemClass, workBenchAvatar: string, workBenchWorkerAvatar: string}>){
             state.workBenchTypeSelected = action.payload.workBenchType;
             state.workBenchAvatar = action.payload.workBenchAvatar;
             state.workBenchWorkerAvatar = action.payload.workBenchWorkerAvatar;
-            state.craftingItems = action.payload.craftingItems;
         },
         setMarketTypeAction(state, action: PayloadAction<TMarketActions>){
             state.marketActionSelected = action.payload;

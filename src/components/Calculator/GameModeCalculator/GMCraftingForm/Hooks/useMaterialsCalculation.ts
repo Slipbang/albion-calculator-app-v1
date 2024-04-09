@@ -1,7 +1,7 @@
 import {IConsumedMaterials} from "../../../../../types/craftItemsType";
 import {TExtractedMaterialsKeys} from "../GMCraftingForm";
-import {IBagCell} from "../../../../../store/Items/craftItems";
 import {ISelectedWorkBenchItem} from "../../../../../store/GMProfit/gm-profit-slice";
+import {IBagCell} from "../../../../../store/Items/workBenchSelectorItems_marketItems";
 
 export interface IBackpackMatsQuantity {
     backpackLEATHERQuantity: number | null;

@@ -20,6 +20,7 @@ const StyledWorkBenchButton = styled.button<IStyledWorkBenchButtonProps>`
   background-size: cover;
   cursor: pointer;
   z-index: ${props => !!props.$isSelected ? 2 : 0};
+  filter: drop-shadow(3px 3px 6px black);
 
   width: 64px;
   height: 85px;

@@ -10,20 +10,22 @@ const ActionButtons = () => {
 
     const marketAction = useSelector(selectMarketAction);
 
-    return <div className={styles.actionButtonsBox}>
-        <div className={styles.actionLabel}>
-            <p>{marketItemStings.actionLabel}</p>
-        </div>
+    return (
+        <div className={styles.actionButtonsBox}>
+            <div className={styles.actionLabel}>
+                <p>{marketItemStings.actionLabel}</p>
+            </div>
 
-        <div className={styles.buttonsWrapper}>
-             <div className={styles.buttonIsSelected}>
-                <StyledActionMarketButton
-                    $isButtonSelected={true}
-                />
-                <p>{marketAction === 'sell' ? marketItemStings.sell : marketItemStings.buy}</p>
+            <div className={styles.buttonsWrapper}>
+                <div className={styles.buttonIsSelected}>
+                    <StyledActionMarketButton
+                        $isButtonSelected={true}
+                    />
+                    <p>{marketAction === 'sell' ? marketItemStings.sell : marketItemStings.buy}</p>
+                </div>
             </div>
         </div>
-    </div>
+    )
 }
 
 export default ActionButtons;

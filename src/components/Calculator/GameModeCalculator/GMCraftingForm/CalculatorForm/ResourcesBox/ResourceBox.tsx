@@ -1,4 +1,3 @@
-import StyledImageBox from "../../../../StyledComponentsCommon/StyledImageBox";
 import styles from './ResourceBox.module.scss'
 import {useMaterialsCalculation} from "../../Hooks/useMaterialsCalculation";
 import {useJournals} from "../../Hooks/useJournals";

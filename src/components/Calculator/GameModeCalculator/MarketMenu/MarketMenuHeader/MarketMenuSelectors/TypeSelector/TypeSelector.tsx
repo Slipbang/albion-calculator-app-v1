@@ -15,15 +15,17 @@ const TypeSelector = () => {
         dispatchAction(interfaceSliceActions.setSelectedItemTypeMM(option))
     }
 
-    return <CustomItemSelector
-        setSelectedParams={setSelectedItemType}
-        paramsOptions={typeOptions}
-        paramState={selectedItemType}
-        customOptionSelectedClass={styles.customOptionSelected}
-        customOptionClass={styles.customOption}
-        selectInputClass={styles.selectItemTypeStyle}
-        paramsSelectorClass={styles.itemTypeSelector}
-    />
+    return (
+        <CustomItemSelector
+            setSelectedParams={setSelectedItemType}
+            paramsOptions={typeOptions}
+            paramState={selectedItemType}
+            customOptionSelectedClass={styles.customOptionSelected}
+            customOptionClass={styles.customOption}
+            selectInputClass={styles.selectItemTypeStyle}
+            paramsSelectorClass={styles.itemTypeSelector}
+        />
+    )
 }
 
 export default TypeSelector;

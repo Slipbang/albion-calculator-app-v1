@@ -8,17 +8,19 @@ import React from "react";
 
 const MarketMenuSelectors = () => {
 
-    return <StyledMarketSelector>
-        <MarketMenuItemInput />
+    return (
+        <StyledMarketSelector>
+            <MarketMenuItemInput />
 
-        <TierSelector />
+            <TierSelector />
 
-        <EnchantmentSelector />
+            <EnchantmentSelector />
 
-        <TypeSelector />
+            <TypeSelector />
 
-        <ResetButton />
-    </StyledMarketSelector>
+            <ResetButton />
+        </StyledMarketSelector>
+    )
 }
 
 export default MarketMenuSelectors;

@@ -47,9 +47,7 @@ const GMCraftingForm = () => {
             onDragStart={handleDragStart}
             onDragOver={handleDrag}
         >
-            <MainItemImageBox
-                type={calculatorType}
-            />
+            <MainItemImageBox type={calculatorType} />
 
             <CloseButton />
 

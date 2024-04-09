@@ -12,17 +12,17 @@ import {interfaceSliceActions} from "../../../../../../store/interface/interface
 import {
     dummyEnchantmentButtons
 } from "../../../../../../store/interface/DummyEnchantmentButtons/DummyEnchantmentButtons";
-import {TCraftItems} from "../../../../../../store/Items/craftItems";
 import {useAppDispatch} from "../../../../../../store";
 import {GMProfitSliceActions, ISelectedWorkBenchItem} from "../../../../../../store/GMProfit/gm-profit-slice";
 import {defineArtefactsName} from "../../../../Definers/defineArtefactsName";
 import TotalFoodTax from "./TotalFoodTax/TotalFoodTax";
 import {srcRoute} from "../../../../../../store/api/api";
+import {IGMCraftItem} from "../../../../../../store/Items/workBenchSelectorItems_marketItems";
 
-type TCraftItemsKeys = keyof Omit<TCraftItems, 'itemName'>;
+type TCraftItemsKeys = keyof Omit<IGMCraftItem, 'itemName'>;
 
 interface IWorkBenchItemProps {
-    item: TCraftItems;
+    item: IGMCraftItem;
 }
 
 const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
@@ -58,7 +58,6 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
             && (!!inputSearch.trim() ? itemName.toLowerCase().match(inputSearch.toLowerCase()) : true));
     }
 
-
     const defineFontSize = (itemName: string) => {
         return itemName.length > 18 ? 10 : itemName.length > 14 ? 12 : 16
     }
@@ -83,7 +82,7 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
     }
 
     const {artefactName} = defineArtefactsName({artefactId: artefactItemId!});
-    const artefactsQuantity = calculateArtefactsQuantityHandler(artefactItemId!, itemNode, itemTier);
+    const artefactsQuantity = calculateArtefactsQuantityHandler(artefactItemId!, itemNode!, itemTier);
 
     const itemKeys = Object.keys(item) as TCraftItemsKeys[];
 

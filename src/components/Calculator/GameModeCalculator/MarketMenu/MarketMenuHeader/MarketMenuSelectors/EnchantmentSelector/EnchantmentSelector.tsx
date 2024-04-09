@@ -16,15 +16,17 @@ const EnchantmentSelector = () => {
         dispatchAction(interfaceSliceActions.setSelectedEnchantmentMM(option));
     }
 
-    return <CustomItemSelector
-        setSelectedParams={setSelectedEnchantment}
-        paramsOptions={enchantmentOptions}
-        paramState={selectedEnchantment}
-        customOptionSelectedClass={styles.customOptionSelected}
-        customOptionClass={styles.customOption}
-        selectInputClass={styles.selectEnchantmentStyle}
-        paramsSelectorClass={styles.enchantmentSelector}
-    />
+    return (
+        <CustomItemSelector
+            setSelectedParams={setSelectedEnchantment}
+            paramsOptions={enchantmentOptions}
+            paramState={selectedEnchantment}
+            customOptionSelectedClass={styles.customOptionSelected}
+            customOptionClass={styles.customOption}
+            selectInputClass={styles.selectEnchantmentStyle}
+            paramsSelectorClass={styles.enchantmentSelector}
+        />
+    )
 }
 
 export default EnchantmentSelector;

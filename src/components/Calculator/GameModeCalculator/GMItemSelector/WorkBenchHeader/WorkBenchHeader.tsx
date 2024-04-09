@@ -15,7 +15,6 @@ type TNameObject = {
     [key in ICraftingItemClass]: TWorkBenchNames
 }
 
-
 interface IWorkBenchNames {
     'ru': TNameObject,
     'en': TNameObject,

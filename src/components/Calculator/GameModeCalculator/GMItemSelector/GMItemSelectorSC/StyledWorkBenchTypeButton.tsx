@@ -4,7 +4,6 @@ interface StyledWorkBenchTypeButtonProps{
     $buttonImage: string;
     $selectedButtonImage: string;
     $isSelected: boolean;
-    $isSelectorShown: boolean;
 }
 
 const StyledWorkBenchTypeButton = styled.button<StyledWorkBenchTypeButtonProps>`;
@@ -17,7 +16,6 @@ const StyledWorkBenchTypeButton = styled.button<StyledWorkBenchTypeButtonProps>`
   background-size: cover;
   width: 45px;
   height: 45px;
-  ${props => props.$isSelected || props.$isSelectorShown ? `filter: drop-shadow(3px 3px 3px black);` : ''}
   cursor: pointer;
   
   &:hover{

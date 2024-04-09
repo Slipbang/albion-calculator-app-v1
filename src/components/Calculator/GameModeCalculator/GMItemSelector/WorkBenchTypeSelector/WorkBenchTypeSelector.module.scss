@@ -1,4 +1,4 @@
-.workBenchTypeSelectorShown{
+.workBenchTypeSelector {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -6,17 +6,30 @@
   display: flex;
   justify-content: space-around;
   transition: all 0.2s ease-in-out;
-}
-
-.workBenchTypeSelectorHidden{
-  position: absolute;
-  top: 10px;
-  right: 10px;
   width: 50px;
-  z-index: 9999;
-  transition: all 0.2s ease-in-out;
 
-  button{
+  button {
     position: absolute;
   }
+
+  button:first-child {
+    filter: drop-shadow(3px 3px 3px black);
+  }
+}
+
+.workBenchTypeSelector:hover {
+  width: var(--width-button-box);
+
+  button {
+    position: initial;
+    filter: drop-shadow(3px 3px 3px black);
+  }
+}
+
+[data-selected='items'] {
+  --width-button-box: 210px;
+}
+
+[data-selected='resource'] {
+  --width-button-box: 260px;
 }

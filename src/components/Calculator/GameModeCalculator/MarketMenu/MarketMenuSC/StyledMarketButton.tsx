@@ -21,6 +21,7 @@ const StyledMarketButton = styled.button<IStyledMarketButtonProps>`
   background-size: cover;
   cursor: pointer;
   z-index: ${props => !!props.$isSelected ? 9999 : -1};
+  filter: drop-shadow(3px 3px 6px black);
   
   transition: transform 1s ease-in-out;
   

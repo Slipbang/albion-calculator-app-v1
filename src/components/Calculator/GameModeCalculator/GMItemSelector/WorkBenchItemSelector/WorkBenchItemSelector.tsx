@@ -1,28 +1,33 @@
 import StyledThumb from "../../../StyledComponentsCommon/StyledThumb";
 import {useSelector} from "react-redux";
-import {selectCraftingItems} from "../../../../../store/GMProfit/gm-profit-selectors";
 import styles from './WorkBenchItemSelector.module.scss'
-import {useDeferredValue} from "react";
+import {memo, useDeferredValue} from "react";
 import WorkBenchItemsLoader from "../ItemsLoaders/WorkBenchItemsLoader";
 import WorkBenchItem from "./WorkBenchItem/WorkBenchItem";
+import {selectWorkBenchType, selectItemType} from "../../../../../store/GMProfit/gm-profit-selectors";
+import {workBenchSelectorItems} from "../../../../../store/Items/workBenchSelectorItems_marketItems";
 
 
 const WorkBenchItemSelector = () => {
-    const craftingItems = useSelector(selectCraftingItems);
-    const deferredCraftingItems = useDeferredValue(craftingItems);
 
+    const selectedWorkBenchType = useSelector(selectWorkBenchType);
+    const selectedItemType = useSelector(selectItemType);
+    const items = workBenchSelectorItems[selectedWorkBenchType][selectedItemType];
+    const deferredCraftingItems = useDeferredValue(items);
 
-    return <StyledThumb>
-        <div className={styles.wrapper}>
-            {craftingItems === deferredCraftingItems && deferredCraftingItems.map(item => <WorkBenchItem key={item.itemId} item={{...item}} />)}
+    return (
+        <StyledThumb>
+            <div className={styles.wrapper}>
+                {items === deferredCraftingItems && deferredCraftingItems?.map(item => <WorkBenchItem key={item.itemId} item={{...item}} />)}
 
-            {craftingItems !== deferredCraftingItems && Array.from({length: 10}).map((_, index) => (
-                <div key={index} style={{margin: '10px 0 10px 0',}}>
-                    <WorkBenchItemsLoader/>
-                </div>
-            ))}
-        </div>
-    </StyledThumb>
+                {items !== deferredCraftingItems && Array.from({length: 10}).map((_, index) => (
+                    <div key={index} style={{margin: '10px 0 10px 0',}}>
+                        <WorkBenchItemsLoader/>
+                    </div>
+                ))}
+            </div>
+        </StyledThumb>
+    )
 }
 
-export default WorkBenchItemSelector;
+export default memo(WorkBenchItemSelector);

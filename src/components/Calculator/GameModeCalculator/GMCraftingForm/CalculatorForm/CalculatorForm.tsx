@@ -13,9 +13,7 @@ const CalculatorForm = (props: {calculatorType: TCalcProps}) => {
         <div className={styles.calculatorForm}>
             <QuantityInput />
 
-            <EnchantmentButtons
-                calculatorType={calculatorType}
-            />
+            <EnchantmentButtons calculatorType={calculatorType} />
 
             <ReturnRateInput />
 

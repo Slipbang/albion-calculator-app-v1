@@ -6,7 +6,7 @@ import {selectInputMM} from "../../../../../../../store/interface/interface-sele
 import styles from './MarketMenuItemInput.module.scss';
 import {selectLanguage} from "../../../../../../../store/language/language-selector";
 
-const MarketMenuItemInput = ( ) => {
+const MarketMenuItemInput = () => {
     const dispatchAction = useAppDispatch();
     const {language} = useSelector(selectLanguage);
     const {marketMenuStrings} = language;
@@ -17,14 +17,16 @@ const MarketMenuItemInput = ( ) => {
         dispatchAction(interfaceSliceActions.setInputSearchMM(value));
     }
 
-    return <input
-        id='MMSearchItemInput'
-        type="text"
-        className={styles.inputTextStyle}
-        placeholder={marketMenuStrings.search}
-        value={inputSearch}
-        onChange={(event) => setInputSearch(event.target.value)}
-    />
+    return (
+        <input
+            id='MMSearchItemInput'
+            type="text"
+            className={styles.inputTextStyle}
+            placeholder={marketMenuStrings.search}
+            value={inputSearch}
+            onChange={(event) => setInputSearch(event.target.value)}
+        />
+    )
 }
 
 export default MarketMenuItemInput;

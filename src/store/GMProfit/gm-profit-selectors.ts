@@ -7,7 +7,6 @@ export const selectBackpackItems = (state: RootState) => state.GMProfit.backpack
 export const selectFoodTax = (state: RootState) => state.GMProfit.foodTax;
 export const selectMarketAction = (state: RootState) => state.GMProfit.marketActionSelected;
 export const selectBackpackSilver = (state: RootState) => state.GMProfit.backpackSilver;
-export const selectCraftingItems = (state: RootState) => state.GMProfit.craftingItems;
 export const selectItemType = (state: RootState) => state.GMProfit.itemTypeSelected;
 export const selectWorkBenchType = (state: RootState) => state.GMProfit.workBenchTypeSelected;
 export const selectWorkBenchAvatar = (state: RootState) => state.GMProfit.workBenchAvatar;

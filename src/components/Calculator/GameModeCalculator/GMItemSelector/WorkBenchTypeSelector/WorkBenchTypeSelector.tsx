@@ -1,5 +1,5 @@
 import StyledWorkBenchTypeButton from "../GMItemSelectorSC/StyledWorkBenchTypeButton";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 import {useSelector} from "react-redux";
 import {selectWorkBenchType} from "../../../../../store/GMProfit/gm-profit-selectors";
 import {interfaceSliceActions} from "../../../../../store/interface/interface-slice";
@@ -7,15 +7,21 @@ import {useAppDispatch} from "../../../../../store";
 import styles from './WorkBenchTypeSelector.module.scss';
 
 import {
-    forgeAvatar, houseAvatar, hunterAvatar,
+    forgeAvatar,
+    houseAvatar,
+    hunterAvatar,
     lumbermillAvatar,
-    lumbermillWorkerAvatar, mageAvatar,
+    lumbermillWorkerAvatar,
+    mageAvatar,
     smelterAvatar,
     smelterWorkerAvatar,
     stonemasonAvatar,
     stonemasonWorkerAvatar,
     tannerAvatar,
-    tannerWorkerAvatar, toolmakerAvatar, toolmakerWorkshopAvatar, towerAvatar,
+    tannerWorkerAvatar,
+    toolmakerAvatar,
+    toolmakerWorkshopAvatar,
+    towerAvatar,
     warriorAvatar,
     weaverAvatar,
     weaverWorkerAvatar,
@@ -24,33 +30,23 @@ import {
     workBenchHunterHouseButton,
     workBenchHunterHouseButtonInactive,
     workBenchLumbermillButton,
-    workBenchLumbermillButtonInactive, workBenchMageTowerButton, workBenchMageTowerButtonInactive,
+    workBenchLumbermillButtonInactive,
+    workBenchMageTowerButton,
+    workBenchMageTowerButtonInactive,
     workBenchSmelterButton,
     workBenchSmelterButtonInactive,
     workBenchStonemasonButton,
     workBenchStonemasonButtonInactive,
     workBenchTannerButton,
-    workBenchTannerButtonInactive, workBenchToolmakerButton, workBenchToolmakerButtonInactive,
+    workBenchTannerButtonInactive,
+    workBenchToolmakerButton,
+    workBenchToolmakerButtonInactive,
     workBenchWeaverButton,
     workBenchWeaverButtonInactive
 } from "../GMItemSelectorImgReexports/GMItemSelectorImgReexports";
-import {
-    clothItems,
-    leatherItems,
-    metalbarItems,
-    planksItems,
-    stoneBlockItems
-} from "../../../../../store/Items/materials";
-import {
-    huntersCraftItems,
-    mageCraftItems, TCraftItems,
-    toolmakerCraftItems,
-    warriorCraftItems
-} from "../../../../../store/Items/craftItems";
+
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
-import {
-    GMProfitSliceActions,
-} from "../../../../../store/GMProfit/gm-profit-slice";
+import {GMProfitSliceActions,} from "../../../../../store/GMProfit/gm-profit-slice";
 import {ICraftingItemClass, TItemTypeSelected} from "../../../../../types/craftItemsType";
 import {selectCalculatorType} from "../../../../../store/interface/interface-selector";
 
@@ -60,7 +56,6 @@ interface IWorkBenchButton {
     selectedButtonImage: string;
     workBenchAvatar: string;
     workerAvatar: string;
-    craftItems: TCraftItems[];
 }
 
 type TWorkBenchNodeSelectorButtons = {
@@ -75,7 +70,6 @@ const workBenchNodeSelectorButtons: TWorkBenchNodeSelectorButtons = {
             selectedButtonImage: workBenchTannerButton,
             workBenchAvatar: tannerAvatar,
             workerAvatar: tannerWorkerAvatar,
-            craftItems: leatherItems,
         },
         {
             workBenchType: 'weaver',
@@ -83,7 +77,6 @@ const workBenchNodeSelectorButtons: TWorkBenchNodeSelectorButtons = {
             selectedButtonImage: workBenchWeaverButton,
             workBenchAvatar: weaverAvatar,
             workerAvatar: weaverWorkerAvatar,
-            craftItems: clothItems,
         },
         {
             workBenchType: 'lumbermill',
@@ -91,7 +84,6 @@ const workBenchNodeSelectorButtons: TWorkBenchNodeSelectorButtons = {
             selectedButtonImage: workBenchLumbermillButton,
             workBenchAvatar: lumbermillAvatar,
             workerAvatar: lumbermillWorkerAvatar,
-            craftItems: planksItems,
         },
         {
             workBenchType: 'smelter',
@@ -99,7 +91,6 @@ const workBenchNodeSelectorButtons: TWorkBenchNodeSelectorButtons = {
             selectedButtonImage: workBenchSmelterButton,
             workBenchAvatar: smelterAvatar,
             workerAvatar: smelterWorkerAvatar,
-            craftItems: metalbarItems,
         },
         {
             workBenchType: 'stonemason',
@@ -107,7 +98,6 @@ const workBenchNodeSelectorButtons: TWorkBenchNodeSelectorButtons = {
             selectedButtonImage: workBenchStonemasonButton,
             workBenchAvatar: stonemasonAvatar,
             workerAvatar: stonemasonWorkerAvatar,
-            craftItems: stoneBlockItems,
         }
     ],
     'items': [
@@ -117,7 +107,6 @@ const workBenchNodeSelectorButtons: TWorkBenchNodeSelectorButtons = {
             selectedButtonImage: workBenchForgeButton,
             workBenchAvatar: forgeAvatar,
             workerAvatar: warriorAvatar,
-            craftItems: warriorCraftItems,
         },
         {
             workBenchType: 'hunter',
@@ -125,7 +114,6 @@ const workBenchNodeSelectorButtons: TWorkBenchNodeSelectorButtons = {
             selectedButtonImage: workBenchHunterHouseButton,
             workBenchAvatar: houseAvatar,
             workerAvatar: hunterAvatar,
-            craftItems: huntersCraftItems,
         },
         {
             workBenchType: 'mage',
@@ -133,7 +121,6 @@ const workBenchNodeSelectorButtons: TWorkBenchNodeSelectorButtons = {
             selectedButtonImage: workBenchMageTowerButton,
             workBenchAvatar: towerAvatar,
             workerAvatar: mageAvatar,
-            craftItems: mageCraftItems,
         },
         {
             workBenchType: 'toolmaker',
@@ -141,7 +128,6 @@ const workBenchNodeSelectorButtons: TWorkBenchNodeSelectorButtons = {
             selectedButtonImage: workBenchToolmakerButton,
             workBenchAvatar: toolmakerWorkshopAvatar,
             workerAvatar: toolmakerAvatar,
-            craftItems: toolmakerCraftItems,
         },
 
     ],
@@ -158,26 +144,23 @@ const WorkBenchTypeSelector = () => {
         workBenchTypeButtonRef.current!.click();
     }, [calculatorType]);
 
-
-    const [isWorkBenchTypeSelectorShown, setIsWorkBenchTypeSelectorShown] = useState(false);
     const workBenchTypeSelected = useSelector(selectWorkBenchType);
 
 
-    const selectWorkBenchTypeHandler = (workBenchType: ICraftingItemClass, workBenchAvatar: string, workBenchWorkerAvatar: string, craftingItems: TCraftItems[],) => {
+    const selectWorkBenchTypeHandler = (workBenchType: ICraftingItemClass, workBenchAvatar: string, workBenchWorkerAvatar: string,) => {
         dispatchAction(interfaceSliceActions.setIsCraftingFormVisible(false));
         dispatchAction(GMProfitSliceActions.setWorkBenchTypeSelected({
             workBenchType,
             workBenchAvatar,
             workBenchWorkerAvatar,
-            craftingItems,
         }));
 
         let itemType: TItemTypeSelected;
 
-        if (calculatorType === 'resource'){
+        if (calculatorType === 'resource') {
             itemType = 'resources';
         } else {
-            if (workBenchType !== 'toolmaker'){
+            if (workBenchType !== 'toolmaker') {
                 itemType = 'weapon';
             } else {
                 itemType = 'tools';
@@ -187,16 +170,7 @@ const WorkBenchTypeSelector = () => {
         dispatchAction(GMProfitSliceActions.setItemTypeSelected(itemType));
     }
 
-    return <div
-        onMouseEnter={() => {
-            setIsWorkBenchTypeSelectorShown(true);
-        }}
-        onMouseLeave={() => {
-            setIsWorkBenchTypeSelectorShown(false);
-        }}
-        className={isWorkBenchTypeSelectorShown ? styles.workBenchTypeSelectorShown : styles.workBenchTypeSelectorHidden}
-        style={{width: `${!isWorkBenchTypeSelectorShown ? 50 : calculatorType === 'items' ? 210 : 260}px`}}
-    >
+    return <div className={styles.workBenchTypeSelector} data-selected={calculatorType}>
         {workBenchNodeSelectorButtons[calculatorType].map((button, index) => {
             const {
                 workBenchType,
@@ -204,7 +178,6 @@ const WorkBenchTypeSelector = () => {
                 workerAvatar,
                 buttonImage,
                 selectedButtonImage,
-                craftItems
             } = button;
 
             return <StyledWorkBenchTypeButton
@@ -214,9 +187,8 @@ const WorkBenchTypeSelector = () => {
                 $isSelected={workBenchTypeSelected === workBenchType}
                 $buttonImage={buttonImage}
                 $selectedButtonImage={selectedButtonImage}
-                $isSelectorShown={isWorkBenchTypeSelectorShown}
                 onClick={() => {
-                    selectWorkBenchTypeHandler(workBenchType, workBenchAvatar, workerAvatar, craftItems);
+                    selectWorkBenchTypeHandler(workBenchType, workBenchAvatar, workerAvatar);
                 }}
             />
         })}

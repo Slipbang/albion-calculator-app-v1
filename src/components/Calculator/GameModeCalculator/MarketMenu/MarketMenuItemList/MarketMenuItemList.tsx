@@ -19,23 +19,25 @@ const MarketMenuItemList = () => {
     const {language, selectedLanguage} = useSelector(selectLanguage);
     const {marketMenuStrings} = language;
 
-    return <StyledThumb>
-        <div className={styles.materials} data-notification={marketMenuStrings.alert}>
-            {selectedMarketItems === deferredMarketItems && deferredMarketItems.map((item, index) => {
+    return (
+        <StyledThumb>
+            <div className={styles.materials} data-notification={marketMenuStrings.alert}>
+                {selectedMarketItems === deferredMarketItems && deferredMarketItems.map((item, index) => {
 
-                const {itemId} = item;
+                    const {itemId} = item;
 
-                return (itemId !== null) &&
-                    <MarketMenuItem
-                        item={item}
-                        key={index}
-                        index={index}
-                        selectedLanguage={selectedLanguage}
-                    />
-            })}
-            {selectedMarketItems !== deferredMarketItems && Array.from({length: 10}).map((_, index) => <MarketItemLoader key={index} />)}
-        </div>
-    </StyledThumb>
+                    return (itemId !== null) &&
+                        <MarketMenuItem
+                            item={item}
+                            key={index}
+                            index={index}
+                            selectedLanguage={selectedLanguage}
+                        />
+                })}
+                {selectedMarketItems !== deferredMarketItems && Array.from({length: 10}).map((_, index) => <MarketItemLoader key={index} />)}
+            </div>
+        </StyledThumb>
+    )
 }
 
 export default MarketMenuItemList;

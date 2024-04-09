@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import language from "../Items/language";
+import language from "./language";
 import {ISelectedLanguage, TSelectedLanguage} from "../../types/languageTypes";
 
 const defineLanguage = (): TSelectedLanguage => {

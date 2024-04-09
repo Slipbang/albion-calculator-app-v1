@@ -14,7 +14,7 @@ export type TItemNode = 'axe' | 'dagger' | 'hammer' | 'warGloves' | 'mace'
     | 'demolitionHammer' | 'fishingRod' | 'toolAxe' | 'stoneHammer' | 'harvesterGarb'
     | 'fishermanGarb' | 'skinnerGarb' | 'minerGarb' | 'quarrierGarb'
     | 'lumberjackGarb' | 'harvesterCap' | 'fishermanCap' | 'skinnerCap'
-    | 'minerCap' | 'Quarrier Cap' | 'quarrierCap' | 'lumberjackCap'
+    | 'minerCap' | 'quarrierCap' | 'lumberjackCap'
     | 'harvesterWorkboots' | 'fishermanWorkboots' | 'skinnerWorkboots'
     | 'minerWorkboots' | 'quarrierWorkboots' | 'lumberjackWorkboots'
     | 'CLOTH' | 'LEATHER' | 'METALBAR' | 'PLANKS' | 'STONEBLOCK'
@@ -31,24 +31,24 @@ export type TWorkBenchNames  = 'Кузница' | 'Охотничий домик
     | 'Mage\'s Tower' | 'Toolmaker' | 'Smelter' | 'Lumbermill' | 'Tanner' | 'Stonemason' | 'Weaver';
 
 export interface ICraftItem {
-    itemId: string;
+    itemId: string | null;
     itemName?: {
         'ru': string;
         'en': string;
     };
     itemNode?: TItemNode;
     itemExample?: boolean;
-    PLANKS?: number;
-    METALBAR?: number;
-    LEATHER?: number;
-    CLOTH?: number;
-    STONEBLOCK?: number;
+    PLANKS?: number | null;
+    METALBAR?: number | null;
+    LEATHER?: number | null;
+    CLOTH?: number | null;
+    STONEBLOCK?: number | null;
     WOOD?: number | null;
     ORE?: number | null;
     ROCK?: number | null;
     FIBER?: number | null;
     HIDE?: number | null;
-    itemClass?: ICraftingItemClass;
+    itemClass?: ICraftingItemClass | '';
     itemType?: TCraftItemType;
     foodConsumption?: number;
     artefactItemId?: string;

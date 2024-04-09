@@ -1,5 +1,4 @@
 import StyledCraftingButton from "../GMCraftingFormSC/StyledCraftingButton";
-import {IBagCell} from "../../../../../store/Items/craftItems";
 import {TItemNode} from "../../../../../types/craftItemsType";
 import {GMProfitSliceActions} from "../../../../../store/GMProfit/gm-profit-slice";
 import {useAppDispatch} from "../../../../../store";
@@ -29,6 +28,7 @@ import {
     selectFoodTax,
     selectWorkBenchItem
 } from "../../../../../store/GMProfit/gm-profit-selectors";
+import {IBagCell} from "../../../../../store/Items/workBenchSelectorItems_marketItems";
 
 const CraftingButton = (props: { calculatorType: TCalcProps }) => {
     const {calculatorType} = props;
@@ -87,23 +87,23 @@ const CraftingButton = (props: { calculatorType: TCalcProps }) => {
     } = useJournals({isJournalUsed, itemsQuantity, selectedWorkBenchItem, enchantmentNum});
 
     const {
-        totalArtefactPrice
+        totalArtefactPrice,
     } = useArtefacts({
         itemsQuantity,
         selectedWorkBenchItem,
         fetchedArtefactPrice,
         ownArtefactPrice,
-        isArtefactPriceFetched
+        isArtefactPriceFetched,
     });
 
     const {
-        totalFoodTax
+        totalFoodTax,
     } = useTotalFoodTaxCalculation({
         calculatorType,
         enchantmentNum,
         foodTax,
         itemsQuantity,
-        selectedWorkBenchItem
+        selectedWorkBenchItem,
     });
 
     const {
@@ -178,7 +178,7 @@ const CraftingButton = (props: { calculatorType: TCalcProps }) => {
             $isRuSelected={isRuSelected}
             $isActive={!!maxQuantity && !backpackIsOverflowed}
             disabled={!maxQuantity && backpackIsOverflowed}
-            onClick={() => craftItemsHandler()}
+            onClick={craftItemsHandler}
         />
     )
 }

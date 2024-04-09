@@ -1,4 +1,4 @@
-import React from "react";
+import {memo} from "react";
 
 import StyledMarketMenu from "./MarketMenuSC/StyledMarketMenu";
 
@@ -7,19 +7,21 @@ import MarketMenuItemList from "./MarketMenuItemList/MarketMenuItemList";
 import MarketMenuToggleButton from "./MarketMenuButtons/MarketMenuToggleButton";
 import MarketMenuHeader from "./MarketMenuHeader/MarketMenuHeader";
 
-const MarketMenu = React.memo(() => {
+const MarketMenu = () => {
 
-    return <>
-        <MarketMenuTypeButtons />
+    return (
+        <>
+            <MarketMenuTypeButtons />
 
-        <StyledMarketMenu>
-            <MarketMenuToggleButton />
+            <StyledMarketMenu>
+                <MarketMenuToggleButton />
 
-            <MarketMenuHeader />
+                <MarketMenuHeader />
 
-            <MarketMenuItemList />
-        </StyledMarketMenu>
-    </>
-})
+                <MarketMenuItemList />
+            </StyledMarketMenu>
+        </>
+    )
+}
 
-export default MarketMenu;
+export default memo(MarketMenu);

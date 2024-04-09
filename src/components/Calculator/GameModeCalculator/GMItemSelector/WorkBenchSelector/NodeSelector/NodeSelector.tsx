@@ -19,15 +19,17 @@ const NodeSelector = () => {
         dispatchAction(interfaceSliceActions.setSelectedNodeIS(option));
     }
 
-    return <CustomItemSelector
-        setSelectedParams={setSelectedNode}
-        paramsOptions={nodeOptions[workBenchTypeSelected][itemTypeSelected]!}
-        paramState={selectedNode}
-        customOptionSelectedClass={styles.customNodeOptionSelected}
-        customOptionClass={styles.customNodeOption}
-        selectInputClass={styles.selectNodeStyle}
-        paramsSelectorClass={styles.nodeSelector}
-    />
+    return (
+        <CustomItemSelector
+            setSelectedParams={setSelectedNode}
+            paramsOptions={nodeOptions[workBenchTypeSelected][itemTypeSelected]!}
+            paramState={selectedNode}
+            customOptionSelectedClass={styles.customNodeOptionSelected}
+            customOptionClass={styles.customNodeOption}
+            selectInputClass={styles.selectNodeStyle}
+            paramsSelectorClass={styles.nodeSelector}
+        />
+    )
 }
 
 export default NodeSelector;

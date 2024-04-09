@@ -287,7 +287,7 @@ const language: TLanguage = {
             artefacts: 'Artefacts',
             craftCalculator: 'Craft',
             transportation: 'Transportation',
-            artefactsDescription: 'In the "Artifacts" section you can see all the prices of artefacts obtained from the Albion Online Data Project, as well as get all the names of artifacts for an easier search on the market.',
+            artefactsDescription: 'In the "Artefacts" section you can see all the prices of artefacts obtained from the Albion Online Data Project, as well as get all the names of artifacts for an easier search on the market.',
             craftCalculatorDescription: 'In the "Crafting" section there are two calculators - using a regular calculator you can quickly calculate the profit from crafting a certain tier, as well as accompanying enchantments, but using the "Game Mode" mode you can visually calculate the profit as it would happened in the game, but without running around.',
             transportationDescription: 'In the "Transportation" section, the most profitable items for sale from any city to the Black Market or to any other city are sorted using the Albion Online Data Project database.',
             language: 'language',

@@ -1,5 +1,5 @@
+import styles from './MarketMenuItem.module.scss';
 import StyledMarketActionButton from "../../MarketMenuSC/StyledMarketActionButton";
-import {IBagCell} from "../../../../../../store/Items/craftItems";
 import {useAppDispatch} from "../../../../../../store";
 import {useSelector} from "react-redux";
 import {
@@ -11,8 +11,8 @@ import {
 import {selectMarketAction} from "../../../../../../store/GMProfit/gm-profit-selectors";
 import {GMProfitSliceActions} from "../../../../../../store/GMProfit/gm-profit-slice";
 import {interfaceSliceActions} from "../../../../../../store/interface/interface-slice";
-import styles from './MarketMenuItem.module.scss';
 import {TSelectedLanguage} from "../../../../../../types/languageTypes";
+import {IBagCell} from "../../../../../../store/Items/workBenchSelectorItems_marketItems";
 
 interface IMarketMenuItemProps {
     item: IBagCell;
@@ -46,7 +46,7 @@ const MarketMenuItem = ({item, index, selectedLanguage}: IMarketMenuItemProps) =
     return (
         <div
             className={styles.materialItem}
-            style={validateItemHandler(itemNode, itemEnchantmentNum, itemTier, itemName?.[selectedLanguage]!) ? {display: 'flex'} : {display: 'none'}}
+            style={validateItemHandler(itemNode!, itemEnchantmentNum, itemTier, itemName?.[selectedLanguage]!) ? {display: 'flex'} : {display: 'none'}}
         >
             <div
                 title={itemName?.[selectedLanguage]}

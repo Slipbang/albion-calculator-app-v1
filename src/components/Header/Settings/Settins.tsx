@@ -42,19 +42,18 @@ const Settings = () => {
                 </svg>
             </div>
 
+            <div className={styles.serverNotificationText}>{serverOptions.find(option => option.value === serverId)?.labelName[selectedLanguage]}</div>
+
             <div className={styles.settings}>
 
                 <div className={styles.themeWrapper}>
-                    <div className={styles.theme}
-                         onClick={() => selectThemeHandler()}
-                    >
-                        <div className={styles.sun}>
-                            <div className={styles.starWrap}>
-                                <div className={styles.star1}>★</div>
-                                <div className={styles.star2}>★</div>
-                            </div>
-                        </div>
+
+                    <div className={styles.theme} onClick={() => selectThemeHandler()}>
+
+                        <div className={styles.sun}>✷</div>
+
                         <div className={styles.moon}></div>
+
                     </div>
                 </div>
 
@@ -69,7 +68,7 @@ const Settings = () => {
                                     onClick={() => selectServerHandler(value)}
                                 >{labelName[selectedLanguage]}</p>
                             )
-                        }) }
+                        })}
                     </div>
                 </div>
 

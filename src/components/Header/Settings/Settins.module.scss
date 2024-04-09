@@ -21,6 +21,19 @@
     }
   }
 
+  .serverNotificationText {
+    font-weight: 700;
+    text-align: center;
+    font-size: 12px;
+    border-left: 2px solid var(--header-color);
+    border-bottom: 2px solid var(--header-color);
+    padding: 2px 5px;
+    color: var(--color-table-text);
+    position: absolute;
+    top: 65px;
+    right: 0;
+  }
+
   .settings {
     position: fixed;
     right: 0;
@@ -84,36 +97,17 @@
           left: var(--left);
           width: 29px;
           height: 29px;
-          background-color: #ffd044;
+          background-color: var(--background-color-sun);
           transform: var(--scale);
           border-radius: 50%;
-          transition: 0.5s ease top, 0.5s ease left, 0.5s ease transform;
-
-          .starWrap{
-            position: absolute;
-            top: -22px;
-            width: 54px;
-            height: 54px;
-            display: flex;
-
-            .star1 {
-              position: absolute;
-              top: -5px;
-              left: -8px;
-              font-size: 54px;
-              color: #ffd044;
-            }
-
-            .star2 {
-              position: absolute;
-              top: -4px;
-              left: -5px;
-              font-size: 54px;
-              color: #ffd044;
-              transform: rotateZ(36deg);
-            }
-          }
+          display: flex;
+          justify-content: center;
+          font-size: 3.4rem;
+          color: var(--color-star);
+          line-height: 1.5rem;
+          transition: 0.5s ease top, 0.5s ease left, 0.5s ease transform, 0.5s ease background-color, 0.5s ease color;
         }
+
 
         .moon {
           z-index: 1;
@@ -160,4 +154,13 @@
     transform: translate(0, 0);
     transition: 0.3s ease transform;
   }
+}
+
+[data-theme="dark"] {
+  --background-color-sun: transparent;
+  --color-star: #ffd044;
+}
+[data-theme="light"] {
+  --background-color-sun: #ffd044;
+  --color-star: transparent;
 }

@@ -20,20 +20,18 @@ export const GMItemSelector = React.memo(() => {
         <>
             {calculatorType === 'items' && <WorkBenchButtons />}
 
-            <StyledWorkBench>
-                <div className={styles.wrapper}>
-                    <WorkBenchTypeSelector />
+            <StyledWorkBench className={styles.wrapper}>
+                <WorkBenchTypeSelector />
 
-                    <WorkBenchHeader />
+                <WorkBenchHeader />
 
-                    <FoodTaxBox />
+                <FoodTaxBox />
 
-                    <WorkBenchItemInput />
+                <WorkBenchItemInput />
 
-                    <WorkBenchSelectors />
+                <WorkBenchSelectors />
 
-                    <WorkBenchItemSelector />
-                </div>
+                <WorkBenchItemSelector />
             </StyledWorkBench>
         </>
     )

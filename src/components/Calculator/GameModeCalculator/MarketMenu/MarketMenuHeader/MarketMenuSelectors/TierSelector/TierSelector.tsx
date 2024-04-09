@@ -15,15 +15,17 @@ const TierSelector = () => {
         dispatchAction(interfaceSliceActions.setSelectedTierMM(option));
     }
 
-    return <CustomItemSelector
-        setSelectedParams={setSelectedTier}
-        paramsOptions={tierOptions}
-        paramState={selectedTier}
-        customOptionSelectedClass={styles.customOptionSelected}
-        customOptionClass={styles.customOption}
-        selectInputClass={styles.selectTierStyle}
-        paramsSelectorClass={styles.tierSelector}
-    />
+    return (
+        <CustomItemSelector
+            setSelectedParams={setSelectedTier}
+            paramsOptions={tierOptions}
+            paramState={selectedTier}
+            customOptionSelectedClass={styles.customOptionSelected}
+            customOptionClass={styles.customOption}
+            selectInputClass={styles.selectTierStyle}
+            paramsSelectorClass={styles.tierSelector}
+        />
+    )
 }
 
 export default TierSelector;
