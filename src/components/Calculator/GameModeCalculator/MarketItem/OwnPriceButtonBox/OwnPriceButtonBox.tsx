@@ -16,14 +16,16 @@ const OwnPriceButtonBox = () => {
         dispatchAction(interfaceSliceActions.setIsPriceFetchedMI())
     }
 
-    return <div className={styles.ownPriceButtonBox}>
-        <p>{marketItemStings.ownPriceLabel}</p>
-        <StyledCustomCheckButton
-            style={{marginLeft: '15px'}}
-            $isSelected={isPriceFetched}
-            onClick={() => setIsPriceFetchedHandler()}
-        />
-    </div>
+    return (
+        <div className={styles.ownPriceButtonBox}>
+            <p>{marketItemStings.ownPriceLabel}</p>
+            <StyledCustomCheckButton
+                style={{marginLeft: '15px'}}
+                $isSelected={isPriceFetched}
+                onClick={() => setIsPriceFetchedHandler()}
+            />
+        </div>
+    )
 }
 
 export default OwnPriceButtonBox;

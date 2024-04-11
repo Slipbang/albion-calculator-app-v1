@@ -90,9 +90,7 @@ const PercentInput = (props: IPercentInputProps) => {
     }
 
     const focusHandler = useCallback(debounce(() => {
-        if (inputPercentRef.current) {
-            inputPercentRef.current.focus();
-        }
+        inputPercentRef.current?.focus();
     }, 1), []);
 
     const chooseMethodHandler = (status: boolean) => {
@@ -152,6 +150,7 @@ const PercentInput = (props: IPercentInputProps) => {
                         value={percent}
                         id='CFReturnPercentInput'
                         type="number"
+                        onFocus={() => inputPercentRef.current?.select()}
                         onChange={event => changeInputPercentHandler(event)}
                         onKeyDown={event => {
                             if (event.key === 'Enter') {

@@ -7,7 +7,7 @@ import StyledDecreasePriceButton from "../../MarketItemSC/StyledDecreasePriceBut
 import StyledIncreasePriceButton from "../../MarketItemSC/StyledIncreasePriceButton";
 import {useSelector} from "react-redux";
 import {selectOwnItemPriceMI, selectPriceFetchedState} from "../../../../../../store/interface/interface-selector";
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
 import {useLazyGetItemsDataQuery} from "../../../../../../store/api/api";
 import {selectMarketAction, selectMarketItem} from "../../../../../../store/GMProfit/gm-profit-selectors";
 import {useAppDispatch} from "../../../../../../store";
@@ -27,6 +27,8 @@ const ItemPriceSelector = () => {
     const selectedMarketItem = useSelector(selectMarketItem);
     const {itemId} = selectedMarketItem;
     const serverId = useSelector(selectServerId);
+
+    const itemOwnPriceInputRef = useRef<HTMLInputElement>(null)
 
     const setOwnItemPriceHandler = (value: number) => {
         if (value >= 0) {
@@ -92,7 +94,9 @@ const ItemPriceSelector = () => {
                     id='MIItemPriceInput'
                     type="number"
                     value={ownItemPrice}
+                    ref={itemOwnPriceInputRef}
                     onChange={(event) => setOwnItemPriceHandler(+event.target.value)}
+                    onFocus={() => itemOwnPriceInputRef.current?.select()}
                 />
                 <StyledIncreasePriceButton
                     onClick={() => setOwnItemPriceHandler(ownItemPrice + 1)}

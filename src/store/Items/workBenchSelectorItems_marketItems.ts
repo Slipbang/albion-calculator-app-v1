@@ -81,7 +81,7 @@ const objectTypeKeys = Object.keys(craftItems) as TCraftObjectTypes[];
 
 objectTypeKeys.forEach(itemTypeKey => craftItems[itemTypeKey].forEach(itemForSelect => [4, 5, 6, 7, 8].forEach(itemTier => {
 
-    const {artefactItemId, itemClass, itemNode, CLOTH, LEATHER, PLANKS, METALBAR, STONEBLOCK, foodConsumption, itemName} = itemForSelect;
+    const {artefactItemId, itemClass, itemNode, CLOTH, LEATHER, PLANKS, METALBAR, STONEBLOCK, foodConsumption, itemName, ORE, ROCK, HIDE, FIBER, WOOD} = itemForSelect;
 
     let itemId: string;
 
@@ -220,6 +220,11 @@ objectTypeKeys.forEach(itemTypeKey => craftItems[itemTypeKey].forEach(itemForSel
         PLANKS: PLANKS || null,
         METALBAR: METALBAR || null,
         STONEBLOCK: STONEBLOCK || null,
+        WOOD: WOOD || null,
+        ORE: ORE || null,
+        ROCK: ROCK || null,
+        FIBER: FIBER || null,
+        HIDE: HIDE || null,
         itemName,
         itemNode: itemNode!,
         itemTier,

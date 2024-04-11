@@ -30,4 +30,11 @@ export const links: TLinks = [
         },
         link: '/transportation',
     },
+    {
+        linkName: {
+            ru: 'FAQ',
+            en: 'FAQ',
+        },
+        link: '/FAQ'
+    },
 ];

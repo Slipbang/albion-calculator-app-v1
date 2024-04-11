@@ -3,7 +3,7 @@ import StyledImageBox from "../../../../StyledComponentsCommon/StyledImageBox";
 import {silver} from "../../../../CommonImgReexports/CommonImgReexports";
 import CustomPriceSelector from "../../../../CustomSelectors/CustomPriceSelector";
 import {useJournals} from "../../Hooks/useJournals";
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
 import {useAppDispatch} from "../../../../../../store";
 import {interfaceSliceActions} from "../../../../../../store/interface/interface-slice";
 import {useLazyGetItemsDataQuery} from "../../../../../../store/api/api";
@@ -26,6 +26,8 @@ const JournalsSelectors = () => {
 
     const {language} = useSelector(selectLanguage);
     const {GMCraftingFormStrings} = language;
+
+    const journalPriceInputRef = useRef<HTMLInputElement>(null)
 
     const isJournalUsed = useSelector(selectJournalUsageCF);
     const enchantmentNum = useSelector(selectEnchantmentNumCF);
@@ -87,11 +89,13 @@ const JournalsSelectors = () => {
                     <div className={styles.journalLabels}>
                         <StyledImageBox $position={'static'} $image={silver} $height={30} $width={30}/>
                         <input
+                            ref={journalPriceInputRef}
                             value={ownJournalPrice}
                             id='CFJournalPriceInput'
                             type="number"
                             step={1}
                             min={0}
+                            onFocus={() => journalPriceInputRef.current?.select()}
                             onChange={(event) => {
                                 if (+event.target.value >= 0) {
                                     setOwnJournalPriceHandler(+event.target.value);

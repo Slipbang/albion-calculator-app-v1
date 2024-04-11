@@ -6,7 +6,7 @@ import StyledRangeButtonPlus from "../../../../StyledComponentsCommon/StyledRang
 import {useAppDispatch} from "../../../../../../store";
 import {useSelector} from "react-redux";
 import {selectItemQuantityMI} from "../../../../../../store/interface/interface-selector";
-import {ChangeEvent, useEffect} from "react";
+import {ChangeEvent, useEffect, useRef} from "react";
 import {useMaxQuantityCalculation} from "../../Hooks/useMaxQuantityCalculation";
 import styles from './QuantityInput.module.scss';
 import {selectLanguage} from "../../../../../../store/language/language-selector";
@@ -17,6 +17,8 @@ const QuantityInput = () => {
     const itemInputQuantity = useSelector(selectItemQuantityMI);
     const {language} = useSelector(selectLanguage);
     const {marketItemStings} = language;
+
+    const quantityInputRef = useRef<HTMLInputElement>(null);
 
     const {maxQuantity} = useMaxQuantityCalculation();
 
@@ -43,6 +45,7 @@ const QuantityInput = () => {
                     id='MIItemQuantityInput'
                     min={1}
                     type="number"
+                    ref={quantityInputRef}
                     style={{left: `${calculateNewLeft()}%`}}
                     value={itemInputQuantity}
                     onChange={(event) => {
@@ -50,6 +53,7 @@ const QuantityInput = () => {
                             changeItemQuantityHandler(event)
                         }
                     }}
+                    onFocus={() => quantityInputRef.current?.select()}
                 />
             </div>
             <StyledRangeButtonMinus

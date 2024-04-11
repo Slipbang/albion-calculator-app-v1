@@ -166,6 +166,10 @@ const CraftingButton = (props: { calculatorType: TCalcProps }) => {
         }
     }
 
+    const isReturnPercentInputValid = (value: number) => {
+        return value >= 15.2 && value <= 70;
+    }
+
     return (
         <StyledCraftingButton
             onDragStart={event => event.preventDefault()}
@@ -176,8 +180,8 @@ const CraftingButton = (props: { calculatorType: TCalcProps }) => {
 
             draggable={true}
             $isRuSelected={isRuSelected}
-            $isActive={!!maxQuantity && !backpackIsOverflowed}
-            disabled={!maxQuantity && backpackIsOverflowed}
+            $isActive={!!maxQuantity && !backpackIsOverflowed && isReturnPercentInputValid(returnPercent)}
+            disabled={!maxQuantity || backpackIsOverflowed || !isReturnPercentInputValid(returnPercent)}
             onClick={craftItemsHandler}
         />
     )

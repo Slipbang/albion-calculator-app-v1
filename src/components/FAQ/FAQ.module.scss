@@ -1,0 +1,45 @@
+.FAQStyles {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+  width: 100%;
+  height: 100vh;
+  min-height: 250px;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  p {
+    width: 80%;
+    color: white;
+    font-size: 20px;
+  }
+
+  a {
+    padding-left: 5px;
+    color: white;
+  }
+}
+
+@media (max-height: 300px) {
+  p:first-child {
+    padding-top: 50px;
+  }
+}
+
+@media (max-width: 900px) {
+  .FAQStyles {
+    p {
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 550px) {
+  .FAQStyles {
+    p {
+      font-size: 14px;
+    }
+  }
+}

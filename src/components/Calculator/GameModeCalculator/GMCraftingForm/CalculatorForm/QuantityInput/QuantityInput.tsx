@@ -6,7 +6,7 @@ import StyledRangeButtonPlus from "../../../../StyledComponentsCommon/StyledRang
 import {useSelector} from "react-redux";
 import {useAppDispatch} from "../../../../../../store";
 import {interfaceSliceActions} from "../../../../../../store/interface/interface-slice";
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
 import {useMaterialsCalculation} from "../../Hooks/useMaterialsCalculation";
 import styles from './QuantityInput.module.scss';
 import {selectLanguage} from "../../../../../../store/language/language-selector";
@@ -23,6 +23,8 @@ const QuantityInput = () => {
     const {language} = useSelector(selectLanguage);
     const {GMCraftingFormStrings} = language;
 
+    const inputAmountRef = useRef<HTMLInputElement>(null)
+
     const backpackItems = useSelector(selectBackpackItems);
     const enchantmentNum = useSelector(selectEnchantmentNumCF);
     const itemsQuantity = useSelector(selectItemsQuantityCF);
@@ -30,7 +32,7 @@ const QuantityInput = () => {
     const selectedWorkBenchItem = useSelector(selectWorkBenchItem);
     const {itemId} = selectedWorkBenchItem;
 
-    const {maxQuantity,} = useMaterialsCalculation({itemsQuantity, enchantmentNum, selectedWorkBenchItem, materialEnchantment, backpackItems});
+    const {maxQuantity} = useMaterialsCalculation({itemsQuantity, enchantmentNum, selectedWorkBenchItem, materialEnchantment, backpackItems});
 
 
     const calculateInputNumberLeft = () => {
@@ -63,10 +65,12 @@ const QuantityInput = () => {
                         type="number"
                         min={1}
                         max={maxQuantity}
+                        ref={inputAmountRef}
                         style={{left: `${calculateInputNumberLeft()}%`}}
                         value={itemsQuantity * (itemId!.includes('STONEBLOCK') && +enchantmentNum > 0 ? Math.pow(2, +enchantmentNum) : 1)}
                         step={1}
                         onChange={(event) => setItemsQuantityHandler(+event.target.value)}
+                        onFocus={() => inputAmountRef.current?.select()}
                     />
                 </div>
                 <div className={styles.quantityLabel}>

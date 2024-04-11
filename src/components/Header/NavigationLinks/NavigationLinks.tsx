@@ -1,12 +1,12 @@
 import {NavLink} from "react-router-dom";
-import {links} from "../NavigationLinks";
-import styles from './MobileNavigationLinks.module.scss';
+import {links} from "../../../store/Options/NavigationLinks";
+import styles from './NavigationLinks.module.scss';
 import {useSelector} from "react-redux";
-import {selectLanguage} from "../../../../store/language/language-selector";
+import {selectLanguage} from "../../../store/language/language-selector";
 
-const MobileNavigationLinks = () => {
+const NavigationLinks = () => {
     const {selectedLanguage} = useSelector(selectLanguage);
-    return <div className={styles.mobileLinks}>
+    return <div className={styles.navigationLinksStyles}>
         <svg
             width="24"
             height="24"
@@ -19,7 +19,7 @@ const MobileNavigationLinks = () => {
             <path d="M3 17.0645C2.44772 17.0645 2 17.5122 2 18.0645C2 18.6167 2.44772 19.0645 3 19.0645H21C21.5523 19.0645 22 18.6167 22 18.0645C22 17.5122 21.5523 17.0645 21 17.0645H3Z" fill="currentColor"/>
         </svg>
 
-        {<ul className={styles.lowWidthScreenNavigation}>
+        <ul>
             {links.map(({link, linkName}) =>
 
                 <li key={link}>
@@ -31,9 +31,9 @@ const MobileNavigationLinks = () => {
                     </NavLink>
                 </li>
             )}
-        </ul>}
+        </ul>
 
     </div>
 }
 
-export default MobileNavigationLinks;
+export default NavigationLinks;

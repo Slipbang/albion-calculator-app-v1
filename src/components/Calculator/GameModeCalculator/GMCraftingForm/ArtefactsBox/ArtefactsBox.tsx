@@ -4,7 +4,7 @@ import StyledImageBox from "../../../StyledComponentsCommon/StyledImageBox";
 import {silver} from "../../../CommonImgReexports/CommonImgReexports";
 import StyledInfoIcon from "../GMCraftingFormSC/StyledInfoIcon";
 import {useArtefacts} from "../Hooks/useArtefacts";
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import {useSelector} from "react-redux";
 import {useAppDispatch} from "../../../../../store";
 import {interfaceSliceActions} from "../../../../../store/interface/interface-slice";
@@ -21,6 +21,8 @@ import {selectServerId} from "../../../../../store/queryParams/query-params-sele
 
 const ArtefactsBox = () => {
     const dispatchAction = useAppDispatch();
+
+    const artefactPriceInputRef = useRef<HTMLInputElement>(null)
 
     const itemsQuantity = useSelector(selectItemsQuantityCF);
     const isArtefactPriceFetched = useSelector(selectArtefactPriceFetchedStateCF);
@@ -112,11 +114,13 @@ const ArtefactsBox = () => {
                         && <>
                             <StyledImageBox $position={'static'} $image={silver} $height={30} $width={30}/>
                             <input
+                                ref={artefactPriceInputRef}
                                 id='CFArtefactPriceInput'
                                 value={ownArtefactPrice}
                                 type="number"
                                 step={0}
                                 min={1}
+                                onFocus={() => artefactPriceInputRef.current?.select()}
                                 onChange={(event) => {
                                     if (+event.target.value >= 1) {
                                         setOwnArtefactPriceHandler(+event.target.value);

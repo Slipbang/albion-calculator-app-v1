@@ -11,6 +11,16 @@ const StyledMarketMenu = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  
+  svg {
+    position: absolute;
+    width: 75px;
+    margin-left: -70px;
+    margin-top: 28px;
+    z-index: 5;
+    fill: var(--color-svg);
+    transform: rotate(35deg);
+  }
 `
 
 export default StyledMarketMenu;

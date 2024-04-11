@@ -27,6 +27,8 @@
   --border-radius-artefacts: none;
   --border-artefacts: 1px solid white;
   --isChecked-color: red;
+
+  --color-svg: white;
 }
 
 [data-theme="light"] {
@@ -47,4 +49,5 @@
   --border-radius-artefacts: 10px;
   --border-artefacts: none;
   --isChecked-color: lightgreen;
+  --color-svg: black;
 }

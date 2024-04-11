@@ -22,7 +22,7 @@ export type TExtractedMaterialsKeys = Extract<TSelectedWorkBenchItemKeys, 'PLANK
 const GMCraftingForm = () => {
     const calculatorType = useSelector(selectCalculatorType);
 
-    const [position, setPosition] = useState<{ x: number | string, y: number | string }>({x: '50%', y: '50%'});
+    const [position, setPosition] = useState<{ x: number | string, y: number | string }>({x: '50%', y: '52%'});
 
     const dummyImg = new Image();
 
@@ -39,7 +39,6 @@ const GMCraftingForm = () => {
     return (
         <StyledCraftingForm
             style={{
-                position: "absolute",
                 top: position.y,
                 left: position.x,
             }}

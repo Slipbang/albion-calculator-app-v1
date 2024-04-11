@@ -61,6 +61,8 @@ const Home = () => {
                     <p>{homeStrings.language}</p>
                 </div>
 
+                <Link to="/FAQ">FAQ</Link>
+
                 <a href='https://www.albion-online-data.com' target='_blank'>Powered by Albion Online Data Project</a>
             </footer>
         </div>

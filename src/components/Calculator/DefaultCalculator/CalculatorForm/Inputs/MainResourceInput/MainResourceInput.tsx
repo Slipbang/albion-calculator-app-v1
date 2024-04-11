@@ -1,7 +1,7 @@
 import styles from './MainResourceInput.module.scss';
 import StyledCalculatorFormSelector from "../../CalculatorFormSC/StyledCalculatorFormSelector";
 import {profitSliceActions} from "../../../../../../store/profit/profit-slice";
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useRef} from "react";
 import {TCalcProps} from "../../../../../../types/calculatorPropsType";
 import {useAppDispatch} from "../../../../../../store";
 import {useSelector} from "react-redux";
@@ -12,6 +12,8 @@ const MainResourceInput = (props: {calculatorType: TCalcProps, calculatorFormStr
     const {calculatorType, calculatorFormStrings} = props;
 
     const dispatchAction = useAppDispatch();
+
+    const inputAmountRef = useRef<HTMLInputElement>(null);
 
     const quantity = useSelector(selectInitialQuantity);
 
@@ -28,8 +30,10 @@ const MainResourceInput = (props: {calculatorType: TCalcProps, calculatorFormStr
             </p>
                 <StyledCalculatorFormSelector>
                     <input
+                        ref={inputAmountRef}
                         id="DCItemQuantityInput"
                         type="number"
+                        onFocus={() => inputAmountRef.current?.select()}
                         onKeyDown={event => {
                             if (event.key === 'Enter') {
                                 event.preventDefault();

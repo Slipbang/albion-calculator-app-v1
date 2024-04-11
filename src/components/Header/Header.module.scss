@@ -29,7 +29,9 @@
 
 .headerLink{
   text-decoration: none;
-  margin-left: -25%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,0);
 }
 
 .headerLink:hover{

@@ -129,31 +129,6 @@ const GMProfitSlice = createSlice({
                 materialApiId,
             } = action.payload.consumedMaterials;
 
-            const {
-                consumeCLOTHQuantity,
-                consumeFIBERQuantity,
-                consumeHIDEQuantity,
-                consumeLEATHERQuantity,
-                consumeMETALBARQuantity,
-                consumeOREQuantity,
-                consumePLANKSQuantity,
-                consumeROCKQuantity,
-                consumeSTONEBLOCKQuantity,
-                consumeWOODQuantity,
-            } = consumedMaterials;
-            const {
-                PLANKSApiId,
-                METALBARApiId,
-                LEATHERApiId,
-                CLOTHApiId,
-                STONEBLOCKApiId,
-                OREApiId,
-                WOODApiId,
-                HIDEApiId,
-                FIBERApiId,
-                ROCKApiId,
-            } = materialApiId;
-
             const consumeMaterials = (itemId: string, consumedMaterialQuantity: number) => {
                 state.backpackItems.some((item,index) => {
                     if (item.itemId === itemId){
@@ -174,36 +149,13 @@ const GMProfitSlice = createSlice({
                 })
             }
 
-            if (!!consumeCLOTHQuantity){
-                consumeMaterials(CLOTHApiId, consumeCLOTHQuantity)
-            }
-            if (!!consumeLEATHERQuantity){
-                consumeMaterials(LEATHERApiId, consumeLEATHERQuantity)
-            }
-            if (!!consumePLANKSQuantity){
-                consumeMaterials(PLANKSApiId, consumePLANKSQuantity)
-            }
-            if (!!consumeMETALBARQuantity){
-                consumeMaterials(METALBARApiId, consumeMETALBARQuantity)
-            }
-            if (!!consumeSTONEBLOCKQuantity){
-                consumeMaterials(STONEBLOCKApiId, consumeSTONEBLOCKQuantity)
-            }
-
-            if (!!consumeOREQuantity){
-                consumeMaterials(OREApiId, consumeOREQuantity)
-            }
-            if (!!consumeWOODQuantity){
-                consumeMaterials(WOODApiId, consumeWOODQuantity)
-            }
-            if (!!consumeHIDEQuantity){
-                consumeMaterials(HIDEApiId, consumeHIDEQuantity)
-            }
-            if (!!consumeFIBERQuantity){
-                consumeMaterials(FIBERApiId, consumeFIBERQuantity)
-            }
-            if (!!consumeROCKQuantity){
-                consumeMaterials(ROCKApiId, consumeROCKQuantity)
+            //проверяем на наличие потребленного ресурса и сопоставляем имя этой же переменной с телом переменной apiId через цикл и помещаем их в аргументы функции consumeMaterials если true
+            for(const CMKey in consumedMaterials) {
+                for(const MAIdKey in materialApiId){
+                    if (!!consumedMaterials[CMKey as keyof IConsumedMaterials['consumedMaterials']] && CMKey.includes(MAIdKey.split('ApiId')[0])){
+                        consumeMaterials(materialApiId[MAIdKey as keyof IConsumedMaterials['materialApiId']]!, consumedMaterials[CMKey as keyof IConsumedMaterials['consumedMaterials']]!)
+                    }
+                }
             }
 
             const addItem = (itemQuantity: number) => {
