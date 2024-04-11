@@ -63,5 +63,5 @@ export class artefactsPrices {
                  </table
                  <p>${this.artefactsStrings.value} ${this.itemValue[this.artefactTierNum - 4]}</p>
                  <div/>
-            `
+            `;
 }

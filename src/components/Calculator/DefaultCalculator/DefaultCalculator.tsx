@@ -33,7 +33,7 @@ const DefaultCalculator = () => {
     const {defaultCalculatorStyles, craftTableStyles} = defineStyles();
 
     return <div className={styles.wrapper}>
-        {isInfoTableShown && <InfoTable />}
+        {!!isInfoTableShown && <InfoTable />}
 
         <div className={defaultCalculatorStyles}>
             <CalculatorForm />

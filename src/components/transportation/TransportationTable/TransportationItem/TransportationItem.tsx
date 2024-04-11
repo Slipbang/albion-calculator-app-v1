@@ -71,9 +71,7 @@ const TransportationItem = ({transportationData, language, selectedLanguage}: IT
 
         const hours = (currentDate.getTime() - Date.parse(date))/(60*60*1000);
 
-        if(hours <= 24) return <span style={{color: `${hours <= 5 ? "green" : "red"}`}}>({Math.round(hours)}h)</span>;
-
-        if(hours > 24) return <span style="color: red">({Math.round(hours/24)}d)</span>;
+        return <span style={{color: `${hours <= 5 ? "green" : "red"}`}}>({hours <= 24 ? `${Math.round(hours) || '<1'}h` : `${Math.round(hours/24)}d`})</span>;
     }
 
     const copyTextHandler = (title: string) => {
