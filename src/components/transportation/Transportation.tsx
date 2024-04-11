@@ -1,5 +1,5 @@
 import TransportationForm from "./TransportationForm/TransportationForm";
-import TransportationTable from "./TransportationList/TransportationTable";
+import TransportationTable from "./TransportationTable/TransportationTable";
 import styles from './Transportation.module.scss';
 
 const Transportation = () => {

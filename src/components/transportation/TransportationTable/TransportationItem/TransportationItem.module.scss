@@ -9,14 +9,14 @@
     background-repeat:no-repeat;
   }
 
-  h4{
+  div {
     padding: 10px;
     cursor: pointer;
   }
-  h4:hover {
+  div:hover {
     scale: 1.1;
   }
-  h4:active{
+  div:active{
     scale: 1.2;
   }
 }

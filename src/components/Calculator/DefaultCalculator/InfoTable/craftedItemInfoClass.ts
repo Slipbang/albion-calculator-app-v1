@@ -7,7 +7,7 @@ import {ISelectedLanguage} from "../../../../types/languageTypes";
 export class craftedItemInfoClass {
     constructor(public city: TCities,
                 public enchantment: string,
-                public itemName:  IItemName,
+                public itemName: IItemName,
                 public artefactName: TArtefactName,
                 public spentQuantityPerItem: ISpentQuantityPerItem | undefined,
                 public selectedLanguage: 'ru' | 'en',
@@ -38,76 +38,104 @@ export class craftedItemInfoClass {
                 public emptyJournalCity: TCities,
                 public isJournalsUsed: boolean,
                 public tier: string,
-                ) {}
+                public currentDate: Date,
+    ) {
+    }
 
     itemTierNum = +this.tier!.split('T')[1];
 
-    get subMatsTier() {
-        const {itemTierNum} = this;
-        if(!!this.itemId){
-            return this.tier
-        }
+    subMatsTier = (!!this.resourceId) ? `T${this.itemTierNum - 1}` : this.tier;
 
-        if (!!this.resourceId){
-            return `T${itemTierNum - 1}`;
-        }
-    }
+    mainMatsName = materials.find(elem => elem.itemId === this.mainMatsId)!.itemName?.[this.selectedLanguage];
 
-    mainMaterialsNames = materials.find(elem => elem.itemId === this.mainMatsId);
-    mainMatsName = this.mainMaterialsNames!.itemName?.[this.selectedLanguage] ;
+    subMatsName = materials.find(elem => elem.itemId === this.subMatsId)?.itemName?.[this.selectedLanguage] || '';
 
-    subMaterialsNames = materials.find(elem => elem.itemId === this.subMatsId) || null;
-    subMatsName = this.subMaterialsNames?.itemName?.[this.selectedLanguage] || '';
-
-    matPrice = (itemId: string, selectedCity: TCities) => {
+    getMatPrice = (itemId: string, selectedCity: TCities) => {
         return this.materialsData?.find(matItem => matItem.itemId === itemId && matItem.location === selectedCity)?.buyPriceMax || 0;
     }
 
     itemIdWithEnchantment(id: string, enchantment: string) {
-        if (!!this.itemId){
+        const {itemId, resourceId} = this;
+
+        if (!!itemId) {
             return enchantment === '' ? id : `${id}@${enchantment}`;
         }
 
-        if(!!this.resourceId){
-            return (enchantment === '' || id.includes('STONEBLOCK')) ? id : `${id}_LEVEL${enchantment}@${enchantment}`;
+        if (!!resourceId) {
+            return (enchantment === '' || id?.includes('STONEBLOCK')) ? id : `${id}_LEVEL${enchantment}@${enchantment}`;
         }
     }
 
+    getTime = (date: string) => {
+        if (date === '1970-01-01T00:00:00.000Z') return ''
+
+        const hours = (this.currentDate.getTime() - Date.parse(date)) / (60 * 60 * 1000);
+
+        return `<span style="color: ${hours <= 5 ? "green" : "red"}">(${hours <= 24 ? `${Math.round(hours) || '<1'}h` : `${Math.round(hours / 24)}d`})</span>`;
+    }
+
+    getMaxBuyPriceDate = (itemId: string, selectedCity: TCities) => {
+        return this.materialsData?.find(matItem => matItem.itemId === itemId && matItem.location === selectedCity)?.sellPriceMinDate || 0
+    }
+
     get averageItemPrice() {
-        const {multiplication} = this;
-        if (!!this.itemId){
-            return this.itemsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(this.itemId!, this.enchantment) && itemElem.location === this.city)?.sellPriceMin || this.infoTableStrings.noData;
+        const {multiplication, itemsData, materialsData, itemId, resourceId, enchantment, city, infoTableStrings} = this;
+
+        if (!!itemId) {
+            return itemsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(itemId, enchantment) && itemElem.location === city)?.sellPriceMin || infoTableStrings.noData;
         }
 
-        if (!!this.resourceId){
-            return this.materialsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(this.resourceId!, this.enchantment) && itemElem.location === this.city)?.sellPriceMin! * multiplication || this.infoTableStrings.noData;
+        if (!!resourceId) {
+            return materialsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(resourceId, enchantment) && itemElem.location === city)?.sellPriceMin! * multiplication || infoTableStrings.noData;
         }
     }
 
     totalFoodFee = Math.floor((this.foodConsumption * (Math.pow(2, this.itemTierNum - 4)) + (this.defaultFoodConsumption! * Math.pow(2, this.itemTierNum - 4) * (Math.pow(2, +this.enchantment) - 1))) * (this.foodTax / 100));
 
     mainMaterialId = this.enchantment === '' ? this.mainMatsId : `${this.mainMatsId}_LEVEL${this.enchantment}@${this.enchantment}`;
-    mainMaterialPrice: number = this.matPrice(this.mainMaterialId!, this.mainMaterialCity) || 0;
+    mainMaterialPrice: number = this.getMatPrice(this.mainMaterialId!, this.mainMaterialCity) || 0;
 
     get subMaterialId() {
-        const {enchantment,subMatsId,resourceId, itemId} = this;
-        if (!!itemId && !resourceId) {
+        const {enchantment, subMatsId, resourceId, itemId} = this;
+
+        if (!!itemId) {
             return enchantment === '' ? subMatsId : `${subMatsId}_LEVEL${enchantment}@${enchantment}`;
         }
-        if (!!resourceId && !itemId) {
-            return (enchantment === '' || subMatsId!.includes('STONEBLOCK')  || subMatsId!.includes('T3')) ? subMatsId : `${subMatsId}_LEVEL${enchantment}@${enchantment}`;
+        if (!!resourceId) {
+            return (enchantment === '' || subMatsId!.includes('STONEBLOCK') || subMatsId!.includes('T3')) ? subMatsId : `${subMatsId}_LEVEL${enchantment}@${enchantment}`;
         }
     }
 
-    subMaterialPrice: number = this.matPrice?.(this.subMaterialId!, this.subMaterialCity);
+    subMaterialPrice: number = this.getMatPrice?.(this.subMaterialId!, this.subMaterialCity);
 
-    artefactPrice = this.artefact.isSelectedOwn ? this.artefact.ownPrice : this.artefactsData?.find(artefact => artefact.location === this.artefactCity)?.buyPriceMax || 0;
+    get itemSellPriceMinDate () {
+        const {resourceId, itemId, enchantment, city, itemsData, materialsData} = this;
+
+        if (!!itemId && !resourceId) {
+            return itemsData?.find(item => item.itemId === this.itemIdWithEnchantment(itemId!, enchantment) && item.location === city)?.sellPriceMinDate || '';
+        }
+
+        if (!!resourceId && !itemId) {
+            return materialsData?.find(item => item.itemId === this.itemIdWithEnchantment(resourceId!, enchantment) && item.location === city)?.sellPriceMinDate || '';
+        }
+    }
+
+    mainMatsMaxBuyPriceDate = this.getMaxBuyPriceDate(this.mainMaterialId, this.mainMaterialCity) || '';
+    subMatsMaxBuyPriceDate = this.getMaxBuyPriceDate(this.subMaterialId!, this.subMaterialCity) || '';
+    artefactMaxBuyPriceDate = this.artefactsData?.find(item => item.itemId === this.artefactId && item.location === this.artefactCity)?.buyPriceMaxDate || '';
+
+    itemWasUpdate = this.getTime(this.itemSellPriceMinDate!);
+    mainMatsWasUpdate = this.getTime(this.mainMatsMaxBuyPriceDate);
+    subMatsWasUpdate = this.getTime(this.subMatsMaxBuyPriceDate);
+    artefactWasUpdate = this.getTime(this.artefactMaxBuyPriceDate);
+
+    artefactPrice = this.artefact.isSelectedOwn ? this.artefact.ownPrice : this.artefactsData?.find(artefact => artefact.location === this.artefactCity)?.sellPriceMin || 0;
 
     mainMatsPricePerItem = Math.floor(+this.mainMaterialPrice * +this.spentQuantityPerItem!.mainMatsQuantity);
 
-    multiplication = !!this.resourceId && this.resourceId?.includes('STONEBLOCK') && this.enchantment !== '' ? Math.pow(2, +this.enchantment) : 1
+    multiplication = (!!this.resourceId && this.resourceId?.includes('STONEBLOCK') && this.enchantment !== '') ? Math.pow(2, +this.enchantment) : 1
 
-    subMatsQuantity = +this.spentQuantityPerItem!.subMatsQuantity! * (!!this.resourceId ? this.multiplication : 1)
+    subMatsQuantity = +this.spentQuantityPerItem!.subMatsQuantity! * this.multiplication;
 
     subMatsPricePerItem = Math.floor(this.subMaterialPrice * this.subMatsQuantity!) || 0;
 
@@ -122,26 +150,18 @@ export class craftedItemInfoClass {
 
     enchantmentString(id: string) {
         const {enchantment} = this;
+
         return (!!enchantment && (!id?.includes('STONEBLOCK') && !id?.includes('T3'))) ? `.${enchantment}` : ``;
     }
 
-    get units() {
-        const {enchantment} = this;
-
-        if (!!this.resourceId && !this.itemId) {
-            return (this.resourceId?.includes('STONEBLOCK') && enchantment !== '') ? ` (${Math.pow(2, +enchantment)}${this.infoTableStrings.un})` : '';
-        }
-
-        return '';
-    }
-
+    units = (this.resourceId?.includes('STONEBLOCK') && this.enchantment !== '') ? ` (${Math.pow(2, +this.enchantment)}${this.infoTableStrings.un})` : '';
     journalsQuantityString = `${this.infoTableStrings.journalQuantity} ${this.totalJournalsQuantity}`;
     journalsProfitPerItemSting = `${this.infoTableStrings.journalProfit} (${this.journalPrice} - ${this.emptyJournalsPrice}) * ${this.totalJournalsQuantity} = ${this.journalsProfitPerItem}`;
-    itemTitleString = `${this.tier}${this.enchantmentString(this.itemId! || this.resourceId!)} ${this.itemName![this.selectedLanguage]}:  ${this.averageItemPrice?.toLocaleString('en')}${this.units}`;
-    mainMatsTitleString = `${this.tier}${this.enchantmentString(this.mainMatsId)} ${this.mainMatsName}: ${this.spentQuantityPerItem!.mainMatsQuantity} * ${this.mainMaterialPrice} = ${this.mainMatsPricePerItem.toLocaleString('en')}`;
+    itemTitleString = `${this.tier}${this.enchantmentString(this.itemId! || this.resourceId!)} ${this.itemName![this.selectedLanguage]}:  ${this.averageItemPrice?.toLocaleString('en')}${this.units} ${this.itemWasUpdate}`;
+    mainMatsTitleString = `${this.tier}${this.enchantmentString(this.mainMatsId)} ${this.mainMatsName}: ${this.spentQuantityPerItem!.mainMatsQuantity} * ${this.mainMaterialPrice} = ${this.mainMatsPricePerItem.toLocaleString('en')} ${this.mainMatsWasUpdate}`;
     totalFoodFeeSting = `${this.infoTableStrings.taxPerOneItem} ${this.totalFoodFee}`;
-    subMatsTitleString = `${this.subMatsTier}${this.enchantmentString(this.subMatsId!)} ${this.subMatsName}: ${this.subMatsQuantity} * ${this.subMaterialPrice} = ${this.subMatsPricePerItem?.toLocaleString('en')}`;
-    artefactString = `${this.tier} ${this.artefactName?.[this.selectedLanguage]}: ${this.artefactPrice.toLocaleString('en')}`;
+    subMatsTitleString = `${this.subMatsTier}${this.enchantmentString(this.subMatsId!)} ${this.subMatsName}: ${this.subMatsQuantity} * ${this.subMaterialPrice} = ${this.subMatsPricePerItem?.toLocaleString('en')} ${this.subMatsWasUpdate}`;
+    artefactString = `${this.tier} ${this.artefactName?.[this.selectedLanguage]}: ${this.artefactPrice.toLocaleString('en')} ${this.artefactWasUpdate}`;
     profitPerItemTitle = `${this.infoTableStrings.profitPerItem} ${this.averageItemPrice?.toLocaleString('en')}${this.isJournalsUsed ? ` + ${this.journalsProfitPerItem}` : ''} - (${this.mainMatsPricePerItem.toLocaleString('en')} ${!!this.subMatsId ? `+ ${this.subMatsPricePerItem!.toLocaleString('en')}` : ''}${this.totalFoodFee ? ` + ${this.totalFoodFee.toLocaleString('en')}` : ''}${!!this.artefactId ? ` + ${this.artefactPrice.toLocaleString('en')}` : ''}) = ${this.profitPerItem.toLocaleString('en')}`;
     totalProfitTitle = `${this.infoTableStrings.total} ${this.output} * ${this.profitPerItem.toLocaleString('en')} = ${this.totalProfit.toLocaleString('en')}`;
 

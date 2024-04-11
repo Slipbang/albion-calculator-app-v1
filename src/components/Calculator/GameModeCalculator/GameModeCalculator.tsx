@@ -27,14 +27,14 @@ const GameModeCalculator = () => {
 
             {!!isCraftingFormVisible && <GMCraftingForm />}
 
-            <div className={!!gameMode ? styles.GMItemSelectorWrapper : `${styles.GMItemSelectorWrapper} ${styles.GMItemSelectorWrapperHidden}`}>
+            <div className={`${styles.GMItemSelectorWrapper} ${!gameMode ? styles.GMItemSelectorWrapperHidden : ''}`}>
                 <GMItemSelector />
             </div>
 
-            <div className={!!gameMode ? styles.backpackWrapper : `${styles.backpackWrapper} ${styles.backpackWrapperHidden}`}>
+            <div className={`${styles.backpackWrapper} ${!gameMode ? styles.backpackWrapperHidden : ''}`}>
                 <Backpack />
 
-                <div className={isMarketMenuShown ? `${styles.marketMenuWrapper} ${styles.marketMenuShown}` : styles.marketMenuWrapper}>
+                <div className={`${styles.marketMenuWrapper} ${!!isMarketMenuShown ? styles.marketMenuShown : ''}`}>
                     <MarketMenu/>
                 </div>
             </div>

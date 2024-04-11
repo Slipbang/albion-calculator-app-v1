@@ -22,6 +22,7 @@ type artefactsArgsTuple = [
     artefactTier: TArtefactsTier,
     itemValue: number[],
     artefactId: string,
+    currentDate: Date,
 ]
 
 interface IArtefactsDataProps{
@@ -60,7 +61,9 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
         dispatchAction(artefactActions.resetArtefactCheck({id}));
     }
 
-    const artefactsArgs: artefactsArgsTuple = [artefactsStrings, artefactsPriceData, isArtefactsFetching, isErrorArtefacts, selectedTier, itemValue, artefactId]
+    const currentDate = new Date();
+
+    const artefactsArgs: artefactsArgsTuple = [artefactsStrings, artefactsPriceData, isArtefactsFetching, isErrorArtefacts, selectedTier, itemValue, artefactId, currentDate]
 
     const artefactTable = new artefactsPrices(...artefactsArgs);
 

@@ -11,15 +11,25 @@ export class artefactsPrices {
         public artefactTier: TArtefactsTier,
         public itemValue: number[],
         public artefactId: string,
-    ) {
-    }
+        public currentDate: Date,
+    ) {}
 
     cities: TCities[] = ['Caerleon', 'Thetford', 'Bridgewatch', 'Lymhurst', 'Fort Sterling', 'Martlock', 'Brecilien'];
 
     fullArtefactId = `${this.artefactTier}_${this.artefactId}`
 
     getPrice = (city: TCities) => {
-        return this.artefactsPriceData?.find(item => item.location === city && item.itemId === this.fullArtefactId)?.buyPriceMax || 0;
+        return this.artefactsPriceData?.find(item => item.location === city && item.itemId === this.fullArtefactId)?.sellPriceMin || 0;
+    }
+
+    getDate = (city: TCities) => {
+        const sellPriceMinDate = this.artefactsPriceData?.find(item => item.location === city && item.itemId === this.fullArtefactId)?.sellPriceMinDate || '';
+
+        if (sellPriceMinDate === '1970-01-01T00:00:00.000Z') return '';
+
+        const hours = (this.currentDate.getTime() - Date.parse(sellPriceMinDate))/(60*60*1000);
+
+        return `<span style="color: ${hours <= 5 ? "green" : "red"}">(${hours <= 24 ? `${Math.round(hours)}h` : `${Math.round(hours/24)}d`})</span>`;
     }
 
     artefactTierNum = +this.artefactTier.split('T')[1];
@@ -43,7 +53,7 @@ export class artefactsPrices {
                                  ${city}
                              </td>
                               <td>
-                                 ${(!this.isArtefactsFetching && !this.isErrorArtefacts) ? (this.getPrice(city) || '-') : ''}
+                                 ${(!this.isArtefactsFetching && !this.isErrorArtefacts) ? `${this.getPrice(city) || '-'} ${this.getDate(city) || ''}` : ''}
                                  ${(this.isArtefactsFetching && !this.isErrorArtefacts) ? 'loading...' : ''}
                                  ${this.isErrorArtefacts ? 'error!' : ''}
                               </td>

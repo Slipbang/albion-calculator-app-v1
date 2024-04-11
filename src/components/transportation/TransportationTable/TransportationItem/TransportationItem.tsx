@@ -18,11 +18,13 @@ interface ITransportationItemProps {
 const TransportationItem = ({transportationData, language, selectedLanguage}: ITransportationItemProps) => {
     const {
         normalizedPrice: normalizedPriceFrom,
+        date: dateFrom,
     } = transportationData.from;
     const {
         itemId: itemIdTo,
         normalizedPrice: normalizedPriceTo,
-        averageItems: averageItemsTo
+        averageItems: averageItemsTo,
+        date: dateTo,
     } = transportationData.to;
 
     const [wasCopied, setWasCopied] = useState(false);
@@ -62,6 +64,18 @@ const TransportationItem = ({transportationData, language, selectedLanguage}: IT
         return 'Can\'t find name :(';
     }
 
+    const getDate = (date: string) => {
+        const currentDate = new Date();
+
+        if (date === '1970-01-01T00:00:00.000Z' && !date) return '';
+
+        const hours = (currentDate.getTime() - Date.parse(date))/(60*60*1000);
+
+        if(hours <= 24) return <span style={{color: `${hours <= 5 ? "green" : "red"}`}}>({Math.round(hours)}h)</span>;
+
+        if(hours > 24) return <span style="color: red">({Math.round(hours/24)}d)</span>;
+    }
+
     const copyTextHandler = (title: string) => {
         navigator.clipboard.writeText(title).then(() => setWasCopied(true)).then(() => setTimeout(() => setWasCopied(false), 1000));
     }
@@ -81,12 +95,12 @@ const TransportationItem = ({transportationData, language, selectedLanguage}: IT
                     />
                 </td>
                 <td>
-                    <h4 onClick={() => copyTextHandler(itemName)}>
+                    <div onClick={() => copyTextHandler(itemName)}>
                         {!wasCopied ? itemName : language.copyAlert}
-                    </h4>
+                    </div>
                 </td>
-                <td>{normalizedPriceFrom.toLocaleString('en')}</td>
-                <td>{normalizedPriceTo.toLocaleString('en')}</td>
+                <td>{normalizedPriceFrom.toLocaleString('en')} {getDate(dateFrom)}</td>
+                <td>{normalizedPriceTo.toLocaleString('en')} {getDate(dateTo)}</td>
                 <td>{profit.toLocaleString('en')}</td>
                 <td>{`${((((normalizedPriceTo - normalizedPriceTo * 0.065) - normalizedPriceFrom)) * 100 / normalizedPriceFrom).toFixed(0)}%`}</td>
                 <td>{`${Math.floor(averageItemsTo).toLocaleString('en')} ${language.unPerDay}`}</td>

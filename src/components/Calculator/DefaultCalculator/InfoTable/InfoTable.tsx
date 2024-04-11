@@ -52,6 +52,7 @@ type ICraftInfoTuple = [
     emptyJournalCity: TCities,
     isJournalsUsed: boolean,
     tier: string,
+    currentDate: Date,
 ];
 
 export interface IOwnPrice {
@@ -179,6 +180,8 @@ const InfoTable = () => {
         dispatchAction(interfaceSliceActions.setInfoTableVisibility(false));
     }
 
+    const currentDate: Date = new Date();
+
     const craftInfoParams: ICraftInfoTuple = [
         itemName as IItemName,
         artefactName,
@@ -211,6 +214,7 @@ const InfoTable = () => {
         emptyJournalCity,
         isJournalsUsed,
         tier,
+        currentDate,
     ];
 
     return (
@@ -257,7 +261,7 @@ const InfoTable = () => {
                         <tbody>
 
                         {['', '1', '2', '3', '4'].map((enchantment, index) => {
-                            if (resourceId?.includes('STONEBLOCK') && enchantment === '4') return;
+                            if (resourceId?.includes?.('STONEBLOCK') && enchantment === '4') return;
 
                             const caerleonInfo = new craftedItemInfoClass('Caerleon', enchantment, ...craftInfoParams);
                             const fortSterlingInfo = new craftedItemInfoClass('Fort Sterling', enchantment, ...craftInfoParams);
@@ -271,7 +275,7 @@ const InfoTable = () => {
 
                             let itemHref = enchantment === '' ? itemId : `${itemId}@${enchantment}`;
 
-                            let resourceHref = enchantment === '' || resourceId?.includes('STONEBLOCK') ? resourceId : `${resourceId}_LEVEL${enchantment}@${enchantment}`;
+                            let resourceHref = enchantment === '' || resourceId?.includes?.('STONEBLOCK') ? resourceId : `${resourceId}_LEVEL${enchantment}@${enchantment}`;
 
                             return (
                                 <tr key={index}>

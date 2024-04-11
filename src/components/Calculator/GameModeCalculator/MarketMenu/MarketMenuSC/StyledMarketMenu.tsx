@@ -20,6 +20,8 @@ const StyledMarketMenu = styled.div`
     z-index: 5;
     fill: var(--color-svg);
     transform: rotate(35deg);
+    
+    transition: 0.5s ease all;
   }
 `
 

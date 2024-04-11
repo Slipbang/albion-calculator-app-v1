@@ -1,5 +1,5 @@
 import {IItemsData, TCities} from "../../../../../types/InfoTableTypes";
-import React, {ChangeEvent, Dispatch, SetStateAction} from "react";
+import React, {ChangeEvent, Dispatch, SetStateAction, useRef} from "react";
 import styles from './MaterialSelectors.module.scss';
 import {materials} from "../../../../../store/Items/materials";
 import {
@@ -54,6 +54,11 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
         selectedLanguage,
         selectedCities,
     } = props;
+
+    const journalInputRef = useRef<HTMLInputElement>(null);
+    const emptyJournalInputRef = useRef<HTMLInputElement>(null);
+    const artefactInputRef = useRef<HTMLInputElement>(null);
+    const foodTaxInputRef = useRef<HTMLInputElement>(null);
 
     const {emptyJournal, journal, artefact} = ownPrices;
 
@@ -137,10 +142,12 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
                         </select>}
                     {emptyJournal.isSelectedOwn &&
                         <input
+                            ref={emptyJournalInputRef}
                             id='ITEmptyJournalPriceInput'
                             type="number"
                             value={emptyJournal.ownPrice}
                             onChange={(event) => setOwnPriceHandler(+event.target.value, 'emptyJournal')}
+                            onFocus={() => emptyJournalInputRef.current?.select()}
                         />}
                     <input
                         id='ITEmptyJournalCheckbox'
@@ -172,10 +179,12 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
                     </select>}
                 {journal.isSelectedOwn &&
                     <input
+                        ref={journalInputRef}
                         id='ITFilledJournalPriceInput'
                         type='number'
                         value={journal.ownPrice}
                         onChange={(event) => setOwnPriceHandler(+event.target.value, 'journal')}
+                        onFocus={() => journalInputRef.current?.select()}
                     />}
                 <input
                     id='ITFilledJournalCheckbox'
@@ -208,10 +217,12 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
 
                 {artefact.isSelectedOwn &&
                     <input
+                        ref={artefactInputRef}
                         id='ITArtefactsPriceInput'
                         type='number'
                         value={artefact.ownPrice}
                         onChange={(event) => setOwnPriceHandler(+event.target.value, 'artefact')}
+                        onFocus={() => artefactInputRef.current?.select()}
                     />}
                 <input
                     id='ITArtefactsCheckbox'
@@ -265,11 +276,14 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
             <div>
                 <p>{infoTableStrings.tax}</p>
                 <input
+                    ref={foodTaxInputRef}
                     id='ITTaxInput'
                     type='number'
                     style={{width: '122px'}}
                     value={foodTax}
-                    onChange={(event) => changeFoodTaxHandler(+event.target.value)}/>
+                    onChange={(event) => changeFoodTaxHandler(+event.target.value)}
+                    onFocus={() => foodTaxInputRef.current?.select()}
+                />
             </div>
         </div>
     )
