@@ -8,11 +8,17 @@ import {selectServerId} from "../../../store/queryParams/query-params-selectors"
 import {queryParamsSliceActions} from "../../../store/queryParams/query-params-slice";
 import {interfaceSliceActions} from "../../../store/interface/interface-slice";
 import {languageOptions, serverOptions} from "../../../store/Options/SettingsOptions";
+// import {useLocation, useNavigate, useParams} from "react-router-dom";
+// import {useEffect} from "react";
 
 const Settings = () => {
     const dispatchAction = useAppDispatch();
     const {selectedLanguage, language} = useSelector(selectLanguage);
     const {headerStrings} = language;
+
+    // const {pathname} = useLocation();
+    // const {language: urlLanguage} = useParams()
+    // const navigate = useNavigate();
 
     const selectThemeHandler = () => {
         dispatchAction(interfaceSliceActions.setTheme());
@@ -26,7 +32,23 @@ const Settings = () => {
 
     const selectLanguageHandler = (value: TSelectedLanguage) => {
         dispatchAction(languageSwitcherActions.changeLanguageHandler(value));
+        // let newPath: string = '';
+        // const pathParts = pathname.split('/')
+        // const lIndex = pathParts.findIndex(str => str === urlLanguage)!
+        // pathParts[lIndex] = value;
+        // newPath = pathParts.join('/');
+        // navigate(newPath);
     }
+
+    // const buildUrlHandler = () => {
+    //
+    //     if (urlLanguage === 'ru' || urlLanguage === 'en') dispatchAction(languageSwitcherActions.changeLanguageHandler(urlLanguage as TSelectedLanguage));
+    //
+    // }
+    //
+    // useEffect(() => {
+    //     buildUrlHandler()
+    // }, [selectedLanguage, urlLanguage])
 
     return (
         <div className={styles.wrapper}>

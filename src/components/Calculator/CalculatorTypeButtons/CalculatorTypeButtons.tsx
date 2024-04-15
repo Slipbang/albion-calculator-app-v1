@@ -4,7 +4,9 @@ import {selectCalculatorType, selectGameMode, selectTheme} from "../../../store/
 import {useAppDispatch} from "../../../store";
 import {TCalcProps} from "../../../types/calculatorPropsType";
 import styles from './CalculatorTypeButtons.module.scss';
-import React from "react";
+import {memo} from "react";
+//import React, {useEffect} from "react";
+//import {Navigate, useNavigate, useParams} from "react-router-dom";
 
 interface ISelector {
     src: string;
@@ -30,21 +32,43 @@ const selectors: ISelector[] = [
     // },
 ]
 
-const CalculatorTypeButtons = React.memo(() => {
+const CalculatorTypeButtons = () => {
     const dispatchAction = useAppDispatch();
+
+    // const {language, mode, type} = useParams();
+    // const navigate = useNavigate();
 
     const theme = useSelector(selectTheme);
     const isDark = theme === 'dark';
     const calculatorType = useSelector(selectCalculatorType);
     const gameMode = useSelector(selectGameMode);
 
+    // useEffect(() => {
+    //     if (mode === 'default-mode') {
+    //         dispatchAction(interfaceSliceActions.toggleGameMode({isGame: false}));
+    //     }
+    //
+    //     if (mode === 'game-mode') {
+    //         dispatchAction(interfaceSliceActions.toggleGameMode({isGame: true}));
+    //     }
+    //     dispatchAction(interfaceSliceActions.setCalculatorType(type as TCalcProps));
+    // }, [mode, type])
+
     const selectCalculatorTypeHandler = (calculatorType: TCalcProps) => {
-        dispatchAction(interfaceSliceActions.setCalculatorType(calculatorType));
+        //navigate(`/${language}/calculator/${mode}/${calculatorType}`);
+        dispatchAction(interfaceSliceActions.setCalculatorType(calculatorType as TCalcProps));
         dispatchAction(interfaceSliceActions.setIsCraftingFormVisible(false));
     }
 
-    const toggleStyles = () => {
-        dispatchAction(interfaceSliceActions.toggleGameMode())
+    const toggleGameMode = () => {
+        // if (mode === 'default-mode') {
+        //     navigate(`/${language}/calculator/game-mode/${type}`);
+        // }
+        //
+        // if (mode === 'game-mode') {
+        //     navigate(`/${language}/calculator/default-mode/${type}`);
+        // }
+        dispatchAction(interfaceSliceActions.toggleGameMode());
     }
 
     const defineColor = () => {
@@ -80,7 +104,7 @@ const CalculatorTypeButtons = React.memo(() => {
 
                 <div
                     className={styles.GMToggleButton}
-                    onClick={() => toggleStyles()}
+                    onClick={() => toggleGameMode()}
                 >
 
                     <div className={ `${styles.sword} ${gameMode ? styles.applySword : styles.removeSword}`}>
@@ -96,6 +120,6 @@ const CalculatorTypeButtons = React.memo(() => {
             </div>
         </div>
     )
-})
+}
 
-export default CalculatorTypeButtons;
+export default memo(CalculatorTypeButtons);

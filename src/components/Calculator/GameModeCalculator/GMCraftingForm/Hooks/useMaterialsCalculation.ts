@@ -48,7 +48,6 @@ const useMaterialsCalculation = (props: IUseMaterialsCalculationProps) => {
     })
 
     const materialsCalculation = (): {matsData: Pick<IConsumedMaterials, 'materialApiId' | 'consumedMaterials'>, backpackMatsQuantity: IBackpackMatsQuantity} => {
-        let matsData: Pick<IConsumedMaterials, 'materialApiId' | 'consumedMaterials'>;
         let materialApiId: IConsumedMaterials['materialApiId'] | undefined = undefined;
         let consumedMaterials: IConsumedMaterials['consumedMaterials'] | undefined = undefined;
         let backpackMatsQuantity: IBackpackMatsQuantity | undefined = undefined;
@@ -72,7 +71,7 @@ const useMaterialsCalculation = (props: IUseMaterialsCalculationProps) => {
             }
             consumedMaterials = {
                 ...consumedMaterials!,
-                [`consume${key}Quantity`]: +selectedWorkBenchItem[`${key}`]! * Math.floor(itemsQuantity) * (key === 'STONEBLOCK' ? Math.pow(2, +enchantmentNum) : 1) || 0,
+                [`consume${key}Quantity`]: +selectedWorkBenchItem[key]! * Math.floor(itemsQuantity) * (key === 'STONEBLOCK' ? Math.pow(2, +enchantmentNum) : 1) || 0,
             }
             backpackMatsQuantity = {
                 ...backpackMatsQuantity!,
@@ -80,14 +79,11 @@ const useMaterialsCalculation = (props: IUseMaterialsCalculationProps) => {
             }
         })
 
-        matsData = {
-            consumedMaterials: consumedMaterials!,
-            materialApiId: materialApiId!,
-        };
-
-
         return {
-            matsData,
+            matsData: {
+                consumedMaterials: consumedMaterials!,
+                materialApiId: materialApiId!,
+            },
             backpackMatsQuantity: backpackMatsQuantity!,
         };
     };

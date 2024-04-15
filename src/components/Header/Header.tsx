@@ -7,8 +7,8 @@ import {selectTheme} from "../../store/interface/interface-selector";
 import {Link, Outlet} from "react-router-dom";
 
 const Header = () => {
-
     const theme = useSelector(selectTheme);
+
     return (
         <>
             <div className={styles.header} data-theme={theme}>

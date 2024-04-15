@@ -1,4 +1,4 @@
-import Transportation from "../components/transportation/Transportation";
+import Transportation from "../components/Transportation/Transportation";
 
 const TransportationPage = () => {
     return <Transportation />

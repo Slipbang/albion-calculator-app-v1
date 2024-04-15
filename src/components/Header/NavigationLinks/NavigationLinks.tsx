@@ -4,8 +4,26 @@ import styles from './NavigationLinks.module.scss';
 import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../store/language/language-selector";
 
+// type TUrls = {
+//     [key in TUrlKeys]: string;
+// }
+
 const NavigationLinks = () => {
     const {selectedLanguage} = useSelector(selectLanguage);
+
+    // const artefactsClass = useSelector(selectArtefactsClass);
+    // const artefactsType = useSelector(selectArtefactsType);
+    // const artefactsTier = useSelector(selectArtefactsTier);
+    // const gameMode = useSelector(selectGameMode);
+    // const calculatorType = useSelector(selectCalculatorType);
+
+    // const urls: TUrls = {
+    //     calculator: `calculator/${!!gameMode ? 'game' : 'default'}-mode/${calculatorType}`,
+    //     artefacts: `artefacts/${artefactsClass}/${artefactsType}/${artefactsTier}`,
+    //     transportation: 'transportation',
+    //     FAQ: 'FAQ',
+    // }
+
     return <div className={styles.navigationLinksStyles}>
         <svg
             width="24"
@@ -25,6 +43,7 @@ const NavigationLinks = () => {
                 <li key={link}>
                     <NavLink
                         className={({isActive}) => isActive ? styles.activeLink : styles.link}
+                        //to={urls[link]}
                         to={link}
                     >
                         {linkName?.[selectedLanguage]}

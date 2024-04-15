@@ -34,34 +34,26 @@ export class artefactsPrices {
 
     artefactTierNum = +this.artefactTier.split('T')[1];
 
-    titleTable = ` <div>
-                   <table>
-                   <thead>
-                      <tr>
-                         <th>
-                            ${this.artefactsStrings.city}
-                         </th>
-                         <th>
-                            ${this.artefactsStrings.price}
-                         </th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                   ${this.cities.map(city => `
-                        <tr>
-                             <td>
-                                 ${city}
-                             </td>
+    titleTable = `<div>
+                     <table>
+                        <thead>
+                           <tr>
+                              <th>${this.artefactsStrings.city}</th>
+                              <th>${this.artefactsStrings.price}</th>
+                           </tr>
+                        </thead>
+                        <tbody>${this.cities.map(city => `
+                           <tr>
+                              <td>${city}</td>
                               <td>
-                                 ${(!this.isArtefactsFetching && !this.isErrorArtefacts) ? `${this.getPrice(city) || '-'} ${this.getDate(city) || ''}` : ''}
-                                 ${(this.isArtefactsFetching && !this.isErrorArtefacts) ? 'loading...' : ''}
-                                 ${this.isErrorArtefacts ? 'error!' : ''}
+                                    ${(!this.isArtefactsFetching && !this.isErrorArtefacts) ? `${this.getPrice(city) || '-'} ${this.getDate(city) || ''}` : ''}
+                                    ${(this.isArtefactsFetching && !this.isErrorArtefacts) ? 'loading...' : ''}
+                                    ${this.isErrorArtefacts ? 'error!' : ''}
                               </td>
-                        </tr>
-                   `).join('')}
-                   </tbody>
-                 </table
-                 <p>${this.artefactsStrings.value} ${this.itemValue[this.artefactTierNum - 4]}</p>
-                 <div/>
-            `;
+                           </tr>`).join('')}
+                        </tbody>
+                     </table
+                     <p>${this.artefactsStrings.value} ${this.itemValue[this.artefactTierNum - 4]}</p>
+                  <div/>`;
 }
+

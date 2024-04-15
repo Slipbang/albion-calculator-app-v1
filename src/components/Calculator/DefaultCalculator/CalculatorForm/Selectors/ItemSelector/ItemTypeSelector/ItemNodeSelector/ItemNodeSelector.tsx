@@ -38,7 +38,7 @@ const ItemNodeSelector = (props: IItemNodeSelectorProps) => {
                 {objectTypeKeys.map(itemTypeKey => craftItems[itemTypeKey].map((itemForNodeSelect) => {
                     let itemBodyId: string;
                     if ((itemTypeKey === 'BAG' && itemForNodeSelect.itemId !== 'INSIGHT') || itemTypeKey === 'CAPE') {
-                        itemBodyId = itemForNodeSelect.itemId;
+                        itemBodyId = itemForNodeSelect.itemId!;
                     } else {
                         itemBodyId = `${itemTypeKey}_${itemForNodeSelect.itemId}`
                     }

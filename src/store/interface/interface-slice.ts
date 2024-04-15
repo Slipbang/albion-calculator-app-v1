@@ -185,12 +185,16 @@ const interfaceSlice = createSlice({
         setInfoTableVisibility(state, action: PayloadAction<boolean>) {
             state.global.isInfoTableShown = action.payload;
         },
-        toggleGameMode(state) {
+        toggleGameMode(state, action: PayloadAction<{isGame?: boolean} | undefined>) {
             state.global.isCraftingFormVisible = initialState.global.isCraftingFormVisible;
             state.global.isMarketItemVisible = initialState.global.isMarketItemVisible;
             state.global.isMarketMenuShown = initialState.global.isMarketMenuShown;
             state.global.isCraftTableShown = initialState.global.isCraftTableShown;
-            state.global.gameMode = !state.global.gameMode;
+            if (action.payload?.isGame === undefined) {
+                state.global.gameMode = !state.global.gameMode;
+            } else {
+                state.global.gameMode = action.payload.isGame;
+            }
         },
         toggleItemSelectorVisibility(state, action: PayloadAction<boolean | undefined>) {
             if (action.payload === undefined) {

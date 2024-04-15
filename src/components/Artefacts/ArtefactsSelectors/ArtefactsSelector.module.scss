@@ -12,11 +12,13 @@
   p {
     color: var(--color-table-text);
     margin-right: 15px;
+    transition: all 1s ease;
   }
 
   select {
     background-color: var(--background-color-table);
     color: var(--color-table-text);
+    transition: all 0.5s ease;
   }
 
   div{

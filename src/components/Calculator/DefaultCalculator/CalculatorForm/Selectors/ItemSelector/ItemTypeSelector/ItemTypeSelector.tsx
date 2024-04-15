@@ -4,7 +4,6 @@ import {
     leftSwipeButton,
     rightSwipeButton
 } from "../../../../DefaultCalculatorImgReexports/DefaultCalculatorImgReexports";
-import React, {useState} from "react";
 import {TCraftItemType, TItemNode} from "../../../../../../../types/craftItemsType";
 import {profitSliceActions} from "../../../../../../../store/profit/profit-slice";
 import {useAppDispatch} from "../../../../../../../store";

@@ -1,9 +1,11 @@
+export type TUrlKeys = 'calculator' | 'artefacts' | 'transportation' | 'FAQ';
+
 interface ILink {
     linkName?: {
         ru: string,
         en: string,
     }
-    link: string;
+    link: TUrlKeys;
 }
 
 export type TLinks = ILink[];
@@ -14,27 +16,27 @@ export const links: TLinks = [
             ru: 'Калькулятор',
             en: 'Calculator'
         },
-        link: '/calculator',
+        link: 'calculator',
     },
     {
         linkName: {
             ru: 'Артефакты',
             en: 'Artefacts'
         },
-        link: '/artefacts',
+        link: 'artefacts',
     },
     {
         linkName: {
             ru: 'Транспортировка',
             en: 'Transportation'
         },
-        link: '/transportation',
+        link: 'transportation',
     },
     {
         linkName: {
             ru: 'FAQ',
             en: 'FAQ',
         },
-        link: '/FAQ'
+        link: 'FAQ'
     },
 ];

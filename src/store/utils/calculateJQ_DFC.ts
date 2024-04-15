@@ -1,8 +1,14 @@
-import {TCraftObjectTypes} from "../../../types/craftItemsType";
+import {TCraftObjectTypes} from "../../types/craftItemsType";
 
-const calculateJQ_DFC = (itemType: TCraftObjectTypes, selectedItemTier: string) => {
+const calculateJQ_DFC = (itemType: TCraftObjectTypes, selectedItemTier: string | number) => {
     let journalsQuantity = 0;
-    const itemTier = +selectedItemTier.split('T')[1];
+    let itemTier: string | number;
+    if (typeof selectedItemTier === "string") {
+        itemTier = +selectedItemTier.split('T')[1];
+    } else {
+        itemTier = selectedItemTier;
+    }
+
     let defaultFoodConsumption = 0;
 
     switch (itemType) {
@@ -75,7 +81,6 @@ const calculateJQ_DFC = (itemType: TCraftObjectTypes, selectedItemTier: string) 
         }
             break;
     }
-
 
     return {journalsQuantity, defaultFoodConsumption}
 }

@@ -14,6 +14,7 @@ import {
 import {
     backpackCell
 } from "../../components/Calculator/GameModeCalculator/Backpack/BackpackImgReexports/BackpackImgReexports";
+import {calculateJQ_DFC} from "../utils/calculateJQ_DFC";
 
 export interface IGMCraftItem extends ICraftItem{
     itemTier: number;
@@ -93,7 +94,7 @@ objectTypeKeys.forEach(itemTypeKey => craftItems[itemTypeKey].forEach(itemForSel
 
     let journalQuantity: number = 0;
 
-    let defaultFoodConsumption = 0;
+    let defaultFoodConsumption: number = 0;
 
     if(itemClass === 'toolmaker'){
         if(itemId === 'TOOL_SIEGEHAMMER'){
@@ -126,76 +127,13 @@ objectTypeKeys.forEach(itemTypeKey => craftItems[itemTypeKey].forEach(itemForSel
             }
         }
     } else {
-        switch (itemTypeKey){
-            case '2H': {
-                defaultFoodConsumption = 57.6;
-                switch (itemTier){
-                    case 4:
-                    case 5:
-                    case 6:
-                        journalQuantity = 0.2 * (itemTier-3);
-                        break;
-                    case 7:
-                        journalQuantity = 0.73;
-                        break;
-                    case 8:
-                        journalQuantity = 0.76;
-                }
-            }
-                break;
-            case 'MAIN': {
-                defaultFoodConsumption = 43.2;
-                switch (itemTier){
-                    case 4:
-                    case 5:
-                    case 6:
-                        journalQuantity = 0.15 * (itemTier-3);
-                        break;
-                    case 7:
-                        journalQuantity = 0.55;
-                        break;
-                    case 8:
-                        journalQuantity = 0.57;
-                }
-            }
-                break;
-            case 'ARMOR':
-            case 'BAG': {
-                defaultFoodConsumption = 28.8;
-                switch (itemTier){
-                    case 4:
-                    case 5:
-                    case 6:
-                        journalQuantity = 0.1 * (itemTier-3);
-                        break;
-                    case 7:
-                        journalQuantity = 0.36;
-                        break;
-                    case 8:
-                        journalQuantity = 0.38;
-                }
-            }
-                break;
-            case 'HEAD':
-            case 'SHOES':
-            case 'OFF':
-            case 'CAPE': {
-                defaultFoodConsumption = 14.4;
-                switch (itemTier){
-                    case 4:
-                    case 5:
-                    case 6:
-                        journalQuantity = 0.05 * (itemTier-3);
-                        break;
-                    case 7:
-                        journalQuantity = 0.18;
-                        break;
-                    case 8:
-                        journalQuantity = 0.19;
-                }
-            }
-                break;
-        }
+        const {
+            journalsQuantity: calculatedJQ,
+            defaultFoodConsumption: calculatedDFC
+        } = calculateJQ_DFC(itemTypeKey, itemTier);
+
+        journalQuantity = calculatedJQ;
+        defaultFoodConsumption = calculatedDFC;
     }
 
     let defineArtefactId = () => {
@@ -235,7 +173,7 @@ objectTypeKeys.forEach(itemTypeKey => craftItems[itemTypeKey].forEach(itemForSel
         journalQuantity,
     }
 
-    let itemType: TItemTypeSelected = 'weapon';
+    let itemType: TItemTypeSelected | undefined = undefined;
 
     switch (itemNode) {
         case 'axe':
@@ -306,7 +244,9 @@ objectTypeKeys.forEach(itemTypeKey => craftItems[itemTypeKey].forEach(itemForSel
             break;
     }
 
-    workBenchSelectorItems![itemClass as ICraftingItemClass]?.[itemType]?.push(craftItem);
+    if (!!itemType) {
+        workBenchSelectorItems![itemClass as ICraftingItemClass]?.[itemType]?.push(craftItem);
+    }
 })));
 
 materials.forEach(material => ['', '_LEVEL1@1', '_LEVEL2@2', '_LEVEL3@3', '_LEVEL4@4'].forEach((materialEnchantment, enchantmentIndex) => {
@@ -324,7 +264,7 @@ materials.forEach(material => ['', '_LEVEL1@1', '_LEVEL2@2', '_LEVEL3@3', '_LEVE
     const itemNode = itemId?.split('_')[1] as TItemNode;
     const itemEnchantmentNum = materialEnchantment.split('@')[1] || '';
     const itemEnchantment = materialEnchantment;
-    let itemClass: ICraftingItemClass | null = null;
+    let itemClass: ICraftingItemClass | undefined = undefined;
 
     let foodConsumption = 1.8;
 
@@ -389,13 +329,13 @@ materials.forEach(material => ['', '_LEVEL1@1', '_LEVEL2@2', '_LEVEL3@3', '_LEVE
     }
 
 
-    if (itemTier === 'T3' && enchantmentIndex > 0) return false;
-    if (enchantmentIndex > 0 && itemNode === 'STONEBLOCK') return false;
-    if (enchantmentIndex === 4 && itemNode === 'ROCK') return false;
+    if (itemTier === 'T3' && enchantmentIndex > 0) return;
+    if (enchantmentIndex > 0 && itemNode === 'STONEBLOCK') return;
+    if (enchantmentIndex === 4 && itemNode === 'ROCK') return;
 
     marketItems.push(marketMaterialItem);
 
-    if (itemTier === 'T3') return  false;
+    if (itemTier === 'T3') return;
 
     workBenchSelectorItems![itemClass as ICraftingItemClass]?.['resources' as TItemTypeSelected]?.push(materialItem);
 }));

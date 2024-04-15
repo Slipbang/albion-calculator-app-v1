@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {v4 as uuidv4} from 'uuid';
 import {TCalcProps} from "../../types/calculatorPropsType";
 import {TCraftItemType, TCraftObjectTypes, TResourceType, TTier} from "../../types/craftItemsType";
-import {calculateJQ_DFC} from "../../components/Calculator/DefaultCalculator/calculateJQ_DFC";
+import {calculateJQ_DFC} from "../utils/calculateJQ_DFC";
 
 export interface IItemName {
     ru: string;

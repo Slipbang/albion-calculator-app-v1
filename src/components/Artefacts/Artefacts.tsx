@@ -6,11 +6,7 @@ import {useArtefacts} from "./Hooks/useArtefacts";
 
 const Artefacts = () => {
     const {
-        reFetchFunction,
         artefactsToRender,
-        isArtefactsFetching,
-        isErrorArtefacts,
-        artefactsPriceData,
         selectedTier,
         selectedSort,
     } = useArtefacts();
@@ -19,9 +15,7 @@ const Artefacts = () => {
         <div className={styles.artefacts}>
             <ArtefactsSelectorButtons />
 
-            <ArtefactsSelectors
-                refetchHandler={reFetchFunction}
-            />
+            <ArtefactsSelectors />
 
             <ul>
                 {artefactsToRender.sort((a, b) => {
@@ -32,13 +26,9 @@ const Artefacts = () => {
                             return a.itemValue[0] > b.itemValue[0] ? 1 : -1;
                     }
                 }).map((item) => {
-
                     return (
                         <ArtefactLiElement
                             artefactData={item}
-                            artefactsPriceData={artefactsPriceData!}
-                            isArtefactsFetching={isArtefactsFetching}
-                            isErrorArtefacts={isErrorArtefacts}
                             selectedTier={selectedTier}
                             key={item.id}
                         />

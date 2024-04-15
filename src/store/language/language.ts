@@ -145,7 +145,12 @@ const language: TLanguage = {
             craftCalculatorDescription: 'В разделе "Крафт" есть два калькулятора - с помощью обычного калькулятора можно быстро посчитать профит от крафта определенного тира, а так же сопутствующих зачарований, с помощью же "Game Mode" режима можно наглядно посчитать профит так, как это происходило бы в игре, только без беготни.',
             transportationDescription: 'В разделе "Транспортировка" с помощью базы данных Albion Online Data Project отсортированы самые выгодные предметы для продажи из любого города на Черный рынок или же в любой другой город.',
             language: 'язык',
-        }
+        },
+        FAQStrings: {
+            description1: 'Данный сайт не является коммерческим, разрабатывался в качестве обучающего пет проекта Front-end девелопера! Разработчик -',
+            description2: 'Вся загружаемые цены берутся с баз данных сайта',
+            description3: 'По вопросам можно обратиться в',
+        },
     },
     en:{
         craftTableStrings: {
@@ -291,7 +296,12 @@ const language: TLanguage = {
             craftCalculatorDescription: 'In the "Crafting" section there are two calculators - using a regular calculator you can quickly calculate the profit from crafting a certain tier, as well as accompanying enchantments, but using the "Game Mode" mode you can visually calculate the profit as it would happened in the game, but without running around.',
             transportationDescription: 'In the "Transportation" section, the most profitable items for sale from any city to the Black Market or to any other city are sorted using the Albion Online Data Project database.',
             language: 'language',
-        }
+        },
+        FAQStrings: {
+            description1: 'This site is not commercial, it was developed as a training project for a Front-end developer. Developer is -',
+            description2: 'All downloaded prices are taken from',
+            description3: 'If You have questions you can contact',
+        },
     }
 };
 export default language;

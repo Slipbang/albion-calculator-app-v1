@@ -224,6 +224,7 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
                         onChange={(event) => setOwnPriceHandler(+event.target.value, 'artefact')}
                         onFocus={() => artefactInputRef.current?.select()}
                     />}
+
                 <input
                     id='ITArtefactsCheckbox'
                     type="checkbox"

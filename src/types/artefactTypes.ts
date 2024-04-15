@@ -7,23 +7,16 @@ export type TArtefactData = {
     equipmentImg: string;
     itemValue: number[];
     artefactId: string;
-    wasCopied?: boolean;
-    wasChecked?: boolean;
 }
 
-export interface IConsumables {
-  runes: TArtefactData[];
-  souls: TArtefactData[];
-  relicts: TArtefactData[];
-  avalonianShards: TArtefactData[];
+export type TArtefactClass = 'WARRIOR' | 'MAGE' | 'HUNTER';
+
+export type TArtefactTypes = 'RUNES' | 'SOULS' | 'RELICTS' | 'AVALONIANSHARDS';
+
+export type TArtefactObject = {
+    [key in TArtefactTypes]: TArtefactData[];
 }
 
-export interface IArtefacts {
-    warrior: IConsumables;
-    mage: IConsumables;
-    hunter: IConsumables;
+export type TArtefacts = {
+    [key in TArtefactClass]: TArtefactObject;
 }
-
-export type TClass = 'warrior' | 'mage' | 'hunter';
-
-export type TConsumables = 'runes' | 'souls' | 'relicts' | 'avalonianShards';

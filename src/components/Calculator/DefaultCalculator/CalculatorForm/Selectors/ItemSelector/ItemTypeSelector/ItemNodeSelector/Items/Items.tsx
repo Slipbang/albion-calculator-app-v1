@@ -58,7 +58,7 @@ const Items = (props: IItemsProps) => {
             foodConsumption: foodConsumption!,
             type: calculatorType,
             selectedType: itemType,
-            selectedItem: itemId,
+            selectedItem: itemId!,
             itemName: itemName!,
             journalId,
             emptyJournalId,
@@ -99,11 +99,11 @@ const Items = (props: IItemsProps) => {
                     {objectTypeKeys.map(itemTypeKey => craftItems[itemTypeKey].map(itemToSelect => {
                         let imgHref: string;
                         if ((itemTypeKey === 'BAG' && itemToSelect.itemId !== 'INSIGHT') || itemTypeKey === 'CAPE') {
-                            imgHref = itemToSelect.itemId;
+                            imgHref = itemToSelect.itemId!;
                         } else {
                             imgHref = `${itemTypeKey}_${itemToSelect.itemId}`;
                         }
-                        return itemToSelect.itemNode === itemNode && itemToSelect.itemType === itemType && !itemToSelect.itemId.includes('ROYAL') && (
+                        return itemToSelect.itemNode === itemNode && itemToSelect.itemType === itemType && !itemToSelect.itemId!.includes('ROYAL') && (
                             <img
                                 key={`${itemTypeKey}_${itemToSelect.itemId}`}
                                 title={itemToSelect.itemName?.[selectedLanguage]}

@@ -57,7 +57,7 @@
     }
 
     .calculatorLink {
-      background-image: url("./craftingCalculation.jpg");
+      background-image: url("homeBackgroundImages/craftingCalculation.jpg");
       background-position: 75%;
       background-repeat: no-repeat;
       background-size: cover;
@@ -65,14 +65,14 @@
 
     .artefactsLink {
       background-position: 74%;
-      background-image: url("./artefacts.jpg");
+      background-image: url("homeBackgroundImages/artefacts.jpg");
       background-repeat: no-repeat;
       background-size: cover;
     }
 
     .transportationLink {
       background-position: 75%;
-      background-image: url("./transportation.jpg");
+      background-image: url("homeBackgroundImages/transportation.jpg");
       background-repeat: no-repeat;
       background-size: cover;
     }
@@ -131,6 +131,14 @@
       color: white;
       padding: 0 10px;
     }
+
+    .links {
+      color: white;
+
+      .AODPStyles {
+        display: initial;
+      }
+    }
   }
 }
 
@@ -140,19 +148,32 @@
     footer {
       min-width: unset;
       font-size: 11px;
+
+      a {
+        padding: 0 5px;
+      }
     }
 
     .sectionWrapper {
       flex-direction: column;
 
-      a {
-        padding: 2px 0 5px 0;
-        font-size: 20px;
-      }
-
       .sectionBox {
         width: 100%;
         min-height: 33.33%;
+      }
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  .wrapper {
+    footer {
+      .links {
+        color: white;
+
+        .AODPStyles {
+          display: none;
+        }
       }
     }
   }

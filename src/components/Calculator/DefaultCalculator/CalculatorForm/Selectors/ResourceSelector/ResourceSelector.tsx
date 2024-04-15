@@ -32,7 +32,7 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
 
     const selectResourceHandler = (selectedItem: ICraftItem) => {
         const {itemId, itemName} = selectedItem;
-        const resourceTier = itemId.split('_')[0] as TTier;
+        const resourceTier = itemId!.split('_')[0] as TTier;
         const tierNumber = +resourceTier.split('T')[1];
 
         const {
@@ -54,7 +54,7 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
         }));
         dispatchAction(profitSliceActions.setSelected({
             type: calculatorType,
-            selectedResourceId: itemId,
+            selectedResourceId: itemId!,
             resourceTier,
             itemName: itemName!,
         }));
@@ -107,9 +107,9 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
 
                     {materials.map((item) => {
                         const {itemId, itemName} = item;
-                        const itemTier = itemId.split('_')[0];
+                        const itemTier = itemId!.split('_')[0];
 
-                        return (!itemId.includes('T3')) && isMaterial(item) &&
+                        return (!itemId!.includes('T3')) && isMaterial(item) &&
                             <img
                                 className={styles.backgroundSkeleton}
                                 src={`${srcRoute}${itemId}`}

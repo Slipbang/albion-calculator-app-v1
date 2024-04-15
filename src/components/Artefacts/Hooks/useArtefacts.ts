@@ -6,60 +6,53 @@ import {
     selectArtefactsTier,
     selectArtefactsType
 } from "../../../store/artefacts/artefact-selectors";
-import {TClass} from "../../../types/artefactTypes";
+import {TArtefactClass} from "../../../types/artefactTypes";
 import {TArtefactData} from "../../../types/artefactTypes";
-import {artefactsClassesKeys} from "../../../store/artefacts/artefact-slice";
-import {useGetItemsDataQuery} from "../../../store/api/api";
-import {selectServerId} from "../../../store/queryParams/query-params-selectors";
+import {artefactActions, artefactsClassesKeys} from "../../../store/artefacts/artefact-slice";
+import {useCallback, useEffect, useMemo} from "react";
+import {useAppDispatch} from "../../../store";
 
 const useArtefacts = () => {
+
+    const dispatchAction = useAppDispatch();
+
     const artefacts = useSelector(selectArtefacts);
     const selectedType = useSelector(selectArtefactsType);
     const selectedClass = useSelector(selectArtefactsClass);
     const selectedTier = useSelector(selectArtefactsTier);
     const selectedSort = useSelector(selectArtefactsSort);
-    const serverId = useSelector(selectServerId)
 
-    const artefactsValidation = (classKey: TClass) => {
+    const artefactsValidation = useCallback((classKey: TArtefactClass) => {
         if (selectedClass === 'allClasses') return true;
 
         return classKey === selectedClass;
-    }
+    },[selectedClass])
 
-    const calcArt = () => {
+    const buildArtefactsTree = useMemo(() => {
         const artefactsToRender: TArtefactData[] = [];
-        let artefactsQueryParams = '';
+        let artefactsQueryParams: string[] = [];
 
         artefactsClassesKeys
-            .forEach(classKey => artefacts[classKey as TClass][selectedType]
+            .forEach(classKey => artefacts[classKey as TArtefactClass][selectedType]
                 .forEach(artefact => {
+
                     if (artefactsValidation(classKey)) {
                         artefactsToRender.push(artefact);
-                        artefactsQueryParams += `${selectedTier}_${artefact.artefactId},`;
+                        artefactsQueryParams.push(`${selectedTier}_${artefact.artefactId}`);
                     }
                 }));
 
-        return {artefactsToRender, artefactsQueryParams}
-    }
+        return {artefactsToRender, artefactsQueryParams: artefactsQueryParams.join(',')}
+    },[selectedType, selectedTier, artefacts, artefactsValidation]);
 
-    const {artefactsToRender, artefactsQueryParams} = calcArt();
+    const {artefactsToRender, artefactsQueryParams} = buildArtefactsTree;
 
-
-    const {
-        isFetching: isArtefactsFetching,
-        isError: isErrorArtefacts,
-        data: artefactsPriceData,
-        refetch: reFetchFunction,
-    } = useGetItemsDataQuery({itemsParams: artefactsQueryParams, isBlackMarket: false, serverId}, {
-        refetchOnReconnect: true,
-    });
+    useEffect(() => {
+        dispatchAction(artefactActions.setArtefactsParams(artefactsQueryParams))
+    }, [artefactsQueryParams])
 
     return {
-        reFetchFunction,
         artefactsToRender,
-        isArtefactsFetching,
-        isErrorArtefacts,
-        artefactsPriceData,
         selectedTier,
         selectedSort,
     }

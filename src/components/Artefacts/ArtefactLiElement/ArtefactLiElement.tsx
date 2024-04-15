@@ -1,10 +1,9 @@
 import {TArtefactData} from "../../../types/artefactTypes";
 import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../store/language/language-selector";
-import {artefactActions, TArtefactsTier} from "../../../store/artefacts/artefact-slice";
-import {useAppDispatch} from "../../../store";
+import {TArtefactsTier} from "../../../store/artefacts/artefact-slice";
 import styles from './ArtefactLiElement.module.scss';
-import React from "react";
+import React, {useState} from "react";
 import StyledCompleteResetButton from "../../Calculator/StyledComponentsCommon/StyledСompleteResetButton";
 import {Tooltip} from "react-tooltip";
 import {IItemsData} from "../../../types/InfoTableTypes";
@@ -13,6 +12,7 @@ import {artefactsPrices} from "./artefactsPricesClass";
 import {ISelectedLanguage} from "../../../types/languageTypes";
 import {selectTheme} from "../../../store/interface/interface-selector";
 import {srcRoute} from "../../../store/api/api";
+import {useArtefactsQuery} from "../Hooks/useArtefactsQuery";
 
 type artefactsArgsTuple = [
     artefactsStrings: ISelectedLanguage['artefactsStrings'],
@@ -28,15 +28,19 @@ type artefactsArgsTuple = [
 interface IArtefactsDataProps{
     artefactData: TArtefactData,
     key: string,
-    artefactsPriceData: IItemsData[],
     selectedTier: TArtefactsTier,
-    isArtefactsFetching: boolean,
-    isErrorArtefacts: boolean,
 }
 
 const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
-    const {artefactData, artefactsPriceData, selectedTier, isArtefactsFetching, isErrorArtefacts} = props;
-    const {id, itemValue, wasCopied, wasChecked, artefactId, artefactName} = artefactData;
+    const {
+        artefactData,
+        selectedTier,
+    } = props;
+    const {id, itemValue, artefactId, artefactName} = artefactData;
+
+    const [wasChecked, setWasChecked] = useState(false);
+    const [wasCopied, setWasCopied] = useState(false);
+
     const {language, selectedLanguage} = useSelector(selectLanguage);
     const {artefactsStrings} = language;
 
@@ -45,31 +49,38 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
 
     const fullArtefactId = `${selectedTier}_${artefactId}`;
 
-    const dispatchAction = useAppDispatch();
-
-    const copyTextHandler = (title: string, id: string) => {
+    const copyTextHandler = (title: string) => {
         navigator.clipboard.writeText(title).then(() => {
-            dispatchAction(artefactActions.setWasCopied(id));
+            setWasCopied(true);
         }).then(() => {
-            dispatchAction(artefactActions.setWasChecked(id));
+            setWasChecked(true);
         }).then(() => setTimeout(() => {
-            dispatchAction(artefactActions.setWasCopied(id));
+            setWasCopied(false);
         }, 1000))
     }
 
-    const artefactCheckResetHandler = (id: string) => {
-        dispatchAction(artefactActions.resetArtefactCheck({id}));
-    }
+    const {artefactsPriceData, isArtefactsFetching, isErrorArtefacts} = useArtefactsQuery();
 
     const currentDate = new Date();
 
-    const artefactsArgs: artefactsArgsTuple = [artefactsStrings, artefactsPriceData, isArtefactsFetching, isErrorArtefacts, selectedTier, itemValue, artefactId, currentDate]
+    const artefactsArgs: artefactsArgsTuple =
+        [
+            artefactsStrings,
+            artefactsPriceData,
+            isArtefactsFetching!,
+            isErrorArtefacts!,
+            selectedTier,
+            itemValue,
+            artefactId,
+            currentDate
+        ]
 
     const artefactTable = new artefactsPrices(...artefactsArgs);
 
     return (
-        <div  data-theme={theme}>
+        <>
             <li
+                data-theme={theme}
                 key={id}
                 className={styles.listElem}
             >
@@ -91,14 +102,14 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
                         aria-label="Loading Spinner"
                         data-testid="loader"
                     />
-                    {!isArtefactsFetching && <p>ℹ</p>}
+                    {!isArtefactsFetching && !isErrorArtefacts && <p>ℹ</p>}
                 </div>
                 <p
                     className={wasChecked ? styles.checkedArtefact : ''}
-                    onClick={() => copyTextHandler(artefactName[selectedLanguage], id)}
+                    onClick={() => copyTextHandler(artefactName[selectedLanguage])}
                 >{!wasCopied ? (artefactName[selectedLanguage]) : (artefactsStrings.copyState)}</p>
                 <StyledCompleteResetButton
-                    onClick={() => artefactCheckResetHandler(id)}
+                    onClick={() => setWasChecked(false)}
                     title={artefactsStrings.resetButtonTitle}
                 />
             </li>
@@ -115,7 +126,7 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
                     zIndex: 6,
                 }}
             />
-        </div>
+        </>
     )
 })
 

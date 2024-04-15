@@ -1,10 +1,10 @@
-import {IArtefacts} from '../../types/artefactTypes';
+import {TArtefacts} from '../../types/artefactTypes';
 
-const artefacts: IArtefacts = {
-    warrior: {
-        runes: [
+const artefacts: TArtefacts = {
+    WARRIOR: {
+        RUNES: [
             {
-                id: 'wr1',
+                id: 'WARRIOR_RUNES_1',
                 artefactName: {
                   ru: 'Головка древнего молота',
                   en: 'Ancient Hammer Head',
@@ -12,11 +12,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_HAMMER_UNDEAD',
                 equipmentImg: '',
                 itemValue: [128,256,512,1024,2048],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wr2',
+                id: 'WARRIOR_RUNES_2',
                 artefactName: {
                   ru: 'Утраченный арбалетный механизм',
                   en: 'Lost Crossbow Mechanism',
@@ -24,11 +22,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_REPEATINGCROSSBOW_UNDEAD',
                 equipmentImg: '',
                 itemValue: [128,256,512,1024,2048],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wr3',
+                id: 'WARRIOR_RUNES_3',
                 artefactName: {
                   ru: 'Рунический камень',
                   en: 'Runed Rock',
@@ -36,11 +32,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_ROCKMACE_KEEPER',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wr4',
+                id: 'WARRIOR_RUNES_4',
                 artefactName: {
                   ru: 'Кровавый клинок',
                   en: 'Bloodforged Blade',
@@ -48,11 +42,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_SCIMITAR_MORGANA',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wr5',
+                id: 'WARRIOR_RUNES_5',
                 artefactName: {
                   ru: 'Лезвие алебарды Морганы',
                   en: 'Morgana Halberd Head',
@@ -60,11 +52,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_HALBERD_MORGANA',
                 equipmentImg: '',
                 itemValue: [128,256,512,1024,2048],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wr6',
+                id: 'WARRIOR_RUNES_6',
                 artefactName: {
                   ru: 'Останки медвежьего стража',
                   en: 'Ursine Guardian Remains',
@@ -72,11 +62,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_KNUCKLES_KEEPER',
                 equipmentImg: '',
                 itemValue: [128,256,512,1024,2048],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wr7',
+                id: 'WARRIOR_RUNES_7',
                 artefactName: {
                   ru: 'Древние цепные кольца',
                   en: 'Ancient Rings',
@@ -84,11 +72,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_PLATE_UNDEAD',
                 equipmentImg: '',
                 itemValue: [64,128,256,512,1024],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wr8',
+                id: 'WARRIOR_RUNES_8',
                 artefactName: {
                   ru: 'Древняя подкладка',
                   en: 'Ancient Padding',
@@ -96,11 +82,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_PLATE_UNDEAD',
                 equipmentImg: '',
                 itemValue: [32,64,128,256,512],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wr9',
+                id: 'WARRIOR_RUNES_9',
                 artefactName: {
                   ru: 'Древние крепления',
                   en: 'Ancient Bindings',
@@ -108,11 +92,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_PLATE_UNDEAD',
                 equipmentImg: '',
                 itemValue: [32,64,128,256,512],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wr10',
+                id: 'WARRIOR_RUNES_10',
                 artefactName: {
                   ru: 'Ядро древнего щита',
                   en: 'Ancient Shield Core',
@@ -120,13 +102,11 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_OFF_TOWERSHIELD_UNDEAD',
                 equipmentImg: '',
                 itemValue: [32,64,128,256,512],
-                wasCopied: false,
-                wasChecked: false,
             },
         ],
-        souls: [
+        SOULS: [
             {
-                id: 'ws1',
+                id: 'WARRIOR_SOULS_1',
                 artefactName: {
                   ru: 'Демонический клинок',
                   en: 'Demonic Blade',
@@ -134,11 +114,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_CLEAVER_HELL',
                 equipmentImg: '',
                 itemValue: [384,768,1536,3072,6144],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ws2',
+                id: 'WARRIOR_SOULS_2',
                 artefactName: {
                   ru: 'Адские болты',
                   en: 'Hellish Bolts',
@@ -146,11 +124,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_DUALCROSSBOW_HELL',
                 equipmentImg: '',
                 itemValue: [384,768,1536,3072,6144],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ws3',
+                id: 'WARRIOR_SOULS_3',
                 artefactName: {
                   ru: 'Головки Адского молота',
                   en: 'Hellish Hammer Heads',
@@ -158,11 +134,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_DUALHAMMER_HELL',
                 equipmentImg: '',
                 itemValue: [384,768,1536,3072,6144],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ws4',
+                id: 'WARRIOR_SOULS_4',
                 artefactName: {
                   ru: 'Лезвие адской косы',
                   en: 'Hellish Sicklehead',
@@ -170,11 +144,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_SCYTHE_HELL',
                 equipmentImg: '',
                 itemValue: [384,768,1536,3072,6144],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ws5',
+                id: 'WARRIOR_SOULS_5',
                 artefactName: {
                   ru: 'Головка адской булавы',
                   en: 'Infernal Mace Head',
@@ -182,11 +154,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_MACE_HELL',
                 equipmentImg: '',
                 itemValue: [288,576,1152,2304,4608],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ws6',
+                id: 'WARRIOR_SOULS_6',
                 artefactName: {
                   ru: 'Отрубленные рога демонов',
                   en: 'Severed Demonic Horns',
@@ -194,11 +164,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_KNUCKLES_HELL',
                 equipmentImg: '',
                 itemValue: [384,768,1536,3072,6144],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ws7',
+                id: 'WARRIOR_SOULS_7',
                 artefactName: {
                   ru: 'Ядро адского щита',
                   en: 'Infernal Shield Core',
@@ -206,11 +174,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_OFF_SHIELD_HELL',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ws8',
+                id: 'WARRIOR_SOULS_8',
                 artefactName: {
                   ru: 'Демонические пластины',
                   en: 'Demonic Plates',
@@ -218,11 +184,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_PLATE_HELL',
                 equipmentImg: '',
                 itemValue: [192,384,768,1536,3072],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ws9',
+                id: 'WARRIOR_SOULS_9',
                 artefactName: {
                   ru: 'Демонические лоскуты',
                   en: 'Demonic Scraps',
@@ -230,11 +194,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_PLATE_HELL',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ws10',
+                id: 'WARRIOR_SOULS_10',
                 artefactName: {
                   ru: 'Демоническая набивка',
                   en: 'Demonic Filling',
@@ -242,13 +204,11 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_PLATE_HELL',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
         ],
-        relicts: [
+        RELICTS: [
             {
-                id: 'wrl1',
+                id: 'WARRIOR_RELICTS_1',
                 artefactName: {
                   ru: 'Проклятые клинки',
                   en: 'Cursed Blades',
@@ -256,11 +216,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_DUALSCIMITAR_UNDEAD',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wrl2',
+                id: 'WARRIOR_RELICTS_2',
                 artefactName: {
                   ru: 'Лезвия топора Хранителя',
                   en: 'Keeper Axeheads',
@@ -268,11 +226,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_DUALAXE_KEEPER',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wrl3',
+                id: 'WARRIOR_RELICTS_3',
                 artefactName: {
                   ru: 'Тисненое полено',
                   en: 'Engraved Log',
@@ -280,11 +236,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_RAM_KEEPER',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wrl4',
+                id: 'WARRIOR_RELICTS_4',
                 artefactName: {
                   ru: 'Болты соблазнения',
                   en: 'Alluring Bolts',
@@ -292,11 +246,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_CROSSBOWLARGE_MORGANA',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wrl5',
+                id: 'WARRIOR_RELICTS_5',
                 artefactName: {
                   ru: 'Зачарованная головка булавы',
                   en: 'Imbued Mace Head',
@@ -304,11 +256,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_MACE_MORGANA',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wrl6',
+                id: 'WARRIOR_RELICTS_6',
                 artefactName: {
                   ru: 'Поврежденная броня ворона',
                   en: 'Warped Raven Plate',
@@ -316,11 +266,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_KNUCKLES_MORGANA',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wrl7',
+                id: 'WARRIOR_RELICTS_7',
                 artefactName: {
                   ru: 'Кровавые шипы',
                   en: 'Adepts Bloodforged Spikes',
@@ -328,11 +276,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_OFF_SPIKEDSHIELD_MORGANA',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wrl8',
+                id: 'WARRIOR_RELICTS_8',
                 artefactName: {
                   ru: 'Подкладка резного черепа',
                   en: 'Carved Skull Padding',
@@ -340,11 +286,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_PLATE_KEEPER',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wrl9',
+                id: 'WARRIOR_RELICTS_9',
                 artefactName: {
                   ru: 'Мех древнего животного',
                   en: 'Preserved Animal Fur',
@@ -352,11 +296,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_PLATE_KEEPER',
                 equipmentImg: '',
                 itemValue: [448,896,1792,3584,7168],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wrl10',
+                id: 'WARRIOR_RELICTS_10',
                 artefactName: {
                   ru: 'Расписанные крепления',
                   en: 'Inscribed Bindings',
@@ -364,11 +306,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_PLATE_KEEPER',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wr11',
+                id: 'WARRIOR_RELICTS_11',
                 artefactName: {
                   ru: 'Панцирь туманника',
                   en: 'Veilweaver Carapace',
@@ -376,11 +316,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_PLATE_FEY',
                 equipmentImg: '',
                 itemValue: [448,896,1792,3584,7168],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wr12',
+                id: 'WARRIOR_RELICTS_12',
                 artefactName: {
                   ru: 'Жвалы туманника',
                   en: 'Veilweaver Mandibles',
@@ -388,11 +326,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_PLATE_FEY',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'wr13',
+                id: 'WARRIOR_RELICTS_13',
                 artefactName: {
                   ru: 'Клешни туманника',
                   en: 'Veilweaver Claws',
@@ -400,13 +336,11 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_PLATE_FEY',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
         ],
-        avalonianShards: [
+        AVALONIANSHARDS: [
             {
-                id: 'was1',
+                id: 'WARRIOR_AVALONIANSHARDS_1',
                 artefactName: {
                   ru: 'Пластина возвышения',
                   en: 'Exalted Plating',
@@ -414,11 +348,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_PLATE_AVALON',
                 equipmentImg: '',
                 itemValue: [960,1920,3840,7680,15360],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'was2',
+                id: 'WARRIOR_AVALONIANSHARDS_2',
                 artefactName: {
                   ru: 'Забрало возвышения',
                   en: 'Exalted Visor',
@@ -426,11 +358,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_PLATE_AVALON',
                 equipmentImg: '',
                 itemValue: [480,960,1920,3840,7680],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'was3',
+                id: 'WARRIOR_AVALONIANSHARDS_3',
                 artefactName: {
                   ru: 'Поножи возвышения',
                   en: 'Exalted Greave',
@@ -438,11 +368,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_PLATE_AVALON',
                 equipmentImg: '',
                 itemValue: [480,960,1920,3840,7680],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'was4',
+                id: 'WARRIOR_AVALONIANSHARDS_4',
                 artefactName: {
                   ru: 'Зазубренное авалонское лезвие',
                   en: 'Avalonian Battle Memoir',
@@ -450,11 +378,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_AXE_AVALON',
                 equipmentImg: '',
                 itemValue: [1920,3824,7680,15360,30480],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'was5',
+                id: 'WARRIOR_AVALONIANSHARDS_5',
                 artefactName: {
                   ru: 'Останки древнего короля',
                   en: 'Remnants of the',
@@ -462,11 +388,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_CLAYMORE_AVALON',
                 equipmentImg: '',
                 itemValue: [1920,3824,7680,15360,30480],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'was6',
+                id: 'WARRIOR_AVALONIANSHARDS_6',
                 artefactName: {
                   ru: 'Огромная металлическая рука',
                   en: 'Massive Metallic Hand',
@@ -474,11 +398,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_HAMMER_AVALON',
                 equipmentImg: '',
                 itemValue: [1920,3824,7680,15360,30480],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'was7',
+                id: 'WARRIOR_AVALONIANSHARDS_7',
                 artefactName: {
                   ru: 'Нарушенные клятвы',
                   en: 'Broken Oaths',
@@ -486,11 +408,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_DUALMACE_AVALON',
                 equipmentImg: '',
                 itemValue: [1920,3824,7680,15360,30480],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'was8',
+                id: 'WARRIOR_AVALONIANSHARDS_8',
                 artefactName: {
                   ru: 'Поврежденные авалонские перчатки',
                   en: 'Damaged Avalonian Gauntlet',
@@ -498,11 +418,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_KNUCKLES_AVALON',
                 equipmentImg: '',
                 itemValue: [1920,3824,7680,15360,30480],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'was9',
+                id: 'WARRIOR_AVALONIANSHARDS_9',
                 artefactName: {
                   ru: 'Гудящий авалонский механизм',
                   en: 'Humming Avalonian Whirligig',
@@ -510,11 +428,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_CROSSBOW_CANNON_AVALON',
                 equipmentImg: '',
                 itemValue: [1920,3824,7680,15360,30480],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'was10',
+                id: 'WARRIOR_AVALONIANSHARDS_10',
                 artefactName: {
                   ru: 'Разбитая авалонская реликвия',
                   en: 'Crushed Avalonian Heirloom',
@@ -522,15 +438,13 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_OFF_SHIELD_AVALON',
                 equipmentImg: '',
                 itemValue: [480,960,1920,3840,7680],
-                wasCopied: false,
-                wasChecked: false,
             },
         ],
     },
-    mage: {
-        runes: [
+    MAGE: {
+        RUNES: [
             {
-                id: 'mr1',
+                id: 'MAGE_RUNES_1',
                 artefactName: {
                   ru: 'Утраченный мистический кристалл',
                   en: 'Lost Arcane Crystal',
@@ -538,11 +452,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_ARCANESTAFF_UNDEAD',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mr2',
+                id: 'MAGE_RUNES_2',
                 artefactName: {
                   ru: 'Утраченный проклятый кристалл',
                   en: 'Lost Cursed Crystal',
@@ -550,11 +462,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_CURSEDSTAFF_UNDEAD',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mr3',
+                id: 'MAGE_RUNES_3',
                 artefactName: {
                   ru: 'Сфера лесного пожара',
                   en: 'Wildfire Orb',
@@ -562,11 +472,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_FIRESTAFF_KEEPER',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mr4',
+                id: 'MAGE_RUNES_4',
                 artefactName: {
                   ru: 'Сфера инея',
                   en: 'Hoarfrost Orb',
@@ -574,11 +482,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_FROSTSTAFF_KEEPER',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mr5',
+                id: 'MAGE_RUNES_5',
                 artefactName: {
                   ru: 'Свиток одержимости',
                   en: 'Possessed Scroll',
@@ -586,11 +492,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_HOLYSTAFF_MORGANA',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mr6',
+                id: 'MAGE_RUNES_6',
                 artefactName: {
                   ru: 'Друидские перья',
                   en: 'Druidic Feathers',
@@ -598,11 +502,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_CLOTH_KEEPER',
                 equipmentImg: '',
                 itemValue: [64,128,256,512,1024],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mr7',
+                id: 'MAGE_RUNES_7',
                 artefactName: {
                   ru: 'Древний друидский клюв',
                   en: 'Druidic Preserved Beak',
@@ -610,11 +512,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_CLOTH_KEEPER',
                 equipmentImg: '',
                 itemValue: [32,64,128,256,512],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mr8',
+                id: 'MAGE_RUNES_8',
                 artefactName: {
                   ru: 'Друидские крепления',
                   en: 'Druidic Bindings',
@@ -622,11 +522,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_CLOTH_KEEPER',
                 equipmentImg: '',
                 itemValue: [32,64,128,256,512],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mr9',
+                id: 'MAGE_RUNES_9',
                 artefactName: {
                   ru: 'Кристалл соблазнения',
                   en: 'Alluring Crystal',
@@ -634,13 +532,11 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_OFF_ORB_MORGANA',
                 equipmentImg: '',
                 itemValue: [32,64,128,256,512],
-                wasCopied: false,
-                wasChecked: false,
             },
         ],
-        souls: [
+        SOULS: [
             {
-                id: 'ms1',
+                id: 'MAGE_SOULS_1',
                 artefactName: {
                   ru: 'Оккультная сфера',
                   en: 'Occult Orb',
@@ -648,11 +544,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_ARCANESTAFF_HELL',
                 equipmentImg: '',
                 itemValue: [384,768,1536,3072,6144],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ms2',
+                id: 'MAGE_SOULS_2',
                 artefactName: {
                   ru: 'Пылающая сфера',
                   en: 'Burning Orb',
@@ -660,11 +554,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_FIRESTAFF_HELL',
                 equipmentImg: '',
                 itemValue: [384,768,1536,3072,6144],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ms3',
+                id: 'MAGE_SOULS_3',
                 artefactName: {
                   ru: 'Адский свиток',
                   en: 'Infernal Scroll',
@@ -672,11 +564,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_HOLYSTAFF_HELL',
                 equipmentImg: '',
                 itemValue: [384,768,1536,3072,6144],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ms4',
+                id: 'MAGE_SOULS_4',
                 artefactName: {
                   ru: 'Заледенелая сфера',
                   en: 'Icicle Orb',
@@ -684,11 +574,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_ICEGAUNTLETS_HELL',
                 equipmentImg: '',
                 itemValue: [384,768,1536,3072,6144],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ms5',
+                id: 'MAGE_SOULS_5',
                 artefactName: {
                   ru: 'Проклятая челюстная кость',
                   en: 'Cursed Jawbone',
@@ -696,11 +584,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_SKULLORB_HELL',
                 equipmentImg: '',
                 itemValue: [384,768,1536,3072,6144],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ms6',
+                id: 'MAGE_SOULS_6',
                 artefactName: {
                   ru: 'Демоническая челюстная кость',
                   en: 'Demonic Jawbone',
@@ -708,11 +594,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_OFF_DEMONSKULL_HELL',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ms7',
+                id: 'MAGE_SOULS_7',
                 artefactName: {
                   ru: 'Заготовки из адской ткани',
                   en: 'Infernal Cloth Folds',
@@ -720,11 +604,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_CLOTH_HELL',
                 equipmentImg: '',
                 itemValue: [192,384,768,1536,3072],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ms8',
+                id: 'MAGE_SOULS_8',
                 artefactName: {
                   ru: 'Забрало из адской ткани',
                   en: 'Infernal Cloth Visor',
@@ -732,11 +614,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_CLOTH_HELL',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'ms9',
+                id: 'MAGE_SOULS_9',
                 artefactName: {
                   ru: 'Крепления из адской ткани',
                   en: 'Infernal Cloth Bindings',
@@ -744,13 +624,11 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_CLOTH_HELL',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
         ],
-        relicts: [
+        RELICTS: [
             {
-                id: 'mrl1',
+                id: 'MAGE_RELICTS_1',
                 artefactName: {
                   ru: 'Проклятый замерзший кристалл',
                   en: 'Cursed Frozen Crystal',
@@ -758,11 +636,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_ICECRYSTAL_UNDEAD',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mrl2',
+                id: 'MAGE_RELICTS_2',
                 artefactName: {
                   ru: 'Ужасный свиток',
                   en: 'Ghastly Scroll',
@@ -770,11 +646,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_HOLYSTAFF_UNDEAD',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mrl3',
+                id: 'MAGE_RELICTS_3',
                 artefactName: {
                   ru: 'Катализатор крови',
                   en: 'Bloodforged Catalyst',
@@ -782,11 +656,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_CURSEDSTAFF_MORGANA',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mrl4',
+                id: 'MAGE_RELICTS_4',
                 artefactName: {
                   ru: 'Катализатор одержимости',
                   en: 'Possessed Catalyst',
@@ -794,11 +666,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_ENIGMATICORB_MORGANA',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mrl5',
+                id: 'MAGE_RELICTS_5',
                 artefactName: {
                   ru: 'Темный свиток',
                   en: 'Unholy Scroll',
@@ -806,11 +676,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_INFERNOSTAFF_MORGANA',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mrl6',
+                id: 'MAGE_RELICTS_6',
                 artefactName: {
                   ru: 'Расписанный камень',
                   en: 'Inscribed Stone',
@@ -818,11 +686,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_OFF_TOTEM_KEEPER',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mrl7',
+                id: 'MAGE_RELICTS_7',
                 artefactName: {
                   ru: 'Подкладка соблазнения',
                   en: 'Alluring Padding',
@@ -830,11 +696,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_CLOTH_MORGANA',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mrl8',
+                id: 'MAGE_RELICTS_8',
                 artefactName: {
                   ru: 'Амулет соблазнения',
                   en: 'Alluring Amulet',
@@ -842,11 +706,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_CLOTH_MORGANA',
                 equipmentImg: '',
                 itemValue: [448,896,1792,3584,7168],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mrl9',
+                id: 'MAGE_RELICTS_9',
                 artefactName: {
                   ru: 'Крепления соблазнения',
                   en: 'Alluring Bindings',
@@ -854,11 +716,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_CLOTH_MORGANA',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mrl10',
+                id: 'MAGE_RELICTS_10',
                 artefactName: {
                   ru: 'Сказочное крыло',
                   en: 'Fey Dorsal Wing',
@@ -866,11 +726,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_CLOTH_FEY',
                 equipmentImg: '',
                 itemValue: [448,896,1792,3584,7168],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mrl11',
+                id: 'MAGE_RELICTS_11',
                 artefactName: {
                   ru: 'Сказочная фибула',
                   en: 'Intact Fey Fibula',
@@ -878,11 +736,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_CLOTH_FEY',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mrl12',
+                id: 'MAGE_RELICTS_12',
                 artefactName: {
                   ru: 'Чешуя сказочного дракона',
                   en: 'Fey Dragonscales',
@@ -890,13 +746,11 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_CLOTH_FEY',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
         ],
-        avalonianShards: [
+        AVALONIANSHARDS: [
             {
-                id: 'mas1',
+                id: 'MAGE_AVALONIANSHARDS_1',
                 artefactName: {
                   ru: 'Освященный пояс',
                   en: 'Sanctified Belt',
@@ -904,11 +758,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_CLOTH_AVALON',
                 equipmentImg: '',
                 itemValue: [960,1920,3840,7680,15360],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mas2',
+                id: 'MAGE_AVALONIANSHARDS_2',
                 artefactName: {
                   ru: 'Освященная маска',
                   en: 'Sanctified Mask',
@@ -916,11 +768,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_CLOTH_AVALON',
                 equipmentImg: '',
                 itemValue: [480,960,1920,3840,7680],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mas3',
+                id: 'MAGE_AVALONIANSHARDS_3',
                 artefactName: {
                   ru: 'Освященные крепления',
                   en: 'Sanctified Bindings',
@@ -928,11 +778,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_CLOTH_AVALON',
                 equipmentImg: '',
                 itemValue: [480,960,1920,3840,7680],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mas4',
+                id: 'MAGE_AVALONIANSHARDS_4',
                 artefactName: {
                   ru: 'Треснувший матовый шар',
                   en: 'Fractured Opaque Orb',
@@ -940,11 +788,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_CURSEDSTAFF_AVALON',
                 equipmentImg: '',
                 itemValue: [1440,2868,5760,11520,22860],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mas5',
+                id: 'MAGE_AVALONIANSHARDS_5',
                 artefactName: {
                   ru: 'Сияющее кольцо гармонии',
                   en: 'Glowing Harmonic Ring',
@@ -952,11 +798,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_FIRE_RINGPAIR_AVALON',
                 equipmentImg: '',
                 itemValue: [1920,3824,7680,15360,30480],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mas6',
+                id: 'MAGE_AVALONIANSHARDS_6',
                 artefactName: {
                   ru: 'Осколок ледяного кристалла',
                   en: 'Chilled Crystalline Shard',
@@ -964,11 +808,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_FROSTSTAFF_AVALON',
                 equipmentImg: '',
                 itemValue: [1440,2868,5760,11520,22860],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mas7',
+                id: 'MAGE_AVALONIANSHARDS_7',
                 artefactName: {
                   ru: 'Гипнотизирующее кольцо гармонии',
                   en: 'Hypnotic Harmonic Ring',
@@ -976,11 +818,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_ARCANE_RINGPAIR_AVALON',
                 equipmentImg: '',
                 itemValue: [1920,3824,7680,15360,30480],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mas8',
+                id: 'MAGE_AVALONIANSHARDS_8',
                 artefactName: {
                   ru: 'Древнее навершие мессии',
                   en: 'Messianic Curio',
@@ -988,11 +828,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_HOLYSTAFF_AVALON',
                 equipmentImg: '',
                 itemValue: [1440,2868,5760,11520,22860],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'mas9',
+                id: 'MAGE_AVALONIANSHARDS_9',
                 artefactName: {
                   ru: 'Звенья небесной цепи',
                   en: 'Severed Celestial Keepsake',
@@ -1000,15 +838,13 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_OFF_CENSER_AVALON',
                 equipmentImg: '',
                 itemValue: [480,960,1920,3840,7680],
-                wasCopied: false,
-                wasChecked: false,
             },
         ],
     },
-    hunter: {
-        runes: [
+    HUNTER: {
+        RUNES: [
             {
-                id: 'hr1',
+                id: 'HUNTER_RUNES_1',
                 artefactName: {
                   ru: 'Наконечник копья Хранителя',
                   en: 'Keeper Spearhead',
@@ -1016,11 +852,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_SPEAR_KEEPER',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hr2',
+                id: 'HUNTER_RUNES_2',
                 artefactName: {
                   ru: 'Усиленное острие',
                   en: 'Hardened Debole',
@@ -1028,11 +862,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_RAPIER_MORGANA',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hr3',
+                id: 'HUNTER_RUNES_3',
                 artefactName: {
                   ru: 'Ужасные стрелы',
                   en: 'Ghastly Arrows',
@@ -1040,11 +872,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_LONGBOW_UNDEAD',
                 equipmentImg: '',
                 itemValue: [128,256,512,1024,2048],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hr4',
+                id: 'HUNTER_RUNES_4',
                 artefactName: {
                   ru: 'Усиленное древко посоха Морганы',
                   en: 'Reinforced Morgana Pole',
@@ -1052,11 +882,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_COMBATSTAFF_MORGANA',
                 equipmentImg: '',
                 itemValue: [128,256,512,1024,2048],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hr5',
+                id: 'HUNTER_RUNES_5',
                 artefactName: {
                   ru: 'Зачарованные кожаные заготовки',
                   en: 'Imbued Leather Folds',
@@ -1064,11 +892,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_LEATHER_MORGANA',
                 equipmentImg: '',
                 itemValue: [64,128,256,512,1024],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hr6',
+                id: 'HUNTER_RUNES_6',
                 artefactName: {
                   ru: 'Зачарованное забрало',
                   en: 'Imbued Visor',
@@ -1076,11 +902,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_LEATHER_MORGANA',
                 equipmentImg: '',
                 itemValue: [32,64,128,256,512],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hr7',
+                id: 'HUNTER_RUNES_7',
                 artefactName: {
                   ru: 'Зачарованные подметки',
                   en: 'Imbued Soles',
@@ -1088,11 +912,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_LEATHER_MORGANA',
                 equipmentImg: '',
                 itemValue: [32,64,128,256,512],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hr8',
+                id: 'HUNTER_RUNES_8',
                 artefactName: {
                   ru: 'Рунический горн',
                   en: 'Runed Horn',
@@ -1100,11 +922,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_OFF_HORN_KEEPER',
                 equipmentImg: '',
                 itemValue: [32,64,128,256,512],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hr9',
+                id: 'HUNTER_RUNES_9',
                 artefactName: {
                   ru: 'Руны друидов',
                   en: 'Druidic Inscriptions',
@@ -1112,13 +932,11 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_NATURESTAFF_KEEPER',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
         ],
-        souls: [
+        SOULS: [
             {
-                id: 'hs1',
+                id: 'HUNTER_SOULS_1',
                 artefactName: {
                   ru: 'Наконечники демонических стрел',
                   en: 'Demonic Arrowheads',
@@ -1126,11 +944,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_BOW_HELL',
                 equipmentImg: '',
                 itemValue: [384,768,1536,3072,6144],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hs2',
+                id: 'HUNTER_SOULS_2',
                 artefactName: {
                   ru: 'Наконечник адского гарпуна',
                   en: 'Infernal Harpoon Tip',
@@ -1138,11 +954,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_HARPOON_HELL',
                 equipmentImg: '',
                 itemValue: [384,768,1536,3072,6144],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hs3',
+                id: 'HUNTER_SOULS_3',
                 artefactName: {
                   ru: 'Сломанный демонический клык',
                   en: 'Broken Demonic Fang',
@@ -1150,11 +964,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_DAGGER_HELL',
                 equipmentImg: '',
                 itemValue: [288,576,1152,2304,4608],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hs4',
+                id: 'HUNTER_SOULS_4',
                 artefactName: {
                   ru: 'Символ порчи',
                   en: 'Symbol of Blight',
@@ -1162,11 +974,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_NATURESTAFF_HELL',
                 equipmentImg: '',
                 itemValue: [384,768,1536,3072,6144],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hs5',
+                id: 'HUNTER_SOULS_5',
                 artefactName: {
                   ru: 'Пара лезвий адской косы',
                   en: 'Hellish Sicklehead Pair',
@@ -1174,11 +984,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_TWINSCYTHE_HELL',
                 equipmentImg: '',
                 itemValue: [384,768,1536,3072,6144],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hs6',
+                id: 'HUNTER_SOULS_6',
                 artefactName: {
                   ru: 'Адская рукоятка',
                   en: 'Hellish Handle',
@@ -1186,11 +994,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_OFF_JESTERCANE_HELL',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hs7',
+                id: 'HUNTER_SOULS_7',
                 artefactName: {
                   ru: 'Кожа из шкуры демона',
                   en: 'Demonhide Leather',
@@ -1198,11 +1004,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_LEATHER_HELL',
                 equipmentImg: '',
                 itemValue: [192,384,768,1536,3072],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hs8',
+                id: 'HUNTER_SOULS_8',
                 artefactName: {
                   ru: 'Подкладка из шкуры демона',
                   en: 'Demonhide Padding',
@@ -1210,11 +1014,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_LEATHER_HELL',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hs9',
+                id: 'HUNTER_SOULS_9',
                 artefactName: {
                   ru: 'Крепления из шкуры демона',
                   en: 'Demonhide Bindings',
@@ -1222,13 +1024,11 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_LEATHER_HELL',
                 equipmentImg: '',
                 itemValue: [96,192,384,768,1536],
-                wasCopied: false,
-                wasChecked: false,
             },
         ],
-        relicts: [
+        RELICTS: [
             {
-                id: 'hrl1',
+                id: 'HUNTER_RELICTS_1',
                 artefactName: {
                   ru: 'Резная кость',
                   en: 'Carved Bone',
@@ -1236,11 +1036,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_BOW_KEEPER',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hrl2',
+                id: 'HUNTER_RELICTS_2',
                 artefactName: {
                   ru: 'Древние камни',
                   en: 'Preserved Rocks',
@@ -1248,11 +1046,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_ROCKSTAFF_KEEPER',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hrl3',
+                id: 'HUNTER_RELICTS_3',
                 artefactName: {
                   ru: 'Древнее полено',
                   en: 'Preserved Log',
@@ -1260,11 +1056,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_NATURESTAFF_KEEPER',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hrl4',
+                id: 'HUNTER_RELICTS_4',
                 artefactName: {
                   ru: 'Ужасные клинки',
                   en: 'Ghastly Blades',
@@ -1272,11 +1066,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_DUALSICKLE_UNDEAD',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hrl5',
+                id: 'HUNTER_RELICTS_5',
                 artefactName: {
                   ru: 'Проклятые шипы',
                   en: 'Cursed Barbs',
@@ -1284,11 +1076,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_TRIDENT_UNDEAD',
                 equipmentImg: '',
                 itemValue: [896,1792,3584,7168,14336],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hrl6',
+                id: 'HUNTER_RELICTS_6',
                 artefactName: {
                   ru: 'Ужасная свеча',
                   en: 'Ghastly Candle',
@@ -1296,11 +1086,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_OFF_LAMP_UNDEAD',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hrl7',
+                id: 'HUNTER_RELICTS_7',
                 artefactName: {
                   ru: 'Ужасное забрало',
                   en: 'Ghastly Visor',
@@ -1308,11 +1096,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_LEATHER_UNDEAD',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hrl8',
+                id: 'HUNTER_RELICTS_8',
                 artefactName: {
                   ru: 'Ужасная кожа',
                   en: 'Ghastly Leather',
@@ -1320,11 +1106,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_LEATHER_UNDEAD',
                 equipmentImg: '',
                 itemValue: [448,896,1792,3584,7168],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hrl9',
+                id: 'HUNTER_RELICTS_9',
                 artefactName: {
                   ru: 'Ужасные крепления',
                   en: 'Ghastly Bindings',
@@ -1332,11 +1116,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_LEATHER_UNDEAD',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hrl10',
+                id: 'HUNTER_RELICTS_10',
                 artefactName: {
                   ru: 'Чистые перья грифона',
                   en: 'Untarnished Griffin Feathers',
@@ -1344,11 +1126,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_LEATHER_FEY',
                 equipmentImg: '',
                 itemValue: [448,896,1792,3584,7168],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hrl11',
+                id: 'HUNTER_RELICTS_11',
                 artefactName: {
                   ru: 'Безупречный клюв грифона',
                   en: 'Flawless Griffin Beak',
@@ -1356,11 +1136,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_LEATHER_FEY',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'hrl12',
+                id: 'HUNTER_RELICTS_12',
                 artefactName: {
                   ru: 'Мех грифона',
                   en: 'Griffin Underfur',
@@ -1368,13 +1146,11 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_LEATHER_FEY',
                 equipmentImg: '',
                 itemValue: [224,448,896,1792,3584],
-                wasCopied: false,
-                wasChecked: false,
             },
         ],
-        avalonianShards: [
+        AVALONIANSHARDS: [
             {
-                id: 'has1',
+                id: 'HUNTER_AVALONIANSHARDS_1',
                 artefactName: {
                   ru: 'Кушак предзнаменования',
                   en: 'Augured Sash',
@@ -1382,11 +1158,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_ARMOR_LEATHER_AVALON',
                 equipmentImg: '',
                 itemValue: [960,1920,3840,7680,15360],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'has2',
+                id: 'HUNTER_AVALONIANSHARDS_2',
                 artefactName: {
                   ru: 'Подкладка предзнаменования',
                   en: 'Augured Padding',
@@ -1394,11 +1168,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_HEAD_LEATHER_AVALON',
                 equipmentImg: '',
                 itemValue: [480,960,1920,3840,7680],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'has3',
+                id: 'HUNTER_AVALONIANSHARDS_3',
                 artefactName: {
                   ru: 'Застежки предзнаменования',
                   en: 'Augured Fasteners',
@@ -1406,11 +1178,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_SHOES_LEATHER_AVALON',
                 equipmentImg: '',
                 itemValue: [480,960,1920,3840,7680],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'has4',
+                id: 'HUNTER_AVALONIANSHARDS_4',
                 artefactName: {
                   ru: 'Окровавленные древние обломки',
                   en: 'BloodStained Antiquities',
@@ -1418,11 +1188,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_DAGGER_KATAR_AVALON',
                 equipmentImg: '',
                 itemValue: [1920,3824,7680,15360,30480],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'has5',
+                id: 'HUNTER_AVALONIANSHARDS_5',
                 artefactName: {
                   ru: 'Обломок рукояти предков',
                   en: 'Ruined Ancestral Vamplate',
@@ -1430,11 +1198,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_SPEAR_LANCE_AVALON',
                 equipmentImg: '',
                 itemValue: [1440,2868,5760,11520,22860],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'has6',
+                id: 'HUNTER_AVALONIANSHARDS_6',
                 artefactName: {
                   ru: 'Ветхий дорожный посох',
                   en: 'Timeworn Walking Staff',
@@ -1442,11 +1208,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_QUARTERSTAFF_AVALON',
                 equipmentImg: '',
                 itemValue: [1920,3824,7680,15360,30480],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'has7',
+                id: 'HUNTER_AVALONIANSHARDS_7',
                 artefactName: {
                   ru: 'Безупречная рукоять',
                   en: 'Immaculately Crafted Riser',
@@ -1454,11 +1218,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_2H_BOW_AVALON',
                 equipmentImg: '',
                 itemValue: [1920,3824,7680,15360,30480],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'has8',
+                id: 'HUNTER_AVALONIANSHARDS_8',
                 artefactName: {
                   ru: 'Выкорчеванный многолетний саженец',
                   en: 'Uprooted Perennial Sapling',
@@ -1466,11 +1228,9 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_MAIN_NATURESTAFF_AVALON',
                 equipmentImg: '',
                 itemValue: [1440,2868,5760,11520,22860],
-                wasCopied: false,
-                wasChecked: false,
             },
             {
-                id: 'has9',
+                id: 'HUNTER_AVALONIANSHARDS_9',
                 artefactName: {
                   ru: 'Сломанный авалонский сувенир',
                   en: 'Shattered Avalonian Memento',
@@ -1478,8 +1238,6 @@ const artefacts: IArtefacts = {
                 artefactId: 'ARTEFACT_OFF_TALISMAN_AVALON',
                 equipmentImg: '',
                 itemValue: [480,960,1920,3840,7680],
-                wasCopied: false,
-                wasChecked: false,
             },
         ],
     }

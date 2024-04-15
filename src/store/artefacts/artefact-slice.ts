@@ -1,70 +1,55 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, Observable, PayloadAction} from "@reduxjs/toolkit";
 import artefacts from "../Items/artefacts";
-import {IArtefacts, TClass} from "../../types/artefactTypes";
-import {TConsumables} from "../../types/artefactTypes";
+import {TArtefactClass, TArtefactData, TArtefacts, TArtefactTypes} from "../../types/artefactTypes";
 import {TTier} from "../../types/craftItemsType";
+import {IItemsData} from "../../types/InfoTableTypes";
 
-export type TExtendedTClass = TClass | 'allClasses';
 
-export const artefactsClassesKeys = Object.keys(artefacts) as TClass[];
+export type TExtendedTClass = TArtefactClass | 'allClasses';
+
+export const artefactsClassesKeys = ['WARRIOR', 'HUNTER', "MAGE"] as TArtefactClass[];
+export const artefactsTypesKeys = ['RUNES', "RELICTS", 'AVALONIANSHARDS'] as TArtefactTypes[];
+
 export type TArtefactsTier = Exclude<TTier, 'T3'>
 
-export interface IInitialState {
+
+interface IInitialState {
     selectedClass: TExtendedTClass;
-    selectedType: TConsumables;
+    selectedType: TArtefactTypes;
     selectedSort: 'descending' | 'ascending';
     selectedTier: TArtefactsTier;
-    artefacts: IArtefacts;
+    artefacts: TArtefacts;
+    artefactsParams: string;
 }
 
 const initialState: IInitialState = {
-    selectedClass: 'warrior',
-    selectedType: 'runes',
+    selectedClass: 'WARRIOR',
+    selectedType: 'RUNES',
     selectedSort: 'descending',
     selectedTier: 'T6',
     artefacts: JSON.parse(JSON.stringify(artefacts)),
+    artefactsParams: '',
 };
 
 const artefactSlice = createSlice({
-    name: '@artefacts',
+    name: 'artefacts',
     initialState,
     reducers: {
-        setWasCopied(state, action: PayloadAction<string>){
-            artefactsClassesKeys.forEach(key => state.artefacts[key][state.selectedType].forEach(artefact => {
-                if(artefact.id === action.payload){
-                    artefact.wasCopied = !artefact.wasCopied;
-                }
-            }))
-        },
-        setArtefactsTier(state, action: PayloadAction<TArtefactsTier>){
+        setArtefactsTier(state, action: PayloadAction<TArtefactsTier>) {
             state.selectedTier = action.payload;
-        },
-        setWasChecked(state, action: PayloadAction<string>){
-            artefactsClassesKeys.forEach(key => state.artefacts[key][state.selectedType].forEach(artefact => {
-                if(artefact.id === action.payload){
-                    artefact.wasChecked = true;
-                }
-            }))
-        },
-        resetArtefactCheck(state, action: PayloadAction<{id?: string}>){
-            artefactsClassesKeys.forEach(key => state.artefacts[key][state.selectedType].forEach(artefact => {
-                if(artefact.id === action.payload.id){
-                    artefact.wasChecked = false;
-                }
-                if (action.payload.id === undefined){
-                    artefact.wasChecked = false;
-                }
-            }))
         },
         setSelectedClass(state, action: PayloadAction<TExtendedTClass>) {
             state.selectedClass = action.payload;
         },
-        setSelectedType(state, action: PayloadAction<TConsumables>) {
+        setSelectedType(state, action: PayloadAction<TArtefactTypes>) {
             state.selectedType = action.payload;
         },
-        setSelectedSort(state, action: PayloadAction<'descending' | 'ascending'>){
+        setSelectedSort(state, action: PayloadAction<'descending' | 'ascending'>) {
             state.selectedSort = action.payload;
         },
+        setArtefactsParams(state, action: PayloadAction<string>) {
+            state.artefactsParams = action.payload;
+        }
     },
 })
 

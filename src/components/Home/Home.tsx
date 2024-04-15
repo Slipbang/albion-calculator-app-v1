@@ -11,17 +11,18 @@ import {TSelectedLanguage} from "../../types/languageTypes";
 const Home = () => {
     const dispatchAction = useAppDispatch();
 
-    const {language} = useSelector(selectLanguage);
+    const {language, selectedLanguage} = useSelector(selectLanguage);
     const {homeStrings} = language;
 
     const selectLanguageHandler = (language: TSelectedLanguage) => {
-        dispatchAction(languageSwitcherActions.changeLanguageHandler(language))
+        dispatchAction(languageSwitcherActions.changeLanguageHandler(language));
     }
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.sectionWrapper}>
                 <div className={`${styles.artefactsLink} ${styles.sectionBox}`}>
+                    {/*<Link to={`/${selectedLanguage}/artefacts/warrior/runes/T6`}>{homeStrings.artefacts}</Link>*/}
                     <Link to='/artefacts'>{homeStrings.artefacts}</Link>
 
                     <div className={styles.textBox}>
@@ -30,6 +31,7 @@ const Home = () => {
                 </div>
 
                 <div className={`${styles.calculatorLink} ${styles.sectionBox}`}>
+                    {/*<Link to={`${selectedLanguage}/calculator/game-mode/items`}>{homeStrings.craftCalculator}</Link>*/}
                     <Link to='/calculator'>{homeStrings.craftCalculator}</Link>
 
                     <AlbionToolkitSVG/>
@@ -40,6 +42,7 @@ const Home = () => {
                 </div>
 
                 <div className={`${styles.transportationLink} ${styles.sectionBox}`}>
+                    {/*<Link to={`/${selectedLanguage}/transportation`}>{homeStrings.transportation}</Link>*/}
                     <Link to='/transportation'>{homeStrings.transportation}</Link>
 
                     <div className={styles.textBox}>
@@ -61,9 +64,15 @@ const Home = () => {
                     <p>{homeStrings.language}</p>
                 </div>
 
-                <Link to="/FAQ">FAQ</Link>
+                {/*<Link to={`/${selectedLanguage}/FAQ`}>FAQ</Link>*/}
+                <Link to='/FAQ'>FAQ</Link>
 
-                <a href='https://www.albion-online-data.com' target='_blank'>Powered by Albion Online Data Project</a>
+                <div className={styles.links}>
+                    Powered by
+                    <a className={styles.AODPStyles} href='https://www.albion-online-data.com' target='_blank'>Albion Online Data Project</a>
+                    <span className={styles.AODPStyles}>&</span>
+                    <a href="https://albion-profit-calculator.com" target='_blank'>albion-profit-calculator.com</a>
+                </div>
             </footer>
         </div>
     )

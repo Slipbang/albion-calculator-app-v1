@@ -156,6 +156,12 @@ interface IHomeStrings {
     language: string;
 }
 
+interface IFAQStrings {
+    description1: string;
+    description2: string;
+    description3: string;
+}
+
 export interface ISelectedLanguage {
     craftTableStrings: ICraftTableStrings;
     calculatorFormStrings: ICalculatorFormStrings;
@@ -171,6 +177,7 @@ export interface ISelectedLanguage {
     headerStrings: IHeaderStrings;
     notFoundStings: INotFoundStings;
     homeStrings: IHomeStrings;
+    FAQStrings: IFAQStrings;
 }
 
 export type TSelectedLanguage = 'ru' | 'en';

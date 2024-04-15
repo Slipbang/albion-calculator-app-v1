@@ -28,13 +28,13 @@ import {TExtendedTClass} from "../../../store/artefacts/artefact-slice";
 import styles from './ArtefactsSelectorButtons.module.scss'
 import React from "react";
 import ArtefactButton from "./ArtefactButton/ArtefactButton";
-import {TConsumables} from "../../../types/artefactTypes";
+import {TArtefactTypes} from "../../../types/artefactTypes";
 
 interface IArtefactsButton {
     image: string;
     hoveredImage: string;
     selectedImage: string;
-    type: TConsumables | TExtendedTClass;
+    type: TArtefactTypes | TExtendedTClass;
 }
 
 type TArtefactsButtons = IArtefactsButton[];
@@ -44,43 +44,43 @@ const artefactsButtons: TArtefactsButtons = [
         image: runesButton,
         hoveredImage: runesButtonHovered,
         selectedImage: selectedRunesButton,
-        type: 'runes',
+        type: 'RUNES',
     },
     {
         image: soulsButton,
         hoveredImage: soulsButtonHovered,
         selectedImage: selectedSoulsButton,
-        type: 'souls',
+        type: 'SOULS',
     },
     {
         image: relictsButton,
         hoveredImage: relictsButtonHovered,
         selectedImage: selectedRelicsButton,
-        type: 'relicts',
+        type: 'RELICTS',
     },
     {
         image: shardsButton,
         hoveredImage: shardsButtonHovered,
         selectedImage: selectedShardsButton,
-        type: 'avalonianShards',
+        type: 'AVALONIANSHARDS',
     },
     {
         image: warriorsButton,
         hoveredImage: warriorsButtonHovered,
         selectedImage: selectedWarriorsButton,
-        type: 'warrior',
+        type: 'WARRIOR',
     },
     {
         image: magesButton,
         hoveredImage: magesButtonHovered,
         selectedImage: selectedMagesButton,
-        type: 'mage',
+        type: 'MAGE',
     },
     {
         image: huntersButton,
         hoveredImage: huntersButtonHovered,
         selectedImage: selectedHuntersButton,
-        type: 'hunter',
+        type: 'HUNTER',
     },
     {
         image: allClassesButton,
