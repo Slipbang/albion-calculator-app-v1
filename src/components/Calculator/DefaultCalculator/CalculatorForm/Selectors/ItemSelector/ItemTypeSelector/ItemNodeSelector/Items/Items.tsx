@@ -30,8 +30,8 @@ const Items = (props: IItemsProps) => {
     const itemNode = useSelector(selectItemNode);
     const itemType = useSelector(selectItemType);
 
-    const selectItemHandler = ({itemType, selectedItem}: { itemType: TCraftObjectTypes, selectedItem: ICraftItem }) => {
-        const {itemId, artefactItemId, foodConsumption, itemClass, itemName} = selectedItem;
+    const selectItemHandler = ({itemType, item}: { itemType: TCraftObjectTypes, item: ICraftItem }) => {
+        const {itemId, artefactItemId, foodConsumption, itemClass, itemName} = item;
 
         let journalBodyId = '';
 
@@ -55,14 +55,16 @@ const Items = (props: IItemsProps) => {
         dispatchAction(interfaceSliceActions.toggleItemSelectorVisibility(false));
 
         dispatchAction(profitSliceActions.setSelected({
-            foodConsumption: foodConsumption!,
             type: calculatorType,
-            selectedType: itemType,
-            selectedItem: itemId!,
-            itemName: itemName!,
-            journalId,
-            emptyJournalId,
-            artefactId: artefactItemId,
+            selectedItem: {
+                selectedItemType: itemType,
+                foodConsumption: foodConsumption!,
+                selectedItemBodyId: itemId!,
+                journalId,
+                emptyJournalId,
+                artefactId: artefactItemId,
+                itemName: itemName!,
+            },
         }));
 
         const {
@@ -70,7 +72,7 @@ const Items = (props: IItemsProps) => {
             subMaterialQuantity,
             mainMaterialId,
             subMaterialId
-        } = defineMaterials(selectedItem);
+        } = defineMaterials(item);
 
         dispatchAction(profitSliceActions.setSelectedMaterials({
             type: calculatorType,
@@ -114,7 +116,7 @@ const Items = (props: IItemsProps) => {
                                     event.stopPropagation();
                                     selectItemHandler({
                                         itemType: itemTypeKey,
-                                        selectedItem: itemToSelect,
+                                        item: itemToSelect,
                                     })
                                 }}
                             />

@@ -10,7 +10,7 @@ import {
     TSelectedCityStates,
 } from "../InfoTable";
 import {cityOptions} from "../../../../../store/Options/CityOptions";
-import {ISelectedLanguage} from "../../../../../types/languageTypes";
+import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
 
 interface IMaterialSelectorsProps {
     mainMatsId: string;
@@ -18,19 +18,19 @@ interface IMaterialSelectorsProps {
     emptyJournalId: string;
     journalId: string;
     artefactId: string;
-    setOwnPrices: Dispatch<SetStateAction<TOwnPriceStates>>;
-    ownPrices: TOwnPriceStates;
-    setFoodTax: Dispatch<SetStateAction<number>>;
+    selectedLanguage: TSelectedLanguage;
+    infoTableStrings: ISelectedLanguage['infoTableStrings'];
     artefactsData: IItemsData[];
     journalsData: IItemsData[];
-    infoTableStrings: ISelectedLanguage['infoTableStrings'];
     isJournalsUsed: boolean;
-    setSelectedCities: Dispatch<SetStateAction<TSelectedCityStates>>;
     setIsJournalsUsed: Dispatch<SetStateAction<boolean>>;
     artefactName: TArtefactName;
     foodTax: number;
-    selectedLanguage: 'ru' | 'en';
+    setFoodTax: Dispatch<SetStateAction<number>>;
     selectedCities: TSelectedCityStates;
+    setSelectedCities: Dispatch<SetStateAction<TSelectedCityStates>>;
+    setOwnPrices: Dispatch<SetStateAction<TOwnPriceStates>>;
+    ownPrices: TOwnPriceStates;
 }
 
 const MaterialSelectors = (props: IMaterialSelectorsProps) => {

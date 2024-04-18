@@ -1,0 +1,61 @@
+.wrapper {
+  display: flex;
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 115px;
+  align-items: center;
+
+  .quantityInput{
+    display: flex;
+    width: 65px;
+    align-items: center;
+    justify-content: center;
+
+    input[type='number'] {
+      width: 55px;
+      text-align: center;
+      background-color: rgb(161, 153, 108);
+      outline: none;
+    }
+    input[type='number']::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+    }
+  }
+
+  .selectedMeal {
+    margin-left: 20px;
+  }
+  .fishSauce {
+    display: flex;
+    filter: drop-shadow(3px 3px 6px black);
+    cursor: pointer;
+
+  }
+
+  .resourceQuantity {
+    margin-left: 34px;
+    margin-top: -30px;
+    position: absolute;
+    height: 15px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p{
+      color: white;
+      font-size: 10px;
+    }
+  }
+
+  .mealResources {
+    display: flex;
+    margin-left: 15px;
+  }
+
+  .totalQuantity {
+    width: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

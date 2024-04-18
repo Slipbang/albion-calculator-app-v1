@@ -26,7 +26,7 @@ const ResourceTable = (props: IResourceTableProps) => {
     const dispatchAction = useAppDispatch();
 
     const fetchResourceDataHandler = (item: ITableData) => {
-        let {resourceId, mainMatsId, subMatsId} = item!;
+        let {resourceId, mainMatsId, subMatsId} = item.infoTableData;
         let craftedMaterial = `${resourceId},`;
         let subMats = `${subMatsId},`;
         let mainMats = `${mainMatsId},`;
@@ -39,7 +39,12 @@ const ResourceTable = (props: IResourceTableProps) => {
 
         const queryMatsParams = `${craftedMaterial}${subMats}${mainMats}`;
 
-        dispatchAction(profitSliceActions.setCraftedItem({...item, queryMatsParams}));
+        dispatchAction(profitSliceActions.setCraftedItem({
+            ...item,
+            tableQueryParams: {
+                queryMatsParams,
+            }
+        }));
         dispatchAction(interfaceSliceActions.setInfoTableVisibility(true));
     }
 
@@ -58,7 +63,8 @@ const ResourceTable = (props: IResourceTableProps) => {
 
             <tbody>
             {craftResourcesList.map((item) => {
-                const {resourceId, spentQuantityPerItem, id, mainResourceQuantity, subResourceQuantity, percent, output} = item;
+                const {id, mainResourceQuantity, subResourceQuantity, percent} = item.craftTableData;
+                const {resourceId, spentQuantityPerItem, output} = item.infoTableData;
 
                 return (
                     <tr key={id}>
@@ -67,7 +73,7 @@ const ResourceTable = (props: IResourceTableProps) => {
                                 draggable={false}
                                 src={`${srcRoute}${resourceId}`}
                                 alt={resourceId}
-                                title={spentQuantityPerItem?.mainMatsQuantity}
+                                title={spentQuantityPerItem?.mainMatsQuantity.toString()}
                             />
                         </td>
                         <td>{mainResourceQuantity}{craftTableStrings.metrics}</td>

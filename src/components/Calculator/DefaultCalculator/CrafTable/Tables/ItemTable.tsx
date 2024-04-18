@@ -27,7 +27,8 @@ const ItemTable = (props: TItemTableProps) => {
     const craftItemsList = useSelector(selectCraftItemsList);
 
     const fetchItemDataHandler = (item: ITableData) => {
-        let {itemId, mainMatsId, subMatsId, journalId, emptyJournalId} = item!;
+        const {itemId, mainMatsId, subMatsId, journalId, emptyJournalId} = item.infoTableData;
+
         let items = `${itemId},`;
         let subMats = !!subMatsId ? `${subMatsId},` : '';
         let mainMats = `${mainMatsId},`;
@@ -46,7 +47,14 @@ const ItemTable = (props: TItemTableProps) => {
         const queryMatsParams = `${subMats}${mainMats}`;
         const queryJournalsParams = `${journals}`;
 
-        dispatchAction(profitSliceActions.setCraftedItem({...item, queryMatsParams, queryItemsParams, queryJournalsParams}));
+        dispatchAction(profitSliceActions.setCraftedItem({
+            ...item,
+            tableQueryParams: {
+                queryMatsParams,
+                queryItemsParams,
+                queryJournalsParams
+            }
+        }));
         dispatchAction(interfaceSliceActions.setInfoTableVisibility(true));
     }
 
@@ -64,19 +72,9 @@ const ItemTable = (props: TItemTableProps) => {
                 </thead>
                 <tbody>
                 {craftItemsList.map((item) => {
-                    const {
-                        itemId,
-                        id,
-                        mainResourceQuantity,
-                        mainMatsId,
-                        spentQuantityPerItem,
-                        subResourceQuantity,
-                        subMatsId,
-                        percent,
-                        output,
-                        subDiv,
-                        mainDiv
-                    } = item;
+                    const {id, mainResourceQuantity, subResourceQuantity, mainDiv, subDiv, percent} = item.craftTableData;
+                    const {itemId, mainMatsId, spentQuantityPerItem, subMatsId, output} = item.infoTableData;
+
 
                     return <tr key={id}>
                         <td>

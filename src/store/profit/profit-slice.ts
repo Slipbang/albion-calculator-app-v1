@@ -3,6 +3,7 @@ import {v4 as uuidv4} from 'uuid';
 import {TCalcProps} from "../../types/calculatorPropsType";
 import {TCraftItemType, TCraftObjectTypes, TResourceType, TTier} from "../../types/craftItemsType";
 import {calculateJQ_DFC} from "../utils/calculateJQ_DFC";
+import {IFoodObject} from "../../types/foodTypes";
 
 export interface IItemName {
     ru: string;
@@ -10,22 +11,16 @@ export interface IItemName {
 }
 
 export interface ISpentQuantityPerItem {
-    mainMatsQuantity: string;
-    subMatsQuantity?: string;
+    mainMatsQuantity: number;
+    subMatsQuantity?: number;
 }
 
-export interface ITableData {
-    mainResourceQuantity: number;
-    percent: number;
-    subResourceQuantity?: number;
+export interface IInfoTableData {
     output: number;
-    id: string;
     resourceId?: string;
     itemId?: string;
     mainMatsId: string;
     subMatsId?: string | undefined;
-    mainDiv?: number;
-    subDiv?: number;
     foodConsumption: number;
     defaultFoodConsumption: number;
     spentQuantityPerItem?: ISpentQuantityPerItem;
@@ -34,23 +29,71 @@ export interface ITableData {
     journalsQuantity?: number;
     itemName?: IItemName;
     tier: string
-    artefactId?: string | null;
-    queryMatsParams?: string;
-    queryItemsParams?: string;
-    queryJournalsParams?: string;
-
+    artefactId?: string | undefined;
 }
 
+export interface ICraftTableData{
+    mainDiv?: number;
+    subDiv?: number;
+    id: string;
+    percent: number;
+    mainResourceQuantity: number;
+    subResourceQuantity?: number;
+}
 
+export interface ITableQueryParams {
+    queryMatsParams: string;
+    queryItemsParams?: string;
+    queryJournalsParams?: string;
+}
+
+export interface ITableData {
+    infoTableData: IInfoTableData;
+    tableQueryParams?: ITableQueryParams;
+    craftTableData: ICraftTableData
+}
+
+export interface IFoodTableData {
+    quantity: number;
+    percent: number;
+    queryParams: string;
+    craftedFood: IFoodObject;
+}
+
+export interface ISelectedItem {
+    selectedItemType: TCraftObjectTypes;
+    selectedItemTier: TTier;
+    foodConsumption: number,
+    selectedItemBodyId: string;
+    journalId: string;
+    emptyJournalId: string;
+    artefactId?: string;
+    itemName: {
+        ru: string,
+        en: string,
+    }
+}
+
+export interface ISelectedResource {
+    resourceId: string;
+    resourceTier: TTier,
+    foodConsumption: 1.8, // всегда 1.8
+    defaultFoodConsumption: 1.8; // всегда 1.8
+    resourceName: {
+        ru: string,
+        en: string,
+    }
+}
 
 interface IInitialState {
     craftResourcesList: ITableData[];
     craftItemsList: ITableData[];
     craftedItemData: null | ITableData;
-    output: {
-        resourcesOutput: number;
-        itemsOutput: number
-    };
+    craftedFoodData: null | IFoodTableData;
+
+    consumableItemQuantity: number;
+    consumptionItemQueryParams: string;
+
     errors: {
         percentError: boolean;
         quantityError: boolean;
@@ -88,29 +131,9 @@ interface IInitialState {
     }
 
     selected: {
-        selectedResource: {
-            resourceId: string;
-            resourceTier: TTier,
-            foodConsumption: 1.8, // всегда 1.8
-            defaultFoodConsumption: 1.8; // всегда 1.8
-            resourceName: {
-                ru: string,
-                en: string,
-            }
-        },
-        selectedItem: {
-            selectedItemType: TCraftObjectTypes;
-            selectedItemTier: TTier;
-            foodConsumption: number,
-            selectedItemBodyId: string;
-            journalId: string;
-            emptyJournalId: string;
-            artefactId?: string;
-            itemName: {
-                ru: string,
-                en: string,
-            }
-        }
+        selectedResource: ISelectedResource,
+        selectedItem: ISelectedItem;
+        selectedFood: IFoodObject;
     }
 }
 
@@ -118,10 +141,10 @@ const initialState: IInitialState = {
     craftResourcesList: [],
     craftItemsList: [],
     craftedItemData: null,
-    output: {
-        resourcesOutput: 0,
-        itemsOutput: 0
-    },
+    craftedFoodData: null,
+
+    consumableItemQuantity: 1,
+    consumptionItemQueryParams: '',
 
     errors: {
         percentError: false,
@@ -180,6 +203,14 @@ const initialState: IInitialState = {
                 ru: 'Палаш',
                 en: 'Broadsword',
             }
+        },
+        selectedFood: {
+            itemId: 'T4_MEAL_SALAD',
+            T4_TURNIP: 24,
+            T3_WHEAT: 24,
+            FISHSAUCE: 30,
+            quantity: 10,
+            foodConsumption: 216,
         }
     },
 };
@@ -218,26 +249,24 @@ const profitSlice = createSlice({
         setSelectedNode(state, action: PayloadAction<string>) {
             state.itemSelector.itemNode = action.payload;
         },
-        setSelected(state, action: PayloadAction<{ type: TCalcProps; selectedType?: TCraftObjectTypes; journalId?: string; emptyJournalId?: string; selectedItem?: string; itemName: {ru: string, en: string} , artefactId?: string; selectedResourceId?: string, resourceTier?: TTier, foodConsumption?: number}>) {
+        setSelected(state, action: PayloadAction<{ type: TCalcProps; selectedItem?: Omit<ISelectedItem, 'selectedItemTier'>; selectedResource?: Pick<ISelectedResource, 'resourceId' | 'resourceTier' | 'resourceName'>; selectedFood?: IFoodObject}>) {
             if (action.payload.type === 'resource') {
                 state.selected.selectedResource = {
                     ...state.selected.selectedResource,
-                    resourceId: action.payload.selectedResourceId as string,
-                    resourceTier: action.payload.resourceTier!,
-                    resourceName: action.payload.itemName,
+                    ...action.payload.selectedResource,
                 }
             }
 
             if (action.payload.type === 'items') {
                 state.selected.selectedItem = {
                     ...state.selected.selectedItem,
-                    selectedItemType: action.payload.selectedType as TCraftObjectTypes,
-                    selectedItemBodyId: action.payload.selectedItem!,
-                    foodConsumption: action.payload.foodConsumption!,
-                    journalId: action.payload.journalId!,
-                    emptyJournalId: action.payload.emptyJournalId!,
-                    itemName: action.payload.itemName,
-                    artefactId: action.payload.artefactId,
+                    ...action.payload.selectedItem,
+                }
+            }
+
+            if (action.payload.type === 'food'){
+                state.selected.selectedFood = {
+                    ...action.payload.selectedFood!,
                 }
             }
         },
@@ -253,6 +282,16 @@ const profitSlice = createSlice({
         },
         setCraftedItem(state, action: PayloadAction<ITableData>) {
             state.craftedItemData = action.payload;
+        },
+        setConsumableItemQuantity(state, action: PayloadAction<number>){
+            state.consumableItemQuantity = action.payload;
+        },
+        resetData(state){
+            state.craftedItemData = initialState.craftedItemData;
+            state.craftedFoodData = initialState.craftedFoodData;
+        },
+        setConsumptionItemQueryParams(state, action: PayloadAction<string>){
+            state.consumptionItemQueryParams = action.payload;
         },
         getResourceProfitHandler(state, action: PayloadAction<{ calculatorType: TCalcProps }>) {
             let id = uuidv4();
@@ -295,24 +334,27 @@ const profitSlice = createSlice({
             output = Math.floor(mainResourceQuantity / (divFactor - (divFactor * (percent / 100))));
 
             if (action.payload.calculatorType === "resource" && !state.errors.percentError && !state.errors.quantityError) {
-                state.output.resourcesOutput = output;
                 state.craftResourcesList.unshift({
-                    output,
-                    mainResourceQuantity,
-                    percent,
-                    id,
-                    foodConsumption: state.selected.selectedResource.foodConsumption,
-                    defaultFoodConsumption: state.selected.selectedResource.defaultFoodConsumption,
-                    subResourceQuantity: subResMatsQuantity,
-                    resourceId: state.selected.selectedResource.resourceId,
-                    mainMatsId: state.resourceMaterials.mainMaterialId,
-                    subMatsId: state.resourceMaterials.subMaterialId,
-                    itemName: state.selected.selectedResource.resourceName,
-                    tier: state.selected.selectedResource.resourceTier,
-                    spentQuantityPerItem: {
-                        mainMatsQuantity: (divFactor - (divFactor * (percent / 100))).toFixed(2),
-                        subMatsQuantity: (subDivFactor - (subDivFactor * (percent / 100))).toFixed(2),
-                    }
+                    craftTableData: {
+                        mainResourceQuantity,
+                        subResourceQuantity: subResMatsQuantity,
+                        percent,
+                        id,
+                    },
+                    infoTableData: {
+                        output,
+                        foodConsumption: state.selected.selectedResource.foodConsumption,
+                        defaultFoodConsumption: state.selected.selectedResource.defaultFoodConsumption,
+                        resourceId: state.selected.selectedResource.resourceId,
+                        mainMatsId: state.resourceMaterials.mainMaterialId,
+                        subMatsId: state.resourceMaterials.subMaterialId,
+                        itemName: state.selected.selectedResource.resourceName,
+                        tier: state.selected.selectedResource.resourceTier,
+                        spentQuantityPerItem: {
+                            mainMatsQuantity: divFactor - (divFactor * (percent / 100)),
+                            subMatsQuantity: subDivFactor - (subDivFactor * (percent / 100)),
+                        }
+                    },
                 });
             }
 
@@ -324,31 +366,48 @@ const profitSlice = createSlice({
                 : `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.selectedItemType}_${state.selected.selectedItem.selectedItemBodyId}`;
 
             if (action.payload.calculatorType === "items" && !state.errors.percentError && !state.errors.quantityError) {
-                state.output.itemsOutput = output;
                 state.craftItemsList.unshift({
-                    output,
-                    mainResourceQuantity: Math.ceil(output * (divFactor - (divFactor * (percent / 100)))),
-                    percent,
-                    id,
-                    foodConsumption: state.selected.selectedItem.foodConsumption,
-                    defaultFoodConsumption,
-                    subResourceQuantity: Math.ceil(output * (subDivFactor - (subDivFactor * (percent / 100)))),
-                    itemId,
-                    journalId: `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.journalId}`,
-                    emptyJournalId: `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.emptyJournalId}`,
-                    journalsQuantity,
-                    mainMatsId: `${state.itemsMaterials.materialsTier}_${state.itemsMaterials.mainMaterialId}`,
-                    subMatsId: !!state.itemsMaterials.subMaterialId ? `${state.itemsMaterials.materialsTier}_${state.itemsMaterials.subMaterialId}` : undefined,
-                    mainDiv: divFactor,
-                    subDiv: subDivFactor,
-                    spentQuantityPerItem: {
-                        mainMatsQuantity: (divFactor - (divFactor * (percent / 100))).toFixed(2),
-                        subMatsQuantity: (subDivFactor - (subDivFactor * (percent / 100))).toFixed(2),
+                    craftTableData: {
+                        mainDiv: divFactor,
+                        subDiv: subDivFactor,
+                        percent,
+                        id,
+                        mainResourceQuantity: Math.ceil(output * (divFactor - (divFactor * (percent / 100)))),
+                        subResourceQuantity: Math.ceil(output * (subDivFactor - (subDivFactor * (percent / 100)))),
                     },
-                    itemName: state.selected.selectedItem.itemName,
-                    tier: state.selected.selectedItem.selectedItemTier,
-                    artefactId: !!state.selected.selectedItem.artefactId ? `${!state.selected.selectedItem.artefactId.includes('T4_SKILLBOOK_STANDARD') ? `${state.selected.selectedItem.selectedItemTier}_` : ''}${state.selected.selectedItem.artefactId}` : '',
+
+                    infoTableData: {
+                        defaultFoodConsumption,
+                        output,
+                        itemId,
+                        journalsQuantity,
+                        mainMatsId: `${state.itemsMaterials.materialsTier}_${state.itemsMaterials.mainMaterialId}`,
+                        subMatsId: !!state.itemsMaterials.subMaterialId ? `${state.itemsMaterials.materialsTier}_${state.itemsMaterials.subMaterialId}` : undefined,
+                        foodConsumption: state.selected.selectedItem.foodConsumption,
+                        journalId: `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.journalId}`,
+                        emptyJournalId: `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.emptyJournalId}`,
+                        itemName: state.selected.selectedItem.itemName,
+                        tier: state.selected.selectedItem.selectedItemTier,
+                        artefactId: !!state.selected.selectedItem.artefactId
+                            ? `${!state.selected.selectedItem.artefactId.includes('T4_SKILLBOOK_STANDARD') 
+                                ? `${state.selected.selectedItem.selectedItemTier}_` 
+                                : ''}${state.selected.selectedItem.artefactId}`
+                            : '',
+                        spentQuantityPerItem: {
+                            mainMatsQuantity: divFactor - (divFactor * (percent / 100)),
+                            subMatsQuantity: subDivFactor - (subDivFactor * (percent / 100)),
+                        },
+                    },
                 });
+            }
+
+            if(action.payload.calculatorType === 'food' && !state.errors.percentError){
+                state.craftedFoodData = {
+                    quantity: state.consumableItemQuantity,
+                    percent: state.percent,
+                    craftedFood: state.selected.selectedFood,
+                    queryParams: state.consumptionItemQueryParams,
+                }
             }
 
             if (state.craftResourcesList.length > 8) {
@@ -360,10 +419,10 @@ const profitSlice = createSlice({
         },
         deleteLiFunction(state, action: PayloadAction<{ type: string; id: string }>) {
             if (action.payload.type === "items") {
-                state.craftItemsList = state.craftItemsList.filter(elem => elem.id !== action.payload.id);
+                state.craftItemsList = state.craftItemsList.filter(elem => elem.craftTableData.id !== action.payload.id);
             }
             if (action.payload.type === "resource") {
-                state.craftResourcesList = state.craftResourcesList.filter(elem => elem.id !== action.payload.id);
+                state.craftResourcesList = state.craftResourcesList.filter(elem => elem.craftTableData.id !== action.payload.id);
             }
         },
     }

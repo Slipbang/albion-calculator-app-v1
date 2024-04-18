@@ -9,6 +9,7 @@ interface IStyledImageBoxProps {
     $top?: number;
     $left?: number;
     $hasDropShadow?: boolean;
+    $backgroundPosition?: string;
     $zIndex?: number;
     $margin?: string;
     $hasPointer?: boolean;
@@ -27,9 +28,9 @@ const StyledImageBox = styled.div<IStyledImageBoxProps>`
   top: ${props => `${props.$top}px`};
   left: ${props => `${props.$left}px`};
   ${props => !!props.$hasDropShadow ? `filter: drop-shadow(3px 3px 6px black);` : ''}
-
+  
   background-image: ${props => `url(${props.$image})`};
-  background-position: center;
+  background-position: ${props => !props.$backgroundPosition ? 'center' : props.$backgroundPosition};
   background-repeat: no-repeat;
   background-size: cover;
   

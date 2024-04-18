@@ -5,12 +5,15 @@ import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../../store/language/language-selector";
 import {Tooltip} from 'react-tooltip';
 import {TArtefactData} from "../../../../types/artefactTypes";
-import {selectCraftedItemData} from "../../../../store/profit/profit-selectors";
+import {selectCraftedFoodData, selectCraftedItemData} from "../../../../store/profit/profit-selectors";
 import {useAppDispatch} from "../../../../store";
 import {interfaceSliceActions} from "../../../../store/interface/interface-slice";
-import StyledCloseButton from "../../StyledComponentsCommon/StyledCloseButton";
-import {craftedItemInfoClass} from "./craftedItemInfoClass";
-import {IItemName, ISpentQuantityPerItem} from "../../../../store/profit/profit-slice";
+import {
+    IFoodTableData,
+    IInfoTableData,
+    ITableQueryParams,
+    profitSliceActions
+} from "../../../../store/profit/profit-slice";
 import {defineArtefactsName} from "../../Definers/defineArtefactsName";
 import MaterialSelectors from "./MaterialSelectors/MaterialSelectors";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../types/languageTypes";
@@ -18,42 +21,31 @@ import {srcRoute, useLazyGetItemsDataQuery} from "../../../../store/api/api";
 import {selectServerId} from "../../../../store/queryParams/query-params-selectors";
 import {PulseLoader} from "react-spinners";
 import ErrorNotification from "../ErrorNotification/ErrorNotification";
-import {selectTheme} from "../../../../store/interface/interface-selector";
+import {selectCalculatorType, selectTheme} from "../../../../store/interface/interface-selector";
+import TableTdElement from "./TableTdElement/TableTdElement";
+import StyledCloseButton from "../../StyledComponentsCommon/StyledCloseButton";
+import {IFoodObject} from "../../../../types/foodTypes";
 
-type ICraftInfoTuple = [
-    itemName: IItemName,
+export type ICraftItemInfoTuple = [
+    itemData: IInfoTableData | undefined,
     artefactName: TArtefactName,
-    spentQuantityPerItem: ISpentQuantityPerItem | undefined,
     selectedLanguage: TSelectedLanguage,
-    itemId: string | undefined,
-    resourceId: string | undefined,
-    artefactId: string | undefined,
-    subMatsId: string | undefined,
-    journalId: string | undefined,
-    emptyJournalId: string | undefined,
     infoTableStrings: ISelectedLanguage['infoTableStrings'],
     materialsData: IItemsData[] | undefined,
     itemsData: IItemsData[] | undefined,
     artefactsData: IItemsData[] | undefined,
     journalsData: IItemsData[] | undefined,
-    defaultFoodConsumption: number,
-    mainMatsId: string,
-    output: number,
     foodTax: number,
-    foodConsumption: number,
-    artefact: IOwnPrice,
-    journal: IOwnPrice,
-    emptyJournal: IOwnPrice,
-    journalsQuantity: number,
-    mainMaterialCity: TCities,
-    artefactCity: TCities,
-    subMaterialCity: TCities,
-    journalCity: TCities,
-    emptyJournalCity: TCities,
+    ownPrices: TOwnPriceStates,
+    selectedCities: TSelectedCityStates,
     isJournalsUsed: boolean,
-    tier: string,
     currentDate: Date,
 ];
+
+export type ICraftConsumableInfoTuple = [
+    infoTableData: IFoodTableData,
+    consumableResourcesData: IItemsData[] | undefined,
+]
 
 export interface IOwnPrice {
     ownPrice: number,
@@ -80,28 +72,39 @@ export type TSelectedCityStates = {
 export type TArtefactName = TArtefactData['artefactName'] | undefined;
 
 const InfoTable = () => {
+    const calculatorType = useSelector(selectCalculatorType);
     const craftedItem = useSelector(selectCraftedItemData);
     const serverId = useSelector(selectServerId);
 
-    const {
-        itemId,
-        resourceId,
-        itemName,
-        tier,
-        subMatsId,
-        mainMatsId,
-        spentQuantityPerItem,
-        output,
-        artefactId,
-        foodConsumption,
-        defaultFoodConsumption,
-        journalsQuantity,
-        journalId,
-        emptyJournalId,
-        queryItemsParams,
-        queryJournalsParams,
-        queryMatsParams,
-    } = craftedItem!;
+    const craftedFoodData = useSelector(selectCraftedFoodData);
+
+    let tableQueryParams: ITableQueryParams | undefined,
+        infoTableData: IInfoTableData | undefined;
+
+    let itemId: string | undefined,
+        artefactId: string | undefined,
+        resourceId: string | undefined,
+        mainMatsId: string | undefined,
+        subMatsId: string | undefined,
+        journalId: string | undefined,
+        emptyJournalId: string | undefined;
+
+    let queryItemsParams: string | undefined,
+        queryJournalsParams: string | undefined,
+        queryMatsParams: string | undefined;
+
+    if (craftedItem !== null) {
+        ({tableQueryParams, infoTableData} = craftedItem!);
+        ({queryItemsParams, queryJournalsParams, queryMatsParams} = tableQueryParams!);
+        ({itemId, artefactId, resourceId, mainMatsId, subMatsId, journalId, emptyJournalId} = infoTableData!);
+    }
+
+    let queryConsumableParams: string | undefined, craftedFood: IFoodObject | undefined, consumablesItemId: string | undefined;
+
+    if (craftedFoodData !== null) {
+        ({queryParams: queryConsumableParams, craftedFood} = craftedFoodData!);
+        ({itemId: consumablesItemId} = craftedFood);
+    }
 
     const [fetchItems, {
         isFetching: isItemFetching,
@@ -127,14 +130,31 @@ const InfoTable = () => {
         data: journalsData,
     }] = useLazyGetItemsDataQuery();
 
+    const [fetchConsumables, {
+        isFetching: isConsumablesFetching,
+        isError: isErrorConsumables,
+        data: consumablesData,
+    }] = useLazyGetItemsDataQuery();
+
     useEffect(() => {
-        fetchItems({itemsParams: queryItemsParams!, isBlackMarket: true, serverId});
-        fetchMaterials({itemsParams: queryMatsParams!, isBlackMarket: false, serverId});
-        fetchJournals({itemsParams: queryJournalsParams!, isBlackMarket: false, serverId})
-        if (!!artefactId) {
-            fetchArtefacts({itemsParams: artefactId!, isBlackMarket: false, serverId});
+        if (calculatorType === 'items') {
+            fetchItems({itemsParams: queryItemsParams!, isBlackMarket: true, serverId});
+            fetchJournals({itemsParams: queryJournalsParams!, isBlackMarket: false, serverId})
+
+
+            if (!!artefactId) {
+                fetchArtefacts({itemsParams: artefactId!, isBlackMarket: false, serverId});
+            }
         }
-    }, [queryItemsParams, queryMatsParams, queryJournalsParams, artefactId, serverId])
+
+        if (calculatorType === 'resource' || calculatorType === 'items') {
+            fetchMaterials({itemsParams: queryMatsParams!, isBlackMarket: false, serverId});
+        }
+
+        if (calculatorType === 'food' || calculatorType === 'potions') {
+            fetchConsumables({itemsParams: queryConsumableParams!, isBlackMarket: false, serverId});
+        }
+    }, [queryItemsParams, queryMatsParams, queryJournalsParams, artefactId, serverId, itemId])
 
     const dispatchAction = useAppDispatch();
 
@@ -159,8 +179,6 @@ const InfoTable = () => {
         },
     })
 
-    const {journal, emptyJournal, artefact} = ownPrices;
-
     const [selectedCities, setSelectedCities] = useState<TSelectedCityStates>({
         mainMaterialCity: 'Fort Sterling',
         subMaterialCity: 'Fort Sterling',
@@ -169,8 +187,6 @@ const InfoTable = () => {
         emptyJournalCity: 'Fort Sterling',
     });
 
-    const {mainMaterialCity, subMaterialCity, journalCity, emptyJournalCity, artefactCity} = selectedCities;
-
     const [isJournalsUsed, setIsJournalsUsed] = useState(false);
     const [foodTax, setFoodTax] = useState(0);
 
@@ -178,69 +194,72 @@ const InfoTable = () => {
 
     const closeInfoTableHandler = () => {
         dispatchAction(interfaceSliceActions.setInfoTableVisibility(false));
+        dispatchAction(profitSliceActions.resetData());
     }
 
     const currentDate: Date = new Date();
 
-    const craftInfoParams: ICraftInfoTuple = [
-        itemName as IItemName,
-        artefactName,
-        spentQuantityPerItem,
-        selectedLanguage,
-        itemId,
-        resourceId,
-        artefactId as string | undefined,
-        subMatsId,
-        journalId,
-        emptyJournalId,
-        infoTableStrings,
-        materialsData,
-        itemsData,
-        artefactsData,
-        journalsData,
-        defaultFoodConsumption,
-        mainMatsId,
-        output,
-        foodTax,
-        foodConsumption,
-        artefact,
-        journal,
-        emptyJournal,
-        journalsQuantity as number,
-        mainMaterialCity,
-        artefactCity,
-        subMaterialCity,
-        journalCity,
-        emptyJournalCity,
-        isJournalsUsed,
-        tier,
-        currentDate,
-    ];
+    const craftInfoParams: ICraftItemInfoTuple | ICraftConsumableInfoTuple =
+        (calculatorType === 'items' || calculatorType === 'resource')
+            ? [
+                infoTableData,
+                artefactName,
+                selectedLanguage,
+                infoTableStrings,
+                materialsData,
+                itemsData,
+                artefactsData,
+                journalsData,
+                foodTax,
+                ownPrices,
+                selectedCities,
+                isJournalsUsed,
+                currentDate,
+            ] as ICraftItemInfoTuple
+            : [
+                craftedFoodData!,
+                consumablesData!,
+            ] as ICraftConsumableInfoTuple
+
+    const defineSrc = (enchantment: string) => {
+        if (calculatorType === 'items' && !!itemId) {
+            return `${itemId}${!enchantment ? '' : `@${enchantment}`}`;
+        }
+
+        if (calculatorType === 'resource' && !!resourceId) {
+            return `${resourceId}${(!enchantment || resourceId?.includes?.('STONEBLOCK')) ? '' : `_LEVEL${enchantment}@${enchantment}`}`;
+        }
+
+        if (calculatorType === 'food') {
+            return `${consumablesItemId}${(enchantment === '4' || !enchantment) ? '' : `@${enchantment}`}`
+        }
+    }
 
     return (
         <>
-            {(!isItemFetching && !isMaterialsFetching && !isArtefactsFetching && !isJournalsFetching && !isErrorItems && !isErrorMaterials && !isErrorArtefacts && !isErrorJournals) &&
+            {(!isItemFetching && !isMaterialsFetching && !isArtefactsFetching && !isJournalsFetching && !isErrorItems && !isErrorMaterials && !isErrorArtefacts && !isErrorJournals && !isErrorConsumables) &&
                 <div className={styles.wrapper} data-theme={theme}>
-                    <MaterialSelectors
-                        mainMatsId={mainMatsId}
-                        subMatsId={subMatsId!}
-                        emptyJournalId={emptyJournalId!}
-                        journalId={journalId!}
-                        artefactId={artefactId!}
-                        setOwnPrices={setOwnPrices}
-                        ownPrices={ownPrices}
-                        setFoodTax={setFoodTax}
-                        artefactsData={artefactsData!}
-                        journalsData={journalsData!}
-                        infoTableStrings={infoTableStrings}
-                        isJournalsUsed={isJournalsUsed}
-                        setIsJournalsUsed={setIsJournalsUsed}
-                        setSelectedCities={setSelectedCities}
-                        artefactName={artefactName}
-                        foodTax={foodTax}
-                        selectedLanguage={selectedLanguage}
-                        selectedCities={selectedCities}
-                    />
+                    {(calculatorType === 'resource' || calculatorType === 'items')
+                        && <MaterialSelectors
+                            mainMatsId={mainMatsId!}
+                            subMatsId={subMatsId!}
+                            emptyJournalId={emptyJournalId!}
+                            journalId={journalId!}
+                            artefactId={artefactId!}
+                            setOwnPrices={setOwnPrices}
+                            ownPrices={ownPrices}
+                            setFoodTax={setFoodTax}
+                            artefactsData={artefactsData!}
+                            journalsData={journalsData!}
+                            infoTableStrings={infoTableStrings}
+                            isJournalsUsed={isJournalsUsed}
+                            setIsJournalsUsed={setIsJournalsUsed}
+                            setSelectedCities={setSelectedCities}
+                            artefactName={artefactName}
+                            foodTax={foodTax}
+                            selectedLanguage={selectedLanguage}
+                            selectedCities={selectedCities}
+                        />}
 
                     <table>
                         <thead>
@@ -253,7 +272,7 @@ const InfoTable = () => {
                             <th>{infoTableStrings.saleIn} Martlock</th>
                             <th>{infoTableStrings.saleIn} Thetford</th>
                             <th>{infoTableStrings.saleIn} Lymhurst</th>
-                            {!resourceId &&
+                            {!!itemId &&
                                 <th>{infoTableStrings.saleIn} Black Market</th>
                             }
                         </tr>
@@ -261,108 +280,35 @@ const InfoTable = () => {
                         <tbody>
 
                         {['', '1', '2', '3', '4'].map((enchantment, index) => {
-                            if (resourceId?.includes?.('STONEBLOCK') && enchantment === '4') return;
+                                if (!!resourceId && resourceId.includes('STONEBLOCK') && enchantment === '4') return;
+                                if (!!consumablesItemId && enchantment === '4') return;
 
-                            const caerleonInfo = new craftedItemInfoClass('Caerleon', enchantment, ...craftInfoParams);
-                            const fortSterlingInfo = new craftedItemInfoClass('Fort Sterling', enchantment, ...craftInfoParams);
-                            const bridgewatchInfo = new craftedItemInfoClass('Bridgewatch', enchantment, ...craftInfoParams);
-                            const martlockInfo = new craftedItemInfoClass('Martlock', enchantment, ...craftInfoParams);
-                            const thetfordInfo = new craftedItemInfoClass('Thetford', enchantment, ...craftInfoParams);
-                            const lymhurstInfo = new craftedItemInfoClass('Lymhurst', enchantment, ...craftInfoParams);
-                            const brecilienInfo = new craftedItemInfoClass('Brecilien', enchantment, ...craftInfoParams);
-                            const blackMarketInfo = !resourceId ? new craftedItemInfoClass('Black Market', enchantment, ...craftInfoParams) : undefined;
+                                const finalSrc = defineSrc(enchantment);
 
-
-                            let itemHref = enchantment === '' ? itemId : `${itemId}@${enchantment}`;
-
-                            let resourceHref = enchantment === '' || resourceId?.includes?.('STONEBLOCK') ? resourceId : `${resourceId}_LEVEL${enchantment}@${enchantment}`;
-
-                            return (
-                                <tr key={index}>
-                                    <td>
-                                        {!!itemId &&
+                                return (
+                                    <tr key={index}>
+                                        <td>
                                             <img
-                                                src={`${srcRoute}${itemHref}`}
+                                                src={`${srcRoute}${finalSrc}`}
                                                 alt={itemId}
                                             />
-                                        }
-                                        {!!resourceId &&
-                                            <img
-                                                src={`${srcRoute}${resourceHref}`}
-                                                alt={resourceId}
-                                            />
-                                        }
-                                    </td>
-                                    <td
-                                        data-tooltip-id="info-table-tooltip-data-html"
-                                        data-tooltip-html={brecilienInfo.title}
-                                    >
-                                        <div>{brecilienInfo.totalProfit.toLocaleString('en')}</div>
-                                        <div>{brecilienInfo.profitPerItem.toLocaleString('en')}</div>
-                                    </td>
-                                    <td
-                                        data-tooltip-id="info-table-tooltip-data-html"
-                                        data-tooltip-html={caerleonInfo.title}
-                                    >
-                                        <div>{caerleonInfo.totalProfit.toLocaleString('en')}</div>
-                                        <div>{caerleonInfo.profitPerItem.toLocaleString('en')}</div>
-                                    </td>
-                                    <td
-                                        data-tooltip-id="info-table-tooltip-data-html"
-                                        data-tooltip-html={fortSterlingInfo.title}
-                                    >
-                                        <div>{fortSterlingInfo.totalProfit.toLocaleString('en')}</div>
-                                        <div>{fortSterlingInfo.profitPerItem.toLocaleString('en')}</div>
-                                    </td>
-                                    <td
-                                        data-tooltip-id="info-table-tooltip-data-html"
-                                        data-tooltip-html={bridgewatchInfo.title}
-                                    >
-                                        <div>{bridgewatchInfo.totalProfit.toLocaleString('en')}</div>
-                                        <div>{bridgewatchInfo.profitPerItem.toLocaleString('en')}</div>
-                                    </td>
-                                    <td
-                                        data-tooltip-id="info-table-tooltip-data-html"
-                                        data-tooltip-html={martlockInfo.title}
-                                    >
-                                        <div>{martlockInfo.totalProfit.toLocaleString('en')}</div>
-                                        <div>{martlockInfo.profitPerItem.toLocaleString('en')}</div>
-                                    </td>
-                                    <td
-                                        data-tooltip-id="info-table-tooltip-data-html"
-                                        data-tooltip-html={thetfordInfo.title}
-                                    >
-                                        <div>{thetfordInfo.totalProfit.toLocaleString('en')}</div>
-                                        <div>{thetfordInfo.profitPerItem.toLocaleString('en')}</div>
-                                    </td>
-                                    <td
-                                        data-tooltip-id="info-table-tooltip-data-html"
-                                        data-tooltip-html={lymhurstInfo.title}
-                                    >
-                                        <div>{lymhurstInfo.totalProfit.toLocaleString('en')}</div>
-                                        <div>{lymhurstInfo.profitPerItem.toLocaleString('en')}</div>
-
-                                        {!!resourceId && (!resourceId?.includes('STONEBLOCK') ? index === 4 : index === 3) &&
-                                            <div className={styles.closeButtonStyles}>
-                                                <StyledCloseButton onClick={() => closeInfoTableHandler()}/>
-                                            </div>}
-                                    </td>
-                                    {!!blackMarketInfo && !resourceId && <td
-                                        data-tooltip-id="info-table-tooltip-data-html"
-                                        data-tooltip-html={blackMarketInfo.title}
-                                    >
-                                        <div>{blackMarketInfo.totalProfit.toLocaleString('en')}</div>
-                                        <div>{blackMarketInfo.profitPerItem.toLocaleString('en')}</div>
-
-                                        {!!itemId && index === 4 && <div className={styles.closeButtonStyles}>
-                                            <StyledCloseButton onClick={() => closeInfoTableHandler()}/>
-                                        </div>}
-                                    </td>}
-                                </tr>
-                            )
-                        })}
+                                        </td>
+                                        <TableTdElement
+                                            enchantment={enchantment}
+                                            craftInfoParams={craftInfoParams}
+                                            calculatorType={calculatorType}
+                                        />
+                                    </tr>
+                                )
+                            }
+                        )}
                         </tbody>
                     </table>
+
+                    <StyledCloseButton
+                        className={styles.closeButtonStyles}
+                        onClick={() => closeInfoTableHandler()}
+                    />
 
                     <Tooltip
                         id="info-table-tooltip-data-html"
@@ -379,7 +325,7 @@ const InfoTable = () => {
                     />
                 </div>}
 
-            {(isItemFetching || isMaterialsFetching || isArtefactsFetching || isJournalsFetching) &&
+            {(isItemFetching || isMaterialsFetching || isArtefactsFetching || isJournalsFetching || isConsumablesFetching) &&
                 <PulseLoader
                     color={isDark ? 'white' : 'rgb(235, 198, 159)'}
                     className={styles.pulseLoader}
@@ -387,7 +333,8 @@ const InfoTable = () => {
                     aria-label='Loading Spinner'
                     data-testid='loader'
                 />}
-            {(isErrorItems || isErrorArtefacts || isErrorMaterials || isErrorJournals) && <ErrorNotification theme={theme}/>}
+            {(isErrorItems || isErrorArtefacts || isErrorMaterials || isErrorJournals || isErrorConsumables) &&
+                <ErrorNotification theme={theme}/>}
         </>
     )
 }

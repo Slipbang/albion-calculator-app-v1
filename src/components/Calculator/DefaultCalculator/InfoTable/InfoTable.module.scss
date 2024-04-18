@@ -1,32 +1,26 @@
 .wrapper{
   z-index: 4;
-  color: var(--color-table-text);
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%,-50%);
 
-  transition: 1s ease color;
-
   .closeButtonStyles{
-    height: 27px;
-    width: 27px;
-    right: 2px;
-    bottom: 2px;
+    top: unset;
+    right: 5px;
+    bottom: 5px;
     position: absolute;
-    button {
-      right: 0;
-      top: 0;
-    }
   }
+
   table{
     white-space: normal;
     border-collapse: collapse;
     background-color: var(--background-color-table);
     text-align: center;
     overflow: auto;
+    color: var(--color-table-text);
 
-    transition: 1s ease background-color;
+    transition: 1s ease all;
 
     img{
       width: 65px;
@@ -36,28 +30,12 @@
     td{
       border: 2px solid white;
       cursor: pointer;
-      transition: 1s ease border;
-
-      div {
-        height: 35px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      div:first-child {
-        border-bottom: 1px solid white;
-        background-color: var(--background-color-first-tr);
-        transition: 1s ease background-color, 1s ease border-bottom-color;
-      }
     }
     thead{
       th{
         padding: 8px;
         border: 2px solid white;
         max-width: 100px;
-
-        transition: 1s ease border;
       }
     }
   }
@@ -85,3 +63,4 @@
     margin-bottom: -10px;
   }
 }
+

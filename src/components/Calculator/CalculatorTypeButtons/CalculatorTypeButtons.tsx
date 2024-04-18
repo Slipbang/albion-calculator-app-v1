@@ -14,6 +14,14 @@ interface ISelector {
 }
 
 const selectors: ISelector[] = [
+    // {
+    //     src: 'https://render.albiononline.com/v1/item/T8_POTION_COOLDOWN',
+    //     type: 'potions',
+    // },
+    {
+        src: 'https://render.albiononline.com/v1/item/T8_MEAL_STEW_AVALON',
+        type: 'food',
+    },
     {
         src: 'https://render.albiononline.com/v1/item/T8_METALBAR',
         type: 'resource',
@@ -22,14 +30,6 @@ const selectors: ISelector[] = [
         src: 'https://render.albiononline.com/v1/item/T8_MAIN_SWORD',
         type: 'items',
     },
-    // {
-    //     src: 'https://render.albiononline.com/v1/item/T8_POTION_COOLDOWN',
-    //     type: 'potions',
-    // },
-    // {
-    //     src: 'https://render.albiononline.com/v1/item/T8_MEAL_STEW_AVALON',
-    //     type: 'food',
-    // },
 ]
 
 const CalculatorTypeButtons = () => {
@@ -68,7 +68,9 @@ const CalculatorTypeButtons = () => {
         // if (mode === 'game-mode') {
         //     navigate(`/${language}/calculator/default-mode/${type}`);
         // }
-        dispatchAction(interfaceSliceActions.toggleGameMode());
+        if (calculatorType === 'items' || calculatorType === 'resource'){
+            dispatchAction(interfaceSliceActions.toggleGameMode());
+        }
     }
 
     const defineColor = () => {
@@ -86,21 +88,24 @@ const CalculatorTypeButtons = () => {
         <div className={styles.wrapper}>
 
             <div className={styles.calculatorTypeButtons}>
-                {selectors.map(({type, src}) => (
-                    <div key={type}>
-                        <img
-                            alt=''
-                            draggable={false}
-                            src={src}
-                            title={type}
-                            className={`${styles.backgroundSkeleton} ${calculatorType === type ? styles.isSelected : styles.isNotSelected}`}
-                            onClick={() => {
-                                selectCalculatorTypeHandler(type);
-                            }}
-                        />
-                        {calculatorType === type && <p className={styles.checkMark}>✓</p>}
-                    </div>
-                ))}
+                {selectors.map(({type, src}) => {
+                    if (!!gameMode && (type === 'food' || type === 'potions')) return;
+                    return (
+                        <div key={type}>
+                            <img
+                                alt=''
+                                draggable={false}
+                                src={src}
+                                title={type}
+                                className={`${styles.backgroundSkeleton} ${calculatorType === type ? styles.isSelected : styles.isNotSelected}`}
+                                onClick={() => {
+                                    selectCalculatorTypeHandler(type);
+                                }}
+                            />
+                            {calculatorType === type && <p className={styles.checkMark}>✓</p>}
+                        </div>
+                    )
+                })}
 
                 <div
                     className={styles.GMToggleButton}
@@ -114,7 +119,7 @@ const CalculatorTypeButtons = () => {
                     </div>
                     <div style={{color: defineColor()}} className={styles.gmText}>
                         <p className={styles.scaleP}>Game Mode:</p>
-                        <p className={styles.gameModeOffImg}>{gameMode ? 'ON' : 'OFF'}</p>
+                        <p className={styles.gameModeOff}>{gameMode ? 'ON' : 'OFF'}</p>
                     </div>
                 </div>
             </div>

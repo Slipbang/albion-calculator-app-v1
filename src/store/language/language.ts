@@ -16,8 +16,12 @@ const language: TLanguage = {
             unPerItem: 'ед. на предмет',
         },
         calculatorFormStrings: {
-            resourceCraftHeader: 'Перекрафт ресурсов в материалы',
-            itemsCraftHeader: 'Перекрафт материалов в экипировку',
+            craftHeader: {
+                items: 'Перекрафт материалов в экипировку:',
+                resource: 'Перекрафт ресурсов в материалы:',
+                potions: 'Крафт зелий:',
+                food: 'Крафт еды:',
+            },
             metrics: 'ед.',
             labelResourceAmount: 'Количество ресурса: ',
             labelItemsAmount: 'Количество материалов: ',
@@ -167,8 +171,12 @@ const language: TLanguage = {
             unPerItem: 'un. per item',
         },
         calculatorFormStrings: {
-            resourceCraftHeader: 'Сrafting resources into materials',
-            itemsCraftHeader: 'Сrafting materials into equipment',
+            craftHeader: {
+              items: 'Сrafting materials into equipment:',
+              resource: 'Сrafting resources into materials:',
+              potions: 'Potions craft:',
+              food: 'Food craft:',
+            },
             metrics: 'un.',
             labelResourceAmount: 'Resource quantity: ',
             labelItemsAmount: 'Materials quantity: ',

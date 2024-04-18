@@ -16,6 +16,7 @@ import PercentError from "./Errors/PercentError";
 import AmountError from "./Errors/AmountError";
 import {selectCalculatorType} from "../../../../store/interface/interface-selector";
 import MainResourceInput from "./Inputs/MainResourceInput/MainResourceInput";
+import FoodSelector from "./Selectors/FoodSelector/FoodSelector";
 
 const CalculatorForm = React.memo(() => {
     const calculatorType = useSelector(selectCalculatorType);
@@ -26,7 +27,7 @@ const CalculatorForm = React.memo(() => {
     return (
         <StyledCalculatorFormWrapper>
             <div className={styles.calculatorForm}>
-                <h3 className={styles.headerStyles}>{calculatorType === "resource" ? calculatorFormStrings.resourceCraftHeader : calculatorFormStrings.itemsCraftHeader}:</h3>
+                <h3 className={styles.headerStyles}>{calculatorFormStrings.craftHeader[calculatorType]}</h3>
 
                 {calculatorType === 'items' &&
                     <>
@@ -38,28 +39,36 @@ const CalculatorForm = React.memo(() => {
                             calculatorFormStrings={calculatorFormStrings}
                             selectedLanguage={selectedLanguage}
                         />
-                    </>
-                }
+                    </>}
 
                 {calculatorType === 'resource' &&
                     <ResourceSelector
                         calculatorType={calculatorType}
                         calculatorFormStrings={calculatorFormStrings}
                         selectedLanguage={selectedLanguage}
-                    />
-                }
+                    />}
 
-                <MainResourceInput
-                    calculatorType={calculatorType}
-                    calculatorFormStrings={calculatorFormStrings}
-                />
+                {calculatorType === 'food' &&
+                    <FoodSelector
+                        calculatorFormStrings={calculatorFormStrings}
+                        selectedLanguage={selectedLanguage}
+                    />}
 
-                <AmountError
-                    errorStyles={styles.errorStyles}
-                    calculatorFormStrings={calculatorFormStrings}
-                />
+                {(calculatorType === 'items' || calculatorType === 'resource') &&
+                    <>
+                        <MainResourceInput
+                            calculatorType={calculatorType}
+                            calculatorFormStrings={calculatorFormStrings}
+                        />
 
-                <PercentInput
+                        <AmountError
+                            errorStyles={styles.errorStyles}
+                            calculatorFormStrings={calculatorFormStrings}
+                        />
+                    </>}
+
+
+                 <PercentInput
                     calculatorFormStrings={calculatorFormStrings}
                 />
 

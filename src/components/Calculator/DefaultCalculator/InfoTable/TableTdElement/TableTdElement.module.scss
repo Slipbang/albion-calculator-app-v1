@@ -1,0 +1,33 @@
+.tdElemStyles {
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-div);
+    transition: all 1s ease;
+    font-weight: 500;
+  }
+  div:first-child {
+    border-bottom: 1px solid white;
+    background-color: var(--background-color-fisrt-div);
+    height: 35px;
+  }
+  div:last-child {
+    background-color: var(--background-color-second-div);
+    height: var(--height-div);
+  }
+}
+
+[data-div-bg-color='valid'] {
+  --background-color-second-div: var(--background-color-table);
+  --background-color-fisrt-div: var(--background-color-first);
+  --height-div: 35px;
+  --color-div: var(--color-table-text);
+}
+
+[data-div-bg-color='nonvalid'] {
+  --background-color-second-div: gray;
+  --background-color-fisrt-div: gray;
+  --height-div: 70px;
+  --color-div: white;
+}

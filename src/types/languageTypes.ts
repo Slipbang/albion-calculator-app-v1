@@ -1,6 +1,9 @@
+import {TCalcProps} from "./calculatorPropsType";
+
 interface ICalculatorFormStrings {
-    resourceCraftHeader: string;
-    itemsCraftHeader: string;
+    craftHeader: {
+        [key in TCalcProps]: string;
+    }
     metrics: string;
     labelResourceAmount: string;
     labelItemsAmount: string;

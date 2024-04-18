@@ -6,7 +6,7 @@ const StyledCloseButton = styled.button`
   position: absolute;
   top: 20px;
   right: 20px;
-  z-index: 9999;
+  z-index: 10;
   background-color: transparent;
   border: none;
   background-image: url(${closeButton});

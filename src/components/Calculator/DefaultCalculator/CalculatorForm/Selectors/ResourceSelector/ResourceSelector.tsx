@@ -6,7 +6,7 @@ import {TCalcProps} from "../../../../../../types/calculatorPropsType";
 import {useAppDispatch} from "../../../../../../store";
 import {useSelector} from "react-redux";
 import {selectResource} from "../../../../../../store/profit/profit-selectors";
-import {ISelectedLanguage} from "../../../../../../types/languageTypes";
+import {ISelectedLanguage, TSelectedLanguage} from "../../../../../../types/languageTypes";
 import styles from './ResourceSelector.module.scss';
 import {ICraftItem, TTier} from "../../../../../../types/craftItemsType";
 import {defineMaterials} from "../../../../Definers/defineMaterials";
@@ -15,7 +15,7 @@ import {srcRoute} from "../../../../../../store/api/api";
 interface IResourceSelectorProps {
     calculatorType: TCalcProps;
     calculatorFormStrings: ISelectedLanguage['calculatorFormStrings'];
-    selectedLanguage: 'ru' | 'en';
+    selectedLanguage: TSelectedLanguage;
 }
 
 const ResourceSelector = (props: IResourceSelectorProps) => {
@@ -54,9 +54,11 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
         }));
         dispatchAction(profitSliceActions.setSelected({
             type: calculatorType,
-            selectedResourceId: itemId!,
-            resourceTier,
-            itemName: itemName!,
+            selectedResource: {
+                resourceId: itemId!,
+                resourceTier,
+                resourceName: itemName!,
+            },
         }));
     }
 

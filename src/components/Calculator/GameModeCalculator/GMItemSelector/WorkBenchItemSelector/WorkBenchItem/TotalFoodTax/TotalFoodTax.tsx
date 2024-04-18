@@ -16,9 +16,9 @@ const TotalFoodTax = (props: ITotalFoodTaxProps) => {
     const calculateFoodTax = (foodConsumption: number, itemTier: number): number => {
 
         if (calculatorType === 'resource') {
-            return Math.floor(foodConsumption * (foodTax / 100));
+            return Math.ceil(foodConsumption * (foodTax / 100));
         } else {
-            return Math.floor(foodConsumption! * Math.pow(2, itemTier - 4) * (foodTax / 100));
+            return Math.ceil(foodConsumption! * Math.pow(2, itemTier - 4) * (foodTax / 100));
         }
     }
 

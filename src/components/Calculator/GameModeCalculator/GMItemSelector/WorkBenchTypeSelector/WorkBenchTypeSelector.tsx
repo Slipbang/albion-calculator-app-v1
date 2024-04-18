@@ -141,7 +141,9 @@ const WorkBenchTypeSelector = () => {
     const dispatchAction = useAppDispatch();
 
     useEffect(() => {
-        workBenchTypeButtonRef.current!.click();
+        if (calculatorType === 'resource' || calculatorType === 'items'){
+            workBenchTypeButtonRef.current!.click();
+        }
     }, [calculatorType]);
 
     const workBenchTypeSelected = useSelector(selectWorkBenchType);
@@ -160,10 +162,10 @@ const WorkBenchTypeSelector = () => {
         if (calculatorType === 'resource') {
             itemType = 'resources';
         } else {
-            if (workBenchType !== 'toolmaker') {
-                itemType = 'weapon';
-            } else {
+            if (workBenchType === 'toolmaker') {
                 itemType = 'tools';
+            } else {
+                itemType = 'weapon';
             }
         }
 

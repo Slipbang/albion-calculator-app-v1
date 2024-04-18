@@ -15,8 +15,15 @@ const FormButton = (props: IFormButtonProps) => {
     const dispatchAction = useAppDispatch();
 
     const calculateProfitHandler = () => {
-        dispatchAction(interfaceSliceActions.toggleCraftTableVisibility(true));
         dispatchAction(profitSliceActions.getResourceProfitHandler({calculatorType}));
+
+        if (calculatorType === 'items' || calculatorType === 'resource'){
+            dispatchAction(interfaceSliceActions.toggleCraftTableVisibility(true));
+        }
+
+        if (calculatorType === 'food' || calculatorType === 'potions'){
+            dispatchAction(interfaceSliceActions.setInfoTableVisibility(true));
+        }
     }
 
     return (
@@ -26,7 +33,7 @@ const FormButton = (props: IFormButtonProps) => {
             style={{marginLeft: '10px',marginTop: '15px', fontSize: '13px'}}
             onClick={() => calculateProfitHandler()}
         >
-            Calculate
+            {(calculatorType === 'items' || calculatorType === 'resource') ? 'Calculate' : 'info'}
         </StyledDefaultButton>
     )
 }
