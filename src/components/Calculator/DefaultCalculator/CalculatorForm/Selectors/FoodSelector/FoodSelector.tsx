@@ -108,7 +108,7 @@ const FoodSelector = (props: IFoodSelectorProps) => {
     }
 
     const resourcesWithReturnPercent = (key: string) => {
-        if (key === 'QUESTITEM_TOKEN_AVALON' || key === 'FISHSAUCE') {
+        if (key === 'QUESTITEM_TOKEN_AVALON') {
             return resourceQuantityInput[key];
         }
 

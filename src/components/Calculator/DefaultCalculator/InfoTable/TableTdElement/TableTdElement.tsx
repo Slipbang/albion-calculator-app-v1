@@ -5,7 +5,8 @@ import {TCities} from "../../../../../types/InfoTableTypes";
 import React from "react";
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {CraftedConsumablesInfoClass} from "../TableClasses/CraftedConsumablesInfoClass";
-import {IInfoTableData} from "../../../../../store/profit/profit-slice";
+import {IFoodTableData, IInfoTableData} from "../../../../../store/profit/profit-slice";
+import {IFoodObject} from "../../../../../types/foodTypes";
 
 
 interface infoCities {
@@ -39,6 +40,7 @@ const TableTdElement = ({enchantment, craftInfoParams, calculatorType}: ITableTd
 
                 if (!!itemData?.resourceId && itemData?.resourceId?.includes?.('STONEBLOCK') && enchantment === '4') return;
                 if (!!itemData?.resourceId && city === 'Black Market') return;
+                if ((calculatorType === 'food' || calculatorType === 'potions') && city === 'Black Market') return;
 
                 const infoClasses: infoCities = {
                     CaerleonInfo: undefined,
