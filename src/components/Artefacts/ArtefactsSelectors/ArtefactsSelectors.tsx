@@ -9,7 +9,6 @@ import ResetButton from "./ResetButton/ResetButton";
 import TierSelector from "./TierSelector";
 
 const ArtefactsSelectors = React.memo(() => {
-    const theme = useSelector(selectTheme);
     const {language} = useSelector(selectLanguage);
     const {artefactsStrings} = language;
 
@@ -20,10 +19,7 @@ const ArtefactsSelectors = React.memo(() => {
     }
 
     return (
-        <div
-            className={styles.wrapper}
-            data-theme={theme}
-        >
+        <div className={styles.wrapper}>
             <div>
                 <p>{artefactsStrings.sortLabel}</p>
                 <select id="artefactSortSelect" onChange={(event) => selectSortHandler(event)}>

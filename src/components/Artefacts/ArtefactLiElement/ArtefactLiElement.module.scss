@@ -65,27 +65,4 @@
   filter: drop-shadow(1px 1px 3px var(--isChecked-color));
 }
 
-.artefactsTooltip {
-  filter: drop-shadow(1px 1px 2px black);
 
-  table{
-    white-space: normal;
-    border-collapse: collapse;
-    text-align: center;
-    overflow: auto;
-    margin-bottom: 10px;
-
-    td{
-      padding: 5px;
-      border: 2px solid #f6f5f1;
-      cursor: pointer;
-    }
-    thead{
-      th{
-        padding: 8px;
-        border: 2px solid #f6f5f1;
-        max-width: 100px;
-      }
-    }
-  }
-}

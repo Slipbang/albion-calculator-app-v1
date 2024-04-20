@@ -5,12 +5,10 @@ import {TArtefactsTier} from "../../../store/artefacts/artefact-slice";
 import styles from './ArtefactLiElement.module.scss';
 import React, {useState} from "react";
 import StyledCompleteResetButton from "../../Calculator/StyledComponentsCommon/StyledСompleteResetButton";
-import {Tooltip} from "react-tooltip";
 import {IItemsData} from "../../../types/InfoTableTypes";
 import {ClockLoader} from "react-spinners";
 import {artefactsPrices} from "./artefactsPricesClass";
 import {ISelectedLanguage} from "../../../types/languageTypes";
-import {selectTheme} from "../../../store/interface/interface-selector";
 import {srcRoute} from "../../../store/api/api";
 import {useArtefactsQuery} from "../Hooks/useArtefactsQuery";
 
@@ -43,9 +41,6 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
 
     const {language, selectedLanguage} = useSelector(selectLanguage);
     const {artefactsStrings} = language;
-
-    const theme = useSelector(selectTheme);
-    const isDark = theme === 'dark';
 
     const fullArtefactId = `${selectedTier}_${artefactId}`;
 
@@ -80,7 +75,6 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
     return (
         <>
             <li
-                data-theme={theme}
                 key={id}
                 className={styles.listElem}
             >
@@ -113,19 +107,7 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
                     title={artefactsStrings.resetButtonTitle}
                 />
             </li>
-            <Tooltip
-                id="artefacts-table-tooltip-data-html"
-                place='left-start'
-                className={styles.artefactsTooltip}
-                style={{
-                    filter: 'drop-shadow(1px 1px 2px black)',
-                    borderRadius: '10px 10px',
-                    backgroundColor: `${isDark ? '#675F5AFF' : '#EBC69FFF'}`,
-                    color: `${isDark ? 'white' : 'rgb(96, 67, 47)'}`,
-                    fontSize: 'inherit',
-                    zIndex: 9999,
-                }}
-            />
+
         </>
     )
 })

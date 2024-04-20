@@ -11,6 +11,30 @@
   transition: 0.5s ease color;
 }
 
+.artefactsTooltip {
+
+  table{
+    white-space: normal;
+    border-collapse: collapse;
+    text-align: center;
+    overflow: auto;
+    margin-bottom: 10px;
+
+    td{
+      padding: 5px;
+      border: 2px solid #f6f5f1;
+      cursor: pointer;
+    }
+    thead{
+      th{
+        padding: 8px;
+        border: 2px solid #f6f5f1;
+        max-width: 100px;
+      }
+    }
+  }
+}
+
 @media (max-width: 1300px) {
   .artefacts{
     padding: 85px 0 20px 0;
