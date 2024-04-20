@@ -3,8 +3,9 @@ import {materials} from "../../../../../store/Items/materials";
 import {TArtefactName, TOwnPriceStates, TSelectedCityStates} from "../InfoTable";
 import {IInfoTableData} from "../../../../../store/profit/profit-slice";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
+import {UtilsMethodsClass} from "./UtilsMethodsClass";
 
-export class CraftedItemInfoClass {
+export class CraftedItemInfoClass extends UtilsMethodsClass{
     constructor(
         public city: TCities,
         public enchantment: string,
@@ -21,7 +22,9 @@ export class CraftedItemInfoClass {
         public selectedCities: TSelectedCityStates,
         public isJournalsUsed: boolean,
         public currentDate: Date,
-    ) {}
+    ) {
+        super(currentDate);
+    }
 
     itemTierNum = +this.itemData!.tier!.split('T')[1];
 
@@ -45,14 +48,6 @@ export class CraftedItemInfoClass {
         if (!!resourceId) {
             return (enchantment === '' || id?.includes('STONEBLOCK')) ? id : `${id}_LEVEL${enchantment}@${enchantment}`;
         }
-    }
-
-    getTime = (date: string) => {
-        if (date === '1970-01-01T00:00:00.000Z') return ''
-
-        const hours = (this.currentDate.getTime() - Date.parse(date)) / (60 * 60 * 1000);
-
-        return `<span style="color: ${hours <= 5 ? "green" : "red"}">(${hours <= 24 ? `${Math.round(hours) || '<1'}h` : `${Math.round(hours / 24)}d`})</span>`;
     }
 
     getMaxBuyPriceDate = (itemId: string, selectedCity: TCities) => {

@@ -36,7 +36,7 @@ const language: TLanguage = {
             craftListHeader: 'Предыдущие 10 расчетов',
             subMaterialsQuantity: 'Доп. материалы(если требуются)',
             copied: 'скопировано!',
-            total: 'итого:'
+            total: 'итого:',
         },
         infoTableStrings: {
             profitPerItem: 'Профит за предмет:',
@@ -55,6 +55,8 @@ const language: TLanguage = {
             journalQuantity: 'Журналов при крафте 1 предмета:',
             journalProfit: 'Профит от журналов при крафте 1 предмета:',
             errorNotification: 'Ошибка загрузки предметов!',
+            multipleCities: 'Цены из разных городов:',
+            resourcesFrom: 'Ресурсы из:',
         },
         artefactsStrings: {
             sortLabel: 'Сортировать:',
@@ -211,6 +213,8 @@ const language: TLanguage = {
             journalQuantity: 'Journal quantity per 1 item crafted:',
             journalProfit: 'Journal profit per 1 item crafted:',
             errorNotification: 'Error loading items!',
+            multipleCities: 'Use multiple cities:',
+            resourcesFrom: 'Resources from:',
         },
         artefactsStrings: {
             sortLabel: 'Sort:',

@@ -108,13 +108,11 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
             newState[key] = initialResources[key] * itemsOutput;
         })
 
-        setResourceQuantityInput({
-            ...newState,
-        })
+        setResourceQuantityInput({...newState})
     }
 
     const resourcesWithReturnPercent = (key: string) => {
-        if (key === 'QUESTITEM_TOKEN_AVALON') {
+        if (key.includes('QUESTITEM_TOKEN_AVALON') || key.includes('ALCHEMY_RARE')) {
             return resourceQuantityInput[key];
         }
 
@@ -125,18 +123,23 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
         <div className={styles.wrapper}>
             <div
                 className={styles.selectedConsumableItem}
-                onClick={() => setIsSelectorVisible(prevState => !prevState)}
-                title={consumablesNamesData[itemId][selectedLanguage] || 'name is not found'}
             >
                 <p>{calculatorFormStrings.type}</p>
-                <div style={{marginLeft: 20}}>
-                    <img
-                        ref={consumableItemSelectorRef}
-                        src={`${srcRoute}${itemId}`}
-                        alt=""
-                    />
-                    <div className={styles.resourceQuantity}>
-                        <p>{amountCrafted}</p>
+                <div
+                    ref={consumableItemSelectorRef}
+                    style={{marginLeft: 20}}
+                >
+                    <div
+                        onClick={() => setIsSelectorVisible(prevState => !prevState)}
+                        title={consumablesNamesData[itemId][selectedLanguage] || 'name is not found'}
+                    >
+                        <img
+                            src={`${srcRoute}${itemId}`}
+                            alt=""
+                        />
+                        <div className={styles.resourceQuantity}>
+                            <p>{amountCrafted}</p>
+                        </div>
                     </div>
                     <div className={styles.quantityInput}>
                         <input

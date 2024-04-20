@@ -3,43 +3,41 @@ import CalculatorForm from "./CalculatorForm/CalculatorForm";
 import CraftTable from "./CrafTable/CraftTable";
 import {useSelector} from "react-redux";
 import {
+    selectCalculatorType,
     selectCraftTableVisibility,
     selectGameMode,
     selectInfoTableVisibility
 } from "../../../store/interface/interface-selector";
 import InfoTable from "./InfoTable/InfoTable";
+import classNames from 'classnames/bind';
 
 const DefaultCalculator = () => {
     const gameMode = useSelector(selectGameMode);
     const isCraftTableShown = useSelector(selectCraftTableVisibility);
     const isInfoTableShown = useSelector(selectInfoTableVisibility);
+    const calculatorType = useSelector(selectCalculatorType);
 
-    const defineStyles = () => {
-        let defaultCalculatorStyles = styles.defaultCalculatorWrapper;
-        let craftTableStyles = styles.craftTableStyles;
+    const extendedClassNames = classNames.bind(styles);
 
-        if (gameMode){
-            defaultCalculatorStyles = `${styles.defaultCalculatorWrapper} ${styles.defaultCalculatorWrapperHidden}`;
-        }
+    const defaultCalculatorStyles = extendedClassNames(styles.defaultCalculatorWrapper, {
+        [styles.defaultCalculatorWrapperHidden]: !!gameMode,
+        [styles.defaultCalculatorWrapperOpened]: !!isCraftTableShown && (calculatorType !== 'food' && calculatorType !== 'potions'),
+    })
 
-        if (isCraftTableShown){
-            craftTableStyles = `${styles.craftTableStyles} ${styles.craftTableOpenedStyles}`;
-            defaultCalculatorStyles = `${styles.defaultCalculatorWrapper} ${styles.defaultCalculatorWrapperOpened}`;
-        }
+    const craftTableStyles = extendedClassNames(styles.craftTableStyles, {
+        [styles.craftTableOpenedStyles]: !!isCraftTableShown,
+        [styles.craftTableHiddenStyles]: (calculatorType === 'food' || calculatorType === 'potions')
 
-        return {defaultCalculatorStyles, craftTableStyles};
-    }
-
-    const {defaultCalculatorStyles, craftTableStyles} = defineStyles();
+    })
 
     return <div className={styles.wrapper}>
-        {!!isInfoTableShown && <InfoTable />}
+        {!!isInfoTableShown && <InfoTable calculatorType={calculatorType} />}
 
         <div className={defaultCalculatorStyles}>
-            <CalculatorForm />
+            <CalculatorForm calculatorType={calculatorType} />
 
             <div className={craftTableStyles}>
-                <CraftTable />
+                <CraftTable calculatorType={calculatorType} />
             </div>
         </div>
     </div>

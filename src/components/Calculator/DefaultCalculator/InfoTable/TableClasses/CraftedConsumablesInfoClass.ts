@@ -3,8 +3,9 @@ import {IConsumableTableData} from "../../../../../store/profit/profit-slice";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
 import {TConsumableNames} from "../../../../../store/Items/consumablesNamesData";
 import {TConsumablesSelectors} from "../InfoTable";
+import {UtilsMethodsClass} from "./UtilsMethodsClass";
 
-export class CraftedConsumablesInfoClass {
+export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
     constructor(
         public city: TCities,
         public enchantment: string,
@@ -16,8 +17,9 @@ export class CraftedConsumablesInfoClass {
         public infoTableStrings: ISelectedLanguage['infoTableStrings'],
         public consumableSelectors: TConsumablesSelectors | undefined,
         public foodTax: number,
+        public currentDate: Date,
     ) {
-
+        super(currentDate);
     }
     percent = this.infoTableData.percent;
     consumableItemId = `${this.infoTableData.craftedFood.itemId}${!!this.enchantment ? `@${this.enchantment}` : ''}`;
@@ -26,15 +28,20 @@ export class CraftedConsumablesInfoClass {
         const {consumableResourcesKeys, consumableResourcesData,enchantment} = this;
 
         const resourcePrices: {[key: string]: number} = {};
+        const resourcePricesDates: {[key: string]: string} = {};
 
         consumableResourcesKeys!.forEach(key => {
-            const finalKey = (!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? key : `${key}${enchantment}`;
-            resourcePrices[key] = consumableResourcesData?.find(item => item.itemId === finalKey && item.location === this.consumableSelectors![finalKey])?.sellPriceMin || 0;
+            const resourcePricesKey = (!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? key : `${key}${enchantment}`;
+            const consumableResourceDataObject =  consumableResourcesData?.find(item => item.itemId === resourcePricesKey && item.location === this.consumableSelectors![resourcePricesKey]);
+            resourcePrices[resourcePricesKey] = consumableResourceDataObject?.sellPriceMin || 0;
+            resourcePricesDates[resourcePricesKey] = consumableResourceDataObject?.sellPriceMinDate || '';
         })
 
-        const consumableItemPrice = consumableResourcesData?.find(item => item.itemId === this.consumableItemId && item.location === this.city)?.sellPriceMin || 0;
+        const consumableItemPriceObject = consumableResourcesData?.find(item => item.itemId === this.consumableItemId && item.location === this.city);
+        const consumableItemPrice = consumableItemPriceObject?.sellPriceMin || 0;
+        const consumableItemPriceDate = consumableItemPriceObject?.sellPriceMinDate || '';
 
-        return {resourcePrices, consumableItemPrice};
+        return {resourcePrices, resourcePricesDates, consumableItemPrice, consumableItemPriceDate};
     }
 
     prices = this.consumableResourcePrices();
@@ -42,12 +49,13 @@ export class CraftedConsumablesInfoClass {
     totalFoodTax = Math.ceil(this.infoTableData.craftedFood.foodConsumption * (this.foodTax/100));
 
     resourcePrices = this.prices.resourcePrices;
+    resourcePricesDates = this.prices.resourcePricesDates;
     consumableItemPrice = Math.floor(this.prices.consumableItemPrice - (this.prices.consumableItemPrice * 0.065)) || this.infoTableStrings.noData;
+    consumableItemPriceDate = this.prices.consumableItemPriceDate;
 
     resourcePricesCalculation = () => {
-        const {consumableResourcesKeys, infoTableData, percent, consumablesNames, selectedLanguage, resourcePrices, enchantment, consumableItemPrice, totalFoodTax} = this;
+        const {consumableResourcesKeys, infoTableData, percent, consumablesNames, selectedLanguage, resourcePrices, enchantment, consumableItemPrice, totalFoodTax, resourcePricesDates} = this;
         const {craftedFood} = infoTableData;
-
 
         const resourcesPricesTitle: string[] = [];
         let totalCost: number = totalFoodTax;
@@ -55,10 +63,12 @@ export class CraftedConsumablesInfoClass {
         consumableResourcesKeys?.map(key => {
             if (!enchantment && (key.includes('FISHSAUCE') || key.includes('ALCHEMY_EXTRACT'))) return;
 
-            const totalQuantity = (key === 'QUESTITEM_TOKEN_AVALON') ? +craftedFood[key] : (+craftedFood[key] - +craftedFood[key] * percent / 100);
-            const totalItemCost = Math.floor(resourcePrices[key] * totalQuantity);
+            const resourcePricesKey = (!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? key : `${key}${enchantment}`;
 
-            resourcesPricesTitle.push(`${consumablesNames?.[(!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? key : `${key}${enchantment}`]?.[selectedLanguage] || 'err'}: ${resourcePrices[key].toLocaleString('en')} * ${totalQuantity} = ${totalItemCost.toLocaleString('en')}<hr><br>`);
+            const totalQuantity = (key.includes('QUESTITEM_TOKEN_AVALON') || key.includes('ALCHEMY_RARE')) ? +craftedFood[key] : (+craftedFood[key] - +craftedFood[key] * percent / 100);
+            const totalItemCost = Math.floor(resourcePrices[resourcePricesKey] * totalQuantity);
+
+            resourcesPricesTitle.push(`${consumablesNames?.[resourcePricesKey]?.[selectedLanguage] || 'err'}: ${resourcePrices[resourcePricesKey]?.toLocaleString('en')} * ${totalQuantity} = ${totalItemCost?.toLocaleString('en')} ${this.getTime(resourcePricesDates[resourcePricesKey])}<hr><br>`);
             totalCost += totalItemCost;
         })
 
@@ -74,7 +84,7 @@ export class CraftedConsumablesInfoClass {
         }
     }
 
-    itemPriceTitle = `${this.consumablesNames![this.infoTableData.craftedFood.itemId][this.selectedLanguage]}: ${this.consumableItemPrice.toLocaleString('en')}`;
+    itemPriceTitle = `${this.consumablesNames![this.infoTableData.craftedFood.itemId][this.selectedLanguage]}: ${this.consumableItemPrice.toLocaleString('en')} ${this.getTime(this.consumableItemPriceDate)}`;
     foodTaxTitle = `${this.infoTableStrings.tax} ${this.totalFoodTax}`;
 
     resourcesPricesTitle = this.resourcePricesCalculation().resourcesPricesTitle;

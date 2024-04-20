@@ -78,7 +78,6 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
                 [ownPriceKey]: {
                     ...prevState[ownPriceKey],
                     ownPrice: value,
-
                 },
             }))
         }

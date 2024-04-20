@@ -115,15 +115,15 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
             </li>
             <Tooltip
                 id="artefacts-table-tooltip-data-html"
-                place={'left-start'}
+                place='left-start'
                 className={styles.artefactsTooltip}
                 style={{
-                    filter: 'drop-shadow(2px 2px 2px black)',
+                    filter: 'drop-shadow(1px 1px 2px black)',
                     borderRadius: '10px 10px',
-                    backgroundColor: `${isDark ? 'rgb(58,58,58)' : 'wheat'}`,
+                    backgroundColor: `${isDark ? '#675F5AFF' : '#EBC69FFF'}`,
                     color: `${isDark ? 'white' : 'rgb(96, 67, 47)'}`,
                     fontSize: 'inherit',
-                    zIndex: 6,
+                    zIndex: 9999,
                 }}
             />
         </>

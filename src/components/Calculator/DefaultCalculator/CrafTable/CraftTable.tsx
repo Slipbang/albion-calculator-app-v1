@@ -13,10 +13,10 @@ import ItemTable from "./Tables/ItemTable";
 import ResourceTable from "./Tables/ResourceTable";
 import CraftTableButton from "./Buttons/CraftTableButton";
 import {selectCalculatorType} from "../../../../store/interface/interface-selector";
+import {TCalcProps} from "../../../../types/calculatorPropsType";
 
 
-const CraftTable = React.memo(() => {
-    const calculatorType = useSelector(selectCalculatorType);
+const CraftTable = React.memo(({calculatorType}: {calculatorType: TCalcProps}) => {
 
     const dispatchAction = useAppDispatch();
 

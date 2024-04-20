@@ -19,4 +19,16 @@
     background-color: var(--background-color-table);
     color: var(--color-table-text);
   }
+
+  .checkbox {
+    display: flex;
+    height: 20px;
+    align-items: center;
+
+    input[type='checkbox']{
+      margin-left: 3px;
+      width: 18px;
+      height: 18px;
+    }
+  }
 }

@@ -4,8 +4,6 @@ import {useSelector} from "react-redux";
 import {selectArtefactsClass, selectArtefactsType} from "../../../../store/artefacts/artefact-selectors";
 import {useAppDispatch} from "../../../../store";
 import {TArtefactTypes} from "../../../../types/artefactTypes";
-// import {useNavigate, useParams} from "react-router-dom";
-// import {useEffect} from "react";
 
 interface IArtefactButtonProps {
     image: string;
@@ -16,9 +14,6 @@ interface IArtefactButtonProps {
 
 const ArtefactButton = (props: IArtefactButtonProps) => {
     const { image, selectedImage, hoveredImage, type} = props;
-
-    // const {language, artefactClass, artefactType, artefactTier} = useParams<'language' | 'artefactClass' | 'artefactType' | 'artefactTier'>();
-    // const navigate = useNavigate();
 
     const dispatchAction = useAppDispatch();
 
@@ -39,17 +34,10 @@ const ArtefactButton = (props: IArtefactButtonProps) => {
     const selectHandler = () => {
         if (isTConsumables) {
             dispatchAction(artefactActions.setSelectedType(type as TArtefactTypes));
-            //navigate(`/${language}/artefacts/${artefactClass}/${type}/${artefactTier}`)
         } else {
             dispatchAction(artefactActions.setSelectedClass(type as TExtendedTClass));
-            //navigate(`/${language}/artefacts/${type}/${artefactType}/${artefactTier}`)
         }
     }
-
-    // useEffect(() => {
-    //     dispatchAction(artefactActions.setSelectedClass(artefactClass as TExtendedTClass));
-    //     dispatchAction(artefactActions.setSelectedType(artefactType as TConsumables));
-    // }, [artefactClass, artefactType])
 
     const selected = useSelector( isTConsumables ? selectArtefactsType : selectArtefactsClass);
 

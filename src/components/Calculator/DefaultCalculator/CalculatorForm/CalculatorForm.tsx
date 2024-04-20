@@ -14,12 +14,11 @@ import ItemSelector from "./Selectors/ItemSelector/ItemSelector";
 import React from 'react';
 import PercentError from "./Errors/PercentError";
 import AmountError from "./Errors/AmountError";
-import {selectCalculatorType} from "../../../../store/interface/interface-selector";
 import MainResourceInput from "./Inputs/MainResourceInput/MainResourceInput";
 import ConsumablesSelector from "./Selectors/ConsumableSelector/ConsumablesSelector";
+import {TCalcProps} from "../../../../types/calculatorPropsType";
 
-const CalculatorForm = React.memo(() => {
-    const calculatorType = useSelector(selectCalculatorType);
+const CalculatorForm = React.memo(({calculatorType}: {calculatorType: TCalcProps}) => {
 
     const {language, selectedLanguage} = useSelector(selectLanguage);
     const {calculatorFormStrings} = language;

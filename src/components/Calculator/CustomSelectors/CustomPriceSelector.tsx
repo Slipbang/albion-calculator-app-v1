@@ -51,13 +51,9 @@ const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
 
         const currentDate = new Date();
 
-        const itemWasUpdated = (currentDate.getTime() - Date.parse(itemsDate))/(60*60*1000);
+        const hours = (currentDate.getTime() - Date.parse(itemsDate))/(60*60*1000);
 
-        if (itemWasUpdated >= 24) {
-            return <span style={{color: 'red'}}>({Math.round(itemWasUpdated/24)}d)</span>;
-        }
-
-        return <span style={{color: `${itemWasUpdated <= 5 ? 'green' : 'red'}`}}>({Math.round(itemWasUpdated)}h)</span>;
+        return <span style={{color: `${hours <= 5 ? "green" : "red"}`}}>({hours <= 24 ? `${Math.round(hours) || '<1'}h` : `${Math.round(hours / 24)}d`})</span>
     }
 
 

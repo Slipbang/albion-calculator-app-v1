@@ -5,10 +5,7 @@ import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../../store/language/language-selector";
 import {Tooltip} from 'react-tooltip';
 import {TArtefactData} from "../../../../types/artefactTypes";
-import {
-    selectCraftedConsumablesData,
-    selectCraftedItemData
-} from "../../../../store/profit/profit-selectors";
+import {selectCraftedConsumablesData, selectCraftedItemData} from "../../../../store/profit/profit-selectors";
 import {useAppDispatch} from "../../../../store";
 import {interfaceSliceActions} from "../../../../store/interface/interface-slice";
 import {
@@ -30,6 +27,7 @@ import StyledCloseButton from "../../StyledComponentsCommon/StyledCloseButton";
 import {IConsumableObject} from "../../../../types/consumableTypes";
 import {consumablesNamesData, TConsumableNames} from "../../../../store/Items/consumablesNamesData";
 import ConsumablesPriceSelectors from "./ConsumablesPriceSelectors/ConsumablesPriceSelectors";
+import {TCalcProps} from "../../../../types/calculatorPropsType";
 
 export type ICraftItemInfoTuple = [
     itemData: IInfoTableData | undefined,
@@ -56,6 +54,7 @@ export type ICraftConsumableInfoTuple = [
     infoTableStrings: ISelectedLanguage['infoTableStrings'],
     consumableSelectors: TConsumablesSelectors | undefined,
     foodTax: number,
+    currentDate: Date,
 ]
 
 export interface IOwnPrice {
@@ -86,8 +85,8 @@ export type TSelectedCityStates = {
 
 export type TArtefactName = TArtefactData['artefactName'] | undefined;
 
-const InfoTable = () => {
-    const calculatorType = useSelector(selectCalculatorType);
+const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
+
     const craftedItem = useSelector(selectCraftedItemData);
     const serverId = useSelector(selectServerId);
 
@@ -136,7 +135,7 @@ const InfoTable = () => {
 
         });
 
-        [1,2,3].forEach(enchantment => {
+        [1, 2, 3].forEach(enchantment => {
             const extraResourceKey =
                 calculatorType === 'food'
                     ? 'T1_FISHSAUCE_LEVEL'
@@ -154,8 +153,6 @@ const InfoTable = () => {
             consumableSelectorsInitialState[key] = 'Fort Sterling';
         })
     }
-
-    console.log(consumableResourcesKeys)
 
     const [fetchItems, {
         isFetching: isItemFetching,
@@ -186,7 +183,6 @@ const InfoTable = () => {
         isError: isErrorConsumables,
         data: consumablesData,
     }] = useLazyGetItemsDataQuery();
-
 
 
     useEffect(() => {
@@ -278,6 +274,7 @@ const InfoTable = () => {
                 infoTableStrings,
                 consumableSelectors,
                 foodTax,
+                currentDate,
             ] as ICraftConsumableInfoTuple;
 
     const defineSrc = (enchantment: string) => {
@@ -299,38 +296,44 @@ const InfoTable = () => {
             {(!isItemFetching && !isMaterialsFetching && !isArtefactsFetching && !isJournalsFetching && !isConsumablesFetching && !isErrorItems && !isErrorMaterials && !isErrorArtefacts && !isErrorJournals && !isErrorConsumables) &&
                 <div className={styles.wrapper} data-theme={theme}>
                     {(calculatorType === 'resource' || calculatorType === 'items')
-                        && <MaterialSelectors
-                            mainMatsId={mainMatsId!}
-                            subMatsId={subMatsId!}
-                            emptyJournalId={emptyJournalId!}
-                            journalId={journalId!}
-                            artefactId={artefactId!}
-                            setOwnPrices={setOwnPrices}
-                            ownPrices={ownPrices}
-                            setFoodTax={setFoodTax}
-                            artefactsData={artefactsData!}
-                            journalsData={journalsData!}
-                            infoTableStrings={infoTableStrings}
-                            isJournalsUsed={isJournalsUsed}
-                            setIsJournalsUsed={setIsJournalsUsed}
-                            setSelectedCities={setSelectedCities}
-                            artefactName={artefactName}
-                            foodTax={foodTax}
-                            selectedLanguage={selectedLanguage}
-                            selectedCities={selectedCities}
-                        />}
+                        && (
+                            <MaterialSelectors
+                                mainMatsId={mainMatsId!}
+                                subMatsId={subMatsId!}
+                                emptyJournalId={emptyJournalId!}
+                                journalId={journalId!}
+                                artefactId={artefactId!}
+                                setOwnPrices={setOwnPrices}
+                                ownPrices={ownPrices}
+                                setFoodTax={setFoodTax}
+                                artefactsData={artefactsData!}
+                                journalsData={journalsData!}
+                                infoTableStrings={infoTableStrings}
+                                isJournalsUsed={isJournalsUsed}
+                                setIsJournalsUsed={setIsJournalsUsed}
+                                setSelectedCities={setSelectedCities}
+                                artefactName={artefactName}
+                                foodTax={foodTax}
+                                selectedLanguage={selectedLanguage}
+                                selectedCities={selectedCities}
+                            />
+                        )}
 
                     {(calculatorType === 'food' || calculatorType == 'potions')
-                    && <ConsumablesPriceSelectors
-                            consumableSelectorsKeys={consumableSelectorsKeys!}
-                            consumablesNames={consumablesNames!}
-                            selectedLanguage={selectedLanguage}
-                            infoTableStrings={infoTableStrings}
-                            consumablesData={consumablesData!}
-                            setConsumableSelectors={setConsumableSelectors}
-                            setFoodTax={setFoodTax}
-                            foodTax={foodTax}
-                        />}
+                        && (
+                            <ConsumablesPriceSelectors
+                                consumableSelectorsKeys={consumableSelectorsKeys!}
+                                consumableSelectors={consumableSelectors}
+                                consumablesNames={consumablesNames!}
+                                selectedLanguage={selectedLanguage}
+                                infoTableStrings={infoTableStrings}
+                                consumablesData={consumablesData!}
+                                setConsumableSelectors={setConsumableSelectors}
+                                setFoodTax={setFoodTax}
+                                foodTax={foodTax}
+                                currentDate={currentDate}
+                            />
+                        )}
 
                     <table>
                         <thead>

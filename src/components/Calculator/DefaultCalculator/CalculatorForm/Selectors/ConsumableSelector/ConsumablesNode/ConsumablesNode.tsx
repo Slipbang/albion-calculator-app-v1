@@ -31,11 +31,14 @@ const ConsumablesNode = ({tier, selectedLanguage}: IConsumablesNodeProps) => {
                 const {itemId, amountCrafted} = item;
 
                 return (
-                    <div key={itemId}>
+                    <div
+                        style={{cursor: 'pointer'}}
+                        key={itemId}
+                        onClick={() => selectConsumableItemHandler(item)}
+                    >
                         <img
                             src={`${srcRoute}${itemId}`}
                             alt=""
-                            onClick={() => selectConsumableItemHandler(item)}
                             title={consumablesNamesData[itemId][selectedLanguage] || 'name is not found'}
                         />
 

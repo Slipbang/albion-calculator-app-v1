@@ -1,5 +1,4 @@
 .listElem {
-  z-index: 9998;
   margin: 10px 20px;
   padding: 5px 5px;
   width: 450px;
@@ -39,7 +38,7 @@
     height: 68px;
 
     img {
-      filter: drop-shadow(5px 5px 6px black);
+      filter: drop-shadow(3px 3px 6px black);
       cursor: pointer;
       width: 68px;
       height: 68px;
@@ -67,22 +66,15 @@
 }
 
 .artefactsTooltip {
+  filter: drop-shadow(1px 1px 2px black);
 
   table{
     white-space: normal;
     border-collapse: collapse;
-    background-color: var(--background-color-table);
     text-align: center;
-    color: var(--color-table-text);
-
     overflow: auto;
     margin-bottom: 10px;
 
-    img{
-      width: 65px;
-      height: 65px;
-      filter: drop-shadow(5px 5px 6px black);
-    }
     td{
       padding: 5px;
       border: 2px solid #f6f5f1;

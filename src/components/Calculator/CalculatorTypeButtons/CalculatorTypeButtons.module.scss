@@ -55,7 +55,9 @@
       top: 67px;
       right: 10px;
       font-size: 17px;
-      transition: 0.4s ease color;
+      color: var(--game-mode-text-color);
+      transform: var(--button-accessibility);
+      transition: all 0.5s ease;
     }
 
     .removeSword{
@@ -131,4 +133,19 @@
 .backgroundSkeleton {
   background: linear-gradient(rgb(210, 187, 139), rgb(210, 187, 139)) center/73% 73%;
   background-repeat:no-repeat;
+}
+
+[data-mode='default']{
+  --game-mode-text-color: var(--game-mode-button-color);
+}
+
+[data-mode='game']{
+  --game-mode-text-color: white;
+}
+
+[data-calculatortype-allowed='simplified-only'] {
+  --button-accessibility: translate(200px,0);
+}
+[data-calculatortype-allowed='all-modes'] {
+  --button-accessibility: translate(0,0);
 }

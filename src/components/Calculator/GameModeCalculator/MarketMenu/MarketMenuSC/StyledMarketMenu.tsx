@@ -12,7 +12,7 @@ const StyledMarketMenu = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   
-  svg {
+  .shopSVG {
     position: absolute;
     width: 75px;
     margin-left: -70px;

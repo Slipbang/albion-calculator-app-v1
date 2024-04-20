@@ -38,6 +38,8 @@ interface IInfoTableStrings {
     journalQuantity: string;
     journalProfit: string;
     errorNotification: string;
+    multipleCities: string;
+    resourcesFrom: string;
 }
 
 interface ITransportationFormStrings {

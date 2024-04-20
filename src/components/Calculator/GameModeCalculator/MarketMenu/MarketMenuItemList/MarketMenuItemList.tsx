@@ -23,18 +23,20 @@ const MarketMenuItemList = () => {
         <StyledThumb>
             <div className={styles.materials} data-notification={marketMenuStrings.alert}>
                 {selectedMarketItems === deferredMarketItems && deferredMarketItems.map((item, index) => {
-
                     const {itemId} = item;
 
-                    return (itemId !== null) &&
+                    return (itemId !== null) && (
                         <MarketMenuItem
                             item={item}
                             key={index}
                             index={index}
                             selectedLanguage={selectedLanguage}
                         />
+                    )
+
                 })}
-                {selectedMarketItems !== deferredMarketItems && Array.from({length: 10}).map((_, index) => <MarketItemLoader key={index} />)}
+                {selectedMarketItems !== deferredMarketItems && Array.from({length: 10}).map((_, index) =>
+                    <MarketItemLoader key={index}/>)}
             </div>
         </StyledThumb>
     )

@@ -22,6 +22,7 @@ const MarketMenu = () => {
                     id="Line"
                     viewBox="0 0 64 64"
                     xmlns="http://www.w3.org/2000/svg"
+                    className='shopSVG'
                 >
                     <path d="m8 33a1 1 0 0 0 1-1v-3h9a1 1 0 0 0 0-2h-10a1 1 0 0 0 -1 1v4a1 1 0 0 0 1 1z" />
                     <circle cx="22" cy="28" r="1" />

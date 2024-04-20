@@ -32,6 +32,9 @@
 .craftTableOpenedStyles{
   transform: translate(510px,0);
 }
+.craftTableHiddenStyles {
+  display: none;
+}
 
 @media (max-height: 935px) {
   .wrapper{
