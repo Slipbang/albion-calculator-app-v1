@@ -1,23 +1,24 @@
 import {cityOptions} from "../../../../../store/Options/CityOptions";
-import {TConsumableNames} from "../../../../../store/Items/foodNames";
-import {TSelectedLanguage} from "../../../../../types/languageTypes";
+import {TConsumableNames} from "../../../../../store/Items/consumablesNamesData";
+import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
 import {IItemsData, TCities} from "../../../../../types/InfoTableTypes";
 import {Dispatch, SetStateAction} from "react";
 import {TConsumablesSelectors} from "../InfoTable";
-import styles from './ConsumablesSelectors.module.scss';
+import styles from './ConsumablesPriceSelectors.module.scss';
 
 interface IConsumablesSelectorsProps {
     consumableSelectorsKeys: string[];
-    consumableNames: TConsumableNames;
+    consumablesNames: TConsumableNames;
     selectedLanguage: TSelectedLanguage;
+    infoTableStrings: ISelectedLanguage['infoTableStrings'];
     consumablesData: IItemsData[];
     setConsumableSelectors: Dispatch<SetStateAction<TConsumablesSelectors>>;
     setFoodTax: Dispatch<SetStateAction<number>>;
     foodTax: number;
 }
 
-const ConsumablesSelectors = (props: IConsumablesSelectorsProps) => {
-    const {consumableSelectorsKeys, consumableNames, selectedLanguage, consumablesData, setConsumableSelectors, setFoodTax, foodTax} = props;
+const ConsumablesPriceSelectors = (props: IConsumablesSelectorsProps) => {
+    const {consumableSelectorsKeys, consumablesNames,infoTableStrings, selectedLanguage, consumablesData, setConsumableSelectors, setFoodTax, foodTax} = props;
 
     const findPrice = (id: string, city: TCities) => {
 
@@ -38,7 +39,7 @@ const ConsumablesSelectors = (props: IConsumablesSelectorsProps) => {
     return (
         <div className={styles.wrapper}>
             <div>
-                <label htmlFor="foodTax">Налог:</label>
+                <label htmlFor="foodTax">{infoTableStrings.taxLabel}</label>
                 <input
                     type='number'
                     id='foodTax'
@@ -49,7 +50,7 @@ const ConsumablesSelectors = (props: IConsumablesSelectorsProps) => {
             {consumableSelectorsKeys.map(key => {
                 return (
                     <div key={key}>
-                        <label htmlFor={key}>{consumableNames[key][selectedLanguage]}:</label>
+                        <label htmlFor={key}>{consumablesNames[key][selectedLanguage]}:</label>
                         <select
                             id={key}
                             onChange={(event) => selectCityHandler(key, event.target.value as TCities)}
@@ -70,4 +71,4 @@ const ConsumablesSelectors = (props: IConsumablesSelectorsProps) => {
     )
 }
 
-export default ConsumablesSelectors;
+export default ConsumablesPriceSelectors;

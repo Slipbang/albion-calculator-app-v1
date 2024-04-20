@@ -5,11 +5,14 @@ import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../../store/language/language-selector";
 import {Tooltip} from 'react-tooltip';
 import {TArtefactData} from "../../../../types/artefactTypes";
-import {selectCraftedFoodData, selectCraftedItemData} from "../../../../store/profit/profit-selectors";
+import {
+    selectCraftedConsumablesData,
+    selectCraftedItemData
+} from "../../../../store/profit/profit-selectors";
 import {useAppDispatch} from "../../../../store";
 import {interfaceSliceActions} from "../../../../store/interface/interface-slice";
 import {
-    IFoodTableData,
+    IConsumableTableData,
     IInfoTableData,
     ITableQueryParams,
     profitSliceActions
@@ -24,9 +27,9 @@ import ErrorNotification from "../ErrorNotification/ErrorNotification";
 import {selectCalculatorType, selectTheme} from "../../../../store/interface/interface-selector";
 import TableTdElement from "./TableTdElement/TableTdElement";
 import StyledCloseButton from "../../StyledComponentsCommon/StyledCloseButton";
-import {IFoodObject} from "../../../../types/foodTypes";
-import {foodNames, TConsumableNames} from "../../../../store/Items/foodNames";
-import ConsumablesSelectors from "./ConsumablesSelectors/ConsumablesSelectors";
+import {IConsumableObject} from "../../../../types/consumableTypes";
+import {consumablesNamesData, TConsumableNames} from "../../../../store/Items/consumablesNamesData";
+import ConsumablesPriceSelectors from "./ConsumablesPriceSelectors/ConsumablesPriceSelectors";
 
 export type ICraftItemInfoTuple = [
     itemData: IInfoTableData | undefined,
@@ -45,11 +48,11 @@ export type ICraftItemInfoTuple = [
 ];
 
 export type ICraftConsumableInfoTuple = [
-    infoTableData: IFoodTableData,
+    infoTableData: IConsumableTableData,
     consumableResourcesData: IItemsData[] | undefined,
     consumableResourcesKeys: string[] | undefined,
     selectedLanguage: TSelectedLanguage,
-    consumableNames: TConsumableNames | undefined,
+    consumablesNames: TConsumableNames | undefined,
     infoTableStrings: ISelectedLanguage['infoTableStrings'],
     consumableSelectors: TConsumablesSelectors | undefined,
     foodTax: number,
@@ -88,7 +91,7 @@ const InfoTable = () => {
     const craftedItem = useSelector(selectCraftedItemData);
     const serverId = useSelector(selectServerId);
 
-    const craftedFoodData = useSelector(selectCraftedFoodData);
+    const craftedConsumablesData = useSelector(selectCraftedConsumablesData);
 
     let tableQueryParams: ITableQueryParams | undefined,
         infoTableData: IInfoTableData | undefined,
@@ -110,40 +113,49 @@ const InfoTable = () => {
     }
 
     let queryConsumableParams: string | undefined,
-        craftedFood: IFoodObject | undefined,
+        craftedFood: IConsumableObject | undefined,
         consumablesItemId: string | undefined,
         consumableResourcesKeys: string[] | undefined,
-        consumableNames: TConsumableNames | undefined;
+        consumablesNames: TConsumableNames | undefined;
 
     const consumableSelectorsKeys: string[] = [];
     const consumableSelectorsInitialState: TConsumablesSelectors = {}
 
-    if (craftedFoodData !== null) {
-        ({queryParams: queryConsumableParams, craftedFood} = craftedFoodData!);
+    if (craftedConsumablesData !== null) {
+        ({queryParams: queryConsumableParams, craftedFood} = craftedConsumablesData!);
         ({itemId: consumablesItemId} = craftedFood);
         consumableResourcesKeys = Object.keys(craftedFood).filter(key => key.toUpperCase() === key && !key.includes(craftedFood!.itemId));
-        consumableNames = {
-            [craftedFood.itemId]: {...foodNames[craftedFood.itemId]}
+        consumablesNames = {
+            [craftedFood.itemId]: {...consumablesNamesData![craftedFood.itemId]}
         };
 
-        consumableSelectorsKeys.push(...[...consumableResourcesKeys].filter(key => key !== 'FISHSAUCE'));
+        consumableSelectorsKeys.push(...[...consumableResourcesKeys].filter(key => !key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')));
 
         consumableResourcesKeys.forEach(key => {
-            consumableNames![key] = {...foodNames[key]};
+            consumablesNames![key] = {...consumablesNamesData![key]};
 
         });
 
         [1,2,3].forEach(enchantment => {
-            consumableNames![`T1_FISHSAUCE_LEVEL${enchantment}`] = {...foodNames[`T1_FISHSAUCE_LEVEL${enchantment}`]};
+            const extraResourceKey =
+                calculatorType === 'food'
+                    ? 'T1_FISHSAUCE_LEVEL'
+                    : calculatorType === 'potions'
+                        ? 'T1_ALCHEMY_EXTRACT_LEVEL'
+                        : '';
 
-            consumableSelectorsInitialState[`T1_FISHSAUCE_LEVEL${enchantment}`] = 'Fort Sterling';
-            consumableSelectorsKeys.push(`T1_FISHSAUCE_LEVEL${enchantment}`);
+            consumablesNames![`${extraResourceKey}${enchantment}`] = {...consumablesNamesData![`${extraResourceKey}${enchantment}`]};
+
+            consumableSelectorsInitialState[`${extraResourceKey}${enchantment}`] = 'Fort Sterling';
+            consumableSelectorsKeys.push(`${extraResourceKey}${enchantment}`);
         })
 
         consumableSelectorsKeys.forEach(key => {
             consumableSelectorsInitialState[key] = 'Fort Sterling';
         })
     }
+
+    console.log(consumableResourcesKeys)
 
     const [fetchItems, {
         isFetching: isItemFetching,
@@ -175,11 +187,12 @@ const InfoTable = () => {
         data: consumablesData,
     }] = useLazyGetItemsDataQuery();
 
+
+
     useEffect(() => {
         if (calculatorType === 'items') {
             fetchItems({itemsParams: queryItemsParams!, isBlackMarket: true, serverId});
             fetchJournals({itemsParams: queryJournalsParams!, isBlackMarket: false, serverId})
-
 
             if (!!artefactId) {
                 fetchArtefacts({itemsParams: artefactId!, isBlackMarket: false, serverId});
@@ -257,11 +270,11 @@ const InfoTable = () => {
                 currentDate,
             ] as ICraftItemInfoTuple
             : [
-                craftedFoodData!,
+                craftedConsumablesData!,
                 consumablesData!,
                 consumableResourcesKeys!,
                 selectedLanguage!,
-                consumableNames,
+                consumablesNames,
                 infoTableStrings,
                 consumableSelectors,
                 foodTax,
@@ -276,7 +289,7 @@ const InfoTable = () => {
             return `${resourceId}${(!enchantment || resourceId?.includes?.('STONEBLOCK')) ? '' : `_LEVEL${enchantment}@${enchantment}`}`;
         }
 
-        if (calculatorType === 'food') {
+        if (calculatorType === 'food' || calculatorType === 'potions') {
             return `${consumablesItemId}${(enchantment === '4' || !enchantment) ? '' : `@${enchantment}`}`
         }
     }
@@ -308,10 +321,11 @@ const InfoTable = () => {
                         />}
 
                     {(calculatorType === 'food' || calculatorType == 'potions')
-                    && <ConsumablesSelectors
+                    && <ConsumablesPriceSelectors
                             consumableSelectorsKeys={consumableSelectorsKeys!}
-                            consumableNames={consumableNames!}
+                            consumablesNames={consumablesNames!}
                             selectedLanguage={selectedLanguage}
+                            infoTableStrings={infoTableStrings}
                             consumablesData={consumablesData!}
                             setConsumableSelectors={setConsumableSelectors}
                             setFoodTax={setFoodTax}

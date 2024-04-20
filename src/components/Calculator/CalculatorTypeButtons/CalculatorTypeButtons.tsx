@@ -5,8 +5,8 @@ import {useAppDispatch} from "../../../store";
 import {TCalcProps} from "../../../types/calculatorPropsType";
 import styles from './CalculatorTypeButtons.module.scss';
 import {memo} from "react";
-//import React, {useEffect} from "react";
-//import {Navigate, useNavigate, useParams} from "react-router-dom";
+import {profitSliceActions} from "../../../store/profit/profit-slice";
+import {consumablesSelectorItems} from "../../../store/Items/consumablesSelectorItems";
 
 interface ISelector {
     src: string;
@@ -14,10 +14,10 @@ interface ISelector {
 }
 
 const selectors: ISelector[] = [
-    // {
-    //     src: 'https://render.albiononline.com/v1/item/T8_POTION_COOLDOWN',
-    //     type: 'potions',
-    // },
+    {
+        src: 'https://render.albiononline.com/v1/item/T8_POTION_COOLDOWN',
+        type: 'potions',
+    },
     {
         src: 'https://render.albiononline.com/v1/item/T8_MEAL_STEW_AVALON',
         type: 'food',
@@ -35,39 +35,24 @@ const selectors: ISelector[] = [
 const CalculatorTypeButtons = () => {
     const dispatchAction = useAppDispatch();
 
-    // const {language, mode, type} = useParams();
-    // const navigate = useNavigate();
-
     const theme = useSelector(selectTheme);
     const isDark = theme === 'dark';
     const calculatorType = useSelector(selectCalculatorType);
     const gameMode = useSelector(selectGameMode);
 
-    // useEffect(() => {
-    //     if (mode === 'default-mode') {
-    //         dispatchAction(interfaceSliceActions.toggleGameMode({isGame: false}));
-    //     }
-    //
-    //     if (mode === 'game-mode') {
-    //         dispatchAction(interfaceSliceActions.toggleGameMode({isGame: true}));
-    //     }
-    //     dispatchAction(interfaceSliceActions.setCalculatorType(type as TCalcProps));
-    // }, [mode, type])
-
     const selectCalculatorTypeHandler = (calculatorType: TCalcProps) => {
-        //navigate(`/${language}/calculator/${mode}/${calculatorType}`);
         dispatchAction(interfaceSliceActions.setCalculatorType(calculatorType as TCalcProps));
         dispatchAction(interfaceSliceActions.setIsCraftingFormVisible(false));
+
+        if (calculatorType === 'food' || calculatorType === 'potions') {
+            dispatchAction(profitSliceActions.setSelected({
+                type: calculatorType,
+                selectedConsumable: consumablesSelectorItems[calculatorType as Exclude<TCalcProps, 'items' | 'resource'>]['T4'][0]
+            }))
+        }
     }
 
     const toggleGameMode = () => {
-        // if (mode === 'default-mode') {
-        //     navigate(`/${language}/calculator/game-mode/${type}`);
-        // }
-        //
-        // if (mode === 'game-mode') {
-        //     navigate(`/${language}/calculator/default-mode/${type}`);
-        // }
         if (calculatorType === 'items' || calculatorType === 'resource'){
             dispatchAction(interfaceSliceActions.toggleGameMode());
         }
@@ -75,13 +60,13 @@ const CalculatorTypeButtons = () => {
 
     const defineColor = () => {
         if (!!gameMode || !!isDark) {
-            return 'white'
+            return 'white';
         }
         if (!gameMode && !isDark) {
-            return 'black'
+            return 'black';
         }
 
-        return 'black'
+        return 'black';
     }
 
     return (

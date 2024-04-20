@@ -1,12 +1,13 @@
-import {IFoodObject, TFood} from "../../types/foodTypes";
+import {IConsumableObject, TConsumable} from "../../types/consumableTypes";
 import {TTier} from "../../types/craftItemsType";
+import {TCalcProps} from "../../types/calculatorPropsType";
 
-export const foodItems: TFood = [
+export const foodItems: TConsumable = [
     {
         itemId: 'T5_MEAL_SOUP',
         T5_CABBAGE: 144,
-        FISHSAUCE: 90,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 90,
+        amountCrafted: 10,
         foodConsumption: 648,
     },
     {
@@ -15,24 +16,24 @@ export const foodItems: TFood = [
         T5_CABBAGE: 6,
         T5_TEASEL: 6,
         T5_MEAT: 6,
-        FISHSAUCE: 27,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 27,
+        amountCrafted: 1,
         foodConsumption: 81,
     },
     {
         itemId: 'T4_MEAL_SALAD',
         T4_TURNIP: 24,
         T3_WHEAT: 24,
-        FISHSAUCE: 30,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 30,
+        amountCrafted: 10,
         foodConsumption: 216,
     },
     {
         itemId: 'T6_MEAL_SALAD',
         T6_POTATO: 72,
         T5_CABBAGE: 72,
-        FISHSAUCE: 90,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 90,
+        amountCrafted: 10,
         foodConsumption: 648,
     },
     {
@@ -41,8 +42,8 @@ export const foodItems: TFood = [
         T4_TURNIP: 2,
         T4_BURDOCK: 2,
         T4_MEAT: 2,
-        FISHSAUCE: 9,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 9,
+        amountCrafted: 1,
         foodConsumption: 27,
     },
     {
@@ -51,8 +52,8 @@ export const foodItems: TFood = [
         T6_POTATO: 6,
         T6_FOXGLOVE: 6,
         T6_MEAT: 6,
-        FISHSAUCE: 27,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 27,
+        amountCrafted: 1,
         foodConsumption: 81,
     },
     {
@@ -61,8 +62,8 @@ export const foodItems: TFood = [
         T3_FLOUR: 12,
         T5_MEAT: 24,
         T4_MILK: 6,
-        FISHSAUCE: 30,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 30,
+        amountCrafted: 10,
         foodConsumption: 216,
     },
     {
@@ -71,8 +72,8 @@ export const foodItems: TFood = [
         T3_FLOUR: 36,
         T7_MEAT: 72,
         T6_MILK: 18,
-        FISHSAUCE: 90,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 90,
+        amountCrafted: 10,
         foodConsumption: 648,
     },
     {
@@ -81,8 +82,8 @@ export const foodItems: TFood = [
         T5_CABBAGE: 2,
         T5_TEASEL: 2,
         T5_EGG: 2,
-        FISHSAUCE: 9,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 9,
+        amountCrafted: 1,
         foodConsumption: 27,
     },
     {
@@ -91,8 +92,8 @@ export const foodItems: TFood = [
         T7_CORN: 6,
         T7_MULLEIN: 6,
         T7_MEAT: 6,
-        FISHSAUCE: 27,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 27,
+        amountCrafted: 1,
         foodConsumption: 81,
     },
     {
@@ -100,8 +101,8 @@ export const foodItems: TFood = [
         T5_CABBAGE: 12,
         T5_MEAT: 24,
         T5_EGG: 6,
-        FISHSAUCE: 30,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 30,
+        amountCrafted: 10,
         foodConsumption: 189,
     },
     {
@@ -109,8 +110,8 @@ export const foodItems: TFood = [
         T7_CORN: 36,
         T7_MEAT: 72,
         T5_EGG: 18,
-        FISHSAUCE: 90,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 90,
+        amountCrafted: 10,
         foodConsumption: 567,
     },
     {
@@ -119,8 +120,8 @@ export const foodItems: TFood = [
         T5_CABBAGE: 2,
         T5_TEASEL: 2,
         T5_EGG: 2,
-        FISHSAUCE: 9,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 9,
+        amountCrafted: 1,
         foodConsumption: 27,
     },
     {
@@ -129,8 +130,8 @@ export const foodItems: TFood = [
         T7_CORN: 6,
         T7_MULLEIN: 6,
         T7_MEAT: 6,
-        FISHSAUCE: 27,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 27,
+        amountCrafted: 1,
         foodConsumption: 81,
     },
     {
@@ -139,8 +140,8 @@ export const foodItems: TFood = [
         T5_MEAT: 24,
         T5_EGG: 6,
         QUESTITEM_TOKEN_AVALON: 30,
-        FISHSAUCE: 30,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 30,
+        amountCrafted: 10,
         foodConsumption: 405,
     },
     {
@@ -149,8 +150,8 @@ export const foodItems: TFood = [
         T7_MEAT: 72,
         T5_EGG: 18,
         QUESTITEM_TOKEN_AVALON: 90,
-        FISHSAUCE: 90,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 90,
+        amountCrafted: 10,
         foodConsumption: 1215,
     },
     {
@@ -158,8 +159,8 @@ export const foodItems: TFood = [
         T5_MEAT: 24,
         T5_CABBAGE: 12,
         T6_MILK: 12,
-        FISHSAUCE: 30,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 30,
+        amountCrafted: 10,
         foodConsumption: 216,
     },
     {
@@ -167,8 +168,8 @@ export const foodItems: TFood = [
         T7_MEAT: 72,
         T7_CORN: 36,
         T8_MILK: 36,
-        FISHSAUCE: 90,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 90,
+        amountCrafted: 10,
         foodConsumption: 648,
     },
     {
@@ -177,8 +178,8 @@ export const foodItems: TFood = [
         T5_CABBAGE: 2,
         T5_TEASEL: 2,
         T6_MILK: 2,
-        FISHSAUCE: 9,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 9,
+        amountCrafted: 1,
         foodConsumption: 27,
     },
     {
@@ -187,8 +188,8 @@ export const foodItems: TFood = [
         T7_CORN: 6,
         T7_MULLEIN: 6,
         T8_MILK: 6,
-        FISHSAUCE: 27,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 27,
+        amountCrafted: 1,
         foodConsumption: 81,
     },
     {
@@ -196,8 +197,8 @@ export const foodItems: TFood = [
         T4_TURNIP: 4,
         T4_BREAD: 4,
         T4_MEAT: 8,
-        FISHSAUCE: 10,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 10,
+        amountCrafted: 10,
         foodConsumption: 72,
     },
     {
@@ -205,8 +206,8 @@ export const foodItems: TFood = [
         T6_POTATO: 12,
         T4_BREAD: 12,
         T6_MEAT: 24,
-        FISHSAUCE: 30,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 30,
+        amountCrafted: 10,
         foodConsumption: 216,
     },
     {
@@ -214,8 +215,8 @@ export const foodItems: TFood = [
         T8_PUMPKIN: 36,
         T4_BREAD: 36,
         T8_MEAT: 72,
-        FISHSAUCE: 90,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 90,
+        amountCrafted: 10,
         foodConsumption: 648,
     },
     {
@@ -223,8 +224,8 @@ export const foodItems: TFood = [
         T3_FISH_FRESHWATER_FOREST_RARE: 1,
         T4_TURNIP: 1,
         T4_BURDOCK: 1,
-        FISHSAUCE: 3,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 3,
+        amountCrafted: 1,
         foodConsumption: 9,
     },
     {
@@ -233,8 +234,8 @@ export const foodItems: TFood = [
         T6_POTATO: 2,
         T6_FOXGLOVE: 2,
         T6_MILK: 2,
-        FISHSAUCE: 9,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 9,
+        amountCrafted: 1,
         foodConsumption: 27,
     },
     {
@@ -243,8 +244,8 @@ export const foodItems: TFood = [
         T8_PUMPKIN: 6,
         T8_YARROW: 6,
         T8_MILK: 6,
-        FISHSAUCE: 27,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 27,
+        amountCrafted: 1,
         foodConsumption: 81,
     },
     {
@@ -252,9 +253,9 @@ export const foodItems: TFood = [
         T1_CARROT: 4,
         T4_TURNIP: 4,
         T4_MEAT: 8,
-        FISHSAUCE: 10,
+        T1_FISHSAUCE_LEVEL: 10,
         QUESTITEM_TOKEN_AVALON: 10,
-        quantity: 10,
+        amountCrafted: 10,
         foodConsumption: 144,
     },
     {
@@ -262,9 +263,9 @@ export const foodItems: TFood = [
         T5_CABBAGE: 12,
         T6_POTATO: 12,
         T6_MEAT: 24,
-        FISHSAUCE: 30,
+        T1_FISHSAUCE_LEVEL: 30,
         QUESTITEM_TOKEN_AVALON: 30,
-        quantity: 10,
+        amountCrafted: 10,
         foodConsumption: 432,
     },
     {
@@ -272,9 +273,9 @@ export const foodItems: TFood = [
         T7_CORN: 36,
         T8_PUMPKIN: 36,
         T8_MEAT: 72,
-        FISHSAUCE: 90,
+        T1_FISHSAUCE_LEVEL: 90,
         QUESTITEM_TOKEN_AVALON: 90,
-        quantity: 10,
+        amountCrafted: 10,
         foodConsumption: 1296,
     },
     {
@@ -282,8 +283,8 @@ export const foodItems: TFood = [
         T4_BREAD: 4,
         T4_MEAT: 8,
         T4_BUTTER: 2,
-        FISHSAUCE: 10,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 10,
+        amountCrafted: 10,
         foodConsumption: 63,
     },
     {
@@ -291,8 +292,8 @@ export const foodItems: TFood = [
         T4_BREAD: 12,
         T6_MEAT: 24,
         T6_BUTTER: 6,
-        FISHSAUCE: 30,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 30,
+        amountCrafted: 10,
         foodConsumption: 189,
     },
     {
@@ -300,8 +301,8 @@ export const foodItems: TFood = [
         T4_BREAD: 36,
         T8_MEAT: 72,
         T8_BUTTER: 18,
-        FISHSAUCE: 90,
-        quantity: 10,
+        T1_FISHSAUCE_LEVEL: 90,
+        amountCrafted: 10,
         foodConsumption: 567,
     },
     {
@@ -309,8 +310,8 @@ export const foodItems: TFood = [
         T3_FISH_FRESHWATER_HIGHLANDS_RARE: 1,
         T4_TURNIP: 1,
         T4_BUTTER: 1,
-        FISHSAUCE: 3,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 3,
+        amountCrafted: 1,
         foodConsumption: 9,
     },
     {
@@ -319,8 +320,8 @@ export const foodItems: TFood = [
         T6_POTATO: 2,
         T6_FOXGLOVE: 2,
         T6_BUTTER: 2,
-        FISHSAUCE: 9,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 9,
+        amountCrafted: 1,
         foodConsumption: 27,
     },
     {
@@ -329,8 +330,8 @@ export const foodItems: TFood = [
         T8_PUMPKIN: 6,
         T8_YARROW: 6,
         T8_BUTTER: 6,
-        FISHSAUCE: 27,
-        quantity: 1,
+        T1_FISHSAUCE_LEVEL: 27,
+        amountCrafted: 1,
         foodConsumption: 81,
     },
     {
@@ -338,9 +339,9 @@ export const foodItems: TFood = [
         T4_BREAD: 4,
         T4_MEAT: 8,
         T4_BUTTER: 2,
-        FISHSAUCE: 10,
+        T1_FISHSAUCE_LEVEL: 10,
         QUESTITEM_TOKEN_AVALON: 10,
-        quantity: 10,
+        amountCrafted: 10,
         foodConsumption: 135,
     },
     {
@@ -348,9 +349,9 @@ export const foodItems: TFood = [
         T4_BREAD: 12,
         T6_MEAT: 24,
         T6_BUTTER: 6,
-        FISHSAUCE: 30,
+        T1_FISHSAUCE_LEVEL: 30,
         QUESTITEM_TOKEN_AVALON: 30,
-        quantity: 10,
+        amountCrafted: 10,
         foodConsumption: 405,
     },
     {
@@ -358,27 +359,9 @@ export const foodItems: TFood = [
         T4_BREAD: 36,
         T8_MEAT: 72,
         T8_BUTTER: 18,
-        FISHSAUCE: 90,
+        T1_FISHSAUCE_LEVEL: 90,
         QUESTITEM_TOKEN_AVALON: 90,
-        quantity: 10,
+        amountCrafted: 10,
         foodConsumption: 1215,
     },
 ];
-
-type TItemsForSelectorTypes = {
-    [key in Exclude<TTier, 'T3'>]: IFoodObject[];
-}
-
-export const foodSelectorItems: TItemsForSelectorTypes = {
-    T4: [],
-    T5: [],
-    T6: [],
-    T7: [],
-    T8: [],
-};
-
-foodItems.forEach(item => {
-    const itemTier = item.itemId.split('_')[0] as Exclude<TTier, 'T3'>;
-
-    foodSelectorItems[itemTier].push(item);
-})

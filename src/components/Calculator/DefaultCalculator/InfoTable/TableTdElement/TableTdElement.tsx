@@ -5,8 +5,7 @@ import {TCities} from "../../../../../types/InfoTableTypes";
 import React from "react";
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {CraftedConsumablesInfoClass} from "../TableClasses/CraftedConsumablesInfoClass";
-import {IFoodTableData, IInfoTableData} from "../../../../../store/profit/profit-slice";
-import {IFoodObject} from "../../../../../types/foodTypes";
+import {IInfoTableData} from "../../../../../store/profit/profit-slice";
 
 
 interface infoCities {

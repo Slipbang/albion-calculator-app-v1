@@ -18,6 +18,7 @@ interface ICalculatorFormStrings {
     craftListHeader: string;
     subMaterialsQuantity: string;
     copied: string;
+    total: string;
 }
 
 interface IInfoTableStrings {

@@ -16,7 +16,7 @@ import PercentError from "./Errors/PercentError";
 import AmountError from "./Errors/AmountError";
 import {selectCalculatorType} from "../../../../store/interface/interface-selector";
 import MainResourceInput from "./Inputs/MainResourceInput/MainResourceInput";
-import FoodSelector from "./Selectors/FoodSelector/FoodSelector";
+import ConsumablesSelector from "./Selectors/ConsumableSelector/ConsumablesSelector";
 
 const CalculatorForm = React.memo(() => {
     const calculatorType = useSelector(selectCalculatorType);
@@ -48,8 +48,8 @@ const CalculatorForm = React.memo(() => {
                         selectedLanguage={selectedLanguage}
                     />}
 
-                {calculatorType === 'food' &&
-                    <FoodSelector
+                {(calculatorType === 'food' || calculatorType === 'potions') &&
+                    <ConsumablesSelector
                         calculatorFormStrings={calculatorFormStrings}
                         selectedLanguage={selectedLanguage}
                     />}

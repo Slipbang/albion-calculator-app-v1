@@ -1,14 +1,19 @@
-import styles from './FoodSelector.module.scss'
+import styles from './ConsumablesSelector.module.scss'
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../../types/languageTypes";
 import {useSelector} from "react-redux";
-import {selectConsumableItemQuantity, selectFood, selectPercent} from "../../../../../../store/profit/profit-selectors";
+import {
+    selectConsumable,
+    selectConsumableItemQuantity,
+    selectPercent
+} from "../../../../../../store/profit/profit-selectors";
 import {srcRoute} from "../../../../../../store/api/api";
 import {useEffect, useRef, useState} from "react";
 import {TTier} from "../../../../../../types/craftItemsType";
-import FoodNode from "./FoodNode/FoodNode";
+import ConsumablesNode from "./ConsumablesNode/ConsumablesNode";
 import StyledImageBox from "../../../../StyledComponentsCommon/StyledImageBox";
 import {useAppDispatch} from "../../../../../../store";
 import {profitSliceActions} from "../../../../../../store/profit/profit-slice";
+import {consumablesNamesData} from "../../../../../../store/Items/consumablesNamesData";
 
 interface IFoodSelectorProps {
     calculatorFormStrings: ISelectedLanguage['calculatorFormStrings'];
@@ -17,23 +22,23 @@ interface IFoodSelectorProps {
 
 const tiers: Exclude<TTier, 'T3'>[] = ['T4', 'T5', 'T6', 'T7', 'T8'];
 
-const FoodSelector = (props: IFoodSelectorProps) => {
+const ConsumablesSelector = (props: IFoodSelectorProps) => {
     const {calculatorFormStrings, selectedLanguage} = props;
 
     const dispatchAction = useAppDispatch();
 
-    const selectedFood = useSelector(selectFood);
-    const {itemId, quantity} = selectedFood;
+    const selectedConsumable = useSelector(selectConsumable);
+    const {itemId, amountCrafted} = selectedConsumable!;
     const itemQuantityInput = useSelector(selectConsumableItemQuantity)
     const returnPercent = useSelector(selectPercent);
 
     const consumableItemSelectorRef = useRef<HTMLImageElement>(null)
 
-    const foodKeys = Object.keys(selectedFood);
+    const consumableKeys = Object.keys(selectedConsumable!);
 
     const defineStates = () => {
         const resourceKeys: string[] = [];
-        foodKeys.forEach(key => {
+        consumableKeys.forEach(key => {
             if (key.toUpperCase() === key) {
                 resourceKeys.push(key);
             }
@@ -44,7 +49,7 @@ const FoodSelector = (props: IFoodSelectorProps) => {
         } = {};
 
         resourceKeys.forEach(key => {
-            initialResources[key] = selectedFood[key] as number;
+            initialResources[key] = selectedConsumable![key] as number;
         })
 
         return {initialResources, resourceKeys};
@@ -56,11 +61,12 @@ const FoodSelector = (props: IFoodSelectorProps) => {
     const [isSelectorVisible, setIsSelectorVisible] = useState(false);
 
     const defineParams = () => {
-        const consumptionItemQueryParams: string[] = [itemId,...resourceKeys].filter(item => item !== 'FISHSAUCE');
+        const consumptionItemQueryParams: string[] = [itemId,...resourceKeys].filter(item => !item.includes('FISHSAUCE') && !item.includes('ALCHEMY_EXTRACT'));
+        const extraResourceKey = [...resourceKeys].filter(item => item.includes('FISHSAUCE') || item.includes('ALCHEMY_EXTRACT')).join('');
 
         [1, 2, 3].forEach(enchantment => {
             consumptionItemQueryParams.push(`${itemId}@${enchantment}`);
-            consumptionItemQueryParams.push(`T1_FISHSAUCE_LEVEL${enchantment}`);
+            consumptionItemQueryParams.push(`${extraResourceKey}${enchantment}`);
         })
 
         return consumptionItemQueryParams.join(',');
@@ -88,7 +94,7 @@ const FoodSelector = (props: IFoodSelectorProps) => {
         return () => {
             document.body.removeEventListener('click', clickOutResourceSelectorHandler);
         };
-    }, [selectedFood])
+    }, [selectedConsumable])
 
     const changeInputsHandler = (value: number, resourceId: string, resourceCount: number) => {
 
@@ -117,59 +123,69 @@ const FoodSelector = (props: IFoodSelectorProps) => {
 
     return (
         <div className={styles.wrapper}>
-            <p>{calculatorFormStrings.type}</p>
-            <div className={styles.selectedMeal}>
-                <img
-                    ref={consumableItemSelectorRef}
-                    src={`${srcRoute}${itemId}`}
-                    onClick={() => setIsSelectorVisible(prevState => !prevState)}
-                    alt=""
-                />
-                <div className={styles.resourceQuantity}>
-                    <p>{quantity}</p>
-                </div>
-                <div className={styles.quantityInput}>
-                    <input
-                        type="number"
-                        min={quantity}
-                        step={quantity}
-                        value={itemQuantityInput * quantity || 0}
-                        onChange={(event) => changeInputsHandler(+event.target.value, itemId, quantity)}
+            <div
+                className={styles.selectedConsumableItem}
+                onClick={() => setIsSelectorVisible(prevState => !prevState)}
+                title={consumablesNamesData[itemId][selectedLanguage] || 'name is not found'}
+            >
+                <p>{calculatorFormStrings.type}</p>
+                <div style={{marginLeft: 20}}>
+                    <img
+                        ref={consumableItemSelectorRef}
+                        src={`${srcRoute}${itemId}`}
+                        alt=""
                     />
+                    <div className={styles.resourceQuantity}>
+                        <p>{amountCrafted}</p>
+                    </div>
+                    <div className={styles.quantityInput}>
+                        <input
+                            type="number"
+                            min={amountCrafted}
+                            step={amountCrafted}
+                            value={itemQuantityInput * amountCrafted || 0}
+                            onChange={(event) => changeInputsHandler(+event.target.value, itemId, amountCrafted)}
+                        />
+                    </div>
+                    <div className={styles.totalQuantity}>{calculatorFormStrings.total}</div>
                 </div>
-                <div className={styles.totalQuantity}>итого:</div>
             </div>
 
             {!!isSelectorVisible && (
                 <div style={{display: "flex", flexDirection: 'column', position: "absolute", zIndex: 5, top: 55, left: 155}}>
                     {tiers.map(tier => {
 
-                        return <FoodNode key={tier} tier={tier} />
+                        return (
+                            <ConsumablesNode
+                                key={tier}
+                                tier={tier}
+                                selectedLanguage={selectedLanguage}
+                            />
+                        )
                     })}
                 </div>
             )}
 
-            {!isSelectorVisible && <div className={styles.mealResources}>
+            {!isSelectorVisible && <div className={styles.resources}>
                 {resourceKeys.map(key => {
 
                     if (key.toUpperCase() !== key) return;
 
                     return (
                         <div key={key} className={styles.resourceUnit}>
-
-                            {!key.includes('FISHSAUCE')
-                                ? <img src={`${srcRoute}${key}`} alt=""/>
-                                : (<div className={styles.fishSauce}>
-                                    <StyledImageBox $position={'static'} $image={`${srcRoute}T1_${key}_LEVEL1`} $width={25} $height={65} $backgroundPosition={'left'} />
-                                    <StyledImageBox $position={'static'} $image={`${srcRoute}T1_${key}_LEVEL2`} $width={15} $height={65} $backgroundPosition={'center'} />
-                                    <StyledImageBox $position={'static'} $image={`${srcRoute}T1_${key}_LEVEL3`} $width={25} $height={65} $backgroundPosition={'right'} />
+                            {!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')
+                                ? <img src={`${srcRoute}${key}`} title={consumablesNamesData[key][selectedLanguage] || 'name is not found'} alt=""/>
+                                : (<div className={styles.extraResource} title={consumablesNamesData[key][selectedLanguage] || 'name is not found'}>
+                                    <StyledImageBox $position={'static'} $image={`${srcRoute}${key}1`} $width={25} $height={65} $backgroundPosition={'left'} />
+                                    <StyledImageBox $position={'static'} $image={`${srcRoute}${key}2`} $width={15} $height={65} $backgroundPosition={'center'} />
+                                    <StyledImageBox $position={'static'} $image={`${srcRoute}${key}3`} $width={25} $height={65} $backgroundPosition={'right'} />
                                 </div>)
                             }
 
-                            <div style={{marginTop: `${!key.includes('FISHSAUCE') ? -30 : -26}px`}} className={styles.resourceQuantity}>
-                                <p>{selectedFood[key] || 0}</p>
+                            <div style={{marginTop: `${(!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? -30 : -26}px`}} className={styles.resourceQuantity}>
+                                <p>{selectedConsumable![key] || 0}</p>
                             </div>
-                            <div style={{marginTop: `${!key.includes('FISHSAUCE') ? 0 : 4}px`}} className={styles.quantityInput}>
+                            <div style={{marginTop: `${(!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? 0 : 4}px`}} className={styles.quantityInput}>
                                 <input
                                     type="number"
                                     value={resourceQuantityInput[key] || 0}
@@ -187,4 +203,4 @@ const FoodSelector = (props: IFoodSelectorProps) => {
     )
 }
 
-export default FoodSelector;
+export default ConsumablesSelector;

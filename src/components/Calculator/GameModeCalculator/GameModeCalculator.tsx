@@ -23,7 +23,7 @@ const GameModeCalculator = () => {
         <div className={styles.wrapper}>
             <CalculatorTypeButtons />
 
-            {!!isMarketItemVisible && <MarketItem/>}
+            {!!isMarketItemVisible && <MarketItem />}
 
             {!!isCraftingFormVisible && <GMCraftingForm />}
 

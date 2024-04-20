@@ -36,6 +36,7 @@ const language: TLanguage = {
             craftListHeader: 'Предыдущие 10 расчетов',
             subMaterialsQuantity: 'Доп. материалы(если требуются)',
             copied: 'скопировано!',
+            total: 'итого:'
         },
         infoTableStrings: {
             profitPerItem: 'Профит за предмет:',
@@ -191,6 +192,7 @@ const language: TLanguage = {
             craftListHeader: 'Previous 10 calculations',
             subMaterialsQuantity: 'Required amount of sub materials: ',
             copied: 'copied!',
+            total: 'total:',
         },
         infoTableStrings: {
             profitPerItem: 'Profit per item:',

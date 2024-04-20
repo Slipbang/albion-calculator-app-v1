@@ -6,7 +6,8 @@ export type TConsumableNames = {
     }
 }
 
-export const foodNames: TConsumableNames = {
+export const consumablesNamesData: TConsumableNames = {
+    //meals names
     T5_MEAL_SOUP: {
         ru: 'Капустный суп',
         en: 'Cabbage Soup',
@@ -159,6 +160,140 @@ export const foodNames: TConsumableNames = {
         ru: 'Авалонский сэндвич с говядиной',
         en: 'Avalonian Beef Sandwich',
     },
+
+    //potions names
+    T4_POTION_HEAL: {
+        ru: 'Эликсир здоровья',
+        en: 'Healing Potion',
+    },
+
+    T4_POTION_ENERGY: {
+        ru: 'Эликсир энергии',
+        en: 'Energy Potion',
+    },
+
+    T4_POTION_COOLDOWN: {
+        ru: 'Малый эликсир яда',
+        en: 'Minor Poison Potion',
+    },
+    T4_POTION_BERSERK: {
+        ru: 'Малое зелье берсерка',
+        en: 'Minor Berserk Potion',
+    },
+    T4_POTION_LAVA: {
+        ru: 'Малое зелье адского пламени',
+        en: 'Minor Hellfire Potion',
+    },
+    T4_POTION_GATHER: {
+        ru: 'Малое зелье собирателя',
+        en: 'Minor Gathering Potion',
+    },
+    T4_POTION_TORNADO: {
+        ru: 'Малая Буря в стакане',
+        en: 'Minor Tornado in a Bottle',
+    },
+    T5_POTION_REVIVE: {
+        ru: 'Зелье гиганта',
+        en: 'Gigantify Potion',
+    },
+    T5_POTION_STONESKIN: {
+        ru: 'Эликсир защиты',
+        en: 'Resistance Potion',
+    },
+    T5_POTION_SLOWFIELD: {
+        ru: 'Вязкая настойка',
+        en: 'Sticky Potion',
+    },
+    T5_POTION_MOB_RESET: {
+        ru: 'Успокаивающее зелье',
+        en: 'Calming Potion',
+    },
+    T5_POTION_CLEANSE2: {
+        ru: 'Очищающее зелье',
+        en: 'Cleansing Potion',
+    },
+    T5_POTION_ACID: {
+        ru: 'Кислотное зелье',
+        en: 'Acid Potion',
+    },
+    T6_POTION_HEAL: {
+        ru: 'Большой эликсир здоровья',
+        en: 'Major Healing Potion',
+    },
+    T6_POTION_ENERGY: {
+        ru: 'Большой эликсир энергии',
+        en: 'Major Energy Potion',
+    },
+    T6_POTION_COOLDOWN: {
+        ru: 'Эликсир яда',
+        en: 'Poison Potion',
+    },
+    T6_POTION_BERSERK: {
+        ru: 'Зелье берсерка',
+        en: 'Berserk Potion',
+    },
+    T6_POTION_LAVA: {
+        ru: 'Зелье адского пламени',
+        en: 'Hellfire Potion',
+    },
+    T6_POTION_GATHER: {
+        ru: 'Зелье собирателя',
+        en: 'Gathering Potion',
+    },
+    T6_POTION_TORNADO: {
+        ru: 'Буря в стакане',
+        en: 'Tornado in a Bottle',
+    },
+    T7_POTION_REVIVE: {
+        ru: 'Большое зелье гиганта',
+        en: 'Major Gigantify Potion',
+    },
+    T7_POTION_STONESKIN: {
+        ru: 'Большой эликсир защиты',
+        en: 'Major Resistance Potion',
+    },
+    T7_POTION_SLOWFIELD: {
+        ru: 'Большая вязкая настойка',
+        en: 'Major Sticky Potion',
+    },
+    T7_POTION_MOB_RESET: {
+        ru: 'Большое успокаивающее зелье',
+        en: 'Major Calming Potion',
+    },
+    T7_POTION_CLEANSE2: {
+        ru: 'Большое очищающее зелье',
+        en: 'Major Cleansing Potion',
+    },
+    T7_POTION_ACID: {
+        ru: 'Большое кислотное зелье',
+        en: 'Major Acid Potion',
+    },
+    T8_POTION_COOLDOWN: {
+        ru: 'Большой эликсир яда',
+        en: 'Major Poison Potion',
+    },
+    T8_POTION_CLEANSE: {
+        ru: 'Эликсир невидимости',
+        en: 'Invisibility Potion',
+    },
+    T8_POTION_BERSERK: {
+        ru: 'Большое зелье берсерка',
+        en: 'Major Berserk Potion',
+    },
+    T8_POTION_LAVA: {
+        ru: 'Большое зелье адского пламени',
+        en: 'Major Hellfire Potion',
+    },
+    T8_POTION_GATHER: {
+        ru: 'Большое зелье собирателя',
+        en: 'Major Gathering Potion',
+    },
+    T8_POTION_TORNADO: {
+        ru: 'Большая буря в стакане',
+        en: 'Major Tornado in a Bottle',
+    },
+
+    //resources names
     T1_FISHSAUCE_LEVEL1: {
         ru: 'Основной рыбный соус',
         en: 'Basic Fish Sauce',
@@ -170,6 +305,10 @@ export const foodNames: TConsumableNames = {
     T1_FISHSAUCE_LEVEL3: {
         ru: 'Особый рыбный соус',
         en: 'Special Fish Sauce',
+    },
+    T1_FISHSAUCE_LEVEL: {
+        ru: 'Рыбные соусы',
+        en: 'Fish Sauces',
     },
     T1_CARROT: {
         ru: 'Морковь',
@@ -346,5 +485,113 @@ export const foodNames: TConsumableNames = {
     T7_FISH_FRESHWATER_HIGHLANDS_RARE: {
         ru: 'Громокрылый подкаменщик',
         en: 'Thunderfall Lurcher',
+    },
+    T1_ALCHEMY_EXTRACT_LEVEL1: {
+        ru: 'Базовый магический экстракт',
+        en: 'Basic Arcane Extract',
+    },
+    T1_ALCHEMY_EXTRACT_LEVEL2: {
+        ru: 'Очищенный магический экстракт',
+        en: 'Refined Arcane Extract',
+    },
+    T1_ALCHEMY_EXTRACT_LEVEL3: {
+        ru: 'Чистый магический экстракт',
+        en: 'Pure Arcane Extract',
+    },
+    T1_ALCHEMY_EXTRACT_LEVEL: {
+        ru: 'Магические экстракты',
+        en: 'Arcane Extracts',
+    },
+    T3_EGG: {
+        ru: 'Куриные яйца',
+        en: 'Hen Eggs',
+    },
+    T3_ALCHEMY_RARE_WEREWOLF: {
+        ru: 'Прочные клыки вервольфа',
+        en: 'Rugged Werewolf Fangs',
+    },
+    T3_ALCHEMY_RARE_IMP: {
+        ru: 'Прочный рог чертенка',
+        en: 'Rugged Imp\'s Horn',
+    },
+    T3_ALCHEMY_RARE_ELEMENTAL: {
+        ru: 'Прочная зубчатая руна',
+        en: 'Rugged Runestone Tooth',
+    },
+    T3_ALCHEMY_RARE_EAGLE: {
+        ru: 'Прочное перо рассвета',
+        en: 'Rugged Dawnfeather',
+    },
+    T5_ALCHEMY_RARE_PANTHER: {
+        ru: 'Отличные теневые когти',
+        en: 'Fine Shadow Claws',
+    },
+    T2_AGARIC: {
+        ru: 'Темногриб',
+        en: 'Arcane Agaric',
+    },
+    T5_ALCHEMY_RARE_ENT: {
+        ru: 'Отличные корни хьерна',
+        en: 'Fine Sylvian Root',
+    },
+    T5_ALCHEMY_RARE_DIREBEAR: {
+        ru: 'Отличные лапы духа медведя',
+        en: 'Fine Spirit Paws',
+    },
+    T6_ALCOHOL: {
+        ru: 'Картофельный самогон',
+        en: 'Potato Schnapps',
+    },
+    T5_ALCHEMY_RARE_WEREWOLF: {
+        ru: 'Отличные клыки вервольфа',
+        en: 'Fine Werewolf Fangs',
+    },
+    T5_ALCHEMY_RARE_IMP: {
+        ru: 'Отличный рог чертенка',
+        en: 'Fine Imp\'s Horn',
+    },
+    T5_ALCHEMY_RARE_ELEMENTAL: {
+        ru: 'Отличная зубчатая руна',
+        en: 'Fine Runestone Tooth',
+    },
+    T5_ALCHEMY_RARE_EAGLE: {
+        ru: 'Отличное перо рассвета',
+        en: 'Fine Dawnfeather',
+    },
+    T7_ALCOHOL: {
+        ru: 'Кукурузный самогон',
+        en: 'Corn Hooch',
+    },
+    T7_ALCHEMY_RARE_PANTHER: {
+        ru: 'Превосходные теневые когти',
+        en: 'Excellent Shadow Claws',
+    },
+    T7_ALCHEMY_RARE_ENT: {
+        ru: 'Превосходные корни хьерна',
+        en: 'Excellent Sylvian Root',
+    },
+    T7_ALCHEMY_RARE_DIREBEAR: {
+        ru: 'Превосходные лапы духа медведя',
+        en: 'Excellent Spirit Paws',
+    },
+    T8_ALCOHOL: {
+        ru: 'Тыквенный самогон',
+        en: 'Pumpkin Moonshine',
+    },
+    T7_ALCHEMY_RARE_WEREWOLF: {
+        ru: 'Превосходные клыки вервольфа',
+        en: 'Excellent Werewolf Fangs',
+    },
+    T7_ALCHEMY_RARE_IMP: {
+        ru: 'Превосходный рог чертенка',
+        en: 'Excellent Imp\'s Horn',
+    },
+    T7_ALCHEMY_RARE_ELEMENTAL: {
+        ru: 'Превосходная зубчатая руна',
+        en: 'Excellent Runestone Tooth',
+    },
+    T7_ALCHEMY_RARE_EAGLE: {
+        ru: 'Превосходное перо рассвета',
+        en: 'Excellent Dawnfeather',
     },
 }

@@ -2,8 +2,7 @@
   display: flex;
   margin-top: 10px;
   margin-left: 10px;
-  width: 115px;
-  align-items: center;
+  width: 480px;
 
   .quantityInput{
     display: flex;
@@ -22,10 +21,13 @@
     }
   }
 
-  .selectedMeal {
-    margin-left: 20px;
+  .selectedConsumableItem {
+    display: flex;
+    align-items: center;
+    height: 110px;
   }
-  .fishSauce {
+
+  .extraResource {
     display: flex;
     filter: drop-shadow(3px 3px 6px black);
     cursor: pointer;
@@ -47,9 +49,13 @@
     }
   }
 
-  .mealResources {
+  .resources {
+    z-index: 5;
     display: flex;
     margin-left: 15px;
+    width: 330px;
+    max-width: 330px;
+    flex-wrap: wrap;
   }
 
   .totalQuantity {

@@ -3,7 +3,7 @@ import {v4 as uuidv4} from 'uuid';
 import {TCalcProps} from "../../types/calculatorPropsType";
 import {TCraftItemType, TCraftObjectTypes, TResourceType, TTier} from "../../types/craftItemsType";
 import {calculateJQ_DFC} from "../utils/calculateJQ_DFC";
-import {IFoodObject} from "../../types/foodTypes";
+import {IConsumableObject} from "../../types/consumableTypes";
 
 export interface IItemName {
     ru: string;
@@ -53,11 +53,11 @@ export interface ITableData {
     craftTableData: ICraftTableData
 }
 
-export interface IFoodTableData {
+export interface IConsumableTableData {
     quantity: number;
     percent: number;
     queryParams: string;
-    craftedFood: IFoodObject;
+    craftedFood: IConsumableObject;
 }
 
 export interface ISelectedItem {
@@ -89,7 +89,7 @@ interface IInitialState {
     craftResourcesList: ITableData[];
     craftItemsList: ITableData[];
     craftedItemData: null | ITableData;
-    craftedFoodData: null | IFoodTableData;
+    craftedConsumablesData: null | IConsumableTableData;
 
     consumableItemQuantity: number;
     consumptionItemQueryParams: string;
@@ -133,7 +133,7 @@ interface IInitialState {
     selected: {
         selectedResource: ISelectedResource,
         selectedItem: ISelectedItem;
-        selectedFood: IFoodObject;
+        selectedConsumable: IConsumableObject | null;
     }
 }
 
@@ -141,7 +141,7 @@ const initialState: IInitialState = {
     craftResourcesList: [],
     craftItemsList: [],
     craftedItemData: null,
-    craftedFoodData: null,
+    craftedConsumablesData: null,
 
     consumableItemQuantity: 1,
     consumptionItemQueryParams: '',
@@ -204,14 +204,7 @@ const initialState: IInitialState = {
                 en: 'Broadsword',
             }
         },
-        selectedFood: {
-            itemId: 'T4_MEAL_SALAD',
-            T4_TURNIP: 24,
-            T3_WHEAT: 24,
-            FISHSAUCE: 30,
-            quantity: 10,
-            foodConsumption: 216,
-        }
+        selectedConsumable: null,
     },
 };
 
@@ -249,7 +242,7 @@ const profitSlice = createSlice({
         setSelectedNode(state, action: PayloadAction<string>) {
             state.itemSelector.itemNode = action.payload;
         },
-        setSelected(state, action: PayloadAction<{ type: TCalcProps; selectedItem?: Omit<ISelectedItem, 'selectedItemTier'>; selectedResource?: Pick<ISelectedResource, 'resourceId' | 'resourceTier' | 'resourceName'>; selectedFood?: IFoodObject}>) {
+        setSelected(state, action: PayloadAction<{ type: TCalcProps; selectedItem?: Omit<ISelectedItem, 'selectedItemTier'>; selectedResource?: Pick<ISelectedResource, 'resourceId' | 'resourceTier' | 'resourceName'>; selectedConsumable?: IConsumableObject}>) {
             if (action.payload.type === 'resource') {
                 state.selected.selectedResource = {
                     ...state.selected.selectedResource,
@@ -264,9 +257,9 @@ const profitSlice = createSlice({
                 }
             }
 
-            if (action.payload.type === 'food'){
-                state.selected.selectedFood = {
-                    ...action.payload.selectedFood!,
+            if (action.payload.type === 'food' || action.payload.type === 'potions'){
+                state.selected.selectedConsumable = {
+                    ...action.payload.selectedConsumable!,
                 }
             }
         },
@@ -288,7 +281,7 @@ const profitSlice = createSlice({
         },
         resetData(state){
             state.craftedItemData = initialState.craftedItemData;
-            state.craftedFoodData = initialState.craftedFoodData;
+            state.craftedConsumablesData = initialState.craftedConsumablesData;
         },
         setConsumptionItemQueryParams(state, action: PayloadAction<string>){
             state.consumptionItemQueryParams = action.payload;
@@ -401,11 +394,11 @@ const profitSlice = createSlice({
                 });
             }
 
-            if(action.payload.calculatorType === 'food' && !state.errors.percentError){
-                state.craftedFoodData = {
+            if((action.payload.calculatorType === 'food' || action.payload.calculatorType === 'potions') && !state.errors.percentError){
+                state.craftedConsumablesData = {
                     quantity: state.consumableItemQuantity,
                     percent: state.percent,
-                    craftedFood: state.selected.selectedFood,
+                    craftedFood: state.selected.selectedConsumable!,
                     queryParams: state.consumptionItemQueryParams,
                 }
             }
