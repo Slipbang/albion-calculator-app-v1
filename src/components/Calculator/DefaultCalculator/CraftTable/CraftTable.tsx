@@ -12,18 +12,18 @@ import React from "react";
 import ItemTable from "./Tables/ItemTable";
 import ResourceTable from "./Tables/ResourceTable";
 import CraftTableButton from "./Buttons/CraftTableButton";
-import {selectCalculatorType} from "../../../../store/interface/interface-selector";
 import {TCalcProps} from "../../../../types/calculatorPropsType";
+import ConsumablesList from "./ConsumablesList/ConsumablesList";
 
 
 const CraftTable = React.memo(({calculatorType}: {calculatorType: TCalcProps}) => {
 
     const dispatchAction = useAppDispatch();
 
-    const {language} = useSelector(selectLanguage);
+    const {language, selectedLanguage} = useSelector(selectLanguage);
     const {craftTableStrings} = language;
 
-    const deleteLiHandler = (type: string, id: string) => {
+    const deleteLiHandler = (type: TCalcProps, id: string) => {
         dispatchAction(profitSliceActions.deleteLiFunction({type, id}));
     }
 
@@ -32,21 +32,29 @@ const CraftTable = React.memo(({calculatorType}: {calculatorType: TCalcProps}) =
 
         <StyledThumb>
             <div className={styles.craftTableStyles}>
-                {calculatorType === "resource" &&
+                {calculatorType === "resource" && (
                     <ResourceTable
                         craftTableStrings={craftTableStrings}
                         calculatorType={calculatorType}
                         deleteLiHandler={deleteLiHandler}
                     />
-                }
+                )}
 
-                {calculatorType === "items" &&
+                {calculatorType === "items" && (
                     <ItemTable
                         craftTableStrings={craftTableStrings}
                         deleteLiHandler={deleteLiHandler}
                         calculatorType={calculatorType}
                     />
-                }
+                )}
+                {(calculatorType === 'food' || calculatorType === 'potions') && (
+                    <ConsumablesList
+                        craftTableStrings={craftTableStrings}
+                        deleteLiHandler={deleteLiHandler}
+                        calculatorType={calculatorType}
+                        selectedLanguage={selectedLanguage}
+                    />
+                )}
             </div>
         </StyledThumb>
     </StyledCraftTableWrapper>

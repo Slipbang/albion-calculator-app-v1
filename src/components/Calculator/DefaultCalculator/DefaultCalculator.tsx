@@ -1,6 +1,6 @@
 import styles from './DefaultCalculator.module.scss'
 import CalculatorForm from "./CalculatorForm/CalculatorForm";
-import CraftTable from "./CrafTable/CraftTable";
+import CraftTable from "./CraftTable/CraftTable";
 import {useSelector} from "react-redux";
 import {
     selectCalculatorType,
@@ -21,13 +21,11 @@ const DefaultCalculator = () => {
 
     const defaultCalculatorStyles = extendedClassNames(styles.defaultCalculatorWrapper, {
         [styles.defaultCalculatorWrapperHidden]: !!gameMode,
-        [styles.defaultCalculatorWrapperOpened]: !!isCraftTableShown && (calculatorType !== 'food' && calculatorType !== 'potions'),
+        [styles.defaultCalculatorWrapperOpened]: !!isCraftTableShown,
     })
 
     const craftTableStyles = extendedClassNames(styles.craftTableStyles, {
         [styles.craftTableOpenedStyles]: !!isCraftTableShown,
-        [styles.craftTableHiddenStyles]: (calculatorType === 'food' || calculatorType === 'potions')
-
     })
 
     return <div className={styles.wrapper}>

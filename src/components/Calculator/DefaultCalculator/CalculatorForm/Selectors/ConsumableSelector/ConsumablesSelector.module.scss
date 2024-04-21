@@ -4,6 +4,15 @@
   margin-left: 10px;
   width: 480px;
 
+  .consumableItemsSelectorBox {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 5;
+    top: 55px;
+    left: 155px;
+  }
+
   .quantityInput{
     display: flex;
     width: 65px;
@@ -31,7 +40,6 @@
     display: flex;
     filter: drop-shadow(3px 3px 6px black);
     cursor: pointer;
-
   }
 
   .resourceQuantity {
@@ -67,3 +75,4 @@
     justify-content: center;
   }
 }
+

@@ -12,7 +12,7 @@ import styles from './TableStyles.module.scss';
 interface TItemTableProps {
     craftTableStrings: ISelectedLanguage['craftTableStrings'];
     calculatorType: TCalcProps;
-    deleteLiHandler: (type: string, id: string) => void;
+    deleteLiHandler: (type: TCalcProps, id: string) => void;
 }
 
 const ItemTable = (props: TItemTableProps) => {
@@ -74,7 +74,6 @@ const ItemTable = (props: TItemTableProps) => {
                 {craftItemsList.map((item) => {
                     const {id, mainResourceQuantity, subResourceQuantity, mainDiv, subDiv, percent} = item.craftTableData;
                     const {itemId, mainMatsId, spentQuantityPerItem, subMatsId, output} = item.infoTableData;
-
 
                     return <tr key={id}>
                         <td>

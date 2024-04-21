@@ -32,7 +32,7 @@ export interface IInfoTableData {
     artefactId?: string | undefined;
 }
 
-export interface ICraftTableData{
+export interface ICraftTableData {
     mainDiv?: number;
     subDiv?: number;
     id: string;
@@ -58,6 +58,7 @@ export interface IConsumableTableData {
     percent: number;
     queryParams: string;
     craftedFood: IConsumableObject;
+    id: string;
 }
 
 export interface ISelectedItem {
@@ -88,6 +89,8 @@ export interface ISelectedResource {
 interface IInitialState {
     craftResourcesList: ITableData[];
     craftItemsList: ITableData[];
+    craftedMealsList: IConsumableTableData[];
+    craftedPotionsList: IConsumableTableData[];
     craftedItemData: null | ITableData;
     craftedConsumablesData: null | IConsumableTableData;
 
@@ -140,6 +143,8 @@ interface IInitialState {
 const initialState: IInitialState = {
     craftResourcesList: [],
     craftItemsList: [],
+    craftedMealsList: [],
+    craftedPotionsList: [],
     craftedItemData: null,
     craftedConsumablesData: null,
 
@@ -242,7 +247,7 @@ const profitSlice = createSlice({
         setSelectedNode(state, action: PayloadAction<string>) {
             state.itemSelector.itemNode = action.payload;
         },
-        setSelected(state, action: PayloadAction<{ type: TCalcProps; selectedItem?: Omit<ISelectedItem, 'selectedItemTier'>; selectedResource?: Pick<ISelectedResource, 'resourceId' | 'resourceTier' | 'resourceName'>; selectedConsumable?: IConsumableObject}>) {
+        setSelected(state, action: PayloadAction<{ type: TCalcProps; selectedItem?: Omit<ISelectedItem, 'selectedItemTier'>; selectedResource?: Pick<ISelectedResource, 'resourceId' | 'resourceTier' | 'resourceName'>; selectedConsumable?: IConsumableObject }>) {
             if (action.payload.type === 'resource') {
                 state.selected.selectedResource = {
                     ...state.selected.selectedResource,
@@ -257,7 +262,7 @@ const profitSlice = createSlice({
                 }
             }
 
-            if (action.payload.type === 'food' || action.payload.type === 'potions'){
+            if (action.payload.type === 'food' || action.payload.type === 'potions') {
                 state.selected.selectedConsumable = {
                     ...action.payload.selectedConsumable!,
                 }
@@ -276,14 +281,17 @@ const profitSlice = createSlice({
         setCraftedItem(state, action: PayloadAction<ITableData>) {
             state.craftedItemData = action.payload;
         },
-        setConsumableItemQuantity(state, action: PayloadAction<number>){
+        setConsumableItem(state, action: PayloadAction<IConsumableTableData>){
+            state.craftedConsumablesData = action.payload;
+        },
+        setConsumableItemQuantity(state, action: PayloadAction<number>) {
             state.consumableItemQuantity = action.payload;
         },
-        resetData(state){
+        resetData(state) {
             state.craftedItemData = initialState.craftedItemData;
             state.craftedConsumablesData = initialState.craftedConsumablesData;
         },
-        setConsumptionItemQueryParams(state, action: PayloadAction<string>){
+        setConsumptionItemQueryParams(state, action: PayloadAction<string>) {
             state.consumptionItemQueryParams = action.payload;
         },
         getResourceProfitHandler(state, action: PayloadAction<{ calculatorType: TCalcProps }>) {
@@ -351,7 +359,10 @@ const profitSlice = createSlice({
                 });
             }
 
-            const {journalsQuantity, defaultFoodConsumption} = calculateJQ_DFC(state.selected.selectedItem.selectedItemType,state.selected.selectedItem.selectedItemTier);
+            const {
+                journalsQuantity,
+                defaultFoodConsumption
+            } = calculateJQ_DFC(state.selected.selectedItem.selectedItemType, state.selected.selectedItem.selectedItemTier);
 
             let itemId = (state.selected.selectedItem.selectedItemType === 'BAG' && state.selected.selectedItem.selectedItemBodyId !== 'INSIGHT')
             || state.selected.selectedItem.selectedItemType === 'CAPE'
@@ -359,6 +370,7 @@ const profitSlice = createSlice({
                 : `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.selectedItemType}_${state.selected.selectedItem.selectedItemBodyId}`;
 
             if (action.payload.calculatorType === "items" && !state.errors.percentError && !state.errors.quantityError) {
+
                 state.craftItemsList.unshift({
                     craftTableData: {
                         mainDiv: divFactor,
@@ -368,7 +380,6 @@ const profitSlice = createSlice({
                         mainResourceQuantity: Math.ceil(output * (divFactor - (divFactor * (percent / 100)))),
                         subResourceQuantity: Math.ceil(output * (subDivFactor - (subDivFactor * (percent / 100)))),
                     },
-
                     infoTableData: {
                         defaultFoodConsumption,
                         output,
@@ -382,8 +393,8 @@ const profitSlice = createSlice({
                         itemName: state.selected.selectedItem.itemName,
                         tier: state.selected.selectedItem.selectedItemTier,
                         artefactId: !!state.selected.selectedItem.artefactId
-                            ? `${!state.selected.selectedItem.artefactId.includes('T4_SKILLBOOK_STANDARD') 
-                                ? `${state.selected.selectedItem.selectedItemTier}_` 
+                            ? `${!state.selected.selectedItem.artefactId.includes('T4_SKILLBOOK_STANDARD')
+                                ? `${state.selected.selectedItem.selectedItemTier}_`
                                 : ''}${state.selected.selectedItem.artefactId}`
                             : '',
                         spentQuantityPerItem: {
@@ -394,13 +405,24 @@ const profitSlice = createSlice({
                 });
             }
 
-            if((action.payload.calculatorType === 'food' || action.payload.calculatorType === 'potions') && !state.errors.percentError){
-                state.craftedConsumablesData = {
+            if (action.payload.calculatorType === 'food' && !state.errors.percentError) {
+                state.craftedMealsList.unshift({
+                    id,
                     quantity: state.consumableItemQuantity,
                     percent: state.percent,
                     craftedFood: state.selected.selectedConsumable!,
                     queryParams: state.consumptionItemQueryParams,
-                }
+                })
+            }
+
+            if (action.payload.calculatorType === 'potions' && !state.errors.percentError) {
+                state.craftedPotionsList.unshift({
+                    id,
+                    quantity: state.consumableItemQuantity,
+                    percent: state.percent,
+                    craftedFood: state.selected.selectedConsumable!,
+                    queryParams: state.consumptionItemQueryParams,
+                })
             }
 
             if (state.craftResourcesList.length > 8) {
@@ -409,13 +431,25 @@ const profitSlice = createSlice({
             if (state.craftItemsList.length > 8) {
                 state.craftItemsList.pop();
             }
+            if (state.craftedMealsList.length > 8) {
+                state.craftedMealsList.pop();
+            }
+            if (state.craftedPotionsList.length > 8) {
+                state.craftedPotionsList.pop();
+            }
         },
-        deleteLiFunction(state, action: PayloadAction<{ type: string; id: string }>) {
+        deleteLiFunction(state, action: PayloadAction<{ type: TCalcProps; id: string }>) {
             if (action.payload.type === "items") {
                 state.craftItemsList = state.craftItemsList.filter(elem => elem.craftTableData.id !== action.payload.id);
             }
             if (action.payload.type === "resource") {
                 state.craftResourcesList = state.craftResourcesList.filter(elem => elem.craftTableData.id !== action.payload.id);
+            }
+            if (action.payload.type === 'food') {
+                state.craftedMealsList = state.craftedMealsList.filter(item => item.id !== action.payload.id);
+            }
+            if (action.payload.type === 'potions') {
+                state.craftedPotionsList = state.craftedPotionsList.filter(item => item.id !== action.payload.id);
             }
         },
     }

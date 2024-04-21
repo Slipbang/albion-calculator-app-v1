@@ -10,10 +10,11 @@ import {srcRoute} from "../../../../../../store/api/api";
 import {useEffect, useRef, useState} from "react";
 import {TTier} from "../../../../../../types/craftItemsType";
 import ConsumablesNode from "./ConsumablesNode/ConsumablesNode";
-import StyledImageBox from "../../../../StyledComponentsCommon/StyledImageBox";
 import {useAppDispatch} from "../../../../../../store";
 import {profitSliceActions} from "../../../../../../store/profit/profit-slice";
 import {consumablesNamesData} from "../../../../../../store/Items/consumablesNamesData";
+import {interfaceSliceActions} from "../../../../../../store/interface/interface-slice";
+import ConsumableItemImage from "../../../CraftTable/ConsumableItemImage/ConsumableItemImage";
 
 interface IFoodSelectorProps {
     calculatorFormStrings: ISelectedLanguage['calculatorFormStrings'];
@@ -37,16 +38,9 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
     const consumableKeys = Object.keys(selectedConsumable!);
 
     const defineStates = () => {
-        const resourceKeys: string[] = [];
-        consumableKeys.forEach(key => {
-            if (key.toUpperCase() === key) {
-                resourceKeys.push(key);
-            }
-        })
+        const resourceKeys: string[] = [...[...consumableKeys].filter(key => key.toUpperCase() === key)];
 
-        const initialResources: {
-            [key: string]: number;
-        } = {};
+        const initialResources: { [key: string]: number; } = {};
 
         resourceKeys.forEach(key => {
             initialResources[key] = selectedConsumable![key] as number;
@@ -61,7 +55,7 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
     const [isSelectorVisible, setIsSelectorVisible] = useState(false);
 
     const defineParams = () => {
-        const consumptionItemQueryParams: string[] = [itemId,...resourceKeys].filter(item => !item.includes('FISHSAUCE') && !item.includes('ALCHEMY_EXTRACT'));
+        const consumptionItemQueryParams: string[] = [itemId, ...resourceKeys].filter(item => !item.includes('FISHSAUCE') && !item.includes('ALCHEMY_EXTRACT'));
         const extraResourceKey = [...resourceKeys].filter(item => item.includes('FISHSAUCE') || item.includes('ALCHEMY_EXTRACT')).join('');
 
         [1, 2, 3].forEach(enchantment => {
@@ -130,7 +124,10 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
                     style={{marginLeft: 20}}
                 >
                     <div
-                        onClick={() => setIsSelectorVisible(prevState => !prevState)}
+                        onClick={() => {
+                            setIsSelectorVisible(prevState => !prevState)
+                            dispatchAction(interfaceSliceActions.toggleCraftTableVisibility(true));
+                        }}
                         title={consumablesNamesData[itemId][selectedLanguage] || 'name is not found'}
                     >
                         <img
@@ -155,40 +152,39 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
             </div>
 
             {!!isSelectorVisible && (
-                <div style={{display: "flex", flexDirection: 'column', position: "absolute", zIndex: 5, top: 55, left: 155}}>
-                    {tiers.map(tier => {
-
-                        return (
+                <div className={styles.consumableItemsSelectorBox}>
+                    {tiers.map(tier => (
                             <ConsumablesNode
                                 key={tier}
                                 tier={tier}
                                 selectedLanguage={selectedLanguage}
                             />
                         )
-                    })}
+                    )}
                 </div>
             )}
 
             {!isSelectorVisible && <div className={styles.resources}>
                 {resourceKeys.map(key => {
 
-                    if (key.toUpperCase() !== key) return;
+                    const resourceQuantity = resourcesWithReturnPercent(key);
 
                     return (
-                        <div key={key} className={styles.resourceUnit}>
-                            {!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')
-                                ? <img src={`${srcRoute}${key}`} title={consumablesNamesData[key][selectedLanguage] || 'name is not found'} alt=""/>
-                                : (<div className={styles.extraResource} title={consumablesNamesData[key][selectedLanguage] || 'name is not found'}>
-                                    <StyledImageBox $position={'static'} $image={`${srcRoute}${key}1`} $width={25} $height={65} $backgroundPosition={'left'} />
-                                    <StyledImageBox $position={'static'} $image={`${srcRoute}${key}2`} $width={15} $height={65} $backgroundPosition={'center'} />
-                                    <StyledImageBox $position={'static'} $image={`${srcRoute}${key}3`} $width={25} $height={65} $backgroundPosition={'right'} />
-                                </div>)
-                            }
+                        <div key={key}>
+                            <ConsumableItemImage
+                                resourceKeys={key}
+                                selectedLanguage={selectedLanguage}
+                                extraResourceStyles={styles.extraResource}
+                            />
 
-                            <div style={{marginTop: `${(!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? -30 : -26}px`}} className={styles.resourceQuantity}>
+                            <div
+                                style={{marginTop: `${(!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? -30 : -26}px`}}
+                                className={styles.resourceQuantity}>
                                 <p>{selectedConsumable![key] || 0}</p>
                             </div>
-                            <div style={{marginTop: `${(!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? 0 : 4}px`}} className={styles.quantityInput}>
+                            <div
+                                style={{marginTop: `${(!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? 0 : 4}px`}}
+                                className={styles.quantityInput}>
                                 <input
                                     type="number"
                                     value={resourceQuantityInput[key] || 0}
@@ -197,7 +193,7 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
                                     onChange={(event) => changeInputsHandler(+event.target.value, key, initialResources[key])}
                                 />
                             </div>
-                            <div className={styles.totalQuantity}>{resourcesWithReturnPercent(key) || 0}</div>
+                            <div className={styles.totalQuantity}>{resourceQuantity || 0}</div>
                         </div>
                     )
                 })}

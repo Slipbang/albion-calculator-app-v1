@@ -10,7 +10,7 @@ import {srcRoute} from "../../../../../store/api/api";
 import styles from './TableStyles.module.scss';
 
 interface IResourceTableProps {
-    deleteLiHandler: (type: string, id: string) => void;
+    deleteLiHandler: (type: TCalcProps, id: string) => void;
     craftTableStrings: ISelectedLanguage['craftTableStrings'];
     calculatorType: TCalcProps;
 }
