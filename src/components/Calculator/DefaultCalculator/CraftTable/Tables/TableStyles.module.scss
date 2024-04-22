@@ -12,6 +12,10 @@
       filter: drop-shadow(5px 5px 6px black);
     }
 
+    tr{
+      background-color: var(--background-color-alert);
+    }
+
     td {
       padding: 5px;
     }
@@ -55,4 +59,11 @@
 
   font-size: 26px;
   font-weight: 700;
+}
+
+[data-similar-allert='non-similar']{
+  --background-color-alert: none;
+}
+[data-similar-allert='similar']{
+  --background-color-alert: rgba(143, 111, 84, 0.4)
 }

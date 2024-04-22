@@ -57,16 +57,16 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
     get averageItemPrice() {
         const {multiplication, itemsData, materialsData, enchantment, city, infoTableStrings} = this;
         const {itemId, resourceId,} = this.itemData!;
+        let itemPrice: number;
 
         if (!!itemId) {
-            const itemPrice = itemsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(itemId, enchantment) && itemElem.location === city)?.sellPriceMin;
-            return (itemPrice! - itemPrice! * 0.065) || infoTableStrings.noData;
+            itemPrice = itemsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(itemId, enchantment) && itemElem.location === city)?.sellPriceMin || 0;
         }
 
         if (!!resourceId) {
-            const itemPrice = materialsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(resourceId, enchantment) && itemElem.location === city)?.sellPriceMin! * multiplication;
-            return Math.round(itemPrice! - itemPrice! * 0.065) || infoTableStrings.noData;
+            itemPrice = materialsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(resourceId, enchantment) && itemElem.location === city)?.sellPriceMin! * multiplication || 0;
         }
+        return Math.round((itemPrice! - itemPrice! * 0.065)) || infoTableStrings.noData;
     }
 
     totalFoodFee = Math.ceil((this.itemData!.foodConsumption * (Math.pow(2, this.itemTierNum - 4)) + (this.itemData!.defaultFoodConsumption! * Math.pow(2, this.itemTierNum - 4) * (Math.pow(2, +this.enchantment) - 1))) * (this.foodTax / 100));
@@ -138,7 +138,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
     units = (this.itemData!.resourceId?.includes('STONEBLOCK') && this.enchantment !== '') ? ` (${Math.pow(2, +this.enchantment)}${this.infoTableStrings.un})` : '';
     journalsQuantityString = `${this.infoTableStrings.journalQuantity} ${this.totalJournalsQuantity}`;
     journalsProfitPerItemSting = `${this.infoTableStrings.journalProfit} (${this.journalPrice} - ${this.emptyJournalsPrice}) * ${this.totalJournalsQuantity} = ${this.journalsProfitPerItem}`;
-    itemTitleString = `${this.itemData!.tier}${this.enchantmentString(this.itemData!.itemId! || this.itemData!.resourceId!)} ${this.itemData!.itemName![this.selectedLanguage]}:  ${this.averageItemPrice?.toLocaleString('en')}${this.units} ${this.itemWasUpdate}`;
+    itemTitleString = `${this.itemData!.tier}${this.enchantmentString(this.itemData!.itemId! || this.itemData!.resourceId!)} ${this.itemData!.itemName![this.selectedLanguage]}(-6.5%):  ${this.averageItemPrice?.toLocaleString('en')}${this.units} ${this.itemWasUpdate}`;
     mainMatsTitleString = `${this.itemData!.tier}${this.enchantmentString(this.itemData!.mainMatsId)} ${this.mainMatsName}: ${this.itemData!.spentQuantityPerItem!.mainMatsQuantity} * ${this.mainMaterialPrice} = ${this.mainMatsPricePerItem.toLocaleString('en')} ${this.mainMatsWasUpdate}`;
     totalFoodFeeSting = `${this.infoTableStrings.taxPerOneItem} ${this.totalFoodFee}`;
     subMatsTitleString = `${this.subMatsTier}${this.enchantmentString(this.itemData!.subMatsId!)} ${this.subMatsName}: ${this.subMatsQuantity} * ${this.subMaterialPrice} = ${this.subMatsPricePerItem?.toLocaleString('en')} ${this.subMatsWasUpdate}`;

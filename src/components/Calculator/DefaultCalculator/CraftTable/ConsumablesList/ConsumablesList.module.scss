@@ -4,6 +4,7 @@
     display: flex;
     margin-left: 10px;
     padding: 10px 0;
+    background-color: var(--background-color-alert);
 
     .buttonsBox {
       display: flex;
@@ -86,4 +87,11 @@
 
   font-size: 26px;
   font-weight: 700;
+}
+
+[data-similar-allert='non-similar']{
+  --background-color-alert: none;
+}
+[data-similar-allert='similar']{
+  --background-color-alert: rgba(143, 111, 84, 0.4)
 }

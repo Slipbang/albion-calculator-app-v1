@@ -1,0 +1,17 @@
+.itemImage {
+  position: relative;
+
+  div {
+    width: 20px;
+    position: absolute;
+    bottom: 15px;
+    right: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p{
+      color: white;
+      font-size: 10px;
+    }
+  }
+}

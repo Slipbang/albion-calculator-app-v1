@@ -1,6 +1,6 @@
 import StyledDefaultButton from "../../../StyledComponentsCommon/StyledDefaultButton";
 import {useSelector} from "react-redux";
-import {selectCraftResourcesList} from "../../../../../store/profit/profit-selectors";
+import {selectCraftResourcesList, selectSimilarTypeErrors} from "../../../../../store/profit/profit-selectors";
 import {ISelectedLanguage} from "../../../../../types/languageTypes";
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {ITableData, profitSliceActions} from "../../../../../store/profit/profit-slice";
@@ -21,9 +21,9 @@ const ResourceTable = (props: IResourceTableProps) => {
         calculatorType,
         deleteLiHandler
     } = props;
-
-    const craftResourcesList = useSelector(selectCraftResourcesList);
     const dispatchAction = useAppDispatch();
+    const craftResourcesList = useSelector(selectCraftResourcesList);
+    const {similarResourceId} = useSelector(selectSimilarTypeErrors);
 
     const fetchResourceDataHandler = (item: ITableData) => {
         let {resourceId, mainMatsId, subMatsId} = item.infoTableData;
@@ -67,7 +67,7 @@ const ResourceTable = (props: IResourceTableProps) => {
                 const {resourceId, spentQuantityPerItem, output} = item.infoTableData;
 
                 return (
-                    <tr key={id}>
+                    <tr key={id} data-similar-allert={id === similarResourceId ? 'similar' : 'non-similar'}>
                         <td>
                             <img
                                 draggable={false}

@@ -57,7 +57,7 @@ export interface IConsumableTableData {
     quantity: number;
     percent: number;
     queryParams: string;
-    craftedFood: IConsumableObject;
+    craftedConsumable: IConsumableObject;
     id: string;
 }
 
@@ -100,6 +100,12 @@ interface IInitialState {
     errors: {
         percentError: boolean;
         quantityError: boolean;
+        similarError: {
+            similarItemId: string | undefined;
+            similarResourceId: string | undefined;
+            similarFoodId: string | undefined;
+            similarPotionsId: string | undefined;
+        };
     };
 
     initialQuantity: number
@@ -154,6 +160,12 @@ const initialState: IInitialState = {
     errors: {
         percentError: false,
         quantityError: false,
+        similarError: {
+            similarItemId: undefined,
+            similarResourceId: undefined,
+            similarFoodId: undefined,
+            similarPotionsId: undefined,
+        },
     },
 
     initialQuantity: 1,
@@ -281,6 +293,15 @@ const profitSlice = createSlice({
         setCraftedItem(state, action: PayloadAction<ITableData>) {
             state.craftedItemData = action.payload;
         },
+        showConsumablesCalculations(state) {
+            state.craftedConsumablesData = {
+                id: 'fastCalculation',
+                quantity: state.consumableItemQuantity,
+                percent: state.percent,
+                craftedConsumable: state.selected.selectedConsumable!,
+                queryParams: state.consumptionItemQueryParams,
+            }
+        },
         setConsumableItem(state, action: PayloadAction<IConsumableTableData>){
             state.craftedConsumablesData = action.payload;
         },
@@ -302,16 +323,14 @@ const profitSlice = createSlice({
             let output: number = 0;
             let subResMatsQuantity: number = 0;
             const mainResourceQuantity: number = +state.initialQuantity;
+            state.errors.percentError = (state.percent < 15.2 || state.percent > 70);
 
             if (action.payload.calculatorType === "items") {
                 state.errors.quantityError = state.initialQuantity < state.divFactor.itemDivFactor.mainDivFactor;
 
-                if (state.percent < 15.2 || state.percent > 70) {
-                    state.errors.percentError = true;
+                if (state.errors.percentError) {
                     return;
                 } else {
-                    state.errors.percentError = false;
-
                     divFactor = +state.divFactor.itemDivFactor.mainDivFactor;
                     subDivFactor = +state.divFactor.itemDivFactor.subDivFactor;
                 }
@@ -320,12 +339,9 @@ const profitSlice = createSlice({
             if (action.payload.calculatorType === "resource") {
                 state.errors.quantityError = state.initialQuantity < state.divFactor.resourcesDivFactor.mainDivFactor;
 
-                if (state.percent < 15.2 || state.percent > 70) {
-                    state.errors.percentError = true;
+                if (state.errors.percentError) {
                     return;
                 } else {
-                    state.errors.percentError = false;
-
                     divFactor = +state.divFactor.resourcesDivFactor.mainDivFactor;
                     subDivFactor = +state.divFactor.resourcesDivFactor.subDivFactor;
                     subResMatsQuantity = Number((state.initialQuantity / divFactor).toFixed(0));
@@ -334,7 +350,36 @@ const profitSlice = createSlice({
 
             output = Math.floor(mainResourceQuantity / (divFactor - (divFactor * (percent / 100))));
 
+            const hasSimilarItems = (craftResourcesList: ITableData[], itemId: string, percent: number, output: number) => {
+                let isSimilar = false;
+                let similarItemId = undefined;
+                craftResourcesList.some(item => {
+                    const {craftTableData, infoTableData} = item;
+                    const {percent: prevPercent, id} = craftTableData;
+                    const {output: prevOutput} = infoTableData;
+                    let prevId: string;
+                    if(!!infoTableData.resourceId) {
+                        ({resourceId: prevId} = infoTableData);
+                    }
+                    if(!!infoTableData.itemId) {
+                        ({itemId: prevId} = infoTableData);
+                    }
+                    if (prevId! === itemId && prevPercent === percent && prevOutput === output) {
+                        isSimilar = true;
+                        similarItemId = id;
+                        return true;
+                    }
+                })
+                return {isSimilar, similarItemId};
+            }
+
             if (action.payload.calculatorType === "resource" && !state.errors.percentError && !state.errors.quantityError) {
+                const {isSimilar, similarItemId} = hasSimilarItems(state.craftResourcesList, state.selected.selectedResource.resourceId, percent, output);
+                state.errors.similarError.similarResourceId = similarItemId;
+                if (isSimilar) {
+                    return;
+                }
+
                 state.craftResourcesList.unshift({
                     craftTableData: {
                         mainResourceQuantity,
@@ -370,6 +415,9 @@ const profitSlice = createSlice({
                 : `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.selectedItemType}_${state.selected.selectedItem.selectedItemBodyId}`;
 
             if (action.payload.calculatorType === "items" && !state.errors.percentError && !state.errors.quantityError) {
+                const {isSimilar, similarItemId} = hasSimilarItems(state.craftItemsList, itemId, percent, output);
+                state.errors.similarError.similarItemId = similarItemId;
+                if (isSimilar) return;
 
                 state.craftItemsList.unshift({
                     craftTableData: {
@@ -405,24 +453,47 @@ const profitSlice = createSlice({
                 });
             }
 
-            if (action.payload.calculatorType === 'food' && !state.errors.percentError) {
-                state.craftedMealsList.unshift({
-                    id,
-                    quantity: state.consumableItemQuantity,
-                    percent: state.percent,
-                    craftedFood: state.selected.selectedConsumable!,
-                    queryParams: state.consumptionItemQueryParams,
+            const craftedConsumableItem: IConsumableTableData = {
+                id,
+                quantity: state.consumableItemQuantity,
+                percent: state.percent,
+                craftedConsumable: state.selected.selectedConsumable!,
+                queryParams: state.consumptionItemQueryParams,
+            }
+
+            const hasConsumableSimilar = (listToCheck: IConsumableTableData[], itemToCheck: IConsumableTableData) => {
+                const {quantity: newQuantity, percent: newPercent, craftedConsumable} = itemToCheck;
+                const {itemId: newItemId} = craftedConsumable;
+
+                let isSimilar = false;
+                let similarItemId = undefined;
+                listToCheck.some(item => {
+                    const {craftedConsumable, percent: prevPercent, quantity: prevQuantity, id} = item;
+                    const {itemId: prevItemId} = craftedConsumable;
+                    if (prevQuantity === newQuantity && prevPercent === newPercent && prevItemId === newItemId){
+                        isSimilar = true;
+                        similarItemId = id;
+                        return true;
+                    }
                 })
+
+                return {isSimilar, similarItemId};
+            }
+
+            if (action.payload.calculatorType === 'food' && !state.errors.percentError) {
+                const {isSimilar, similarItemId} = hasConsumableSimilar(state.craftedMealsList, craftedConsumableItem);
+                state.errors.similarError.similarFoodId = similarItemId;
+                if (isSimilar) return;
+
+                state.craftedMealsList.unshift(craftedConsumableItem);
             }
 
             if (action.payload.calculatorType === 'potions' && !state.errors.percentError) {
-                state.craftedPotionsList.unshift({
-                    id,
-                    quantity: state.consumableItemQuantity,
-                    percent: state.percent,
-                    craftedFood: state.selected.selectedConsumable!,
-                    queryParams: state.consumptionItemQueryParams,
-                })
+                const {isSimilar, similarItemId} = hasConsumableSimilar(state.craftedPotionsList, craftedConsumableItem);
+                state.errors.similarError.similarPotionsId = similarItemId;
+                if (isSimilar) return;
+
+                state.craftedPotionsList.unshift(craftedConsumableItem);
             }
 
             if (state.craftResourcesList.length > 8) {
@@ -440,10 +511,10 @@ const profitSlice = createSlice({
         },
         deleteLiFunction(state, action: PayloadAction<{ type: TCalcProps; id: string }>) {
             if (action.payload.type === "items") {
-                state.craftItemsList = state.craftItemsList.filter(elem => elem.craftTableData.id !== action.payload.id);
+                state.craftItemsList = state.craftItemsList.filter(item => item.craftTableData.id !== action.payload.id);
             }
             if (action.payload.type === "resource") {
-                state.craftResourcesList = state.craftResourcesList.filter(elem => elem.craftTableData.id !== action.payload.id);
+                state.craftResourcesList = state.craftResourcesList.filter(item => item.craftTableData.id !== action.payload.id);
             }
             if (action.payload.type === 'food') {
                 state.craftedMealsList = state.craftedMealsList.filter(item => item.id !== action.payload.id);

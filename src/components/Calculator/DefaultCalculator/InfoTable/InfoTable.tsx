@@ -21,7 +21,7 @@ import {srcRoute, useLazyGetItemsDataQuery} from "../../../../store/api/api";
 import {selectServerId} from "../../../../store/queryParams/query-params-selectors";
 import {PulseLoader} from "react-spinners";
 import ErrorNotification from "../ErrorNotification/ErrorNotification";
-import {selectCalculatorType, selectTheme} from "../../../../store/interface/interface-selector";
+import {selectTheme} from "../../../../store/interface/interface-selector";
 import TableTdElement from "./TableTdElement/TableTdElement";
 import StyledCloseButton from "../../StyledComponentsCommon/StyledCloseButton";
 import {IConsumableObject} from "../../../../types/consumableTypes";
@@ -112,7 +112,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
     }
 
     let queryConsumableParams: string | undefined,
-        craftedFood: IConsumableObject | undefined,
+        craftedConsumable: IConsumableObject | undefined,
         consumablesItemId: string | undefined,
         consumableResourcesKeys: string[] | undefined,
         consumablesNames: TConsumableNames | undefined;
@@ -121,11 +121,11 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
     const consumableSelectorsInitialState: TConsumablesSelectors = {}
 
     if (craftedConsumablesData !== null) {
-        ({queryParams: queryConsumableParams, craftedFood} = craftedConsumablesData!);
-        ({itemId: consumablesItemId} = craftedFood);
-        consumableResourcesKeys = Object.keys(craftedFood).filter(key => key.toUpperCase() === key && !key.includes(craftedFood!.itemId));
+        ({queryParams: queryConsumableParams, craftedConsumable} = craftedConsumablesData!);
+        ({itemId: consumablesItemId} = craftedConsumable);
+        consumableResourcesKeys = Object.keys(craftedConsumable).filter(key => key.toUpperCase() === key && !key.includes(craftedConsumable!.itemId));
         consumablesNames = {
-            [craftedFood.itemId]: {...consumablesNamesData![craftedFood.itemId]}
+            [craftedConsumable.itemId]: {...consumablesNamesData![craftedConsumable.itemId]}
         };
 
         consumableSelectorsKeys.push(...[...consumableResourcesKeys].filter(key => !key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')));
@@ -183,7 +183,6 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
         isError: isErrorConsumables,
         data: consumablesData,
     }] = useLazyGetItemsDataQuery();
-
 
     useEffect(() => {
         if (calculatorType === 'items') {
@@ -278,22 +277,22 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
             ] as ICraftConsumableInfoTuple;
 
     const defineSrc = (enchantment: string) => {
-        if (calculatorType === 'items' && !!itemId) {
-            return `${itemId}${!enchantment ? '' : `@${enchantment}`}`;
-        }
-
-        if (calculatorType === 'resource' && !!resourceId) {
-            return `${resourceId}${(!enchantment || resourceId?.includes?.('STONEBLOCK')) ? '' : `_LEVEL${enchantment}@${enchantment}`}`;
-        }
-
-        if (calculatorType === 'food' || calculatorType === 'potions') {
-            return `${consumablesItemId}${(enchantment === '4' || !enchantment) ? '' : `@${enchantment}`}`
+        switch (calculatorType) {
+            case 'items':
+                return `${itemId}${!enchantment ? '' : `@${enchantment}`}`;
+            case 'resource':
+                return `${resourceId}${(!enchantment || resourceId?.includes?.('STONEBLOCK')) ? '' : `_LEVEL${enchantment}@${enchantment}`}`;
+            case 'food':
+            case "potions":
+                return `${consumablesItemId}${(enchantment === '4' || !enchantment) ? '' : `@${enchantment}`}`;
         }
     }
 
     return (
         <>
-            {(!isItemFetching && !isMaterialsFetching && !isArtefactsFetching && !isJournalsFetching && !isConsumablesFetching && !isErrorItems && !isErrorMaterials && !isErrorArtefacts && !isErrorJournals && !isErrorConsumables) &&
+            {(!isItemFetching && !isMaterialsFetching && !isArtefactsFetching && !isJournalsFetching
+                    && !isConsumablesFetching && !isErrorItems && !isErrorMaterials
+                    && !isErrorArtefacts && !isErrorJournals && !isErrorConsumables) &&
                 <div className={styles.wrapper} data-theme={theme}>
                     {(calculatorType === 'resource' || calculatorType === 'items')
                         && (

@@ -5,7 +5,7 @@ import {profitSliceActions} from "../../../../../../store/profit/profit-slice";
 import {TCalcProps} from "../../../../../../types/calculatorPropsType";
 import {useAppDispatch} from "../../../../../../store";
 import {useSelector} from "react-redux";
-import {selectResource} from "../../../../../../store/profit/profit-selectors";
+import {selectDivFactor, selectResource} from "../../../../../../store/profit/profit-selectors";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../../types/languageTypes";
 import styles from './ResourceSelector.module.scss';
 import {ICraftItem, TTier} from "../../../../../../types/craftItemsType";
@@ -25,6 +25,9 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
 
     const selectedResource = useSelector(selectResource);
     const {resourceId, resourceName, resourceTier} = selectedResource;
+    const {resourcesDivFactor} = useSelector(selectDivFactor);
+    const {mainDivFactor, subDivFactor} = resourcesDivFactor;
+
 
     const resourceSelectorRef = useRef<HTMLDivElement>(null);
 
@@ -93,6 +96,10 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
                     src={`${srcRoute}${resourceId}`}
                     alt=""
                 />
+                <div className={styles.resourceDivFactor}>
+                    <p>{mainDivFactor}/{subDivFactor}</p>
+                </div>
+
                 {isResourceSelectorShown && <img
                     src={arrowRight}
                     alt=""

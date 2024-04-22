@@ -10,6 +10,7 @@ import {selectCalculatorType} from "../../../../../../../../../store/interface/i
 import {selectItemNode, selectItemType} from "../../../../../../../../../store/profit/profit-selectors";
 import {arrowRight} from "../../../../../../DefaultCalculatorImgReexports/DefaultCalculatorImgReexports";
 import {interfaceSliceActions} from "../../../../../../../../../store/interface/interface-slice";
+import styles from './Items.module.scss'
 import {srcRoute} from "../../../../../../../../../store/api/api";
 
 const objectTypeKeys = Object.keys(craftItems) as TCraftObjectTypes[];
@@ -99,6 +100,19 @@ const Items = (props: IItemsProps) => {
                          }}
                     />
                     {objectTypeKeys.map(itemTypeKey => craftItems[itemTypeKey].map(itemToSelect => {
+                        const itemResourceKey = Object.keys(itemToSelect).filter(key => key.toUpperCase() === key);
+                        let mainDiv: number = 0;
+                        let subDiv: number = 0;
+                        const bufferedObject: {[key: string]: number} = {}
+                        itemResourceKey.forEach(key => {
+                            if(!!itemToSelect[key as keyof ICraftItem]){
+                                bufferedObject[key] = +itemToSelect[key as keyof ICraftItem]!;
+                            }
+                        })
+                        const values = Object.values(bufferedObject);
+                        mainDiv = Math.max(...values);
+                        subDiv = values.length > 1 ? Math.min(...values) : 0;
+
                         let imgHref: string;
                         if ((itemTypeKey === 'BAG' && itemToSelect.itemId !== 'INSIGHT') || itemTypeKey === 'CAPE') {
                             imgHref = itemToSelect.itemId!;
@@ -106,12 +120,9 @@ const Items = (props: IItemsProps) => {
                             imgHref = `${itemTypeKey}_${itemToSelect.itemId}`;
                         }
                         return itemToSelect.itemNode === itemNode && itemToSelect.itemType === itemType && !itemToSelect.itemId!.includes('ROYAL') && (
-                            <img
+                            <div
                                 key={`${itemTypeKey}_${itemToSelect.itemId}`}
-                                title={itemToSelect.itemName?.[selectedLanguage]}
-                                className={imgLoaderBackground}
-                                src={`${srcRoute}${selectedItemTier}_${imgHref}`}
-                                alt=""
+                                className={styles.item}
                                 onClick={(event) => {
                                     event.stopPropagation();
                                     selectItemHandler({
@@ -119,7 +130,17 @@ const Items = (props: IItemsProps) => {
                                         item: itemToSelect,
                                     })
                                 }}
-                            />
+                            >
+                                <img
+                                    title={itemToSelect.itemName?.[selectedLanguage]}
+                                    className={imgLoaderBackground}
+                                    src={`${srcRoute}${selectedItemTier}_${imgHref}`}
+                                    alt=""
+                                />
+                                <div>
+                                    <p>{mainDiv}/{subDiv}</p>
+                                </div>
+                            </div>
                         )
                     }))}
                 </>}

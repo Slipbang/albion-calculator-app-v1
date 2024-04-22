@@ -12,6 +12,7 @@
 
   .resourceSelector{
     display: flex;
+    position: relative;
     z-index: 9999;
 
     .resourceButtonSelector{
@@ -21,6 +22,21 @@
     }
     .resourceButtonSelectorHidden{
       display: none;
+    }
+    .resourceDivFactor {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      right: 5px;
+      bottom: 8px;
+
+      p {
+        font-size: 10px;
+        color: white;
+      }
     }
   }
 }

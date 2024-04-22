@@ -52,10 +52,11 @@ const ItemTierSelector = (props: IItemTierSelectorProps) => {
             >
                 <img
                     className={styles.backgroundSkeleton}
-                    title={`${itemName?.[selectedLanguage]}${selectedItemTier}`}
+                    title={`${itemName?.[selectedLanguage]} ${selectedItemTier}`}
                     src={selectorImg}
                     alt=""
                 />
+                <p>{}</p>
                 {isItemTierSelectorShown &&
                     <img
                         src={arrowRight}
@@ -63,8 +64,8 @@ const ItemTierSelector = (props: IItemTierSelectorProps) => {
                         style={{
                             width: '11px',
                             height: '50px',
-                            marginTop: '6px',
-                            marginLeft: '64px',
+                            top: '6px',
+                            left: '64px',
                             position: 'absolute'
                         }}
                     />}

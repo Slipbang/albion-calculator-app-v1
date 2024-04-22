@@ -1,9 +1,10 @@
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {useSelector} from "react-redux";
-import {selectCraftedMealsList, selectCraftedPotionsList} from "../../../../../store/profit/profit-selectors";
-import {srcRoute} from "../../../../../store/api/api";
-import {consumablesNamesData} from "../../../../../store/Items/consumablesNamesData";
-import StyledImageBox from "../../../StyledComponentsCommon/StyledImageBox";
+import {
+    selectCraftedMealsList,
+    selectCraftedPotionsList,
+    selectSimilarTypeErrors
+} from "../../../../../store/profit/profit-selectors";
 import styles from './ConsumablesList.module.scss';
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
 import {IConsumableObject} from "../../../../../types/consumableTypes";
@@ -35,6 +36,14 @@ const ConsumablesList = (props: TConsumablesTableProps) => {
     }
     const selectedList = selectList();
     const craftedConsumablesList = useSelector(selectedList!);
+    const similarError = useSelector(selectSimilarTypeErrors);
+    let similarItemId: string | undefined;
+    if (calculatorType === 'food'){
+        similarItemId = similarError.similarFoodId;
+    }
+    if (calculatorType === 'potions'){
+        similarItemId = similarError.similarPotionsId;
+    }
 
     const resourcesWithReturnPercent = (craftedFood: IConsumableObject, key: string, returnPercent: number, totalQuantity: number) => {
 
@@ -54,16 +63,16 @@ const ConsumablesList = (props: TConsumablesTableProps) => {
 
     return <div className={styles.wrapper} data-notification={craftTableStrings.alert}>
         {craftedConsumablesList.map(item => {
-            const {craftedFood, percent, quantity,id} = item;
-            const consumableKeys = Object.keys(craftedFood);
+            const {craftedConsumable, percent, quantity, id} = item;
+            const consumableKeys = Object.keys(craftedConsumable);
 
-            const resourceKeys: string[] = [craftedFood.itemId, ...[...consumableKeys].filter(key => key.toUpperCase() === key)];
+            const resourceKeys: string[] = [craftedConsumable.itemId, ...[...consumableKeys].filter(key => key.toUpperCase() === key)];
 
             return (
-                <div className={styles.craftedItem} key={id}>
+                <div className={styles.craftedItem} key={id} data-similar-allert={id === similarItemId ? 'similar' : 'non-similar'}>
                     <div className={styles.resources}>
                         {resourceKeys.map(key => {
-                            const resourceQuantity = resourcesWithReturnPercent(craftedFood, key, percent, quantity);
+                            const resourceQuantity = resourcesWithReturnPercent(craftedConsumable, key, percent, quantity);
 
                             return (
                                 <div key={key} style={{position: 'relative'}}>
@@ -74,7 +83,7 @@ const ConsumablesList = (props: TConsumablesTableProps) => {
                                     />
 
                                     <div style={{marginTop: `${(!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? -30 : -26}px`}} className={styles.resourceQuantity}>
-                                        <p>{craftedFood![key] || craftedFood.amountCrafted || 0}</p>
+                                        <p>{craftedConsumable![key] || craftedConsumable.amountCrafted || 0}</p>
                                     </div>
                                     <div style={{marginTop: `${(!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? 0 : 3}px`}} className={styles.totalQuantity}>{resourceQuantity || 0}</div>
                                 </div>

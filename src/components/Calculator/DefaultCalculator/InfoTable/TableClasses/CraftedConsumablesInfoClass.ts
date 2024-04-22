@@ -22,7 +22,7 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
         super(currentDate);
     }
     percent = this.infoTableData.percent;
-    consumableItemId = `${this.infoTableData.craftedFood.itemId}${!!this.enchantment ? `@${this.enchantment}` : ''}`;
+    consumableItemId = `${this.infoTableData.craftedConsumable.itemId}${!!this.enchantment ? `@${this.enchantment}` : ''}`;
 
     consumableResourcePrices = () => {
         const {consumableResourcesKeys, consumableResourcesData,enchantment} = this;
@@ -46,7 +46,7 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
 
     prices = this.consumableResourcePrices();
 
-    totalFoodTax = Math.ceil(this.infoTableData.craftedFood.foodConsumption * (this.foodTax/100));
+    totalFoodTax = Math.ceil(this.infoTableData.craftedConsumable.foodConsumption * (this.foodTax/100));
 
     resourcePrices = this.prices.resourcePrices;
     resourcePricesDates = this.prices.resourcePricesDates;
@@ -55,7 +55,7 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
 
     resourcePricesCalculation = () => {
         const {consumableResourcesKeys, infoTableData, percent, consumablesNames, selectedLanguage, resourcePrices, enchantment, consumableItemPrice, totalFoodTax, resourcePricesDates} = this;
-        const {craftedFood} = infoTableData;
+        const {craftedConsumable} = infoTableData;
 
         const resourcesPricesTitle: string[] = [];
         let totalCost: number = totalFoodTax;
@@ -65,15 +65,15 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
 
             const resourcePricesKey = (!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? key : `${key}${enchantment}`;
 
-            const totalQuantity = (key.includes('QUESTITEM_TOKEN_AVALON') || key.includes('ALCHEMY_RARE')) ? +craftedFood[key] : (+craftedFood[key] - +craftedFood[key] * percent / 100);
+            const totalQuantity = (key.includes('QUESTITEM_TOKEN_AVALON') || key.includes('ALCHEMY_RARE')) ? +craftedConsumable[key] : (+craftedConsumable[key] - +craftedConsumable[key] * percent / 100);
             const totalItemCost = Math.floor(resourcePrices[resourcePricesKey] * totalQuantity);
 
-            resourcesPricesTitle.push(`${consumablesNames?.[resourcePricesKey]?.[selectedLanguage] || 'err'}: ${resourcePrices[resourcePricesKey]?.toLocaleString('en')} * ${totalQuantity} = ${totalItemCost?.toLocaleString('en')} ${this.getTime(resourcePricesDates[resourcePricesKey])}<hr><br>`);
+            resourcesPricesTitle.push(`${consumablesNames?.[resourcePricesKey]?.[selectedLanguage] || 'err'}: ${resourcePrices[resourcePricesKey]?.toLocaleString('en')} * ${totalQuantity?.toLocaleString('en')} = ${totalItemCost?.toLocaleString('en')} ${this.getTime(resourcePricesDates[resourcePricesKey])}<hr><br>`);
             totalCost += totalItemCost;
         })
 
-        const profitPerItem = (+consumableItemPrice * craftedFood.amountCrafted - totalCost) || this.infoTableStrings.noData;
-        const profitPerItemTitle = `${consumableItemPrice.toLocaleString('en')} * ${craftedFood.amountCrafted} - ${totalCost.toLocaleString('en')} = ${profitPerItem.toLocaleString('en')}`
+        const profitPerItem = (+consumableItemPrice * craftedConsumable.amountCrafted - totalCost) || this.infoTableStrings.noData;
+        const profitPerItemTitle = `${consumableItemPrice.toLocaleString('en')} * ${craftedConsumable.amountCrafted} - ${totalCost.toLocaleString('en')} = ${profitPerItem.toLocaleString('en')}`
         const totalProfit = +profitPerItem * infoTableData.quantity;
 
         return {
@@ -84,7 +84,7 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
         }
     }
 
-    itemPriceTitle = `${this.consumablesNames![this.infoTableData.craftedFood.itemId][this.selectedLanguage]}: ${this.consumableItemPrice.toLocaleString('en')} ${this.getTime(this.consumableItemPriceDate)}`;
+    itemPriceTitle = `${this.consumablesNames![this.infoTableData.craftedConsumable.itemId][this.selectedLanguage]}: ${this.consumableItemPrice.toLocaleString('en')} ${this.getTime(this.consumableItemPriceDate)}`;
     foodTaxTitle = `${this.infoTableStrings.tax} ${this.totalFoodTax}`;
 
     resourcesPricesTitle = this.resourcePricesCalculation().resourcesPricesTitle;

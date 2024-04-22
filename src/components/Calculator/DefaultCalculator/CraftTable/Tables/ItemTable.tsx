@@ -1,7 +1,7 @@
 import StyledDefaultButton from "../../../StyledComponentsCommon/StyledDefaultButton";
 import {ITableData, profitSliceActions} from "../../../../../store/profit/profit-slice";
 import {useSelector} from "react-redux";
-import {selectCraftItemsList} from "../../../../../store/profit/profit-selectors";
+import {selectCraftItemsList, selectSimilarTypeErrors} from "../../../../../store/profit/profit-selectors";
 import {ISelectedLanguage} from "../../../../../types/languageTypes";
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {useAppDispatch} from "../../../../../store";
@@ -25,6 +25,7 @@ const ItemTable = (props: TItemTableProps) => {
     const dispatchAction = useAppDispatch();
 
     const craftItemsList = useSelector(selectCraftItemsList);
+    const {similarItemId} = useSelector(selectSimilarTypeErrors);
 
     const fetchItemDataHandler = (item: ITableData) => {
         const {itemId, mainMatsId, subMatsId, journalId, emptyJournalId} = item.infoTableData;
@@ -75,7 +76,7 @@ const ItemTable = (props: TItemTableProps) => {
                     const {id, mainResourceQuantity, subResourceQuantity, mainDiv, subDiv, percent} = item.craftTableData;
                     const {itemId, mainMatsId, spentQuantityPerItem, subMatsId, output} = item.infoTableData;
 
-                    return <tr key={id}>
+                    return <tr key={id} data-similar-allert={id === similarItemId ? 'similar' : 'non-similar'}>
                         <td>
                             {mainResourceQuantity}{craftTableStrings.metrics}
                             <img

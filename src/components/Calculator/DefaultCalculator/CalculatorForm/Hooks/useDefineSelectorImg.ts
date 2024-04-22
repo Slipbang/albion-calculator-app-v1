@@ -1,9 +1,10 @@
 import {useSelector} from "react-redux";
-import {selectItem} from "../../../../../store/profit/profit-selectors";
+import {selectDivFactor, selectItem} from "../../../../../store/profit/profit-selectors";
 import {srcRoute} from "../../../../../store/api/api";
 
 const useDefineSelectorImg = () => {
     const selectedItem = useSelector(selectItem);
+    const {itemDivFactor, resourcesDivFactor} = useSelector(selectDivFactor);
 
     const {selectedItemBodyId, selectedItemTier, selectedItemType, itemName} = selectedItem;
 
@@ -16,7 +17,9 @@ const useDefineSelectorImg = () => {
         selectedItemBodyId,
         selectedItemTier,
         selectedItemType,
-        selectorImg
+        selectorImg,
+        itemDivFactor,
+        resourcesDivFactor,
     }
 }
 

@@ -9,6 +9,7 @@
   .itemTierSelector{
     display: flex;
     z-index: 9999;
+    position: relative;
 
     .itemTierButtonSelector{
       position: absolute;

@@ -5,7 +5,7 @@ import {selectLanguage} from "../../../../store/language/language-selector";
 
 import StyledCalculatorFormWrapper from "./CalculatorFormSC/StyledCalculatorFormWrapper";
 
-import FormButton from "./Buttons/FormButton";
+import FormButtons from "./FormButtons/FormButtons";
 import PercentInput from "./Inputs/PercentInput/PercentInput";
 
 import ItemTierSelector from "./Selectors/ItemTierSelector/ItemTierSelector";
@@ -76,7 +76,7 @@ const CalculatorForm = React.memo(({calculatorType}: {calculatorType: TCalcProps
                     calculatorFormStrings={calculatorFormStrings}
                 />
 
-                <FormButton
+                <FormButtons
                     calculatorType={calculatorType}
                 />
             </div>
