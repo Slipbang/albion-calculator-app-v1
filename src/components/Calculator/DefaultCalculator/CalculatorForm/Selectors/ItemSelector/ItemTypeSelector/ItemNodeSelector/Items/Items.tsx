@@ -12,6 +12,7 @@ import {arrowRight} from "../../../../../../DefaultCalculatorImgReexports/Defaul
 import {interfaceSliceActions} from "../../../../../../../../../store/interface/interface-slice";
 import styles from './Items.module.scss'
 import {srcRoute} from "../../../../../../../../../store/api/api";
+import {defineDivisionsFactors} from "../../../../../../../Definers/defineDivisionsFactors";
 
 const objectTypeKeys = Object.keys(craftItems) as TCraftObjectTypes[];
 
@@ -91,27 +92,17 @@ const Items = (props: IItemsProps) => {
         <>
             {itemNodeOfNodeSelector === itemNode &&
                 <>
-                    <img src={arrowRight}
-                         alt=""
-                         style={{
-                             width: '11px',
-                             height: '50px',
-                             marginTop: '6px'
-                         }}
+                    <img
+                        src={arrowRight}
+                        alt=""
+                        style={{
+                            width: '11px',
+                            height: '50px',
+                            marginTop: '6px'
+                    }}
                     />
                     {objectTypeKeys.map(itemTypeKey => craftItems[itemTypeKey].map(itemToSelect => {
-                        const itemResourceKey = Object.keys(itemToSelect).filter(key => key.toUpperCase() === key);
-                        let mainDiv: number = 0;
-                        let subDiv: number = 0;
-                        const bufferedObject: {[key: string]: number} = {}
-                        itemResourceKey.forEach(key => {
-                            if(!!itemToSelect[key as keyof ICraftItem]){
-                                bufferedObject[key] = +itemToSelect[key as keyof ICraftItem]!;
-                            }
-                        })
-                        const values = Object.values(bufferedObject);
-                        mainDiv = Math.max(...values);
-                        subDiv = values.length > 1 ? Math.min(...values) : 0;
+                        const {mainDiv, subDiv} = defineDivisionsFactors(itemToSelect);
 
                         let imgHref: string;
                         if ((itemTypeKey === 'BAG' && itemToSelect.itemId !== 'INSIGHT') || itemTypeKey === 'CAPE') {
@@ -119,6 +110,7 @@ const Items = (props: IItemsProps) => {
                         } else {
                             imgHref = `${itemTypeKey}_${itemToSelect.itemId}`;
                         }
+
                         return itemToSelect.itemNode === itemNode && itemToSelect.itemType === itemType && !itemToSelect.itemId!.includes('ROYAL') && (
                             <div
                                 key={`${itemTypeKey}_${itemToSelect.itemId}`}

@@ -19,6 +19,30 @@
       position: absolute;
       width: 350px;
       margin-left: 80px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .resourceUnit {
+        position: relative;
+
+        div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 20px;
+          height: 20px;
+          position: absolute;
+          z-index: 5;
+          right: 7px;
+          bottom: 12px;
+
+          p {
+            font-size: 10px;
+            color: white;
+          }
+        }
+      }
     }
     .resourceButtonSelectorHidden{
       display: none;

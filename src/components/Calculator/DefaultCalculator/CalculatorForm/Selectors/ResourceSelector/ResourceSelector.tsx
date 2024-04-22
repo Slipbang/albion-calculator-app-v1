@@ -11,6 +11,7 @@ import styles from './ResourceSelector.module.scss';
 import {ICraftItem, TTier} from "../../../../../../types/craftItemsType";
 import {defineMaterials} from "../../../../Definers/defineMaterials";
 import {srcRoute} from "../../../../../../store/api/api";
+import {defineDivisionsFactors} from "../../../../Definers/defineDivisionsFactors";
 
 interface IResourceSelectorProps {
     calculatorType: TCalcProps;
@@ -111,26 +112,32 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
                         position: 'absolute'
                     }}
                 />}
-                <div
-                    className={!!isResourceSelectorShown ? styles.resourceButtonSelector : styles.resourceButtonSelectorHidden}>
+                <div className={!!isResourceSelectorShown ? styles.resourceButtonSelector : styles.resourceButtonSelectorHidden}>
 
                     {materials.map((item) => {
                         const {itemId, itemName} = item;
                         const itemTier = itemId!.split('_')[0];
 
+                        const {mainDiv, subDiv} = defineDivisionsFactors(item);
+
                         return (!itemId!.includes('T3')) && isMaterial(item) &&
-                            <img
-                                className={styles.backgroundSkeleton}
-                                src={`${srcRoute}${itemId}`}
-                                alt=''
-                                title={`${itemName?.[selectedLanguage]} ${itemTier}`}
-                                key={itemId}
-                                onClick={(event) => {
-                                    selectResourceHandler(item);
-                                    setIsResourceSelectorShown(false);
-                                    event.stopPropagation();
-                                }}
-                            />
+                            <div className={styles.resourceUnit}>
+                                <img
+                                    className={styles.backgroundSkeleton}
+                                    src={`${srcRoute}${itemId}`}
+                                    alt=''
+                                    title={`${itemName?.[selectedLanguage]} ${itemTier}`}
+                                    key={itemId}
+                                    onClick={(event) => {
+                                        selectResourceHandler(item);
+                                        setIsResourceSelectorShown(false);
+                                        event.stopPropagation();
+                                    }}
+                                />
+                                <div>
+                                    <p>{mainDiv}/{subDiv}</p>
+                                </div>
+                            </div>
                     })}
                 </div>
             </div>
