@@ -5,23 +5,24 @@ import {
     selectSimilarTypeErrors
 } from "../../../../../store/profit/profit-selectors";
 import styles from './ConsumablesList.module.scss';
-import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
 import {IConsumableObject} from "../../../../../types/consumableTypes";
 import StyledDefaultButton from "../../../StyledComponentsCommon/StyledDefaultButton";
-import {IConsumableTableData, profitSliceActions} from "../../../../../store/profit/profit-slice";
+import {profitSliceActions} from "../../../../../store/profit/profit-slice";
 import {interfaceSliceActions} from "../../../../../store/interface/interface-slice";
 import {useAppDispatch} from "../../../../../store";
 import ConsumableItemImage from "../ConsumableItemImage/ConsumableItemImage";
+import {IConsumableTableData} from "../../../../../types/defaultCalculatorTypes";
+import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
 
 interface TConsumablesTableProps {
-    craftTableStrings: ISelectedLanguage['craftTableStrings'];
     deleteLiHandler: (type: TCalcProps, id: string) => void;
     calculatorType: TCalcProps;
+    craftTableStrings: ISelectedLanguage['craftTableStrings'];
     selectedLanguage: TSelectedLanguage;
 }
 
 const ConsumablesList = (props: TConsumablesTableProps) => {
-    const {deleteLiHandler, calculatorType, selectedLanguage, craftTableStrings} = props;
+    const {deleteLiHandler, calculatorType, craftTableStrings, selectedLanguage} = props;
 
     const dispatchAction = useAppDispatch();
 

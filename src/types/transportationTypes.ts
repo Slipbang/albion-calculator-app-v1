@@ -1,4 +1,4 @@
-import {IItemName} from "../store/profit/profit-slice";
+import {TItemName} from "./craftItemsType";
 
 export interface TransportationData {
     from: AODItemData,
@@ -29,7 +29,7 @@ export type TTransportationItemTypes = '2H' | 'MAIN' | 'BAG' | 'CAPE'
 
 export interface IItemType {
     itemId: string;
-    itemName: IItemName;
+    itemName: TItemName;
 }
 
 export type TTransportationItemsInfo = {

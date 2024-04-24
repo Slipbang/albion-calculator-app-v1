@@ -8,22 +8,40 @@ import {selectLanguage} from "../../../../store/language/language-selector";
 
 import StyledCraftTableWrapper from "./CraftTableSC/StyledCraftTableWrapper";
 import StyledThumb from "../../StyledComponentsCommon/StyledThumb";
-import React from "react";
+import {memo} from "react";
 import ItemTable from "./Tables/ItemTable";
 import ResourceTable from "./Tables/ResourceTable";
 import CraftTableButton from "./Buttons/CraftTableButton";
 import {TCalcProps} from "../../../../types/calculatorPropsType";
 import ConsumablesList from "./ConsumablesList/ConsumablesList";
 
-const CraftTable = React.memo(({calculatorType}: {calculatorType: TCalcProps}) => {
+const CraftTable = memo(({calculatorType}: {calculatorType: TCalcProps}) => {
 
     const dispatchAction = useAppDispatch();
 
-    const {language, selectedLanguage} = useSelector(selectLanguage);
+    const {selectedLanguage, language} = useSelector(selectLanguage);
     const {craftTableStrings} = language;
 
-    const deleteLiHandler = (type: TCalcProps, id: string) => {
-        dispatchAction(profitSliceActions.deleteLiFunction({type, id}));
+    const deleteLiHandler = (calculatorType: TCalcProps, id: string) => {
+        dispatchAction(profitSliceActions.deleteLiFunction({calculatorType, id}));
+    }
+
+    const tableProps = {
+        craftTableStrings,
+        calculatorType,
+        deleteLiHandler,
+    }
+
+    const selectTableType = () => {
+        switch (calculatorType) {
+            case "ITEMS":
+                return <ItemTable {...tableProps} />;
+            case "RESOURCES":
+                return <ResourceTable {...tableProps} />;
+            case 'FOOD':
+            case "POTIONS":
+                return <ConsumablesList {...tableProps} selectedLanguage={selectedLanguage}/>;
+        }
     }
 
     return <StyledCraftTableWrapper>
@@ -31,29 +49,9 @@ const CraftTable = React.memo(({calculatorType}: {calculatorType: TCalcProps}) =
 
         <StyledThumb>
             <div className={styles.craftTableStyles}>
-                {calculatorType === "RESOURCES" && (
-                    <ResourceTable
-                        craftTableStrings={craftTableStrings}
-                        calculatorType={calculatorType}
-                        deleteLiHandler={deleteLiHandler}
-                    />
-                )}
 
-                {calculatorType === "ITEMS" && (
-                    <ItemTable
-                        craftTableStrings={craftTableStrings}
-                        deleteLiHandler={deleteLiHandler}
-                        calculatorType={calculatorType}
-                    />
-                )}
-                {(calculatorType === 'FOOD' || calculatorType === 'POTIONS') && (
-                    <ConsumablesList
-                        craftTableStrings={craftTableStrings}
-                        deleteLiHandler={deleteLiHandler}
-                        calculatorType={calculatorType}
-                        selectedLanguage={selectedLanguage}
-                    />
-                )}
+                { selectTableType() }
+
             </div>
         </StyledThumb>
     </StyledCraftTableWrapper>

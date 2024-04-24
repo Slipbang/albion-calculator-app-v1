@@ -1,16 +1,17 @@
 import StyledDefaultButton from "../../../StyledComponentsCommon/StyledDefaultButton";
-import {ITableData, profitSliceActions} from "../../../../../store/profit/profit-slice";
+import {profitSliceActions} from "../../../../../store/profit/profit-slice";
 import {useSelector} from "react-redux";
 import {selectCraftList, selectSimilarTypeErrors} from "../../../../../store/profit/profit-selectors";
-import {ISelectedLanguage} from "../../../../../types/languageTypes";
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {useAppDispatch} from "../../../../../store";
 import {interfaceSliceActions} from "../../../../../store/interface/interface-slice";
 import {srcRoute} from "../../../../../store/api/api";
 import styles from './TableStyles.module.scss';
+import {ITableData} from "../../../../../types/defaultCalculatorTypes";
+import {ISelectedLanguage} from "../../../../../types/languageTypes";
 
 interface TItemTableProps {
-    craftTableStrings: ISelectedLanguage['craftTableStrings'];
+    craftTableStrings: ISelectedLanguage['craftTableStrings']
     calculatorType: TCalcProps;
     deleteLiHandler: (type: TCalcProps, id: string) => void;
 }

@@ -1,9 +1,10 @@
 import {IItemsData, TCities} from "../../../../../types/InfoTableTypes";
-import {IConsumableTableData} from "../../../../../store/profit/profit-slice";
+//import {IConsumableTableData} from "../../../../../store/profit/profit-slice";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
 import {TConsumableNames} from "../../../../../store/Items/consumablesNamesData";
 import {TConsumablesSelectors} from "../InfoTable";
 import {UtilsMethodsClass} from "./UtilsMethodsClass";
+import {IConsumableTableData} from "../../../../../types/defaultCalculatorTypes";
 
 export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
     constructor(

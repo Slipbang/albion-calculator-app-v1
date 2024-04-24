@@ -1,26 +1,24 @@
 import StyledDefaultButton from "../../../StyledComponentsCommon/StyledDefaultButton";
 import {useSelector} from "react-redux";
 import {selectCraftList, selectSimilarTypeErrors} from "../../../../../store/profit/profit-selectors";
-import {ISelectedLanguage} from "../../../../../types/languageTypes";
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
-import {ITableData, profitSliceActions} from "../../../../../store/profit/profit-slice";
+import {profitSliceActions} from "../../../../../store/profit/profit-slice";
 import {interfaceSliceActions} from "../../../../../store/interface/interface-slice";
 import {useAppDispatch} from "../../../../../store";
 import {srcRoute} from "../../../../../store/api/api";
 import styles from './TableStyles.module.scss';
+import {ITableData} from "../../../../../types/defaultCalculatorTypes";
+import {ISelectedLanguage} from "../../../../../types/languageTypes";
 
 interface IResourceTableProps {
     deleteLiHandler: (type: TCalcProps, id: string) => void;
-    craftTableStrings: ISelectedLanguage['craftTableStrings'];
     calculatorType: TCalcProps;
+    craftTableStrings: ISelectedLanguage['craftTableStrings'];
 }
 
 const ResourceTable = (props: IResourceTableProps) => {
-    const {
-        craftTableStrings,
-        calculatorType,
-        deleteLiHandler
-    } = props;
+    const {craftTableStrings, calculatorType, deleteLiHandler} = props;
+
     const dispatchAction = useAppDispatch();
     const craftLists = useSelector(selectCraftList);
     const {RESOURCES: similarResourceId} = useSelector(selectSimilarTypeErrors);

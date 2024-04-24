@@ -14,12 +14,12 @@ const defineLanguage = (): TSelectedLanguage => {
 
 const systemLanguage = defineLanguage();
 
-interface IInitialState {
+export interface ILanguageInitialState {
     language: ISelectedLanguage;
     selectedLanguage: TSelectedLanguage;
 }
 
-const initialLanguageState: IInitialState = {
+const initialLanguageState: ILanguageInitialState = {
     language: language[systemLanguage],
     selectedLanguage: systemLanguage,
 };

@@ -1,103 +1,22 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {v4 as uuidv4} from 'uuid';
 import {TCalcProps} from "../../types/calculatorPropsType";
-import {TCraftItemType, TCraftObjectTypes, TItemNode, TResourceType, TTier} from "../../types/craftItemsType";
+import {
+    TCraftItemType,
+    TItemNode,
+    TResourceType,
+    TTier
+} from "../../types/craftItemsType";
 import {calculateJQ_DFC} from "../utils/calculateJQ_DFC";
 import {IConsumableObject} from "../../types/consumableTypes";
+import {
+    IConsumableTableData,
+    IInfoTableData, ISelectedItem, ISelectedResource,
+    ITableData,
+    TCraftedLists, TDivFactor,
+    TSimilarErrors
+} from "../../types/defaultCalculatorTypes";
 
-export interface IItemName {
-    ru: string;
-    en: string;
-}
-
-export interface ISpentQuantityPerItem {
-    mainMatsQuantity: number;
-    subMatsQuantity?: number;
-}
-
-export interface IInfoTableData {
-    output: number;
-    resourceId?: string;
-    itemId?: string;
-    mainMatsId: string;
-    subMatsId?: string | undefined;
-    foodConsumption: number;
-    defaultFoodConsumption: number;
-    spentQuantityPerItem?: ISpentQuantityPerItem;
-    journalId?: string,
-    emptyJournalId?: string;
-    journalsQuantity?: number;
-    itemName?: IItemName;
-    tier: string
-    artefactId?: string | undefined;
-}
-
-export interface ICraftTableData {
-    id: string;
-    percent: number;
-    mainResourceQuantity: number;
-    subResourceQuantity?: number;
-}
-
-export interface ITableQueryParams {
-    queryMatsParams: string;
-    queryItemsParams?: string;
-    queryJournalsParams?: string;
-}
-
-export interface ITableData {
-    infoTableData: IInfoTableData;
-    tableQueryParams?: ITableQueryParams;
-    craftTableData: ICraftTableData
-}
-
-export interface IConsumableTableData {
-    quantity: number;
-    percent: number;
-    queryParams: string;
-    craftedConsumable: IConsumableObject;
-    id: string;
-}
-
-export interface ISelectedItem {
-    selectedItemType: TCraftObjectTypes;
-    selectedItemTier: TTier;
-    foodConsumption: number,
-    selectedItemBodyId: string;
-    journalId: string;
-    emptyJournalId: string;
-    artefactId?: string;
-    itemName: {
-        ru: string,
-        en: string,
-    }
-}
-
-export interface ISelectedResource {
-    resourceId: string;
-    resourceTier: TTier,
-    foodConsumption: 1.8, // всегда 1.8
-    defaultFoodConsumption: 1.8; // всегда 1.8
-    resourceName: {
-        ru: string,
-        en: string,
-    }
-}
-
-type TSimilarErrors = {
-    [key in TCalcProps]: string | undefined;
-}
-
-type TCraftedLists = {
-    [key in TCalcProps]: IConsumableTableData[] | ITableData[];
-}
-
-type TDivFactor = {
-    [key in Exclude<TCalcProps, 'FOOD' | 'POTIONS'>]: {
-        mainDivFactor: number;
-        subDivFactor: number;
-    }
-}
 
 interface IInitialState {
     craftLists: TCraftedLists;
@@ -161,10 +80,10 @@ const initialState: IInitialState = {
         percentError: false,
         quantityError: false,
         similarError: {
-            ITEMS: undefined,
-            RESOURCES: undefined,
-            FOOD: undefined,
-            POTIONS: undefined,
+            ITEMS: null,
+            RESOURCES: null,
+            FOOD: null,
+            POTIONS: null,
         },
     },
 
@@ -316,6 +235,8 @@ const profitSlice = createSlice({
             state.errors.percentError = (state.percent < 15.2 || state.percent > 70);
             if (state.errors.percentError) return;
 
+            // items and resource calculation ------------------------------------------------------------------------------------------------
+
             if ((action.payload.calculatorType === 'ITEMS' || action.payload.calculatorType === "RESOURCES") && !state.errors.percentError) {
                 state.errors.quantityError = state.initialQuantity < state.divFactor[action.payload.calculatorType].mainDivFactor;
                 if (state.errors.quantityError) return;
@@ -327,7 +248,7 @@ const profitSlice = createSlice({
 
                 const hasSimilarItems = (craftResourcesList: ITableData[], itemId: string, percent: number, output: number) => {
                     let isSimilar = false;
-                    let similarItemId = undefined;
+                    let similarItemId = null;
                     craftResourcesList.some(item => {
                         const {craftTableData, infoTableData} = item;
                         const {percent: prevPercent, id} = craftTableData;
@@ -363,7 +284,7 @@ const profitSlice = createSlice({
                     subMatsQuantity: subDivFactor - (subDivFactor * (percent / 100)),
                 }
 
-                const infoTableData = (action.payload.calculatorType === 'ITEMS')
+                const infoTableData: IInfoTableData | undefined = (action.payload.calculatorType === 'ITEMS')
                     ? {
                         output,
                         foodConsumption: state.selected.selectedItem.foodConsumption,
@@ -421,7 +342,7 @@ const profitSlice = createSlice({
                 (state.craftLists[action.payload.calculatorType] as ITableData[]).unshift(usableItem);
             }
 
-            //---------------------------------------------------------------------------------------------------------------------------------------------------------
+            // food and potions calculation ----------------------------------------------------------------------------------------------------------------
 
             if ((action.payload.calculatorType === 'FOOD' || action.payload.calculatorType === 'POTIONS') && !state.errors.percentError) {
                 const craftedConsumableItem: IConsumableTableData = {
@@ -437,7 +358,7 @@ const profitSlice = createSlice({
                     const {itemId: newItemId} = craftedConsumable;
 
                     let isSimilar = false;
-                    let similarItemId = undefined;
+                    let similarItemId = null;
                     listToCheck.some(item => {
                         const {craftedConsumable, percent: prevPercent, quantity: prevQuantity, id} = item;
                         const {itemId: prevItemId} = craftedConsumable;
@@ -465,13 +386,13 @@ const profitSlice = createSlice({
                 state.craftLists[action.payload.calculatorType].pop();
             }
         },
-        deleteLiFunction(state, action: PayloadAction<{ type: TCalcProps; id: string }>) {
-            if (action.payload.type === "ITEMS" || action.payload.type === "RESOURCES") {
-                state.craftLists[action.payload.type] = (state.craftLists[action.payload.type] as ITableData[]).filter(item => item.craftTableData.id !== action.payload.id);
+        deleteLiFunction(state, action: PayloadAction<{ calculatorType: TCalcProps; id: string }>) {
+            if (action.payload.calculatorType === "ITEMS" || action.payload.calculatorType === "RESOURCES") {
+                state.craftLists[action.payload.calculatorType] = (state.craftLists[action.payload.calculatorType] as ITableData[]).filter(item => item.craftTableData.id !== action.payload.id);
             }
 
-            if (action.payload.type === 'FOOD' || action.payload.type === 'POTIONS') {
-                state.craftLists[action.payload.type] = (state.craftLists[action.payload.type] as IConsumableTableData[]).filter(item => item.id !== action.payload.id);
+            if (action.payload.calculatorType === 'FOOD' || action.payload.calculatorType === 'POTIONS') {
+                state.craftLists[action.payload.calculatorType] = (state.craftLists[action.payload.calculatorType] as IConsumableTableData[]).filter(item => item.id !== action.payload.id);
             }
         },
     }

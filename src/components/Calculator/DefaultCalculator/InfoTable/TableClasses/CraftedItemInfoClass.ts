@@ -1,9 +1,9 @@
 import {IItemsData, TCities} from "../../../../../types/InfoTableTypes";
 import {materials} from "../../../../../store/Items/materials";
 import {TArtefactName, TOwnPriceStates, TSelectedCityStates} from "../InfoTable";
-import {IInfoTableData} from "../../../../../store/profit/profit-slice";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
 import {UtilsMethodsClass} from "./UtilsMethodsClass";
+import {IInfoTableData} from "../../../../../types/defaultCalculatorTypes";
 
 export class CraftedItemInfoClass extends UtilsMethodsClass{
     constructor(

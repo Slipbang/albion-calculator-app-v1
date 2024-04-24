@@ -1,12 +1,10 @@
 import {CraftedItemInfoClass} from "../TableClasses/CraftedItemInfoClass";
 import {ICraftConsumableInfoTuple, ICraftItemInfoTuple, infoCityOptions} from "../InfoTable";
 import styles from "./TableTdElement.module.scss";
-import {TCities} from "../../../../../types/InfoTableTypes";
 import React from "react";
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {CraftedConsumablesInfoClass} from "../TableClasses/CraftedConsumablesInfoClass";
-import {IInfoTableData} from "../../../../../store/profit/profit-slice";
-
+import {IInfoTableData} from "../../../../../types/defaultCalculatorTypes";
 
 interface infoCities {
     CaerleonInfo: CraftedItemInfoClass | CraftedConsumablesInfoClass | undefined,

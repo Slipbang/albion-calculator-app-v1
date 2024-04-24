@@ -6,6 +6,7 @@ import {
     tannerWorkerAvatar
 } from "../../components/Calculator/GameModeCalculator/GMItemSelector/GMItemSelectorImgReexports/GMItemSelectorImgReexports";
 import {emptyBagCell, IBagCell, marketItems, IGMCraftItem} from "../Items/workBenchSelectorItems_marketItems";
+import {srcRoute} from "../api/api";
 
 export interface ISelectedWorkBenchItem extends IGMCraftItem{
     artefactsQuantity?: number;
@@ -281,7 +282,7 @@ const GMProfitSlice = createSlice({
                         if (item.itemId === null){
                             item.itemId = action.payload.journalId;
                             item.itemQuantity = +nonIntegerRestQuantity.toFixed(2);
-                            item.itemImage = `https://render.albiononline.com/v1/item/${action.payload.journalId}`
+                            item.itemImage = `${srcRoute}${action.payload.journalId}`
 
                             return true;
                         }
@@ -318,7 +319,7 @@ const GMProfitSlice = createSlice({
                                 if (item.itemId === null){
                                     item.itemId = `${action.payload.journalId}_FULL`;
                                     item.itemQuantity! = roundedQuantity;
-                                    item.itemImage = `https://render.albiononline.com/v1/item/${action.payload.journalId}_FULL`
+                                    item.itemImage = `${srcRoute}${action.payload.journalId}_FULL`
                                     return true;
                                 }
                             })
@@ -333,7 +334,7 @@ const GMProfitSlice = createSlice({
                             if (item.itemId === null){
                                 item.itemId = `${action.payload.journalId}_FULL`;
                                 item.itemQuantity = 999;
-                                item.itemImage = `https://render.albiononline.com/v1/item/${action.payload.journalId}_FULL`
+                                item.itemImage = `${srcRoute}${action.payload.journalId}_FULL`
 
                                 return true;
                             }
@@ -347,7 +348,7 @@ const GMProfitSlice = createSlice({
             fillJournals(action.payload.journalsQuantity);
         },
         sortBackpackItems(state){
-            state.backpackItems.sort((item1, item2) => {
+            state.backpackItems = state.backpackItems.sort((item1, item2) => {
                 if (item1.itemId! < item2.itemId!) return -1;
                 if (item1.itemId! > item2.itemId!) return 1;
 

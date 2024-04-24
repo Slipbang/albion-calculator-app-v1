@@ -8,12 +8,7 @@ import {TArtefactData} from "../../../../types/artefactTypes";
 import {selectCraftedConsumablesData, selectCraftedItemData} from "../../../../store/profit/profit-selectors";
 import {useAppDispatch} from "../../../../store";
 import {interfaceSliceActions} from "../../../../store/interface/interface-slice";
-import {
-    IConsumableTableData,
-    IInfoTableData,
-    ITableQueryParams,
-    profitSliceActions
-} from "../../../../store/profit/profit-slice";
+import {profitSliceActions} from "../../../../store/profit/profit-slice";
 import {defineArtefactsName} from "../../Definers/defineArtefactsName";
 import MaterialSelectors from "./MaterialSelectors/MaterialSelectors";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../types/languageTypes";
@@ -28,6 +23,7 @@ import {IConsumableObject} from "../../../../types/consumableTypes";
 import {consumablesNamesData, TConsumableNames} from "../../../../store/Items/consumablesNamesData";
 import ConsumablesPriceSelectors from "./ConsumablesPriceSelectors/ConsumablesPriceSelectors";
 import {TCalcProps} from "../../../../types/calculatorPropsType";
+import {IConsumableTableData, IInfoTableData, ITableQueryParams} from "../../../../types/defaultCalculatorTypes";
 
 export type ICraftItemInfoTuple = [
     itemData: IInfoTableData | undefined,
