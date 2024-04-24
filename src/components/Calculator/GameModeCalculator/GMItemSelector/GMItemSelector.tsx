@@ -1,5 +1,5 @@
 import styles from './GMItemSelector.module.scss'
-import React from "react";
+import {memo} from "react";
 
 import StyledWorkBench from "./GMItemSelectorSC/StyledWorkBench";
 
@@ -13,7 +13,7 @@ import {selectCalculatorType} from "../../../../store/interface/interface-select
 import FoodTaxBox from "./FoodTaxBox/FoodTaxBox";
 import WorkBenchSelectors from "./WorkBenchSelector/WorkBenchSelectors";
 
-export const GMItemSelector = React.memo(() => {
+export const GMItemSelector = memo(() => {
     const calculatorType = useSelector(selectCalculatorType);
 
     return (

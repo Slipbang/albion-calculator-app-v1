@@ -54,7 +54,8 @@ const TransportationForm = () => {
                 <p>{transportationFormStrings.sortBy}</p>
                 <select
                     value={profitSort}
-                    id="byPercentOrProfit" onChange={(event) => selectSortHandler(event)}
+                    id="byPercentOrProfit"
+                    onChange={(event) => selectSortHandler(event)}
                 >
                     <option value="BY_PERCENTAGE_PROFIT">{transportationFormStrings.percentageProfit}</option>
                     <option value="BY_PROFIT">{transportationFormStrings.silverProfit}</option>

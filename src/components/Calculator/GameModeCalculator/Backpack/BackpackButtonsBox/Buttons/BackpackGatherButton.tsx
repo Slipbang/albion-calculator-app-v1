@@ -13,14 +13,16 @@ const BackpackGatherButton = () => {
     const gatherBackpackItemsHandler = () => {
         dispatchAction(GMProfitSliceActions.gatherBackpackItems());
     }
-    return <StyledDefaultButton
-        $width={71}
-        $height={25}
-        style={{fontSize: '12px'}}
-        onClick={() => gatherBackpackItemsHandler()}
-    >
-        {backpackString.gatherButton}
-    </StyledDefaultButton>
+    return (
+        <StyledDefaultButton
+            $width={71}
+            $height={25}
+            style={{fontSize: '12px'}}
+            onClick={() => gatherBackpackItemsHandler()}
+        >
+            {backpackString.gatherButton}
+        </StyledDefaultButton>
+    )
 }
 
 export default BackpackGatherButton;

@@ -42,8 +42,9 @@ const Artefacts = () => {
                     )
                 })}
             </ul>
+
             <Tooltip
-                id="artefacts-table-tooltip-data-html"
+                id='artefacts-table-tooltip-data-html'
                 place='left-start'
                 className={styles.artefactsTooltip}
                 style={{

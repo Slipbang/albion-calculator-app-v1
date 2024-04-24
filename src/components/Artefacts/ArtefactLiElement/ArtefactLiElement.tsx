@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../store/language/language-selector";
 import {TArtefactsTier} from "../../../store/artefacts/artefact-slice";
 import styles from './ArtefactLiElement.module.scss';
-import React, {useState} from "react";
+import {memo, useState} from "react";
 import StyledCompleteResetButton from "../../Calculator/StyledComponentsCommon/StyledСompleteResetButton";
 import {IItemsData} from "../../../types/InfoTableTypes";
 import {ClockLoader} from "react-spinners";
@@ -29,14 +29,14 @@ interface IArtefactsDataProps{
     selectedTier: TArtefactsTier,
 }
 
-const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
+const ArtefactLiElement = memo((props: IArtefactsDataProps) => {
     const {
         artefactData,
         selectedTier,
     } = props;
     const {id, itemValue, artefactId, artefactName} = artefactData;
 
-    const [wasChecked, setWasChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
     const [wasCopied, setWasCopied] = useState(false);
 
     const {language, selectedLanguage} = useSelector(selectLanguage);
@@ -48,7 +48,7 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
         navigator.clipboard.writeText(title).then(() => {
             setWasCopied(true);
         }).then(() => {
-            setWasChecked(true);
+            setIsChecked(true);
         }).then(() => setTimeout(() => {
             setWasCopied(false);
         }, 1000))
@@ -68,7 +68,7 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
             itemValue,
             artefactId,
             currentDate
-        ]
+        ];
 
     const artefactTable = new artefactsPrices(...artefactsArgs);
 
@@ -77,6 +77,7 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
             <li
                 key={id}
                 className={styles.listElem}
+                data-checked={isChecked ? 'checked' : 'non-checked'}
             >
                 <div
                     className={styles.imageBox}
@@ -85,25 +86,24 @@ const ArtefactLiElement = React.memo((props: IArtefactsDataProps) => {
                 >
                     <img
                         draggable={false}
-                        alt=""
+                        alt=''
                         src={`${srcRoute}${fullArtefactId}`}
                     />
                     <ClockLoader
                         className={styles.spinnerStyles}
-                        color="rgb(235, 198, 159)"
+                        color='gb(235, 198, 159)'
                         loading={isArtefactsFetching}
                         size={15}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
+                        aria-label='Loading Spinner'
+                        data-testid='loader'
                     />
                     {!isArtefactsFetching && !isErrorArtefacts && <p>ℹ</p>}
                 </div>
                 <p
-                    className={wasChecked ? styles.checkedArtefact : ''}
                     onClick={() => copyTextHandler(artefactName[selectedLanguage])}
                 >{!wasCopied ? (artefactName[selectedLanguage]) : (artefactsStrings.copyState)}</p>
                 <StyledCompleteResetButton
-                    onClick={() => setWasChecked(false)}
+                    onClick={() => setIsChecked(false)}
                     title={artefactsStrings.resetButtonTitle}
                 />
             </li>

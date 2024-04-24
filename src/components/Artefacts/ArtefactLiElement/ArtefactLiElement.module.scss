@@ -23,6 +23,7 @@
     cursor: pointer;
     color: var(--color-table-text);
     transition: 1s ease color;
+    filter: var(--filter-paragraph);
   }
 
   p:hover {
@@ -61,8 +62,11 @@
   margin-left: 44px;
 }
 
-.checkedArtefact{
-  filter: drop-shadow(1px 1px 3px var(--isChecked-color));
+[data-checked='checked']{
+  --filter-paragraph: drop-shadow(1px 1px 3px var(--isChecked-color));
 }
 
+[data-checked='non-checked']{
+  --filter-paragraph: none;
+}
 

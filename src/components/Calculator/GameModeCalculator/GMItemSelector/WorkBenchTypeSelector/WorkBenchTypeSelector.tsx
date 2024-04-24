@@ -172,29 +172,33 @@ const WorkBenchTypeSelector = () => {
         dispatchAction(GMProfitSliceActions.setItemTypeSelected(itemType));
     }
 
-    return <div className={styles.workBenchTypeSelector} data-selected={calculatorType}>
-        {workBenchNodeSelectorButtons[calculatorType].map((button, index) => {
-            const {
-                workBenchType,
-                workBenchAvatar,
-                workerAvatar,
-                buttonImage,
-                selectedButtonImage,
-            } = button;
+    return (
+        <div className={styles.workBenchTypeSelector} data-selected={calculatorType}>
+            {workBenchNodeSelectorButtons[calculatorType].map((button, index) => {
+                const {
+                    workBenchType,
+                    workBenchAvatar,
+                    workerAvatar,
+                    buttonImage,
+                    selectedButtonImage,
+                } = button;
 
-            return <StyledWorkBenchTypeButton
-                key={workBenchType}
-                title={workBenchType}
-                ref={index === 0 ? workBenchTypeButtonRef : undefined}
-                $isSelected={workBenchTypeSelected === workBenchType}
-                $buttonImage={buttonImage}
-                $selectedButtonImage={selectedButtonImage}
-                onClick={() => {
-                    selectWorkBenchTypeHandler(workBenchType, workBenchAvatar, workerAvatar);
-                }}
-            />
-        })}
-    </div>
+                return (
+                    <StyledWorkBenchTypeButton
+                        key={workBenchType}
+                        title={workBenchType}
+                        ref={index === 0 ? workBenchTypeButtonRef : undefined}
+                        $isSelected={workBenchTypeSelected === workBenchType}
+                        $buttonImage={buttonImage}
+                        $selectedButtonImage={selectedButtonImage}
+                        onClick={() => {
+                            selectWorkBenchTypeHandler(workBenchType, workBenchAvatar, workerAvatar);
+                        }}
+                    />
+                )
+            })}
+        </div>
+    )
 }
 
 export default WorkBenchTypeSelector;

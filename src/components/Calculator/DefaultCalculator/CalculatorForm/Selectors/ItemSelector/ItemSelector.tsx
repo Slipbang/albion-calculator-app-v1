@@ -39,18 +39,17 @@ const ItemSelector = (props: IItemSelectorProps) => {
     return (
         <div className={styles.wrapper}>
             <p>{calculatorFormStrings.type}</p>
-            <div className={styles.itemTypeSelector}
-                 ref={classSelectorRef}
-                 onClick={() => {
-                     dispatchAction(interfaceSliceActions.toggleItemSelectorVisibility());
-                     dispatchAction(interfaceSliceActions.toggleCraftTableVisibility(true));
-                 }}
+            <div
+                className={styles.itemTypeSelector}
+                ref={classSelectorRef}
+                onClick={() => {
+                    dispatchAction(interfaceSliceActions.toggleItemSelectorVisibility());
+                    dispatchAction(interfaceSliceActions.toggleCraftTableVisibility(true));
+                }}
             >
-                <SelectedItemImage selectedLanguage={selectedLanguage} />
+                <SelectedItemImage selectedLanguage={selectedLanguage}/>
 
-                {isItemSelectorShown &&
-                    <ItemTypeSelector />
-                }
+                {isItemSelectorShown && <ItemTypeSelector />}
             </div>
         </div>
     )

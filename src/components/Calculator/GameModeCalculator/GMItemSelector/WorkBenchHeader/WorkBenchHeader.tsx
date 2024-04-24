@@ -10,18 +10,18 @@ import {
 import styles from './WorkBenchHeader.module.scss';
 import {selectLanguage} from "../../../../../store/language/language-selector";
 import {ICraftingItemClass, TWorkBenchNames} from "../../../../../types/craftItemsType";
+import {TSelectedLanguage} from "../../../../../types/languageTypes";
 
 type TNameObject = {
-    [key in ICraftingItemClass]: TWorkBenchNames
+    [key in ICraftingItemClass]: TWorkBenchNames;
 }
 
-interface IWorkBenchNames {
-    'ru': TNameObject,
-    'en': TNameObject,
+type IWorkBenchNames = {
+    [key in TSelectedLanguage]: TNameObject;
 }
 
 const workBenchNames: IWorkBenchNames = {
-    'ru': {
+    ru: {
         warrior: 'Кузница',
         hunter: 'Охотничий домик',
         mage: 'Башня мага',
@@ -32,7 +32,7 @@ const workBenchNames: IWorkBenchNames = {
         stonemason: 'Каменоломня',
         weaver: 'Ткацкая мастерская'
     },
-    'en': {
+    en: {
         warrior: 'Warrior\'s Forge',
         hunter: 'Hunter\'s Lodge',
         mage: 'Mage\'s Tower',
@@ -53,40 +53,41 @@ const WorkBenchHeader = () => {
     const {language, selectedLanguage} = useSelector(selectLanguage);
     const {GMItemSelectorStings} = language;
 
-
-    return <div className={styles.workBenchHeader}>
-        <div className={styles.workBenchAvatarBox}>
-            <StyledImageBox
-                $image={workBenchAvatar}
-                $position={'static'}
-                $width={76}
-                $height={77}
-                $hasDropShadow={false}
-            />
-            <p>{workBenchNames[selectedLanguage][selectedWorkBenchType]}</p>
-        </div>
-
-        <div className={styles.workerAvatarBox}>
-            <StyledImageBox
-                $image={workBenchWorkerAvatar}
-                $position={'static'}
-                $width={56}
-                $height={57}
-                $hasDropShadow={true}
-                $zIndex={3}
-            />
-            <div className={styles.workerDialog}>
+    return (
+        <div className={styles.workBenchHeader}>
+            <div className={styles.workBenchAvatarBox}>
                 <StyledImageBox
-                    $image={dialogWindow}
+                    $image={workBenchAvatar}
                     $position={'static'}
-                    $width={220}
-                    $height={46}
-                    $hasDropShadow={true}
+                    $width={76}
+                    $height={77}
+                    $hasDropShadow={false}
                 />
-                <p>{GMItemSelectorStings.dialogText}</p>
+                <p>{workBenchNames[selectedLanguage][selectedWorkBenchType]}</p>
+            </div>
+
+            <div className={styles.workerAvatarBox}>
+                <StyledImageBox
+                    $image={workBenchWorkerAvatar}
+                    $position={'static'}
+                    $width={56}
+                    $height={57}
+                    $hasDropShadow={true}
+                    $zIndex={3}
+                />
+                <div className={styles.workerDialog}>
+                    <StyledImageBox
+                        $image={dialogWindow}
+                        $position={'static'}
+                        $width={220}
+                        $height={46}
+                        $hasDropShadow={true}
+                    />
+                    <p>{GMItemSelectorStings.dialogText}</p>
+                </div>
             </div>
         </div>
-    </div>
+    )
 }
 
 export default WorkBenchHeader;

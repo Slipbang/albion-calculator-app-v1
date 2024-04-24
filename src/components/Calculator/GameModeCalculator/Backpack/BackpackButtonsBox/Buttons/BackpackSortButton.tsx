@@ -21,9 +21,7 @@ const BackpackSortButton = () => {
             $height={25}
             style={{fontSize: `${isRuSelected ? 9 : 12}px`, lineHeight: '15px'}}
             onClick={() => sortBackpackItemsHandler()}
-        >
-            {backpackString.sortButton}
-        </StyledDefaultButton>
+        >{backpackString.sortButton}</StyledDefaultButton>
     )
 }
 

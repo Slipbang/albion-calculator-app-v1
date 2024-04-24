@@ -9,7 +9,7 @@ const FAQ = () => {
 
     return (
         <div className={styles.FAQStyles}>
-            <p>{FAQStrings.description1} <a href="https://github.com/Slipbang" target='_blank'> Slipbang</a>.</p>
+            <p>{FAQStrings.description1} <a href="https://github.com/Slipbang" target='_blank'> Slipbang</a></p>
 
             <br/>
 
@@ -17,7 +17,7 @@ const FAQ = () => {
 
             <br/>
 
-            <p>{FAQStrings.description3} <a href="https://discordapp.com/users/150513063311835136" target='_blank'> discord</a>.</p>
+            <p>{FAQStrings.description3} <a href="https://discordapp.com/users/150513063311835136" target='_blank'>Discord</a>.</p>
         </div>
     )
 }

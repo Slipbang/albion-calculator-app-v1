@@ -35,8 +35,7 @@ const MarketMenuItemList = () => {
                     )
 
                 })}
-                {selectedMarketItems !== deferredMarketItems && Array.from({length: 10}).map((_, index) =>
-                    <MarketItemLoader key={index}/>)}
+                {selectedMarketItems !== deferredMarketItems && Array.from({length: 10}).map((_, index) => <MarketItemLoader key={index}/>)}
             </div>
         </StyledThumb>
     )

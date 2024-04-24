@@ -14,8 +14,7 @@ const PercentError = (props: IPercentErrorProps) => {
     const {percentError} = useSelector(selectErrors);
 
     return <>
-        {percentError &&
-            <p className={errorStyles}>{calculatorFormStrings.percentError}</p>}
+        {percentError && <p className={errorStyles}>{calculatorFormStrings.percentError}</p>}
     </>
 }
 

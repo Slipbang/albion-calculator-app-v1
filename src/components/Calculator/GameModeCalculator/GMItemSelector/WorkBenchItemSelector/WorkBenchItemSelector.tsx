@@ -7,7 +7,6 @@ import WorkBenchItem from "./WorkBenchItem/WorkBenchItem";
 import {selectWorkBenchType, selectItemType} from "../../../../../store/GMProfit/gm-profit-selectors";
 import {workBenchSelectorItems} from "../../../../../store/Items/workBenchSelectorItems_marketItems";
 
-
 const WorkBenchItemSelector = () => {
 
     const selectedWorkBenchType = useSelector(selectWorkBenchType);

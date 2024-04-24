@@ -12,10 +12,12 @@ const CloseButton = () => {
         dispatchAction(interfaceSliceActions.setIsArtefactPriceFetchedCF(false));
     };
 
-    return <StyledCloseButton
-        onClick={() => closeCraftingFormHandler()}
-        onMouseDown={(event) => event.preventDefault()}
-    />
+    return (
+        <StyledCloseButton
+            onClick={() => closeCraftingFormHandler()}
+            onMouseDown={(event) => event.preventDefault()}
+        />
+    )
 }
 
 export default CloseButton;

@@ -46,55 +46,52 @@ const ItemTierSelector = (props: IItemTierSelectorProps) => {
             <p>{calculatorFormStrings.itemTier}</p>
             <div
                 id='itemTierSelector'
-                className={styles.itemTierSelector}
+                className={styles.selectedItem}
                 ref={tierSelectorRef}
                 onClick={() => setIsItemTierSelectorShown(prevState => !prevState)}
             >
                 <img
+                    style={{marginLeft: 20}}
                     className={styles.backgroundSkeleton}
                     title={`${itemName?.[selectedLanguage]} ${selectedItemTier}`}
                     src={selectorImg}
                     alt=""
                 />
-                <p>{}</p>
-                {isItemTierSelectorShown &&
-                    <img
-                        src={arrowRight}
-                        alt=''
-                        style={{
-                            width: '11px',
-                            height: '50px',
-                            top: '6px',
-                            left: '64px',
-                            position: 'absolute'
-                        }}
-                    />}
-                <div
-                    className={isItemTierSelectorShown ? styles.itemTierButtonSelector : styles.itemTierButtonSelectorHidden}>
-                    {['T4', 'T5', 'T6', 'T7', 'T8'].map(tier => {
-                            let itemId: string;
-                            if ((selectedItemType === 'BAG' && selectedItemBodyId !== 'INSIGHT') || selectedItemType === 'CAPE') {
-                                itemId = selectedItemBodyId;
-                            } else {
-                                itemId = `${selectedItemType}_${selectedItemBodyId}`
-                            }
-                            return (
-                                <span key={tier}>
-                                    <img
-                                        className={styles.backgroundSkeleton}
-                                        title={tier}
-                                        src={`${srcRoute}${tier}_${itemId}`}
-                                        alt=''
-                                        onClick={(event) => {
-                                            event.stopPropagation();
-                                            selectItemTierHandler(tier as TTier);
-                                            setIsItemTierSelectorShown(false);
-                                        }}/>
-                                 </span>
-                            )
-                        }
-                    )}
-                </div>
+                {isItemTierSelectorShown && (
+                    <div className={styles.itemTierSelector}>
+                        <img
+                            src={arrowRight}
+                            alt=''
+                            style={{width: '11px', height: '50px'}}
+                        />
+                        <div className={styles.itemTierButtonSelector}>
+                            {['T4', 'T5', 'T6', 'T7', 'T8'].map(tier => {
+                                    let itemId: string;
+                                    if ((selectedItemType === 'BAG' && selectedItemBodyId !== 'INSIGHT') || selectedItemType === 'CAPE') {
+                                        itemId = selectedItemBodyId;
+                                    } else {
+                                        itemId = `${selectedItemType}_${selectedItemBodyId}`;
+                                    }
+                                    return (
+                                        <span key={tier}>
+                                            <img
+                                                className={styles.backgroundSkeleton}
+                                                title={tier}
+                                                src={`${srcRoute}${tier}_${itemId}`}
+                                                alt=''
+                                                onClick={(event) => {
+                                                    event.stopPropagation();
+                                                    selectItemTierHandler(tier as TTier);
+                                                    setIsItemTierSelectorShown(false);
+                                                }}
+                                            />
+                                        </span>
+                                    )
+                                }
+                            )}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     )

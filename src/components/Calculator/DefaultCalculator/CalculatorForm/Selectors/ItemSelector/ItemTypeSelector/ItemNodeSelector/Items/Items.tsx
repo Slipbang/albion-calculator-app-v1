@@ -91,7 +91,7 @@ const Items = (props: IItemsProps) => {
 
     return (
         <>
-            {itemNodeOfNodeSelector === itemNode &&
+            {itemNodeOfNodeSelector === itemNode && (
                 <>
                     <img
                         src={arrowRight}
@@ -99,8 +99,8 @@ const Items = (props: IItemsProps) => {
                         style={{
                             width: '11px',
                             height: '50px',
-                            marginTop: '6px'
-                    }}
+                            marginTop: '7px'
+                        }}
                     />
                     {objectTypeKeys.map(itemTypeKey => craftItems[itemTypeKey].map(itemToSelect => {
                         const {mainDiv, subDiv} = defineDivisionsFactors(itemToSelect);
@@ -136,7 +136,8 @@ const Items = (props: IItemsProps) => {
                             </div>
                         )
                     }))}
-                </>}
+                </>
+            )}
         </>
     )
 }

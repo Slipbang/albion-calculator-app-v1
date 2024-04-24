@@ -1,13 +1,14 @@
 .item {
   position: relative;
   cursor: pointer;
+  height: 65px;
 
   div {
     position: absolute;
     width: 25px;
     height: 20px;
     right: 5px;
-    bottom: 12px;
+    bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;

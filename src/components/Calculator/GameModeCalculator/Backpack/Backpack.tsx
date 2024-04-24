@@ -1,16 +1,14 @@
-import React from "react";
+import {memo} from "react";
 
 import StyledBackpack from "./BackpackSC/StyledBackpack";
 import SilverIcon from "./SilverIcon/SilverIcon";
 import BackpackItems from "./BackpackItems/BackpackItems";
 import BackpackButtonsBox from "./BackpackButtonsBox/BackpackButtonsBox";
 
-const Backpack = React.memo(() => {
+const Backpack = memo(() => {
 
     return (
-        <StyledBackpack
-            draggable={false}
-        >
+        <StyledBackpack draggable={false}>
             <BackpackItems />
 
             <SilverIcon />

@@ -27,17 +27,17 @@ const ResourceTable = (props: IResourceTableProps) => {
 
     const fetchResourceDataHandler = (item: ITableData) => {
         let {resourceId, mainMatsId, subMatsId} = item.infoTableData;
-        let craftedMaterial = `${resourceId},`;
-        let subMats = `${subMatsId},`;
-        let mainMats = `${mainMatsId},`;
+        const craftedMaterial = [resourceId];
+        const subMats = [subMatsId];
+        const mainMats = [mainMatsId];
 
         [1,2,3,4].forEach(enchantmentLvl => {
-            craftedMaterial += !resourceId!.includes('STONEBLOCK') ? `${resourceId}_LEVEL${enchantmentLvl}@${enchantmentLvl},` : '';
-            subMats += !subMats.includes('STONEBLOCK') ? `${subMatsId}_LEVEL${enchantmentLvl}@${enchantmentLvl},` : '';
-            mainMats += `${mainMatsId}_LEVEL${enchantmentLvl}@${enchantmentLvl}${(enchantmentLvl === 4) ? '' : ','}`;
+            if (!resourceId!.includes('STONEBLOCK')) craftedMaterial.push(`${resourceId}_LEVEL${enchantmentLvl}@${enchantmentLvl}`);
+            if (!subMatsId!.includes('STONEBLOCK')) subMats.push(`${subMatsId}_LEVEL${enchantmentLvl}@${enchantmentLvl}`);
+            mainMats.push(`${mainMatsId}_LEVEL${enchantmentLvl}@${enchantmentLvl}`);
         });
 
-        const queryMatsParams = `${craftedMaterial}${subMats}${mainMats}`;
+        const queryMatsParams = `${craftedMaterial.join(',')},${subMats.join(',')},${mainMats.join(',')}`;
 
         dispatchAction(profitSliceActions.setCraftedItem({
             ...item,
@@ -49,56 +49,58 @@ const ResourceTable = (props: IResourceTableProps) => {
     }
 
     return <div className={styles.tableStyle} data-notification={craftTableStrings.alert}>
-        {craftLists[calculatorType].length > 0 && <table>
-            <thead>
-            <tr>
-                <th>{craftTableStrings.materialTier}</th>
-                <th>{craftTableStrings.resQuant}</th>
-                <th>{craftTableStrings.subMatsQuant}</th>
-                <th>{craftTableStrings.returnPercentage}</th>
-                <th>{craftTableStrings.materialsOutput}</th>
-                <th>{craftTableStrings.deleteButton}</th>
-            </tr>
-            </thead>
+        {craftLists[calculatorType].length > 0 && (
+            <table>
+                <thead>
+                <tr>
+                    <th>{craftTableStrings.materialTier}</th>
+                    <th>{craftTableStrings.resQuant}</th>
+                    <th>{craftTableStrings.subMatsQuant}</th>
+                    <th>{craftTableStrings.returnPercentage}</th>
+                    <th>{craftTableStrings.materialsOutput}</th>
+                    <th>{craftTableStrings.deleteButton}</th>
+                </tr>
+                </thead>
 
-            <tbody>
-            {(craftLists[calculatorType] as ITableData[]).map((item) => {
-                const {id, mainResourceQuantity, subResourceQuantity, percent} = item.craftTableData;
-                const {resourceId, spentQuantityPerItem, output} = item.infoTableData;
+                <tbody>
+                {(craftLists[calculatorType] as ITableData[]).map((item) => {
+                        const {id, mainResourceQuantity, subResourceQuantity, percent} = item.craftTableData;
+                        const {resourceId, spentQuantityPerItem, output} = item.infoTableData;
 
-                return (
-                    <tr key={id} data-similar-allert={id === similarResourceId ? 'similar' : 'non-similar'}>
-                        <td>
-                            <img
-                                draggable={false}
-                                src={`${srcRoute}${resourceId}`}
-                                alt={resourceId}
-                                title={spentQuantityPerItem?.mainMatsQuantity.toString()}
-                            />
-                        </td>
-                        <td>{mainResourceQuantity}{craftTableStrings.metrics}</td>
-                        <td>{subResourceQuantity}{craftTableStrings.metrics}</td>
-                        <td>{percent}%</td>
-                        <td>{output}{craftTableStrings.metrics}</td>
-                        <td>
-                            <StyledDefaultButton
-                                $width={70}
-                                $height={23}
-                                onClick={() => deleteLiHandler(calculatorType, id)}
-                            >delete</StyledDefaultButton>
+                        return (
+                            <tr key={id} data-similar-allert={id === similarResourceId ? 'similar' : 'non-similar'}>
+                                <td>
+                                    <img
+                                        draggable={false}
+                                        src={`${srcRoute}${resourceId}`}
+                                        alt={resourceId}
+                                        title={spentQuantityPerItem?.mainMatsQuantity.toString()}
+                                    />
+                                </td>
+                                <td>{mainResourceQuantity}{craftTableStrings.metrics}</td>
+                                <td>{subResourceQuantity}{craftTableStrings.metrics}</td>
+                                <td>{percent}%</td>
+                                <td>{output}{craftTableStrings.metrics}</td>
+                                <td>
+                                    <StyledDefaultButton
+                                        $width={70}
+                                        $height={23}
+                                        onClick={() => deleteLiHandler(calculatorType, id)}
+                                    >delete</StyledDefaultButton>
 
-                            <StyledDefaultButton
-                                $width={70}
-                                $height={23}
-                                onClick={() => fetchResourceDataHandler(item)}
-                            >Info</StyledDefaultButton>
-                        </td>
-                    </tr>
-                )
-            }
-            )}
-            </tbody>
-        </table>}
+                                    <StyledDefaultButton
+                                        $width={70}
+                                        $height={23}
+                                        onClick={() => fetchResourceDataHandler(item)}
+                                    >Info</StyledDefaultButton>
+                                </td>
+                            </tr>
+                        )
+                    }
+                )}
+                </tbody>
+            </table>
+        )}
     </div>
 }
 

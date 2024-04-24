@@ -31,18 +31,12 @@ const ItemTypeSelector = () => {
 
     return (
         <>
-            <img
-                alt=''
-                src={arrowRight}
-                style={{
-                    width: '11px',
-                    height: '50px',
-                    marginLeft: '64px',
-                    marginTop: '6px',
-                    position: "absolute"
-                }}
-            />
             <div className={styles.itemTypeButtonSelector}>
+                <img
+                    alt=''
+                    src={arrowRight}
+                    style={{width: '11px', height: '50px', marginRight: 5, marginBottom: 5}}
+                />
                 <SwipeButton
                     swipeButtonImage={leftSwipeButton}
                     isLeft={true}
@@ -63,16 +57,16 @@ const ItemTypeSelector = () => {
                                 })
                             }}
                         >
-                        <img
-                            className={styles.imgLoaderBackground}
-                            src={`${srcRoute}${selectedItemTier}_${itemForTypeSelect.itemId}`}
-                            alt=''
-                        />
+                            <img
+                                className={styles.imgLoaderBackground}
+                                src={`${srcRoute}${selectedItemTier}_${itemForTypeSelect.itemId}`}
+                                alt=''
+                            />
 
-                             <ItemNodeSelector
-                                 typeOfTypeSelector={itemForTypeSelect.itemType!}
-                                 selectedItemTier={selectedItemTier}
-                             />
+                            <ItemNodeSelector
+                                typeOfTypeSelector={itemForTypeSelect.itemType!}
+                                selectedItemTier={selectedItemTier}
+                            />
                     </span>
                     )
                 })}

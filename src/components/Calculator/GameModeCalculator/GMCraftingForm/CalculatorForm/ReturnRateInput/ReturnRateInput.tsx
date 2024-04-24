@@ -16,9 +16,6 @@ const ReturnRateInput = () => {
     const {GMCraftingFormStrings} = language;
 
     const setReturnPercentHandler = (value: number) => {
-        if (value >= 15.2 && value < 70) {
-
-        }
         dispatchAction(interfaceSliceActions.setReturnPercentCF(value));
     }
 

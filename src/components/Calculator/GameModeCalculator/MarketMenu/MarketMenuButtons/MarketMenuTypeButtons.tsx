@@ -14,7 +14,6 @@ import {interfaceSliceActions} from "../../../../../store/interface/interface-sl
 import {useAppDispatch} from "../../../../../store";
 import {selectLanguage} from "../../../../../store/language/language-selector";
 
-
 const MarketMenuTypeButtons = () => {
     const isMarketMenuShown = useSelector(selectMarketMenuShown);
     const marketActionSelected = useSelector(selectMarketAction);
@@ -28,28 +27,30 @@ const MarketMenuTypeButtons = () => {
         dispatchAction(interfaceSliceActions.resetMarketMenuSelectors());
     }
 
-    return <>
-        <StyledMarketButton
-            $isMenuShown={isMarketMenuShown}
-            $isSelected={marketActionSelected === 'buy' && isMarketMenuShown}
-            $hoverimg={marketBuyPageButtonActive}
-            $buttonoimg={marketBuyPageButtonInactive}
-            $top={145}
-            $left={-50}
-            onClick={() => setMarketTypeActionHandler('buy')}
-            title={marketMenuStrings.buy}
-        />
-        <StyledMarketButton
-            $isMenuShown={isMarketMenuShown}
-            $isSelected={marketActionSelected === 'sell' && isMarketMenuShown}
-            $hoverimg={marketSellPageButtonActive}
-            $buttonoimg={marketSellPageButtonInactive}
-            $top={220}
-            $left={-50}
-            onClick={() => setMarketTypeActionHandler('sell')}
-            title={marketMenuStrings.sell}
-        />
-    </>
+    return (
+        <>
+            <StyledMarketButton
+                $isMenuShown={isMarketMenuShown}
+                $isSelected={marketActionSelected === 'buy' && isMarketMenuShown}
+                $hoverimg={marketBuyPageButtonActive}
+                $buttonoimg={marketBuyPageButtonInactive}
+                $top={145}
+                $left={-50}
+                onClick={() => setMarketTypeActionHandler('buy')}
+                title={marketMenuStrings.buy}
+            />
+            <StyledMarketButton
+                $isMenuShown={isMarketMenuShown}
+                $isSelected={marketActionSelected === 'sell' && isMarketMenuShown}
+                $hoverimg={marketSellPageButtonActive}
+                $buttonoimg={marketSellPageButtonInactive}
+                $top={220}
+                $left={-50}
+                onClick={() => setMarketTypeActionHandler('sell')}
+                title={marketMenuStrings.sell}
+            />
+        </>
+    )
 }
 
 export default MarketMenuTypeButtons;

@@ -28,17 +28,19 @@ const DefaultCalculator = () => {
         [styles.craftTableOpenedStyles]: !!isCraftTableShown,
     })
 
-    return <div className={styles.wrapper}>
-        {!!isInfoTableShown && <InfoTable calculatorType={calculatorType} />}
+    return (
+        <div className={styles.wrapper}>
+            {!!isInfoTableShown && <InfoTable calculatorType={calculatorType} />}
 
-        <div className={defaultCalculatorStyles}>
-            <CalculatorForm calculatorType={calculatorType} />
+            <div className={defaultCalculatorStyles}>
+                <CalculatorForm calculatorType={calculatorType}/>
 
-            <div className={craftTableStyles}>
-                <CraftTable calculatorType={calculatorType} />
+                <div className={craftTableStyles}>
+                    <CraftTable calculatorType={calculatorType}/>
+                </div>
             </div>
         </div>
-    </div>
+    )
 }
 
 export default DefaultCalculator;

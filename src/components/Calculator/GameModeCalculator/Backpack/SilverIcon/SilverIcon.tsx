@@ -11,12 +11,14 @@ const SilverIcon = () => {
 
     const backpackSilver = useSelector(selectBackpackSilver);
 
-    return <div className={styles.backPackSilverIconStyles}>
-        <StyledBackpackSilverIcon
-            title={backpackString.iconTitle}
-        />
-        <p>{backpackSilver.toLocaleString('en')}</p>
-    </div>
+    return (
+        <div className={styles.backPackSilverIconStyles}>
+            <StyledBackpackSilverIcon
+                title={backpackString.iconTitle}
+            />
+            <p>{backpackSilver.toLocaleString('en')}</p>
+        </div>
+    )
 }
 
 export default SilverIcon;

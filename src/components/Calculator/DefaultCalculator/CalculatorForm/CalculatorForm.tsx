@@ -28,7 +28,7 @@ const CalculatorForm = React.memo(({calculatorType}: {calculatorType: TCalcProps
             <div className={styles.calculatorForm}>
                 <h3 className={styles.headerStyles}>{calculatorFormStrings.craftHeader[calculatorType]}</h3>
 
-                {calculatorType === 'ITEMS' &&
+                {calculatorType === 'ITEMS' && (
                     <>
                         <ItemSelector
                             calculatorFormStrings={calculatorFormStrings}
@@ -38,22 +38,25 @@ const CalculatorForm = React.memo(({calculatorType}: {calculatorType: TCalcProps
                             calculatorFormStrings={calculatorFormStrings}
                             selectedLanguage={selectedLanguage}
                         />
-                    </>}
+                    </>
+                )}
 
-                {calculatorType === 'RESOURCES' &&
+                {calculatorType === 'RESOURCES' && (
                     <ResourceSelector
                         calculatorType={calculatorType}
                         calculatorFormStrings={calculatorFormStrings}
                         selectedLanguage={selectedLanguage}
-                    />}
+                    />
+                )}
 
-                {(calculatorType === 'FOOD' || calculatorType === 'POTIONS') &&
+                {(calculatorType === 'FOOD' || calculatorType === 'POTIONS') && (
                     <ConsumablesSelector
                         calculatorFormStrings={calculatorFormStrings}
                         selectedLanguage={selectedLanguage}
-                    />}
+                    />
+                )}
 
-                {(calculatorType === 'ITEMS' || calculatorType === 'RESOURCES') &&
+                {(calculatorType === 'ITEMS' || calculatorType === 'RESOURCES') && (
                     <>
                         <MainResourceInput
                             calculatorType={calculatorType}
@@ -64,10 +67,10 @@ const CalculatorForm = React.memo(({calculatorType}: {calculatorType: TCalcProps
                             errorStyles={styles.errorStyles}
                             calculatorFormStrings={calculatorFormStrings}
                         />
-                    </>}
+                    </>
+                )}
 
-
-                 <PercentInput calculatorFormStrings={calculatorFormStrings} />
+                <PercentInput calculatorFormStrings={calculatorFormStrings} />
 
                 <PercentError
                     errorStyles={styles.errorStyles}

@@ -7,11 +7,12 @@ import {languageOptions} from "../../store/Options/SettingsOptions";
 import {useAppDispatch} from "../../store";
 import {languageSwitcherActions} from "../../store/language/language-slice";
 import {TSelectedLanguage} from "../../types/languageTypes";
+import {artefacts, craftingCalculation, transportation} from "./HomePageImgReexports/HomePageImgReexports";
 
 const Home = () => {
     const dispatchAction = useAppDispatch();
 
-    const {language, selectedLanguage} = useSelector(selectLanguage);
+    const {language} = useSelector(selectLanguage);
     const {homeStrings} = language;
 
     const selectLanguageHandler = (language: TSelectedLanguage) => {
@@ -21,7 +22,7 @@ const Home = () => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.sectionWrapper}>
-                <div className={`${styles.artefactsLink} ${styles.sectionBox}`}>
+                <div className={styles.sectionBox} style={{backgroundImage: `url(${artefacts})`}}>
                     <Link to='/artefacts'>{homeStrings.artefacts}</Link>
 
                     <div className={styles.textBox}>
@@ -29,7 +30,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className={`${styles.calculatorLink} ${styles.sectionBox}`}>
+                <div className={styles.sectionBox} style={{backgroundImage: `url(${craftingCalculation})`}}>
                     <Link to='/calculator'>{homeStrings.craftCalculator}</Link>
 
                     <AlbionToolkitSVG/>
@@ -39,7 +40,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className={`${styles.transportationLink} ${styles.sectionBox}`}>
+                <div className={styles.sectionBox} style={{backgroundImage: `url(${transportation})`}}>
                     <Link to='/transportation'>{homeStrings.transportation}</Link>
 
                     <div className={styles.textBox}>

@@ -1,3 +1,5 @@
+import {TSelectedLanguage} from "./languageTypes";
+
 export type TCraftObjectTypes = '2H' | 'MAIN' | 'BAG' | 'CAPE' | 'ARMOR' | 'HEAD' | 'SHOES' | 'OFF';
 
 export type TResourceType = 'METALBAR' | 'LEATHER' | 'CLOTH' | 'PLANKS' | 'STONEBLOCK' | 'ORE' | 'WOOD' | 'HIDE' | 'FIBER' | 'ROCK';
@@ -34,12 +36,13 @@ export type TResources = {
     [key in TResourceType]?: number | null;
 }
 
+export type TItemName = {
+    [key in TSelectedLanguage]: string;
+}
+
 export interface ICraftItem extends TResources{
     itemId: string | null;
-    itemName?: {
-        'ru': string;
-        'en': string;
-    };
+    itemName?: TItemName;
     itemNode?: TItemNode;
     itemExample?: boolean;
     itemClass?: ICraftingItemClass | '';

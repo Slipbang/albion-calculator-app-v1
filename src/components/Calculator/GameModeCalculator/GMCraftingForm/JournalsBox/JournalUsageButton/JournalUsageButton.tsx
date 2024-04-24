@@ -19,23 +19,23 @@ const JournalUsageButton = () => {
         dispatchAction(interfaceSliceActions.setIsJournalsUsedCF())
     }
 
-    return <div
-        className={styles.journalUsageButton}
-        draggable={true}
-        onDragStart={event => event.preventDefault()}
-        onDragOver={event => event.preventDefault()}
-        onDrag={event => event.preventDefault()}
-        onDragEnter={event => event.preventDefault()}
-    >
-        <p>{GMCraftingFormStrings.journalUsageButton}</p>
-        <StyledCustomCheckButton
-            $isSelected={isJournalUsed}
-            onClick={() => setIsJournalUsedHandler()}
-        />
-        <StyledInfoIcon
-            title={GMCraftingFormStrings.journalInfoIconText}
-        />
-    </div>
+    return (
+        <div
+            className={styles.journalUsageButton}
+            draggable={true}
+            onDragStart={event => event.preventDefault()}
+            onDragOver={event => event.preventDefault()}
+            onDrag={event => event.preventDefault()}
+            onDragEnter={event => event.preventDefault()}
+        >
+            <p>{GMCraftingFormStrings.journalUsageButton}</p>
+            <StyledCustomCheckButton
+                $isSelected={isJournalUsed}
+                onClick={() => setIsJournalUsedHandler()}
+            />
+            <StyledInfoIcon title={GMCraftingFormStrings.journalInfoIconText}/>
+        </div>
+    )
 }
 
 export default JournalUsageButton;

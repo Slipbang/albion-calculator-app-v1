@@ -35,27 +35,29 @@ const BackpackItems = () => {
         }));
     }, [touchedItemIndex])
 
-    return <StyledThumb>
-        <div className={styles.wrapper}>
-            {backpackItems.map((item, index) => {
-                const {itemQuantity, itemImage, itemName} = item;
+    return (
+        <StyledThumb>
+            <div className={styles.wrapper}>
+                {backpackItems.map((item, index) => {
+                    const {itemQuantity, itemImage, itemName} = item;
 
-                return (
-                    <BackpackCell
-                        itemName={itemName!}
-                        key={index}
-                        itemQuantity={itemQuantity!}
-                        itemImage={itemImage}
-                        selectedLanguage={selectedLanguage}
-                        index={index}
-                        handleDragStart={handleDragStart}
-                        handleDrag={handleDrag}
-                        onDrop={onDrop}
-                    />
-                )
-            })}
-        </div>
-    </StyledThumb>
+                    return (
+                        <BackpackCell
+                            itemName={itemName!}
+                            key={index}
+                            itemQuantity={itemQuantity!}
+                            itemImage={itemImage}
+                            selectedLanguage={selectedLanguage}
+                            index={index}
+                            handleDragStart={handleDragStart}
+                            handleDrag={handleDrag}
+                            onDrop={onDrop}
+                        />
+                    )
+                })}
+            </div>
+        </StyledThumb>
+    )
 }
 
 export default BackpackItems;

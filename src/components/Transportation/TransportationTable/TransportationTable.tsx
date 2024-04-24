@@ -38,7 +38,7 @@ const TransportationTable = () => {
 
     return (
         <div className={styles.tableStyles} data-theme={theme}>
-            {!isFetching && !isError &&
+            {!isFetching && !isError && (
                 <table>
                     <thead>
                     <tr>
@@ -74,8 +74,9 @@ const TransportationTable = () => {
                         )
                     }
                     </tbody>
-                </table>}
-            {!!isFetching &&
+                </table>
+            )}
+            {!!isFetching && (
                 <PacmanLoader
                     className={styles.spinnerStyles}
                     color={isDark ? "white" : 'rgb(235, 198, 159)'}
@@ -83,7 +84,8 @@ const TransportationTable = () => {
                     size={50}
                     aria-label="Loading Spinner"
                     data-testid="loader"
-                />}
+                />
+            )}
             {!!isError && <div className={styles.errorStyles}>{transportationTableStrings.requestError}</div>}
         </div>
     )

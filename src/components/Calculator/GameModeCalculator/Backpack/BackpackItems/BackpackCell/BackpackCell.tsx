@@ -1,17 +1,16 @@
 import StyledBackpackCell from "../../BackpackSC/StyledBackpackCell";
 import React from "react";
 import styles from './BackpackCell.module.scss';
+import {TSelectedLanguage} from "../../../../../../types/languageTypes";
+import {TItemName} from "../../../../../../types/craftItemsType";
 
 interface IBackpackCellProps {
     index: number,
     handleDragStart: (event: React.DragEvent<HTMLDivElement>, dragItemIndex: number) => void;
     handleDrag: (event: React.DragEvent<HTMLDivElement>) => void;
     onDrop: (event: React.DragEvent<HTMLDivElement>, dropItemIndex: number, isShiftPressed: boolean) => void;
-    itemName?: {
-        'ru': string,
-        'en': string,
-    }
-    selectedLanguage: 'ru' | 'en';
+    itemName?: TItemName;
+    selectedLanguage: TSelectedLanguage;
     itemQuantity: number;
     itemImage: string;
 }

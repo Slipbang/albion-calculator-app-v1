@@ -19,6 +19,9 @@
       align-items: flex-start;
       justify-content: space-between;
       min-width: 220px;
+      background-position: 75%;
+      background-repeat: no-repeat;
+      background-size: cover;
 
       a {
         border: 1px solid white;
@@ -54,27 +57,6 @@
         color: #f1ebe3;
         overflow-y: auto;
       }
-    }
-
-    .calculatorLink {
-      background-image: url("homeBackgroundImages/craftingCalculation.jpg");
-      background-position: 75%;
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-
-    .artefactsLink {
-      background-position: 74%;
-      background-image: url("homeBackgroundImages/artefacts.jpg");
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-
-    .transportationLink {
-      background-position: 75%;
-      background-image: url("homeBackgroundImages/transportation.jpg");
-      background-repeat: no-repeat;
-      background-size: cover;
     }
   }
 

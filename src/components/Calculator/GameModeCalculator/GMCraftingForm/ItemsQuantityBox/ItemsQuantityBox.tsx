@@ -8,7 +8,8 @@ const ItemsQuantityBox = () => {
 
     return (
         <div
-            className={itemsQuantity < 99 ? styles.itemsCounterBig : itemsQuantity < 999 ? styles.itemsCounterMedium : styles.itemsCounterSmall}
+            data-count={itemsQuantity < 100 ? 'large' : itemsQuantity < 1000 ? 'medium' : 'small'}
+            className={styles.itemsCounter}
         >
             <p>{Math.floor(itemsQuantity)}</p>
         </div>

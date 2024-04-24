@@ -35,9 +35,11 @@ const ResetButton = () => {
     }, [workBenchTypeSelected, itemTypeSelected, calculatorType]);
 
     const wereInputsChanged = () => {
-        return selectedTier.value !== tierOptions[0].value
+        return (
+            selectedTier.value !== tierOptions[0].value
             || selectedNode.value !== nodeOptions[workBenchTypeSelected][itemTypeSelected]![0].value
-            || inputSearch.length > 0;
+            || inputSearch.length > 0
+        );
     }
 
     return (

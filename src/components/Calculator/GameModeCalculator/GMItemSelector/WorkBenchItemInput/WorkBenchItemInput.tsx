@@ -18,18 +18,20 @@ const WorkBenchItemInput = () => {
         dispatchAction(interfaceSliceActions.setInputSearchIS(value));
     }
 
-    return <StyledWorkBenchInput>
-        <input
-            id='WBSearchItemInput'
-            type="text"
-            className={styles.inputTextStyle}
-            value={inputSearch}
-            placeholder={GMItemSelectorStings.search}
-            onChange={(event) => {
-                setInputSearchHandler(event.target.value);
-            }}
-        />
-    </StyledWorkBenchInput>
+    return (
+        <StyledWorkBenchInput>
+            <input
+                id='WBSearchItemInput'
+                type="text"
+                className={styles.inputTextStyle}
+                value={inputSearch}
+                placeholder={GMItemSelectorStings.search}
+                onChange={(event) => {
+                    setInputSearchHandler(event.target.value);
+                }}
+            />
+        </StyledWorkBenchInput>
+    )
 }
 
 export default WorkBenchItemInput;

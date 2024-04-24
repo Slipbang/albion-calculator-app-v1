@@ -48,7 +48,7 @@ const SwipeButton = (props: ISwipeButtonProps) => {
         <img
             src={swipeButtonImage}
             alt=""
-            style={{height: '50px', width: '11px', marginBottom: '8px'}}
+            style={{height: '50px', width: '11px', marginBottom: '7px'}}
             onClick={(event) => {
                 event.stopPropagation();
                 handle();

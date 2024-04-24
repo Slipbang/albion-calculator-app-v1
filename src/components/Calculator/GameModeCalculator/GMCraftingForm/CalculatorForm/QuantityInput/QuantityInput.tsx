@@ -34,7 +34,6 @@ const QuantityInput = () => {
 
     const {maxQuantity} = useMaterialsCalculation({itemsQuantity, enchantmentNum, selectedWorkBenchItem, materialEnchantment, backpackItems});
 
-
     const calculateInputNumberLeft = () => {
         return itemsQuantity > 1 ? `${(((itemsQuantity - 1) * 100) / (maxQuantity - 1))}` : 0;
     }

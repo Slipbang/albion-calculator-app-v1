@@ -61,47 +61,51 @@ const ItemPriceSelector = () => {
             <div className={styles.priceLabel}>
                 <p>{marketItemStings.priceLabel}</p>
             </div>
-            {!!isPriceFetched && <div>
-                <StyledImageBox $position={'static'} $image={selectCity} $width={250} $height={27}>
-                    {!isDataFetching && !isItemsHasError &&
-                        <CustomPriceSelector
-                            selectorStyles={styles.citySelector}
-                            selectedCityStyles={styles.selectedCity}
-                            optionsStyles={styles.cityOptions}
-                            cityListStyles={styles.cityList}
-                            setFunction={setItemPriceHandler}
-                            itemsData={itemsData!}
-                        />}
-                    {!!isDataFetching && <p className={styles.loaderStyles}>loading...</p>}
-                    {!!isItemsHasError && <p className={styles.loaderStyles}>error!</p>}
-                </StyledImageBox>
-            </div>}
-            {!isPriceFetched && <StyledInputPrice>
-                <StyledDecreasePriceButton
-                    $isDisabled={ownItemPrice <= 0}
-                    disabled={ownItemPrice <= 0}
-                    onClick={() => setOwnItemPriceHandler(ownItemPrice - 1)}
-                />
-                <StyledImageBox
-                    $position={'absolute'}
-                    $image={silver}
-                    $height={23}
-                    $width={23}
-                    $left={150}
-                    $top={149}
-                />
-                <input
-                    id='MIItemPriceInput'
-                    type="number"
-                    value={ownItemPrice}
-                    ref={itemOwnPriceInputRef}
-                    onChange={(event) => setOwnItemPriceHandler(+event.target.value)}
-                    onFocus={() => itemOwnPriceInputRef.current?.select()}
-                />
-                <StyledIncreasePriceButton
-                    onClick={() => setOwnItemPriceHandler(ownItemPrice + 1)}
-                />
-            </StyledInputPrice>}
+            {!!isPriceFetched && (
+                <div>
+                    <StyledImageBox $position={'static'} $image={selectCity} $width={250} $height={27}>
+                        {!isDataFetching && !isItemsHasError &&
+                            <CustomPriceSelector
+                                selectorStyles={styles.citySelector}
+                                selectedCityStyles={styles.selectedCity}
+                                optionsStyles={styles.cityOptions}
+                                cityListStyles={styles.cityList}
+                                setFunction={setItemPriceHandler}
+                                itemsData={itemsData!}
+                            />}
+                        {!!isDataFetching && <p className={styles.loaderStyles}>loading...</p>}
+                        {!!isItemsHasError && <p className={styles.loaderStyles}>error!</p>}
+                    </StyledImageBox>
+                </div>
+            )}
+            {!isPriceFetched && (
+                <StyledInputPrice>
+                    <StyledDecreasePriceButton
+                        $isDisabled={ownItemPrice <= 0}
+                        disabled={ownItemPrice <= 0}
+                        onClick={() => setOwnItemPriceHandler(ownItemPrice - 1)}
+                    />
+                    <StyledImageBox
+                        $position={'absolute'}
+                        $image={silver}
+                        $height={23}
+                        $width={23}
+                        $left={150}
+                        $top={149}
+                    />
+                    <input
+                        id='MIItemPriceInput'
+                        type="number"
+                        value={ownItemPrice}
+                        ref={itemOwnPriceInputRef}
+                        onChange={(event) => setOwnItemPriceHandler(+event.target.value)}
+                        onFocus={() => itemOwnPriceInputRef.current?.select()}
+                    />
+                    <StyledIncreasePriceButton
+                        onClick={() => setOwnItemPriceHandler(ownItemPrice + 1)}
+                    />
+                </StyledInputPrice>
+            )}
         </div>
     )
 }

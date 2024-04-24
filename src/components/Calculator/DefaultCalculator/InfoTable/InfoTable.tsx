@@ -298,45 +298,45 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
         <>
             {(!isItemFetching && !isMaterialsFetching && !isArtefactsFetching && !isJournalsFetching
                     && !isConsumablesFetching && !isErrorItems && !isErrorMaterials
-                    && !isErrorArtefacts && !isErrorJournals && !isErrorConsumables) &&
+                    && !isErrorArtefacts && !isErrorJournals && !isErrorConsumables) && (
                 <div className={styles.wrapper} data-theme={theme}>
                     {(calculatorType === 'RESOURCES' || calculatorType === 'ITEMS') && (
-                            <MaterialSelectors
-                                mainMatsId={mainMatsId!}
-                                subMatsId={subMatsId!}
-                                emptyJournalId={emptyJournalId!}
-                                journalId={journalId!}
-                                artefactId={artefactId!}
-                                setOwnPrices={setOwnPrices}
-                                ownPrices={ownPrices}
-                                setFoodTax={setFoodTax}
-                                artefactsData={artefactsData!}
-                                journalsData={journalsData!}
-                                infoTableStrings={infoTableStrings}
-                                isJournalsUsed={isJournalsUsed}
-                                setIsJournalsUsed={setIsJournalsUsed}
-                                setSelectedCities={setSelectedCities}
-                                artefactName={artefactName}
-                                foodTax={foodTax}
-                                selectedLanguage={selectedLanguage}
-                                selectedCities={selectedCities}
-                            />
-                        )}
+                        <MaterialSelectors
+                            mainMatsId={mainMatsId!}
+                            subMatsId={subMatsId!}
+                            emptyJournalId={emptyJournalId!}
+                            journalId={journalId!}
+                            artefactId={artefactId!}
+                            setOwnPrices={setOwnPrices}
+                            ownPrices={ownPrices}
+                            setFoodTax={setFoodTax}
+                            artefactsData={artefactsData!}
+                            journalsData={journalsData!}
+                            infoTableStrings={infoTableStrings}
+                            isJournalsUsed={isJournalsUsed}
+                            setIsJournalsUsed={setIsJournalsUsed}
+                            setSelectedCities={setSelectedCities}
+                            artefactName={artefactName}
+                            foodTax={foodTax}
+                            selectedLanguage={selectedLanguage}
+                            selectedCities={selectedCities}
+                        />
+                    )}
 
                     {(calculatorType === 'FOOD' || calculatorType == 'POTIONS') && (
-                            <ConsumablesPriceSelectors
-                                consumableSelectorsKeys={consumableSelectorsKeys!}
-                                consumableSelectors={consumableSelectors}
-                                consumablesNames={consumablesNames!}
-                                selectedLanguage={selectedLanguage}
-                                infoTableStrings={infoTableStrings}
-                                consumablesData={consumablesData!}
-                                setConsumableSelectors={setConsumableSelectors}
-                                setFoodTax={setFoodTax}
-                                foodTax={foodTax}
-                                currentDate={currentDate}
-                            />
-                        )}
+                        <ConsumablesPriceSelectors
+                            consumableSelectorsKeys={consumableSelectorsKeys!}
+                            consumableSelectors={consumableSelectors}
+                            consumablesNames={consumablesNames!}
+                            selectedLanguage={selectedLanguage}
+                            infoTableStrings={infoTableStrings}
+                            consumablesData={consumablesData!}
+                            setConsumableSelectors={setConsumableSelectors}
+                            setFoodTax={setFoodTax}
+                            foodTax={foodTax}
+                            currentDate={currentDate}
+                        />
+                    )}
 
                     <table>
                         <thead>
@@ -395,9 +395,10 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                             zIndex: 9999
                         }}
                     />
-                </div>}
+                </div>
+            )}
 
-            {(isItemFetching || isMaterialsFetching || isArtefactsFetching || isJournalsFetching || isConsumablesFetching) &&
+            {(isItemFetching || isMaterialsFetching || isArtefactsFetching || isJournalsFetching || isConsumablesFetching) && (
                 <PulseLoader
                     color={isDark ? 'white' : 'rgb(235, 198, 159)'}
                     className={styles.pulseLoader}
@@ -405,9 +406,8 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                     aria-label='Loading Spinner'
                     data-testid='loader'
                 />
-            }
-            {(isErrorItems || isErrorArtefacts || isErrorMaterials || isErrorJournals || isErrorConsumables) &&
-                <ErrorNotification theme={theme}/>}
+            )}
+            {(isErrorItems || isErrorArtefacts || isErrorMaterials || isErrorJournals || isErrorConsumables) && <ErrorNotification theme={theme}/>}
         </>
     )
 }

@@ -6,15 +6,17 @@ import ModalWindow from "./ModalWindow/ModalWindow";
 
 const Calculator = () => {
 
-    return <>
-        <ModalWindow />
+    return (
+        <>
+            <ModalWindow />
 
-        <div className={styles.wrapper}>
-            <GameModeCalculator />
+            <div className={styles.wrapper}>
+                <GameModeCalculator />
 
-            <DefaultCalculator />
-        </div>
-    </>
+                <DefaultCalculator />
+            </div>
+        </>
+    )
 }
 
 export default Calculator;

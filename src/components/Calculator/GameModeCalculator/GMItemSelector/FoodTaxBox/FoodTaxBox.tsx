@@ -10,20 +10,22 @@ const FoodTaxBox = () => {
     const {language} = useSelector(selectLanguage);
     const {GMItemSelectorStings} = language;
 
-    return <div className={styles.foodTax}>
-        <p>{GMItemSelectorStings.nutritionUsage1}</p>
-        <div className={styles.inputBox}>
-            <p>{GMItemSelectorStings.nutritionUsage2}</p>
-            <StyledImageBox
-                style={{margin: '-5px'}}
-                $width={23}
-                $height={23}
-                $image={silver}
-                $position={'static'} $hasDropShadow={false}
-            />
-            <FoodTaxInput />
+    return (
+        <div className={styles.foodTax}>
+            <p>{GMItemSelectorStings.nutritionUsage1}</p>
+            <div className={styles.inputBox}>
+                <p>{GMItemSelectorStings.nutritionUsage2}</p>
+                <StyledImageBox
+                    style={{margin: '-5px'}}
+                    $width={23}
+                    $height={23}
+                    $image={silver}
+                    $position={'static'} $hasDropShadow={false}
+                />
+                <FoodTaxInput />
+            </div>
         </div>
-    </div>
+    )
 }
 
 export default FoodTaxBox;

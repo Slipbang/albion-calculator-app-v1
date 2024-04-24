@@ -29,46 +29,49 @@ const ItemNodeSelector = (props: IItemNodeSelectorProps) => {
 
     return (
         <>
-            {typeOfTypeSelector === itemType && <div className={styles.itemNodeButtonSelector}>
-                <img
-                    src={arrowDown}
-                    alt=''
-                    style={{width: '50px', height: '11px', marginLeft: '7px'}}
-                />
-                {objectTypeKeys.map(itemTypeKey => craftItems[itemTypeKey].map((itemForNodeSelect) => {
-                    let itemBodyId: string;
-                    if ((itemTypeKey === 'BAG' && itemForNodeSelect.itemId !== 'INSIGHT') || itemTypeKey === 'CAPE') {
-                        itemBodyId = itemForNodeSelect.itemId!;
-                    } else {
-                        itemBodyId = `${itemTypeKey}_${itemForNodeSelect.itemId}`
-                    }
+            {typeOfTypeSelector === itemType && (
+                <div className={styles.itemNodeButtonSelector}>
+                    <img
+                        src={arrowDown}
+                        alt=''
+                        style={{width: '50px', height: '11px', marginLeft: '7px'}}
+                    />
+                    {objectTypeKeys.map(itemTypeKey => craftItems[itemTypeKey].map((itemForNodeSelect) => {
+                        let itemBodyId: string;
+                        if ((itemTypeKey === 'BAG' && itemForNodeSelect.itemId !== 'INSIGHT') || itemTypeKey === 'CAPE') {
+                            itemBodyId = itemForNodeSelect.itemId!;
+                        } else {
+                            itemBodyId = `${itemTypeKey}_${itemForNodeSelect.itemId}`
+                        }
 
-                    return typeOfTypeSelector === itemForNodeSelect.itemType && !!itemForNodeSelect.itemExample &&
-                        <div
-                            key={`${selectedItemTier}_${itemBodyId}`}
-                            style={{display: 'flex'}}
-                            onClick={event => event.stopPropagation()}
-                        >
-                            <img
-                                className={styles.imgLoaderBackground}
-                                src={`${srcRoute}${selectedItemTier}_${itemBodyId}`}
-                                alt=""
-                                title={itemForNodeSelect.itemNode}
-                                onClick={(event) => {
-                                    selectItemNodeHandler(itemForNodeSelect.itemNode!)
-                                    event.stopPropagation();
-                                }}
-                            />
+                        return typeOfTypeSelector === itemForNodeSelect.itemType && !!itemForNodeSelect.itemExample && (
+                            <div
+                                key={`${selectedItemTier}_${itemBodyId}`}
+                                style={{display: 'flex'}}
+                                onClick={event => event.stopPropagation()}
+                            >
+                                <img
+                                    className={styles.imgLoaderBackground}
+                                    src={`${srcRoute}${selectedItemTier}_${itemBodyId}`}
+                                    alt=""
+                                    title={itemForNodeSelect.itemNode}
+                                    onClick={(event) => {
+                                        selectItemNodeHandler(itemForNodeSelect.itemNode!)
+                                        event.stopPropagation();
+                                    }}
+                                />
 
-                            {/*селектор определенной вещи*/}
-                            <Items
-                                imgLoaderBackground={styles.imgLoaderBackground}
-                                itemNodeOfNodeSelector={itemForNodeSelect.itemNode!}
-                                selectedItemTier={selectedItemTier}
-                            />
-                        </div>
-                }))}
-            </div>}
+                                {/*селектор определенной вещи*/}
+                                <Items
+                                    imgLoaderBackground={styles.imgLoaderBackground}
+                                    itemNodeOfNodeSelector={itemForNodeSelect.itemNode!}
+                                    selectedItemTier={selectedItemTier}
+                                />
+                            </div>
+                        )
+                    }))}
+                </div>
+            )}
         </>
 
     )

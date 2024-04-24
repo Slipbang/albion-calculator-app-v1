@@ -1,44 +1,28 @@
-.itemsCounterBig {
+.itemsCounter {
   position: fixed;
   display: flex;
   justify-content: center;
+  align-items: center;
   right: 10px;
-  bottom: 19px;
+  bottom: 13px;
   width: 36px;
+  height: 36px;
 
   p {
     font-weight: 500;
-    font-size: 18px;
+    font-size: var(--font-size-counter);
     color: white;
   }
 }
 
-.itemsCounterMedium {
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  right: 10px;
-  bottom: 22px;
-  width: 36px;
-
-  p {
-    font-weight: 500;
-    font-size: 14px;
-    color: white;
-  }
+[data-count='small']{
+  --font-size-counter: 12px;
 }
 
-.itemsCounterSmall {
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  right: 10px;
-  bottom: 23px;
-  width: 36px;
+[data-count='medium']{
+  --font-size-counter: 14px;
+}
 
-  p {
-    font-weight: 500;
-    font-size: 12px;
-    color: white;
-  }
+[data-count='large']{
+  --font-size-counter: 18px;
 }

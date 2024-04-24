@@ -22,7 +22,7 @@ import {selectServerId} from "../../../../../store/queryParams/query-params-sele
 const ArtefactsBox = () => {
     const dispatchAction = useAppDispatch();
 
-    const artefactPriceInputRef = useRef<HTMLInputElement>(null)
+    const artefactPriceInputRef = useRef<HTMLInputElement>(null);
 
     const itemsQuantity = useSelector(selectItemsQuantityCF);
     const isArtefactPriceFetched = useSelector(selectArtefactPriceFetchedStateCF);
@@ -74,7 +74,7 @@ const ArtefactsBox = () => {
 
     return (
         <>
-            {!!artefactItemId &&
+            {!!artefactItemId && (
                 <div
                     className={styles.artefactPrice}
                     draggable={true}
@@ -93,10 +93,10 @@ const ArtefactsBox = () => {
                             !isArtefactPriceFetched && fetchArtefactsDataHandler();
                         }}
                     />
-                    {isArtefactPriceFetched &&
+                    {isArtefactPriceFetched && (
                         <div className={styles.artefactSelectCity}>
 
-                            {!isArtefactsFetching && !isArtefactsError &&
+                            {!isArtefactsFetching && !isArtefactsError && (
                                 <CustomPriceSelector
                                     itemsData={artefactsData!}
                                     selectorStyles={styles.artefactSelector}
@@ -104,14 +104,16 @@ const ArtefactsBox = () => {
                                     optionsStyles={styles.artefactOptions}
                                     cityListStyles={styles.cityList}
                                     setFunction={setArtefactPriceHandler}
-                                />}
+                                />
+                            )}
 
                             {!!isArtefactsFetching && <p className={styles.loader}>loading...</p>}
                             {!!isArtefactsError && <p className={styles.loader}>error!</p>}
-                        </div>}
+                        </div>
+                    )}
 
-                    {!isArtefactPriceFetched
-                        && <>
+                    {!isArtefactPriceFetched && (
+                        <>
                             <StyledImageBox $position={'static'} $image={silver} $height={30} $width={30}/>
                             <input
                                 ref={artefactPriceInputRef}
@@ -127,12 +129,12 @@ const ArtefactsBox = () => {
                                     }
                                 }}
                             />
-                        </>}
+                        </>
+                    )}
 
-                    <StyledInfoIcon
-                        title={`${GMCraftingFormStrings.artefactInfoIconText} ${totalArtefactPrice.toLocaleString('en')}`}
-                    />
-                </div>}
+                    <StyledInfoIcon title={`${GMCraftingFormStrings.artefactInfoIconText} ${totalArtefactPrice.toLocaleString('en')}`}/>
+                </div>
+            )}
         </>
     )
 }

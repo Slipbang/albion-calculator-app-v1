@@ -31,40 +31,48 @@ const ResourceBox = () => {
 
     const {emptyJournalImage, totalJournalQuantity} = useJournals({itemsQuantity, enchantmentNum, selectedWorkBenchItem, isJournalUsed});
 
-    const totalArtefactQuantity = artefactsQuantity! * itemsQuantity
+    const totalArtefactQuantity = artefactsQuantity! * itemsQuantity;
 
-    return <div className={styles.resourcesBox}>
-        {materialKeys.map(key => {
-            return !!selectedWorkBenchItem[key] && <div key={key}>
-                <img
-                    src={`${srcRoute}${materialApiId[`${key}ApiId`]}`}
-                    alt=""
-                />
-                <div className={styles.resourceQuantityBox}>
-                    <p>{backpackMatsQuantity[`backpack${key}Quantity`]}/</p>
-                    <p>{consumedMaterials[`consume${key}Quantity`]! || selectedWorkBenchItem[key]! * (key === 'STONEBLOCK' ? Math.pow(2, +enchantmentNum) : 1)}</p>
+    return (
+        <div className={styles.resourcesBox}>
+            {materialKeys.map(key => {
+                return !!selectedWorkBenchItem[key] && (
+                    <div key={key}>
+                        <img
+                            src={`${srcRoute}${materialApiId[`${key}ApiId`]}`}
+                            alt=""
+                        />
+                        <div className={styles.resourceQuantityBox}>
+                            <p>{backpackMatsQuantity[`backpack${key}Quantity`]}/</p>
+                            <p>{consumedMaterials[`consume${key}Quantity`]! || selectedWorkBenchItem[key]! * (key === 'STONEBLOCK' ? Math.pow(2, +enchantmentNum) : 1)}</p>
+                        </div>
+                    </div>
+                )
+            })}
+            {!!artefactItemId && (
+                <div>
+                    <img
+                        src={`${srcRoute}${artefactItemId}`}
+                        alt=""
+                    />
+                    <div className={styles.resourceQuantityBox}>
+                        <p>{totalArtefactQuantity}</p>
+                    </div>
                 </div>
-            </div>
-        })}
-        {!!artefactItemId && <div>
-            <img
-                src={`${srcRoute}${artefactItemId}`}
-                alt=""
-            />
-            <div className={styles.resourceQuantityBox}>
-                <p>{totalArtefactQuantity}</p>
-            </div>
-        </div>}
-        {isJournalUsed && <div>
-            <img
-                src={emptyJournalImage}
-                alt=""
-            />
-            <div className={styles.resourceQuantityBox}>
-                <p>{totalJournalQuantity.toFixed(2)}</p>
-            </div>
-        </div>}
-    </div>
+            )}
+            {isJournalUsed && (
+                <div>
+                    <img
+                        src={emptyJournalImage}
+                        alt=""
+                    />
+                    <div className={styles.resourceQuantityBox}>
+                        <p>{totalJournalQuantity.toFixed(2)}</p>
+                    </div>
+                </div>
+            )}
+        </div>
+    )
 }
 
 export default ResourceBox;

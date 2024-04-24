@@ -37,11 +37,7 @@ const ItemTable = (props: TItemTableProps) => {
 
         [1, 2, 3, 4].forEach(enchantmentLvl => {
             items.push(`${itemId}@${enchantmentLvl}`);
-
-            if (!!subMatsId) {
-                materials.push(`${subMatsId}_LEVEL${enchantmentLvl}@${enchantmentLvl}`);
-            }
-
+            if (!!subMatsId) materials.push(`${subMatsId}_LEVEL${enchantmentLvl}@${enchantmentLvl}`);
             materials.push(`${mainMatsId}_LEVEL${enchantmentLvl}@${enchantmentLvl}`);
         });
 
@@ -61,7 +57,7 @@ const ItemTable = (props: TItemTableProps) => {
     }
 
     return <div className={styles.tableStyle} data-notification={craftTableStrings.alert}>
-        {craftLists[calculatorType].length > 0 &&
+        {craftLists[calculatorType].length > 0 && (
             <table>
                 <thead>
                 <tr>
@@ -77,51 +73,54 @@ const ItemTable = (props: TItemTableProps) => {
                     const {id, mainResourceQuantity, subResourceQuantity, percent} = item.craftTableData;
                     const {itemId, mainMatsId, spentQuantityPerItem, subMatsId, output} = item.infoTableData;
 
-                    return <tr key={id} data-similar-allert={id === similarItemId ? 'similar' : 'non-similar'}>
-                        <td>
-                            {mainResourceQuantity}{craftTableStrings.metrics}
-                            <img
-                                src={`${srcRoute}${mainMatsId}`}
-                                alt={mainMatsId}
-                                title={`${spentQuantityPerItem?.mainMatsQuantity} ${craftTableStrings.unPerItem}`}
-                            />
-                        </td>
-                        <td>
-                            {subResourceQuantity}{craftTableStrings.metrics}
-                            {!!subMatsId &&
+                    return (
+                        <tr key={id} data-similar-allert={id === similarItemId ? 'similar' : 'non-similar'}>
+                            <td>
+                                {mainResourceQuantity}{craftTableStrings.metrics}
                                 <img
-                                    draggable={false}
-                                    src={`${srcRoute}${subMatsId}`}
-                                    alt={subMatsId}
-                                    title={`${spentQuantityPerItem?.subMatsQuantity} ${craftTableStrings.unPerItem}`}
-                                />}
-                        </td>
-                        <td>{percent}%</td>
-                        <td>
-                            {output}{craftTableStrings.metrics}
-                            <img
-                                src={`${srcRoute}${itemId}`}
-                                alt={itemId}
-                            />
-                        </td>
-                        <td>
-                            <StyledDefaultButton
-                                $width={70}
-                                $height={23}
-                                onClick={() => deleteLiHandler(calculatorType, id)}
-                            >Delete</StyledDefaultButton>
+                                    src={`${srcRoute}${mainMatsId}`}
+                                    alt={mainMatsId}
+                                    title={`${spentQuantityPerItem?.mainMatsQuantity} ${craftTableStrings.unPerItem}`}
+                                />
+                            </td>
+                            <td>
+                                {subResourceQuantity}{craftTableStrings.metrics}
+                                {!!subMatsId && (
+                                    <img
+                                        draggable={false}
+                                        src={`${srcRoute}${subMatsId}`}
+                                        alt={subMatsId}
+                                        title={`${spentQuantityPerItem?.subMatsQuantity} ${craftTableStrings.unPerItem}`}
+                                    />
+                                )}
+                            </td>
+                            <td>{percent}%</td>
+                            <td>
+                                {output}{craftTableStrings.metrics}
+                                <img
+                                    src={`${srcRoute}${itemId}`}
+                                    alt={itemId}
+                                />
+                            </td>
+                            <td>
+                                <StyledDefaultButton
+                                    $width={70}
+                                    $height={23}
+                                    onClick={() => deleteLiHandler(calculatorType, id)}
+                                >Delete</StyledDefaultButton>
 
-                            <StyledDefaultButton
-                                $width={70}
-                                $height={23}
-                                onClick={() => fetchItemDataHandler(item)}
-                            >Info</StyledDefaultButton>
-                        </td>
-                    </tr>
+                                <StyledDefaultButton
+                                    $width={70}
+                                    $height={23}
+                                    onClick={() => fetchItemDataHandler(item)}
+                                >Info</StyledDefaultButton>
+                            </td>
+                        </tr>
+                    )
                 })}
                 </tbody>
             </table>
-        }
+        )}
     </div>
 }
 

@@ -6,13 +6,15 @@ import styles from './BackpackButtonsBox.module.scss';
 
 const BackpackButtonsBox = () => {
 
-    return <div className={styles.buttonsWrapper}>
-        <BackpackResetButton />
+    return (
+        <div className={styles.buttonsWrapper}>
+            <BackpackResetButton />
 
-        <BackpackGatherButton />
+            <BackpackGatherButton />
 
-        <BackpackSortButton />
-    </div>
+            <BackpackSortButton />
+        </div>
+    )
 }
 
 export default BackpackButtonsBox;

@@ -66,7 +66,9 @@ const TableTdElement = ({enchantment, craftInfoParams, calculatorType}: ITableTd
                         data-div-bg-color={typeof infoClasses[`${cityKey}Info` as keyof infoCities]?.totalProfit === 'number' ? 'valid' : 'nonvalid'}
                     >
                         <div>{infoClasses[`${cityKey}Info` as keyof infoCities]!.totalProfit.toLocaleString('en')}</div>
-                        {typeof infoClasses[`${cityKey}Info` as keyof infoCities]?.totalProfit === 'number' && <div>{infoClasses[`${cityKey}Info` as keyof infoCities]!.profitPerItem.toLocaleString('en')}</div>}
+                        {typeof infoClasses[`${cityKey}Info` as keyof infoCities]?.totalProfit === 'number' && (
+                            <div>{infoClasses[`${cityKey}Info` as keyof infoCities]!.profitPerItem.toLocaleString('en')}</div>
+                        )}
                     </td>
                 )
             })}

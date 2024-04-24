@@ -113,10 +113,7 @@ const PercentInput = (props: IPercentInputProps) => {
 
     return (
         <div className={styles.wrapper}>
-            <div
-                style={{width: '225px'}}
-                className={styles.boxContent}
-            >
+            <div className={styles.boxContent}>
                 <p>{calculatorFormStrings.labelOwnPercent}</p>
                 <StyledCustomCheckButton
                     $isSelected={isOwnPercent}
@@ -128,38 +125,41 @@ const PercentInput = (props: IPercentInputProps) => {
                 />
             </div>
 
-
             <div
                 style={{width: '320px'}}
                 className={styles.boxContent}
             >
                 <p>{calculatorFormStrings.labelPercent}</p>
                 <StyledCalculatorFormSelector>
-                    {!isOwnPercent && <CustomItemSelector
-                        setSelectedParams={setSelectedPercent}
-                        paramsOptions={percentOptions}
-                        paramState={selectedPercent}
-                        paramsSelectorClass={styles.percentSelector}
-                        customOptionSelectedClass={styles.customPercentOptionSelected}
-                        customOptionClass={styles.customPercentOption}
-                        selectInputClass={styles.selectPercentStyle}
-                    />}
+                    {!isOwnPercent && (
+                        <CustomItemSelector
+                            setSelectedParams={setSelectedPercent}
+                            paramsOptions={percentOptions}
+                            paramState={selectedPercent}
+                            paramsSelectorClass={styles.percentSelector}
+                            customOptionSelectedClass={styles.customPercentOptionSelected}
+                            customOptionClass={styles.customPercentOption}
+                            selectInputClass={styles.selectPercentStyle}
+                        />
+                    )}
 
-                    {!!isOwnPercent && <input
-                        ref={inputPercentRef}
-                        value={percent}
-                        id='CFReturnPercentInput'
-                        type="number"
-                        onFocus={() => inputPercentRef.current?.select()}
-                        onChange={event => changeInputPercentHandler(event)}
-                        onKeyDown={event => {
-                            if (event.key === 'Enter') {
-                                event.preventDefault();
-                                inputPercentRef.current!.blur();
-                            }
-                        }}
-                        step={0.1}
-                    />}
+                    {!!isOwnPercent && (
+                        <input
+                            ref={inputPercentRef}
+                            value={percent}
+                            step={0.1}
+                            id='CFReturnPercentInput'
+                            type="number"
+                            onFocus={() => inputPercentRef.current?.select()}
+                            onChange={event => changeInputPercentHandler(event)}
+                            onKeyDown={event => {
+                                if (event.key === 'Enter') {
+                                    event.preventDefault();
+                                    inputPercentRef.current!.blur();
+                                }
+                            }}
+                        />
+                    )}
                 </StyledCalculatorFormSelector>
             </div>
         </div>

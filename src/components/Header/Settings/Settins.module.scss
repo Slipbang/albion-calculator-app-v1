@@ -4,6 +4,7 @@
   user-select: none;
   display: flex;
   z-index: 9999;
+  color: #d7cecc;
 
   .settingsSVG {
     display: flex;
@@ -14,6 +15,7 @@
     z-index: 0;
     width: 65px;
     height: 65px;
+
     svg {
       margin: 0 10px;
       width: 45px;
@@ -54,6 +56,7 @@
 
     .selectors:hover {
       background-color: var(--header-color-hovered);
+      color: #ffdfbc;
 
       .options {
         display: flex;
@@ -71,10 +74,13 @@
 
       p {
         padding: 5px;
+        text-decoration: var(--text-decoration-paragraph);
+        color: var(--color-paragraph);
       }
 
       p:hover {
         background-color: var(--header-color-hovered);
+        color: #ffdfbc;
       }
     }
 
@@ -138,10 +144,6 @@
   }
 }
 
-.selected {
-  text-decoration: underline;
-}
-
 .wrapper:hover {
   .settings {
     transform: translate(0, 0);
@@ -156,10 +158,21 @@
   }
 }
 
+[data-selected='selected'] {
+  --text-decoration-paragraph: underline;
+  --color-paragraph: #ffdfbc;
+}
+
+[data-selected='non-selected'] {
+  --text-decoration-paragraph: none;
+  --color-paragraph:  #d7cecc;
+}
+
 [data-theme="dark"] {
   --background-color-sun: transparent;
   --color-star: #ffd044;
 }
+
 [data-theme="light"] {
   --background-color-sun: #ffd044;
   --color-star: transparent;

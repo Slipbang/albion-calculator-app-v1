@@ -37,7 +37,6 @@ const JournalsSelectors = () => {
     const selectedWorkBenchItem = useSelector(selectWorkBenchItem);
     const serverId = useSelector(selectServerId);
 
-
     const {emptyJournalId} = useJournals({isJournalUsed, selectedWorkBenchItem, itemsQuantity, enchantmentNum});
 
     const [fetchJournalsData, {
@@ -66,62 +65,63 @@ const JournalsSelectors = () => {
         fetchJournalsDataHandler();
     }, [emptyJournalId, serverId])
 
-    return <>
-        {isJournalUsed &&
-            <div
-                className={styles.journalLabels}
-                draggable={true}
-                onDragStart={event => event.preventDefault()}
-                onDragOver={event => event.preventDefault()}
-                onDrag={event => event.preventDefault()}
-                onDragEnter={event => event.preventDefault()}
-            >
-                <p>{GMCraftingFormStrings.price}</p>
-                <StyledCustomCheckButton
-                    $isSelected={isJournalPriceFetched}
-                    onClick={() => {
-                        setIsJournalPriceFetchedHandler();
-                        !isJournalPriceFetched && fetchJournalsDataHandler();
-                    }}
-                />
+    return (
+        <>
+            {isJournalUsed &&
+                <div
+                    className={styles.journalLabels}
+                    draggable={true}
+                    onDragStart={event => event.preventDefault()}
+                    onDragOver={event => event.preventDefault()}
+                    onDrag={event => event.preventDefault()}
+                    onDragEnter={event => event.preventDefault()}
+                >
+                    <p>{GMCraftingFormStrings.price}</p>
+                    <StyledCustomCheckButton
+                        $isSelected={isJournalPriceFetched}
+                        onClick={() => {
+                            setIsJournalPriceFetchedHandler();
+                            !isJournalPriceFetched && fetchJournalsDataHandler();
+                        }}
+                    />
 
-                {!isJournalPriceFetched &&
-                    <div className={styles.journalLabels}>
-                        <StyledImageBox $position={'static'} $image={silver} $height={30} $width={30}/>
-                        <input
-                            ref={journalPriceInputRef}
-                            value={ownJournalPrice}
-                            id='CFJournalPriceInput'
-                            type="number"
-                            step={1}
-                            min={0}
-                            onFocus={() => journalPriceInputRef.current?.select()}
-                            onChange={(event) => {
-                                if (+event.target.value >= 0) {
-                                    setOwnJournalPriceHandler(+event.target.value);
-                                }
-                            }}
-                        />
-                    </div>}
+                    {!isJournalPriceFetched &&
+                        <div className={styles.journalLabels}>
+                            <StyledImageBox $position={'static'} $image={silver} $height={30} $width={30}/>
+                            <input
+                                ref={journalPriceInputRef}
+                                value={ownJournalPrice}
+                                id='CFJournalPriceInput'
+                                type="number"
+                                step={1}
+                                min={0}
+                                onFocus={() => journalPriceInputRef.current?.select()}
+                                onChange={(event) => {
+                                    if (+event.target.value >= 0) {
+                                        setOwnJournalPriceHandler(+event.target.value);
+                                    }
+                                }}
+                            />
+                        </div>}
 
-                {isJournalPriceFetched &&
-                    <div className={styles.journalSelectCity}>
-                        {!isJournalsFetching && !isJournalsError &&
-                            <CustomPriceSelector
-                                itemsData={journalsData!}
-                                selectorStyles={styles.journalSelector}
-                                selectedCityStyles={styles.selectedJournalCity}
-                                optionsStyles={styles.journalOptions}
-                                cityListStyles={styles.cityList}
-                                setFunction={setJournalPriceHandler}
-                            />}
+                    {isJournalPriceFetched &&
+                        <div className={styles.journalSelectCity}>
+                            {!isJournalsFetching && !isJournalsError &&
+                                <CustomPriceSelector
+                                    itemsData={journalsData!}
+                                    selectorStyles={styles.journalSelector}
+                                    selectedCityStyles={styles.selectedJournalCity}
+                                    optionsStyles={styles.journalOptions}
+                                    cityListStyles={styles.cityList}
+                                    setFunction={setJournalPriceHandler}
+                                />}
 
-                        {!!isJournalsFetching && <p className={styles.loader}>loading...</p>}
-                        {!!isJournalsError && <p className={styles.loader}>error!</p>}
-                    </div>}
-            </div>}
-
-    </>
+                            {!!isJournalsFetching && <p className={styles.loader}>loading...</p>}
+                            {!!isJournalsError && <p className={styles.loader}>error!</p>}
+                        </div>}
+                </div>}
+        </>
+    )
 }
 
 export default JournalsSelectors;

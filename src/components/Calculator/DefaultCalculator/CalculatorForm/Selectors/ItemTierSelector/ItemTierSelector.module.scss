@@ -3,23 +3,19 @@
   align-items: center;
   margin-top: 10px;
   margin-left: 10px;
-  width: 115px;
-  justify-content: space-between;
 
-  .itemTierSelector{
+  .selectedItem{
     display: flex;
     z-index: 9999;
-    position: relative;
 
-    .itemTierButtonSelector{
-      position: absolute;
-      margin-left: 75px;
-      width: 325px;
-      height: 65px;
-    }
+    .itemTierSelector {
+      display: flex;
+      align-items: center;
 
-    .itemTierButtonSelectorHidden{
-      display: none;
+      .itemTierButtonSelector{
+        width: 325px;
+        height: 65px;
+      }
     }
   }
 }

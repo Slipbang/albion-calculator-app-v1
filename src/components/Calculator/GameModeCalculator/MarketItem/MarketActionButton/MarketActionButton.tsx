@@ -46,20 +46,22 @@ const MarketActionButton = () => {
         }
     }
 
-    return <StyledMarketActionButton
-        $isActionBuy={marketAction === 'buy'}
-        $isRuSelected={isRuSelected}
-        className={styles.buyButton}
-        disabled={isNaN(totalPrice) || typeof totalPrice !== "number"}
-        onClick={() => {
-            if (marketAction === 'buy'){
-                buyMaterialHandler();
-            }
-            if (marketAction === 'sell'){
-                sellItemsHandler(itemIndex!, itemInputQuantity);
-            }
-        }}
-    />
+    return (
+        <StyledMarketActionButton
+            $isActionBuy={marketAction === 'buy'}
+            $isRuSelected={isRuSelected}
+            className={styles.buyButton}
+            disabled={isNaN(totalPrice) || typeof totalPrice !== "number"}
+            onClick={() => {
+                if (marketAction === 'buy'){
+                    buyMaterialHandler();
+                }
+                if (marketAction === 'sell'){
+                    sellItemsHandler(itemIndex!, itemInputQuantity);
+                }
+            }}
+        />
+    )
 }
 
 export default MarketActionButton;

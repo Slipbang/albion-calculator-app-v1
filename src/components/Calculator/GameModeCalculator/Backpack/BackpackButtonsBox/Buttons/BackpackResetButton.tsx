@@ -10,9 +10,11 @@ const BackpackResetButton = () => {
         dispatchAction(GMProfitSliceActions.resetBackpack());
     }
 
-    return <StyledCompleteResetButton
-        onClick={() => resetBackpackHandler()}
-    />
+    return (
+        <StyledCompleteResetButton
+            onClick={() => resetBackpackHandler()}
+        />
+    )
 }
 
 export default BackpackResetButton;

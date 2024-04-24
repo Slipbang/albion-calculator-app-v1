@@ -15,8 +15,7 @@ interface IEnchantmentButtonsProps {
     calculatorType: TCalcProps;
 }
 
-const EnchantmentButtons = (props: IEnchantmentButtonsProps) => {
-    const {calculatorType} = props;
+const EnchantmentButtons = ({calculatorType}: IEnchantmentButtonsProps) => {
 
     const selectedWorkBenchItem = useSelector(selectWorkBenchItem);
     const enchantmentButtons = useSelector(selectEnchantmentButtons);
@@ -30,11 +29,11 @@ const EnchantmentButtons = (props: IEnchantmentButtonsProps) => {
         const reservedButtons = JSON.parse(JSON.stringify(enchantmentButtons)) as IEnchantmentButton[];
         reservedButtons.forEach(resElem => {
             if (resElem.index !== index) {
-                resElem.active = false
+                resElem.active = false;
             }
         });
 
-        reservedButtons[index].active = !reservedButtons[index].active
+        reservedButtons[index].active = !reservedButtons[index].active;
 
         let materialEnchantment = '';
         let itemEnchantment = '';
@@ -74,23 +73,25 @@ const EnchantmentButtons = (props: IEnchantmentButtonsProps) => {
                     </div>
                     {enchantmentButtons.filter(item => {
                         if (itemId!.includes('STONEBLOCK')) {
-                            return item.index < 3
+                            return item.index < 3;
                         } else {
                             return true;
                         }
-                    }).map(({index, active, activeButton, hoveredActiveButton, button, hoveredButton}) =>
+                    }).map(({index, active, activeButton, hoveredActiveButton, button, hoveredButton}) => {
 
-                        <StyledEnchantmentButton
-                            key={index}
-                            $isSelected={active}
-                            $enchantmentButton={button}
-                            $hoveredEnchantmentButton={hoveredButton}
-                            $selectedEnchantmentButton={activeButton}
-                            $hoveredActiveEnchantmentButton={hoveredActiveButton}
-                            onClick={() => activateButtonHandler(index)}
-                            onMouseDown={(event) => event.preventDefault()}
-                        />
-                    )}
+                        return (
+                            <StyledEnchantmentButton
+                                key={index}
+                                $isSelected={active}
+                                $enchantmentButton={button}
+                                $hoveredEnchantmentButton={hoveredButton}
+                                $selectedEnchantmentButton={activeButton}
+                                $hoveredActiveEnchantmentButton={hoveredActiveButton}
+                                onClick={() => activateButtonHandler(index)}
+                                onMouseDown={(event) => event.preventDefault()}
+                            />
+                        )
+                    })}
                 </div>}
         </>
     )
