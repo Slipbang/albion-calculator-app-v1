@@ -9,6 +9,7 @@ import {
     selectMaterialEnchantmentCF,
 } from "../../../../../../store/interface/interface-selector";
 import {useSelector} from "react-redux";
+import {srcRoute} from "../../../../../../store/api/api";
 
 const ResourceBox = () => {
 
@@ -21,7 +22,7 @@ const ResourceBox = () => {
 
     const {
         backpackMatsQuantity,
-        matsKeys,
+        materialKeys,
         consumedMaterials,
         materialApiId,
     } = useMaterialsCalculation({backpackItems, materialEnchantment, itemsQuantity, selectedWorkBenchItem, enchantmentNum});
@@ -32,10 +33,8 @@ const ResourceBox = () => {
 
     const totalArtefactQuantity = artefactsQuantity! * itemsQuantity
 
-    const srcRoute = 'https://render.albiononline.com/v1/item/';
-
     return <div className={styles.resourcesBox}>
-        {matsKeys.map(key => {
+        {materialKeys.map(key => {
             return !!selectedWorkBenchItem[key] && <div key={key}>
                 <img
                     src={`${srcRoute}${materialApiId[`${key}ApiId`]}`}

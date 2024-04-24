@@ -1,11 +1,7 @@
 import styles from './ConsumablesSelector.module.scss'
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../../types/languageTypes";
 import {useSelector} from "react-redux";
-import {
-    selectConsumable,
-    selectConsumableItemQuantity,
-    selectPercent
-} from "../../../../../../store/profit/profit-selectors";
+import {selectConsumable, selectConsumableItemQuantity, selectPercent} from "../../../../../../store/profit/profit-selectors";
 import {srcRoute} from "../../../../../../store/api/api";
 import {useEffect, useRef, useState} from "react";
 import {TTier} from "../../../../../../types/craftItemsType";
@@ -22,6 +18,8 @@ interface IFoodSelectorProps {
 }
 
 const tiers: Exclude<TTier, 'T3'>[] = ['T4', 'T5', 'T6', 'T7', 'T8'];
+
+const extraKeys = ['T1_FISHSAUCE_LEVEL', 'T1_ALCHEMY_EXTRACT_LEVEL'];
 
 const ConsumablesSelector = (props: IFoodSelectorProps) => {
     const {calculatorFormStrings, selectedLanguage} = props;
@@ -54,9 +52,11 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
     const [resourceQuantityInput, setResourceQuantityInput] = useState(initialResources);
     const [isSelectorVisible, setIsSelectorVisible] = useState(false);
 
+
     const defineParams = () => {
-        const consumptionItemQueryParams: string[] = [itemId, ...resourceKeys].filter(item => !item.includes('FISHSAUCE') && !item.includes('ALCHEMY_EXTRACT'));
-        const extraResourceKey = [...resourceKeys].filter(item => item.includes('FISHSAUCE') || item.includes('ALCHEMY_EXTRACT')).join('');
+        const consumptionItemQueryParams: string[] = [itemId, ...resourceKeys].filter(key => !extraKeys.includes(key));
+
+        const extraResourceKey = [...resourceKeys].filter(key => extraKeys.includes(key)).join('');
 
         [1, 2, 3].forEach(enchantment => {
             consumptionItemQueryParams.push(`${itemId}@${enchantment}`);
@@ -178,13 +178,14 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
                             />
 
                             <div
-                                style={{marginTop: `${(!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? -30 : -26}px`}}
+                                style={{marginTop: `${!extraKeys.includes(key) ? -30 : -26}px`}}
                                 className={styles.resourceQuantity}>
                                 <p>{selectedConsumable![key] || 0}</p>
                             </div>
                             <div
-                                style={{marginTop: `${(!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? 0 : 4}px`}}
-                                className={styles.quantityInput}>
+                                style={{marginTop: `${!extraKeys.includes(key) ? 0 : 4}px`}}
+                                className={styles.quantityInput}
+                            >
                                 <input
                                     type="number"
                                     value={resourceQuantityInput[key] || 0}

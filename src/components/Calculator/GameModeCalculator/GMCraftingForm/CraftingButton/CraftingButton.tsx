@@ -1,5 +1,4 @@
 import StyledCraftingButton from "../GMCraftingFormSC/StyledCraftingButton";
-import {TItemNode} from "../../../../../types/craftItemsType";
 import {GMProfitSliceActions} from "../../../../../store/GMProfit/gm-profit-slice";
 import {useAppDispatch} from "../../../../../store";
 import {useSelector} from "react-redux";
@@ -29,6 +28,8 @@ import {
     selectWorkBenchItem
 } from "../../../../../store/GMProfit/gm-profit-selectors";
 import {IBagCell} from "../../../../../store/Items/workBenchSelectorItems_marketItems";
+import {srcRoute} from "../../../../../store/api/api";
+import {TMaterialsInfo} from "../../../../../types/craftItemsType";
 
 const CraftingButton = (props: { calculatorType: TCalcProps }) => {
     const {calculatorType} = props;
@@ -69,19 +70,6 @@ const CraftingButton = (props: { calculatorType: TCalcProps }) => {
     });
 
     const {
-        consumeLEATHERQuantity,
-        consumeCLOTHQuantity,
-        consumeMETALBARQuantity,
-        consumePLANKSQuantity,
-        consumeSTONEBLOCKQuantity,
-        consumeOREQuantity,
-        consumeWOODQuantity,
-        consumeHIDEQuantity,
-        consumeFIBERQuantity,
-        consumeROCKQuantity,
-    } = consumedMaterials;
-
-    const {
         journalApiId,
         totalJournalQuantity,
     } = useJournals({isJournalUsed, itemsQuantity, selectedWorkBenchItem, enchantmentNum});
@@ -115,7 +103,7 @@ const CraftingButton = (props: { calculatorType: TCalcProps }) => {
 
     const journalPrice = isJournalUsed ? (isJournalPriceFetched ? fetchedJournalPrice : ownJournalPrice) : 0;
 
-    const consumedMaterialsWithReturnPercent = (consumedQuantity: number) => {
+    const applyReturnPercent = (consumedQuantity: number) => {
         const random = Math.random();
 
         return Math[random < 0.5 ? 'floor' : 'ceil'](consumedQuantity - consumedQuantity * (returnPercent / 100));
@@ -132,32 +120,27 @@ const CraftingButton = (props: { calculatorType: TCalcProps }) => {
             },
             itemTier: `T${itemTier}`,
             itemQuantity: Math.floor(itemsQuantity! * (itemId!.includes('STONEBLOCK') && +enchantmentNum > 0 ? Math.pow(2, +enchantmentNum) : 1)),
-            itemImage: `https://render.albiononline.com/v1/item/${itemId}${itemEnchantment}`,
-            itemNode: itemNode as TItemNode,
+            itemImage: `${srcRoute}${itemId}${itemEnchantment}`,
+            itemNode,
             itemEnchantmentNum: itemId?.includes('STONEBLOCK') ? '' : enchantmentNum,
-            itemEnchantment: itemEnchantment!,
+            itemEnchantment,
         }
 
-        const consumedMaterials = {
-            consumedMaterials: {
-                consumeLEATHERQuantity: consumedMaterialsWithReturnPercent(+consumeLEATHERQuantity!),
-                consumeCLOTHQuantity: consumedMaterialsWithReturnPercent(+consumeCLOTHQuantity!),
-                consumeMETALBARQuantity: consumedMaterialsWithReturnPercent(+consumeMETALBARQuantity!),
-                consumePLANKSQuantity: consumedMaterialsWithReturnPercent(+consumePLANKSQuantity!),
-                consumeSTONEBLOCKQuantity: consumedMaterialsWithReturnPercent(+consumeSTONEBLOCKQuantity!),
-                consumeOREQuantity: consumedMaterialsWithReturnPercent(+consumeOREQuantity!),
-                consumeWOODQuantity: consumedMaterialsWithReturnPercent(+consumeWOODQuantity!),
-                consumeHIDEQuantity: consumedMaterialsWithReturnPercent(+consumeHIDEQuantity!),
-                consumeFIBERQuantity: consumedMaterialsWithReturnPercent(+consumeFIBERQuantity!),
-                consumeROCKQuantity: consumedMaterialsWithReturnPercent(+consumeROCKQuantity!),
-            },
+        const consumedMaterialsWithReturnPercent: {[key: string]: number} = {};
+
+        for (const key in consumedMaterials) {
+            consumedMaterialsWithReturnPercent[key as keyof TMaterialsInfo['consumedMaterials']] = applyReturnPercent(+consumedMaterials[key as keyof TMaterialsInfo['consumedMaterials']]!);
+        }
+
+        const materialsInfo = {
+            consumedMaterials: consumedMaterialsWithReturnPercent as TMaterialsInfo['consumedMaterials'],
             materialApiId,
         }
 
-        dispatchAction(GMProfitSliceActions.craftItems({craftedItems, consumedMaterials}));
+        dispatchAction(GMProfitSliceActions.craftItems({craftedItems, materialsInfo}));
         dispatchAction(GMProfitSliceActions.calculateBagSilver(-(totalFoodTax + totalArtefactPrice)));
 
-        if (calculatorType === 'items' && isJournalUsed) {
+        if (calculatorType === 'ITEMS' && isJournalUsed) {
             dispatchAction(GMProfitSliceActions.addJournals({
                 journalsQuantity: totalJournalQuantity!,
                 journalId: journalApiId!,

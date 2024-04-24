@@ -1,9 +1,6 @@
 import {RootState} from "../index";
 
-export const selectCraftResourcesList = (state: RootState) => state.profit.craftResourcesList;
-export const selectCraftItemsList = (state: RootState) => state.profit.craftItemsList;
-export const selectCraftedMealsList = (state: RootState) => state.profit.craftedMealsList;
-export const selectCraftedPotionsList = (state: RootState) => state.profit.craftedPotionsList;
+export const selectCraftList = (state: RootState) => state.profit.craftLists;
 export const selectInitialQuantity = (state: RootState) => state.profit.initialQuantity;
 export const selectErrors = (state: RootState) => state.profit.errors;
 export const selectSimilarTypeErrors = (state: RootState) => state.profit.errors.similarError;

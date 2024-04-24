@@ -4,7 +4,6 @@ import styles from './ArtefactsSelector.module.scss';
 import {useAppDispatch} from "../../../store";
 import React, {ChangeEventHandler} from "react";
 import {artefactActions} from "../../../store/artefacts/artefact-slice";
-import {selectTheme} from "../../../store/interface/interface-selector";
 import ResetButton from "./ResetButton/ResetButton";
 import TierSelector from "./TierSelector";
 

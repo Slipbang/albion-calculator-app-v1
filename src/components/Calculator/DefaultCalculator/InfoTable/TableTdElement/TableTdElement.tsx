@@ -1,5 +1,5 @@
 import {CraftedItemInfoClass} from "../TableClasses/CraftedItemInfoClass";
-import {ICraftConsumableInfoTuple, ICraftItemInfoTuple} from "../InfoTable";
+import {ICraftConsumableInfoTuple, ICraftItemInfoTuple, infoCityOptions} from "../InfoTable";
 import styles from "./TableTdElement.module.scss";
 import {TCities} from "../../../../../types/InfoTableTypes";
 import React from "react";
@@ -19,8 +19,6 @@ interface infoCities {
     BlackMarketInfo: CraftedItemInfoClass | CraftedConsumablesInfoClass |undefined,
 }
 
-const infoCityOptions: TCities[] = ['Brecilien', "Caerleon", "Fort Sterling", "Bridgewatch", 'Martlock', 'Thetford', 'Lymhurst', 'Black Market'];
-
 interface ITableTdElementProps {
     enchantment: string;
     craftInfoParams: ICraftItemInfoTuple | ICraftConsumableInfoTuple;
@@ -39,7 +37,7 @@ const TableTdElement = ({enchantment, craftInfoParams, calculatorType}: ITableTd
 
                 if (!!itemData?.resourceId && itemData?.resourceId?.includes?.('STONEBLOCK') && enchantment === '4') return;
                 if (!!itemData?.resourceId && city === 'Black Market') return;
-                if ((calculatorType === 'food' || calculatorType === 'potions') && city === 'Black Market') return;
+                if ((calculatorType === 'FOOD' || calculatorType === 'POTIONS') && city === 'Black Market') return;
 
                 const infoClasses: infoCities = {
                     CaerleonInfo: undefined,
@@ -55,7 +53,7 @@ const TableTdElement = ({enchantment, craftInfoParams, calculatorType}: ITableTd
                 const cityKey = city.split(' ').join('') as keyof infoCities;
 
                 infoClasses[`${cityKey}Info` as keyof infoCities] =
-                    (calculatorType === 'resource' || calculatorType === 'items')
+                    (calculatorType === 'RESOURCES' || calculatorType === 'ITEMS')
                         ? new CraftedItemInfoClass(city, enchantment, ...craftInfoParams as ICraftItemInfoTuple)
                         : new CraftedConsumablesInfoClass(city, enchantment, ...craftInfoParams as ICraftConsumableInfoTuple);
 

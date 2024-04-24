@@ -1,8 +1,7 @@
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {useSelector} from "react-redux";
 import {
-    selectCraftedMealsList,
-    selectCraftedPotionsList,
+    selectCraftList,
     selectSimilarTypeErrors
 } from "../../../../../store/profit/profit-selectors";
 import styles from './ConsumablesList.module.scss';
@@ -26,24 +25,9 @@ const ConsumablesList = (props: TConsumablesTableProps) => {
 
     const dispatchAction = useAppDispatch();
 
-    const selectList = () => {
-        switch (calculatorType) {
-            case 'food':
-                return selectCraftedMealsList;
-            case 'potions':
-                return selectCraftedPotionsList;
-        }
-    }
-    const selectedList = selectList();
-    const craftedConsumablesList = useSelector(selectedList!);
+    const craftLists = useSelector(selectCraftList);
     const similarError = useSelector(selectSimilarTypeErrors);
-    let similarItemId: string | undefined;
-    if (calculatorType === 'food'){
-        similarItemId = similarError.similarFoodId;
-    }
-    if (calculatorType === 'potions'){
-        similarItemId = similarError.similarPotionsId;
-    }
+    const similarItemId = similarError[calculatorType];
 
     const resourcesWithReturnPercent = (craftedFood: IConsumableObject, key: string, returnPercent: number, totalQuantity: number) => {
 
@@ -62,7 +46,7 @@ const ConsumablesList = (props: TConsumablesTableProps) => {
     }
 
     return <div className={styles.wrapper} data-notification={craftTableStrings.alert}>
-        {craftedConsumablesList.map(item => {
+        {(craftLists[calculatorType] as IConsumableTableData[]).map(item => {
             const {craftedConsumable, percent, quantity, id} = item;
             const consumableKeys = Object.keys(craftedConsumable);
 

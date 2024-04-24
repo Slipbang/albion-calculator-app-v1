@@ -85,6 +85,8 @@ export type TSelectedCityStates = {
 
 export type TArtefactName = TArtefactData['artefactName'] | undefined;
 
+export const infoCityOptions: TCities[] = ['Brecilien', "Caerleon", "Fort Sterling", "Bridgewatch", 'Martlock', 'Thetford', 'Lymhurst', 'Black Market'];
+
 const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
 
     const craftedItem = useSelector(selectCraftedItemData);
@@ -123,7 +125,9 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
     if (craftedConsumablesData !== null) {
         ({queryParams: queryConsumableParams, craftedConsumable} = craftedConsumablesData!);
         ({itemId: consumablesItemId} = craftedConsumable);
+
         consumableResourcesKeys = Object.keys(craftedConsumable).filter(key => key.toUpperCase() === key && !key.includes(craftedConsumable!.itemId));
+
         consumablesNames = {
             [craftedConsumable.itemId]: {...consumablesNamesData![craftedConsumable.itemId]}
         };
@@ -132,14 +136,13 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
 
         consumableResourcesKeys.forEach(key => {
             consumablesNames![key] = {...consumablesNamesData![key]};
-
         });
 
         [1, 2, 3].forEach(enchantment => {
             const extraResourceKey =
-                calculatorType === 'food'
+                calculatorType === 'FOOD'
                     ? 'T1_FISHSAUCE_LEVEL'
-                    : calculatorType === 'potions'
+                    : calculatorType === 'POTIONS'
                         ? 'T1_ALCHEMY_EXTRACT_LEVEL'
                         : '';
 
@@ -153,6 +156,9 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
             consumableSelectorsInitialState[key] = 'Fort Sterling';
         })
     }
+
+    //если объединить запрос в один, то в инстансах классов будет слишком длинный проход по одному большому объекту при поиске цен,
+    // использовать кэширование в случае Albion Online Data Project смысла нет тк данные меняются ежесекундно.
 
     const [fetchItems, {
         isFetching: isItemFetching,
@@ -185,7 +191,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
     }] = useLazyGetItemsDataQuery();
 
     useEffect(() => {
-        if (calculatorType === 'items') {
+        if (calculatorType === 'ITEMS') {
             fetchItems({itemsParams: queryItemsParams!, isBlackMarket: true, serverId});
             fetchJournals({itemsParams: queryJournalsParams!, isBlackMarket: false, serverId})
 
@@ -194,11 +200,11 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
             }
         }
 
-        if (calculatorType === 'resource' || calculatorType === 'items') {
+        if (calculatorType === 'RESOURCES' || calculatorType === 'ITEMS') {
             fetchMaterials({itemsParams: queryMatsParams!, isBlackMarket: false, serverId});
         }
 
-        if (calculatorType === 'food' || calculatorType === 'potions') {
+        if (calculatorType === 'FOOD' || calculatorType === 'POTIONS') {
             fetchConsumables({itemsParams: queryConsumableParams!, isBlackMarket: false, serverId});
         }
     }, [queryItemsParams, queryMatsParams, queryJournalsParams, artefactId, serverId, itemId])
@@ -248,7 +254,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
     const currentDate: Date = new Date();
 
     const craftInfoParams: ICraftItemInfoTuple | ICraftConsumableInfoTuple =
-        (calculatorType === 'items' || calculatorType === 'resource')
+        (calculatorType === 'ITEMS' || calculatorType === 'RESOURCES')
             ? [
                 infoTableData,
                 artefactName,
@@ -278,12 +284,12 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
 
     const defineSrc = (enchantment: string) => {
         switch (calculatorType) {
-            case 'items':
+            case 'ITEMS':
                 return `${itemId}${!enchantment ? '' : `@${enchantment}`}`;
-            case 'resource':
+            case 'RESOURCES':
                 return `${resourceId}${(!enchantment || resourceId?.includes?.('STONEBLOCK')) ? '' : `_LEVEL${enchantment}@${enchantment}`}`;
-            case 'food':
-            case "potions":
+            case 'FOOD':
+            case "POTIONS":
                 return `${consumablesItemId}${(enchantment === '4' || !enchantment) ? '' : `@${enchantment}`}`;
         }
     }
@@ -294,8 +300,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                     && !isConsumablesFetching && !isErrorItems && !isErrorMaterials
                     && !isErrorArtefacts && !isErrorJournals && !isErrorConsumables) &&
                 <div className={styles.wrapper} data-theme={theme}>
-                    {(calculatorType === 'resource' || calculatorType === 'items')
-                        && (
+                    {(calculatorType === 'RESOURCES' || calculatorType === 'ITEMS') && (
                             <MaterialSelectors
                                 mainMatsId={mainMatsId!}
                                 subMatsId={subMatsId!}
@@ -318,8 +323,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                             />
                         )}
 
-                    {(calculatorType === 'food' || calculatorType == 'potions')
-                        && (
+                    {(calculatorType === 'FOOD' || calculatorType == 'POTIONS') && (
                             <ConsumablesPriceSelectors
                                 consumableSelectorsKeys={consumableSelectorsKeys!}
                                 consumableSelectors={consumableSelectors}
@@ -338,16 +342,11 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                         <thead>
                         <tr>
                             <th>{infoTableStrings.item}</th>
-                            <th>{infoTableStrings.saleIn} Brecilien</th>
-                            <th>{infoTableStrings.saleIn} Caerleon</th>
-                            <th>{infoTableStrings.saleIn} Fort Sterling</th>
-                            <th>{infoTableStrings.saleIn} Bridgewatch</th>
-                            <th>{infoTableStrings.saleIn} Martlock</th>
-                            <th>{infoTableStrings.saleIn} Thetford</th>
-                            <th>{infoTableStrings.saleIn} Lymhurst</th>
-                            {!!itemId &&
-                                <th>{infoTableStrings.saleIn} Black Market</th>
-                            }
+                            {infoCityOptions.map(city => {
+                                if (!itemId && city === 'Black Market') return;
+
+                                return <th key={city}>{infoTableStrings.saleIn} {city}</th>
+                            })}
                         </tr>
                         </thead>
                         <tbody>
@@ -405,7 +404,8 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                     size={60}
                     aria-label='Loading Spinner'
                     data-testid='loader'
-                />}
+                />
+            }
             {(isErrorItems || isErrorArtefacts || isErrorMaterials || isErrorJournals || isErrorConsumables) &&
                 <ErrorNotification theme={theme}/>}
         </>

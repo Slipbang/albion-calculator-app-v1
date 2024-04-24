@@ -26,6 +26,10 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         super(currentDate);
     }
 
+    test = () => {
+        const {} = this.itemData!;
+    }
+
     itemTierNum = +this.itemData!.tier!.split('T')[1];
 
     subMatsTier = (!!this.itemData!.resourceId) ? `T${this.itemTierNum - 1}` : this!.itemData!.tier;
@@ -50,7 +54,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         }
     }
 
-    getMaxBuyPriceDate = (itemId: string, selectedCity: TCities) => {
+    getSellPriceMinDate = (itemId: string, selectedCity: TCities) => {
         return this.materialsData?.find(matItem => matItem.itemId === itemId && matItem.location === selectedCity)?.sellPriceMinDate || 0
     }
 
@@ -60,11 +64,11 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         let itemPrice: number;
 
         if (!!itemId) {
-            itemPrice = itemsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(itemId, enchantment) && itemElem.location === city)?.sellPriceMin || 0;
+            itemPrice = itemsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(itemId, enchantment) && itemElem.location === city)?.buyPriceMax || 0;
         }
 
         if (!!resourceId) {
-            itemPrice = materialsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(resourceId, enchantment) && itemElem.location === city)?.sellPriceMin! * multiplication || 0;
+            itemPrice = materialsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(resourceId, enchantment) && itemElem.location === city)?.buyPriceMax! * multiplication || 0;
         }
         return Math.round((itemPrice! - itemPrice! * 0.065)) || infoTableStrings.noData;
     }
@@ -88,27 +92,27 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
 
     subMaterialPrice: number = this.getMatPrice?.(this.subMaterialId!, this.selectedCities.subMaterialCity);
 
-    get itemSellPriceMinDate() {
+    get itemPriceDate() {
         const {enchantment, city, itemsData, materialsData} = this;
         const {resourceId, itemId} = this.itemData!;
 
         if (!!itemId && !resourceId) {
-            return itemsData?.find(item => item.itemId === this.itemIdWithEnchantment(itemId!, enchantment) && item.location === city)?.sellPriceMinDate || '';
+            return itemsData?.find(item => item.itemId === this.itemIdWithEnchantment(itemId!, enchantment) && item.location === city)?.buyPriceMaxDate || '';
         }
 
         if (!!resourceId && !itemId) {
-            return materialsData?.find(item => item.itemId === this.itemIdWithEnchantment(resourceId!, enchantment) && item.location === city)?.sellPriceMinDate || '';
+            return materialsData?.find(item => item.itemId === this.itemIdWithEnchantment(resourceId!, enchantment) && item.location === city)?.buyPriceMaxDate || '';
         }
     }
 
-    mainMatsMaxBuyPriceDate = this.getMaxBuyPriceDate(this.mainMaterialId, this.selectedCities.mainMaterialCity) || '';
-    subMatsMaxBuyPriceDate = this.getMaxBuyPriceDate(this.subMaterialId!, this.selectedCities.subMaterialCity) || '';
-    artefactMaxBuyPriceDate = this.artefactsData?.find(item => item.itemId === this.itemData!.artefactId && item.location === this.selectedCities.artefactCity)?.buyPriceMaxDate || '';
+    mainMatsPriceDate = this.getSellPriceMinDate(this.mainMaterialId, this.selectedCities.mainMaterialCity) || '';
+    subMatsPriceDate = this.getSellPriceMinDate(this.subMaterialId!, this.selectedCities.subMaterialCity) || '';
+    artefactPriceDate = this.artefactsData?.find(item => item.itemId === this.itemData!.artefactId && item.location === this.selectedCities.artefactCity)?.sellPriceMinDate || '';
 
-    itemWasUpdate = this.getTime(this.itemSellPriceMinDate!);
-    mainMatsWasUpdate = this.getTime(this.mainMatsMaxBuyPriceDate);
-    subMatsWasUpdate = this.getTime(this.subMatsMaxBuyPriceDate);
-    artefactWasUpdate = this.getTime(this.artefactMaxBuyPriceDate);
+    itemWasUpdate = this.getTime(this.itemPriceDate!);
+    mainMatsWasUpdate = this.getTime(this.mainMatsPriceDate);
+    subMatsWasUpdate = this.getTime(this.subMatsPriceDate);
+    artefactWasUpdate = this.getTime(this.artefactPriceDate);
 
     artefactPrice = this.ownPrices.artefact.isSelectedOwn ? this.ownPrices.artefact.ownPrice : this.artefactsData?.find(artefact => artefact.location === this.selectedCities.artefactCity)?.sellPriceMin || 0;
 

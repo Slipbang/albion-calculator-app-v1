@@ -19,7 +19,7 @@ export class artefactsPrices extends UtilsMethodsClass{
 
     cities: TCities[] = ['Caerleon', 'Thetford', 'Bridgewatch', 'Lymhurst', 'Fort Sterling', 'Martlock', 'Brecilien'];
 
-    fullArtefactId = `${this.artefactTier}_${this.artefactId}`
+    fullArtefactId = `${this.artefactTier}_${this.artefactId}`;
 
     getArtefactsData = (city: TCities) => {
         const sellPriceMin = this.artefactsPriceData?.find(item => item.location === city && item.itemId === this.fullArtefactId)?.sellPriceMin || 0;

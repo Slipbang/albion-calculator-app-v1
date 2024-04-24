@@ -63,7 +63,7 @@ type TWorkBenchNodeSelectorButtons = {
 }
 
 const workBenchNodeSelectorButtons: TWorkBenchNodeSelectorButtons = {
-    'resource': [
+    RESOURCES: [
         {
             workBenchType: 'tanner',
             buttonImage: workBenchTannerButtonInactive,
@@ -100,7 +100,7 @@ const workBenchNodeSelectorButtons: TWorkBenchNodeSelectorButtons = {
             workerAvatar: stonemasonWorkerAvatar,
         }
     ],
-    'items': [
+    ITEMS: [
         {
             workBenchType: 'warrior',
             buttonImage: workBenchForgeButtonInactive,
@@ -131,8 +131,8 @@ const workBenchNodeSelectorButtons: TWorkBenchNodeSelectorButtons = {
         },
 
     ],
-    'potions': [],
-    'food': []
+    POTIONS: [],
+    FOOD: []
 }
 
 const WorkBenchTypeSelector = () => {
@@ -141,7 +141,7 @@ const WorkBenchTypeSelector = () => {
     const dispatchAction = useAppDispatch();
 
     useEffect(() => {
-        if (calculatorType === 'resource' || calculatorType === 'items'){
+        if (calculatorType === 'RESOURCES' || calculatorType === 'ITEMS'){
             workBenchTypeButtonRef.current!.click();
         }
     }, [calculatorType]);
@@ -159,7 +159,7 @@ const WorkBenchTypeSelector = () => {
 
         let itemType: TItemTypeSelected;
 
-        if (calculatorType === 'resource') {
+        if (calculatorType === 'RESOURCES') {
             itemType = 'resources';
         } else {
             if (workBenchType === 'toolmaker') {

@@ -78,7 +78,7 @@ const theme = defineTheme();
 const initialState: IInitialState = {
     global: {
         gameMode: true,
-        calculatorType: 'resource',
+        calculatorType: 'RESOURCES',
         isMarketMenuShown: false,
         isCraftingFormVisible: false,
         isMarketItemVisible: false,

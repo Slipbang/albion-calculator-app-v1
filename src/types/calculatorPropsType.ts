@@ -1,1 +1,1 @@
-export type TCalcProps = 'resource' | 'items' | 'potions' | 'food';
+export type TCalcProps = 'RESOURCES' | 'ITEMS' | 'POTIONS' | 'FOOD';

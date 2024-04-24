@@ -1,7 +1,7 @@
 import StyledDefaultButton from "../../../StyledComponentsCommon/StyledDefaultButton";
 import {ITableData, profitSliceActions} from "../../../../../store/profit/profit-slice";
 import {useSelector} from "react-redux";
-import {selectCraftItemsList, selectSimilarTypeErrors} from "../../../../../store/profit/profit-selectors";
+import {selectCraftList, selectSimilarTypeErrors} from "../../../../../store/profit/profit-selectors";
 import {ISelectedLanguage} from "../../../../../types/languageTypes";
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {useAppDispatch} from "../../../../../store";
@@ -24,29 +24,30 @@ const ItemTable = (props: TItemTableProps) => {
 
     const dispatchAction = useAppDispatch();
 
-    const craftItemsList = useSelector(selectCraftItemsList);
-    const {similarItemId} = useSelector(selectSimilarTypeErrors);
+    const craftLists = useSelector(selectCraftList);
+    const {ITEMS: similarItemId} = useSelector(selectSimilarTypeErrors);
 
     const fetchItemDataHandler = (item: ITableData) => {
         const {itemId, mainMatsId, subMatsId, journalId, emptyJournalId} = item.infoTableData;
 
-        let items = `${itemId},`;
-        let subMats = !!subMatsId ? `${subMatsId},` : '';
-        let mainMats = `${mainMatsId},`;
-        let journals = `${journalId},${emptyJournalId},`;
+        const items = [itemId];
+        const materials = [mainMatsId];
+        if (!!subMatsId) materials.push(subMatsId);
+        const journals = `${journalId},${emptyJournalId}`;
 
         [1, 2, 3, 4].forEach(enchantmentLvl => {
-            items += (enchantmentLvl !== 4) ? `${itemId}@${enchantmentLvl},` : `${itemId}@${enchantmentLvl}`;
+            items.push(`${itemId}@${enchantmentLvl}`);
+
             if (!!subMatsId) {
-                subMats += `${subMatsId}_LEVEL${enchantmentLvl}@${enchantmentLvl},`;
+                materials.push(`${subMatsId}_LEVEL${enchantmentLvl}@${enchantmentLvl}`);
             }
 
-            mainMats += (enchantmentLvl !== 4) ? `${mainMatsId}_LEVEL${enchantmentLvl}@${enchantmentLvl},` : `${mainMatsId}_LEVEL${enchantmentLvl}@${enchantmentLvl}`;
+            materials.push(`${mainMatsId}_LEVEL${enchantmentLvl}@${enchantmentLvl}`);
         });
 
-        const queryItemsParams = `${items}`;
-        const queryMatsParams = `${subMats}${mainMats}`;
-        const queryJournalsParams = `${journals}`;
+        const queryItemsParams = items.join(',');
+        const queryMatsParams = materials.join(',');
+        const queryJournalsParams = journals;
 
         dispatchAction(profitSliceActions.setCraftedItem({
             ...item,
@@ -60,7 +61,7 @@ const ItemTable = (props: TItemTableProps) => {
     }
 
     return <div className={styles.tableStyle} data-notification={craftTableStrings.alert}>
-        {craftItemsList.length > 0 &&
+        {craftLists[calculatorType].length > 0 &&
             <table>
                 <thead>
                 <tr>
@@ -72,8 +73,8 @@ const ItemTable = (props: TItemTableProps) => {
                 </tr>
                 </thead>
                 <tbody>
-                {craftItemsList.map((item) => {
-                    const {id, mainResourceQuantity, subResourceQuantity, mainDiv, subDiv, percent} = item.craftTableData;
+                {(craftLists[calculatorType] as ITableData[]).map((item) => {
+                    const {id, mainResourceQuantity, subResourceQuantity, percent} = item.craftTableData;
                     const {itemId, mainMatsId, spentQuantityPerItem, subMatsId, output} = item.infoTableData;
 
                     return <tr key={id} data-similar-allert={id === similarItemId ? 'similar' : 'non-similar'}>
@@ -101,7 +102,6 @@ const ItemTable = (props: TItemTableProps) => {
                             <img
                                 src={`${srcRoute}${itemId}`}
                                 alt={itemId}
-                                title={!!subDiv ? `${mainDiv}/${subDiv}` : `${mainDiv}`}
                             />
                         </td>
                         <td>

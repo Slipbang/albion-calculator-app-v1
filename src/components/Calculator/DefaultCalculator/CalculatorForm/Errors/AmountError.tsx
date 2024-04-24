@@ -10,11 +10,11 @@ interface IAmountErrorProps {
 const AmountError = (props: IAmountErrorProps) => {
     const {errorStyles, calculatorFormStrings} = props;
 
-    const errors = useSelector(selectErrors);
+    const {quantityError} = useSelector(selectErrors);
 
     return (
         <>
-            {errors.quantityError &&
+            {quantityError &&
                 <p className={errorStyles}>{calculatorFormStrings.amountError}</p>}
         </>
     )

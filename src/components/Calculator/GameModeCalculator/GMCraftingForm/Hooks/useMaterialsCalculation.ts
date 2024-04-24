@@ -1,19 +1,10 @@
-import {IConsumedMaterials} from "../../../../../types/craftItemsType";
+import {TMaterialsInfo, TResourceType} from "../../../../../types/craftItemsType";
 import {TExtractedMaterialsKeys} from "../GMCraftingForm";
 import {ISelectedWorkBenchItem} from "../../../../../store/GMProfit/gm-profit-slice";
 import {IBagCell} from "../../../../../store/Items/workBenchSelectorItems_marketItems";
 
-export interface IBackpackMatsQuantity {
-    backpackLEATHERQuantity: number | null;
-    backpackPLANKSQuantity: number | null;
-    backpackCLOTHQuantity: number | null;
-    backpackMETALBARQuantity: number | null;
-    backpackSTONEBLOCKQuantity: number | null;
-    backpackOREQuantity: number | null;
-    backpackWOODQuantity: number | null;
-    backpackFIBERQuantity: number | null;
-    backpackHIDEQuantity: number | null;
-    backpackROCKQuantity: number | null;
+export type TBackpackMatsQuantity = {
+    [key in TResourceType as `backpack${Capitalize<string & key>}Quantity`]: number | null;
 }
 
 interface IUseMaterialsCalculationProps {
@@ -37,22 +28,14 @@ const useMaterialsCalculation = (props: IUseMaterialsCalculationProps) => {
         itemTier,
     } = selectedWorkBenchItem;
 
-    let selectedWorkBenchItemKeys = Object.keys(selectedWorkBenchItem) as TExtractedMaterialsKeys[];
+    const materialKeys = [...Object.keys(selectedWorkBenchItem).filter(key => key.toUpperCase() === key)] as TExtractedMaterialsKeys[] ;
 
-    const matsKeys: TExtractedMaterialsKeys[] = [];
+    const materialsCalculation = (): {matsData: Pick<TMaterialsInfo, 'materialApiId' | 'consumedMaterials'>, backpackMatsQuantity: TBackpackMatsQuantity} => {
+        let materialApiId: TMaterialsInfo['materialApiId'] | undefined = undefined;
+        let consumedMaterials: TMaterialsInfo['consumedMaterials'] | undefined = undefined;
+        let backpackMatsQuantity: TBackpackMatsQuantity | undefined = undefined;
 
-    selectedWorkBenchItemKeys.forEach(key=> {
-        if (key.toUpperCase() === key){
-            matsKeys.push(key);
-        }
-    })
-
-    const materialsCalculation = (): {matsData: Pick<IConsumedMaterials, 'materialApiId' | 'consumedMaterials'>, backpackMatsQuantity: IBackpackMatsQuantity} => {
-        let materialApiId: IConsumedMaterials['materialApiId'] | undefined = undefined;
-        let consumedMaterials: IConsumedMaterials['consumedMaterials'] | undefined = undefined;
-        let backpackMatsQuantity: IBackpackMatsQuantity | undefined = undefined;
-
-        matsKeys.forEach(key => {
+        materialKeys.forEach(key => {
 
             let tier: number = itemTier;
             let enchantment: string = materialEnchantment!;
@@ -99,7 +82,7 @@ const useMaterialsCalculation = (props: IUseMaterialsCalculationProps) => {
         let maxQuantity = 0;
         let noMatsInBackpack = false;
 
-        matsKeys.forEach(key => {
+        materialKeys.forEach(key => {
             if (!!selectedWorkBenchItem[key]!){
                 if (backpackMatsQuantity[`backpack${key}Quantity`]! >= +selectedWorkBenchItem[key]!){
                     materialsDivisionFactors.push(Math.floor(backpackMatsQuantity[`backpack${key}Quantity`]! / +selectedWorkBenchItem[key]!));
@@ -125,7 +108,7 @@ const useMaterialsCalculation = (props: IUseMaterialsCalculationProps) => {
         consumedMaterials,
         materialApiId,
         backpackMatsQuantity,
-        matsKeys,
+        materialKeys,
         maxQuantity,
     }
 }

@@ -15,7 +15,6 @@ import CraftTableButton from "./Buttons/CraftTableButton";
 import {TCalcProps} from "../../../../types/calculatorPropsType";
 import ConsumablesList from "./ConsumablesList/ConsumablesList";
 
-
 const CraftTable = React.memo(({calculatorType}: {calculatorType: TCalcProps}) => {
 
     const dispatchAction = useAppDispatch();
@@ -32,7 +31,7 @@ const CraftTable = React.memo(({calculatorType}: {calculatorType: TCalcProps}) =
 
         <StyledThumb>
             <div className={styles.craftTableStyles}>
-                {calculatorType === "resource" && (
+                {calculatorType === "RESOURCES" && (
                     <ResourceTable
                         craftTableStrings={craftTableStrings}
                         calculatorType={calculatorType}
@@ -40,14 +39,14 @@ const CraftTable = React.memo(({calculatorType}: {calculatorType: TCalcProps}) =
                     />
                 )}
 
-                {calculatorType === "items" && (
+                {calculatorType === "ITEMS" && (
                     <ItemTable
                         craftTableStrings={craftTableStrings}
                         deleteLiHandler={deleteLiHandler}
                         calculatorType={calculatorType}
                     />
                 )}
-                {(calculatorType === 'food' || calculatorType === 'potions') && (
+                {(calculatorType === 'FOOD' || calculatorType === 'POTIONS') && (
                     <ConsumablesList
                         craftTableStrings={craftTableStrings}
                         deleteLiHandler={deleteLiHandler}

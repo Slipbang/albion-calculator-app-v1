@@ -22,7 +22,6 @@ const Home = () => {
         <div className={styles.wrapper}>
             <div className={styles.sectionWrapper}>
                 <div className={`${styles.artefactsLink} ${styles.sectionBox}`}>
-                    {/*<Link to={`/${selectedLanguage}/artefacts/warrior/runes/T6`}>{homeStrings.artefacts}</Link>*/}
                     <Link to='/artefacts'>{homeStrings.artefacts}</Link>
 
                     <div className={styles.textBox}>
@@ -31,7 +30,6 @@ const Home = () => {
                 </div>
 
                 <div className={`${styles.calculatorLink} ${styles.sectionBox}`}>
-                    {/*<Link to={`${selectedLanguage}/calculator/game-mode/items`}>{homeStrings.craftCalculator}</Link>*/}
                     <Link to='/calculator'>{homeStrings.craftCalculator}</Link>
 
                     <AlbionToolkitSVG/>
@@ -42,7 +40,6 @@ const Home = () => {
                 </div>
 
                 <div className={`${styles.transportationLink} ${styles.sectionBox}`}>
-                    {/*<Link to={`/${selectedLanguage}/transportation`}>{homeStrings.transportation}</Link>*/}
                     <Link to='/transportation'>{homeStrings.transportation}</Link>
 
                     <div className={styles.textBox}>
@@ -64,7 +61,6 @@ const Home = () => {
                     <p>{homeStrings.language}</p>
                 </div>
 
-                {/*<Link to={`/${selectedLanguage}/FAQ`}>FAQ</Link>*/}
                 <Link to='/FAQ'>FAQ</Link>
 
                 <div className={styles.links}>

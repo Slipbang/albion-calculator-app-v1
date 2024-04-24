@@ -32,10 +32,10 @@ const FormButtons = (props: IFormButtonProps) => {
                 style={{marginLeft: '10px',marginTop: '15px', fontSize: '13px'}}
                 onClick={() => calculateProfitHandler()}
             >
-                {(calculatorType === 'items' || calculatorType === 'resource') ? 'Calculate' : 'Save'}
+                {(calculatorType === 'ITEMS' || calculatorType === 'RESOURCES') ? 'Calculate' : 'Save'}
             </StyledDefaultButton>
 
-            {(calculatorType === 'potions' || calculatorType === 'food') && (
+            {(calculatorType === 'POTIONS' || calculatorType === 'FOOD') && (
                 <StyledDefaultButton
                     $width={81}
                     $height={27}

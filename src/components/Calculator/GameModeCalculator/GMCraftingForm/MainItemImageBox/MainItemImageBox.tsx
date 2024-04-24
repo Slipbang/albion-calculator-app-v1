@@ -4,6 +4,7 @@ import {selectWorkBenchItem} from "../../../../../store/GMProfit/gm-profit-selec
 import {selectItemEnchantmentCF} from "../../../../../store/interface/interface-selector";
 import styles from './MainItemImageBox.module.scss';
 import {selectLanguage} from "../../../../../store/language/language-selector";
+import {srcRoute} from "../../../../../store/api/api";
 
 const MainItemImageBox = (props: {type: TCalcProps}) => {
     const {type} = props;
@@ -14,12 +15,10 @@ const MainItemImageBox = (props: {type: TCalcProps}) => {
     const selectedWorkBenchItem = useSelector(selectWorkBenchItem);
     const {itemId, itemTier, itemName} = selectedWorkBenchItem;
 
-    const srcRoute = 'https://render.albiononline.com/v1/item/';
-
     return (
         <div className={styles.itemImage}>
             <img
-                src={`${srcRoute}${itemId}${type === 'items' ? itemEnchantment : ''}`}
+                src={`${srcRoute}${itemId}${type === 'ITEMS' ? itemEnchantment : ''}`}
                 alt=""
             />
 

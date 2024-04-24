@@ -30,7 +30,11 @@ export type TWorkBenchNames  = 'Кузница' | 'Охотничий домик
     | 'Ткацкая мастерская' | 'Лесопилка' | 'Кожемятня' | 'Каменоломня' | 'Warrior\'s Forge' | 'Hunter\'s Lodge'
     | 'Mage\'s Tower' | 'Toolmaker' | 'Smelter' | 'Lumbermill' | 'Tanner' | 'Stonemason' | 'Weaver';
 
-export interface ICraftItem {
+export type TResources = {
+    [key in TResourceType]?: number | null;
+}
+
+export interface ICraftItem extends TResources{
     itemId: string | null;
     itemName?: {
         'ru': string;
@@ -38,16 +42,6 @@ export interface ICraftItem {
     };
     itemNode?: TItemNode;
     itemExample?: boolean;
-    PLANKS?: number | null;
-    METALBAR?: number | null;
-    LEATHER?: number | null;
-    CLOTH?: number | null;
-    STONEBLOCK?: number | null;
-    WOOD?: number | null;
-    ORE?: number | null;
-    ROCK?: number | null;
-    FIBER?: number | null;
-    HIDE?: number | null;
     itemClass?: ICraftingItemClass | '';
     itemType?: TCraftItemType;
     foodConsumption?: number;
@@ -58,30 +52,11 @@ export type TItems = {
     [key in TCraftObjectTypes]: ICraftItem[]
 }
 
-export interface IConsumedMaterials {
+export type TMaterialsInfo = {
     materialApiId: {
-        PLANKSApiId: string;
-        METALBARApiId: string;
-        CLOTHApiId: string;
-        LEATHERApiId: string;
-        STONEBLOCKApiId: string;
-        OREApiId: string;
-        WOODApiId: string;
-        HIDEApiId: string;
-        FIBERApiId: string;
-        ROCKApiId: string;
-
+        [key in TResourceType as `${Capitalize<string & key>}ApiId`]: string;
     };
     consumedMaterials: {
-        consumeLEATHERQuantity: number | null;
-        consumePLANKSQuantity: number | null;
-        consumeCLOTHQuantity: number | null;
-        consumeMETALBARQuantity: number | null;
-        consumeSTONEBLOCKQuantity: number | null;
-        consumeOREQuantity: number | null;
-        consumeWOODQuantity: number | null;
-        consumeFIBERQuantity: number | null;
-        consumeHIDEQuantity: number | null;
-        consumeROCKQuantity: number | null;
+        [key in TResourceType as `consume${Capitalize<string & key>}Quantity`]: number | null;
     };
 }

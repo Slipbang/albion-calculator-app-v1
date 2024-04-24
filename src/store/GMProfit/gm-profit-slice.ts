@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-import {IConsumedMaterials, ICraftingItemClass, TItemTypeSelected} from "../../types/craftItemsType";
+import {ICraftingItemClass, TItemTypeSelected, TMaterialsInfo} from "../../types/craftItemsType";
 import {
     tannerAvatar,
     tannerWorkerAvatar
@@ -122,12 +122,12 @@ const GMProfitSlice = createSlice({
 
             addMaterial(action.payload.itemQuantity!)
         },
-        craftItems(state, action: PayloadAction<{craftedItems: IBagCell, consumedMaterials: IConsumedMaterials }>){
+        craftItems(state, action: PayloadAction<{craftedItems: IBagCell, materialsInfo: TMaterialsInfo }>){
 
             const {
                 consumedMaterials,
                 materialApiId,
-            } = action.payload.consumedMaterials;
+            } = action.payload.materialsInfo;
 
             const consumeMaterials = (itemId: string, consumedMaterialQuantity: number) => {
                 state.backpackItems.some((item,index) => {
@@ -152,8 +152,8 @@ const GMProfitSlice = createSlice({
             //проверяем на наличие потребленного ресурса и сопоставляем имя этой же переменной с телом переменной apiId через цикл и помещаем их в аргументы функции consumeMaterials если true
             for(const CMKey in consumedMaterials) {
                 for(const MAIdKey in materialApiId){
-                    if (!!consumedMaterials[CMKey as keyof IConsumedMaterials['consumedMaterials']] && CMKey.includes(MAIdKey.split('ApiId')[0])){
-                        consumeMaterials(materialApiId[MAIdKey as keyof IConsumedMaterials['materialApiId']]!, consumedMaterials[CMKey as keyof IConsumedMaterials['consumedMaterials']]!)
+                    if (!!consumedMaterials[CMKey as keyof TMaterialsInfo['consumedMaterials']] && CMKey.includes(MAIdKey.split('ApiId')[0])){
+                        consumeMaterials(materialApiId[MAIdKey as keyof TMaterialsInfo['materialApiId']]!, consumedMaterials[CMKey as keyof TMaterialsInfo['consumedMaterials']]!)
                     }
                 }
             }

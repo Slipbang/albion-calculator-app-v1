@@ -25,7 +25,7 @@ const useTotalFoodTaxCalculation = (props: IUseTotalFoodTaxCalculationProps) => 
         defaultFoodConsumption,
     } = selectedWorkBenchItem;
 
-    const totalFoodTax = Math.round(itemsQuantity * (itemId!.includes('STONEBLOCK') && +enchantmentNum > 0 ? Math.pow(2, +enchantmentNum) : 1) * (foodTax / 100) * (calculatorType === 'resource' ? foodConsumption! : (foodConsumption! * (Math.pow(2, itemTier - 4)) + (defaultFoodConsumption! * Math.pow(2, itemTier - 4) * (Math.pow(2, +enchantmentNum) - 1)))));
+    const totalFoodTax = Math.round(itemsQuantity * (itemId!.includes('STONEBLOCK') && +enchantmentNum > 0 ? Math.pow(2, +enchantmentNum) : 1) * (foodTax / 100) * (calculatorType === 'RESOURCES' ? foodConsumption! : (foodConsumption! * (Math.pow(2, itemTier - 4)) + (defaultFoodConsumption! * Math.pow(2, itemTier - 4) * (Math.pow(2, +enchantmentNum) - 1)))));
 
     return {totalFoodTax}
 }

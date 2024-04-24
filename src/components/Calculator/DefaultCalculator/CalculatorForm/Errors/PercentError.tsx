@@ -11,10 +11,10 @@ interface IPercentErrorProps {
 const PercentError = (props: IPercentErrorProps) => {
     const {errorStyles ,calculatorFormStrings} = props;
 
-    const errors = useSelector(selectErrors);
+    const {percentError} = useSelector(selectErrors);
 
     return <>
-        {errors.percentError &&
+        {percentError &&
             <p className={errorStyles}>{calculatorFormStrings.percentError}</p>}
     </>
 }

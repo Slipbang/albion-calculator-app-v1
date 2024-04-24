@@ -13,6 +13,7 @@ import {interfaceSliceActions} from "../../../../../../../../../store/interface/
 import styles from './Items.module.scss'
 import {srcRoute} from "../../../../../../../../../store/api/api";
 import {defineDivisionsFactors} from "../../../../../../../Definers/defineDivisionsFactors";
+import {TCalcProps} from "../../../../../../../../../types/calculatorPropsType";
 
 const objectTypeKeys = Object.keys(craftItems) as TCraftObjectTypes[];
 
@@ -82,7 +83,7 @@ const Items = (props: IItemsProps) => {
             subMaterialId
         }));
         dispatchAction(profitSliceActions.setDivFactor({
-            type: calculatorType,
+            type: calculatorType as Exclude<TCalcProps,'FOOD' | 'POTIONS'>,
             divFactor: mainMaterialQuantity,
             subDivFactor: subMaterialQuantity
         }));

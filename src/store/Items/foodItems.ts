@@ -1,6 +1,4 @@
-import {IConsumableObject, TConsumable} from "../../types/consumableTypes";
-import {TTier} from "../../types/craftItemsType";
-import {TCalcProps} from "../../types/calculatorPropsType";
+import {TConsumable} from "../../types/consumableTypes";
 
 export const foodItems: TConsumable = [
     {

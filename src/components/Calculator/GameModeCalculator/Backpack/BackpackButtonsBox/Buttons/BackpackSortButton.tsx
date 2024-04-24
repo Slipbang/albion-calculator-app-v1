@@ -15,14 +15,16 @@ const BackpackSortButton = () => {
         dispatchAction(GMProfitSliceActions.sortBackpackItems());
     }
 
-    return <StyledDefaultButton
-        $width={71}
-        $height={25}
-        style={{fontSize: `${isRuSelected ? 9 : 12}px`, lineHeight: '15px'}}
-        onClick={() => sortBackpackItemsHandler()}
-    >
-        {backpackString.sortButton}
-    </StyledDefaultButton>
+    return (
+        <StyledDefaultButton
+            $width={71}
+            $height={25}
+            style={{fontSize: `${isRuSelected ? 9 : 12}px`, lineHeight: '15px'}}
+            onClick={() => sortBackpackItemsHandler()}
+        >
+            {backpackString.sortButton}
+        </StyledDefaultButton>
+    )
 }
 
 export default BackpackSortButton;

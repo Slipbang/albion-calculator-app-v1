@@ -16,16 +16,7 @@ const MarketActionButton = () => {
 
     const {maxQuantity, selectedMarketItem, marketAction, backpackItems} = useMaxQuantityCalculation();
 
-    const {
-        itemNode,
-        itemTier,
-        itemEnchantmentNum,
-        itemId,
-        itemName,
-        itemImage,
-        itemIndex,
-        itemEnchantment,
-    } = selectedMarketItem;
+    const {itemIndex} = selectedMarketItem;
 
     const {totalPrice, itemInputQuantity} = useTotalPriceCalculation();
 
@@ -47,14 +38,8 @@ const MarketActionButton = () => {
     const buyMaterialHandler = () => {
         if (backpackItems.filter(item => item.itemId !== null).length < 48) {
             dispatchAction(GMProfitSliceActions.buyMaterials({
+                ...selectedMarketItem,
                 itemQuantity: itemInputQuantity,
-                itemNode,
-                itemImage,
-                itemEnchantment,
-                itemId,
-                itemTier,
-                itemName,
-                itemEnchantmentNum,
             }));
 
             dispatchAction(GMProfitSliceActions.calculateBagSilver(-Math.floor(totalPrice)));

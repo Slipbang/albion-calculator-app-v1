@@ -18,7 +18,7 @@ export const GMItemSelector = React.memo(() => {
 
     return (
         <>
-            {calculatorType === 'items' && <WorkBenchButtons />}
+            {calculatorType === 'ITEMS' && <WorkBenchButtons />}
 
             <StyledWorkBench className={styles.wrapper}>
                 <WorkBenchTypeSelector />

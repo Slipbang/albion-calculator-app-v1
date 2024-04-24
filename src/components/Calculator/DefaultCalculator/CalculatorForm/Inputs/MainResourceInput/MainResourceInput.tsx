@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 import {selectDivFactor, selectInitialQuantity} from "../../../../../../store/profit/profit-selectors";
 import {ISelectedLanguage} from "../../../../../../types/languageTypes";
 
-const MainResourceInput = (props: {calculatorType: TCalcProps, calculatorFormStrings: ISelectedLanguage['calculatorFormStrings']}) => {
+const MainResourceInput = (props: {calculatorType: Exclude<TCalcProps, 'FOOD' | 'POTIONS'>, calculatorFormStrings: ISelectedLanguage['calculatorFormStrings']}) => {
     const {calculatorType, calculatorFormStrings} = props;
 
     const dispatchAction = useAppDispatch();
@@ -16,15 +16,9 @@ const MainResourceInput = (props: {calculatorType: TCalcProps, calculatorFormStr
     const inputAmountRef = useRef<HTMLInputElement>(null);
 
     const quantity = useSelector(selectInitialQuantity);
-    const {resourcesDivFactor, itemDivFactor} = useSelector(selectDivFactor);
+    const divFactors = useSelector(selectDivFactor);
 
-    let divFactor: number;
-    if (calculatorType === 'items'){
-        divFactor = itemDivFactor.mainDivFactor;
-    }
-    if (calculatorType === 'resource'){
-        divFactor = resourcesDivFactor.mainDivFactor;
-    }
+    const {mainDivFactor} = divFactors[calculatorType];
 
     const changeQuantityHandler = (event: ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
@@ -38,13 +32,13 @@ const MainResourceInput = (props: {calculatorType: TCalcProps, calculatorFormStr
     return (
         <div className={styles.wrapper}>
             <p>
-                {calculatorType === "resource" && calculatorFormStrings.labelResourceAmount}
-                {calculatorType === "items" && calculatorFormStrings.labelItemsAmount}
+                {calculatorType === "RESOURCES" && calculatorFormStrings.labelResourceAmount}
+                {calculatorType === "ITEMS" && calculatorFormStrings.labelItemsAmount}
             </p>
                 <StyledCalculatorFormSelector>
                     <input
-                        min={divFactor!}
-                        step={divFactor!}
+                        min={mainDivFactor}
+                        step={mainDivFactor}
                         ref={inputAmountRef}
                         id="DCItemQuantityInput"
                         type="number"

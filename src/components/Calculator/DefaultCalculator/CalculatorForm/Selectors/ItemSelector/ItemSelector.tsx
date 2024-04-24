@@ -41,7 +41,7 @@ const ItemSelector = (props: IItemSelectorProps) => {
             <p>{calculatorFormStrings.type}</p>
             <div className={styles.itemTypeSelector}
                  ref={classSelectorRef}
-                 onClick={(event) => {
+                 onClick={() => {
                      dispatchAction(interfaceSliceActions.toggleItemSelectorVisibility());
                      dispatchAction(interfaceSliceActions.toggleCraftTableVisibility(true));
                  }}

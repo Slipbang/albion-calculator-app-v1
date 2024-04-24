@@ -44,7 +44,7 @@ const EnchantmentButtons = (props: IEnchantmentButtonsProps) => {
             if (button.active) {
                 const level = button.index + 1;
                 materialEnchantment = `_LEVEL${level}@${level}`;
-                if (calculatorType === 'items') {
+                if (calculatorType === 'ITEMS') {
                     itemEnchantment = `@${level}`;
                 } else {
                     itemEnchantment = '';
@@ -61,7 +61,7 @@ const EnchantmentButtons = (props: IEnchantmentButtonsProps) => {
 
     return (
         <>
-            {(calculatorType === 'items' || calculatorType === 'resource' && itemId!.includes('STONEBLOCK')) &&
+            {(calculatorType === 'ITEMS' || calculatorType === 'RESOURCES' && itemId!.includes('STONEBLOCK')) &&
                 <div className={styles.enchantmentButtons}
                      draggable={true}
                      onDragStart={event => event.preventDefault()}

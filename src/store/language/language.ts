@@ -17,10 +17,10 @@ const language: TLanguage = {
         },
         calculatorFormStrings: {
             craftHeader: {
-                items: 'Перекрафт материалов в экипировку:',
-                resource: 'Перекрафт ресурсов в материалы:',
-                potions: 'Крафт зелий:',
-                food: 'Крафт еды:',
+                ITEMS: 'Перекрафт материалов в экипировку:',
+                RESOURCES: 'Перекрафт ресурсов в материалы:',
+                POTIONS: 'Крафт зелий:',
+                FOOD: 'Крафт еды:',
             },
             metrics: 'ед.',
             labelResourceAmount: 'Количество ресурса: ',
@@ -175,10 +175,10 @@ const language: TLanguage = {
         },
         calculatorFormStrings: {
             craftHeader: {
-              items: 'Сrafting materials into equipment:',
-              resource: 'Сrafting resources into materials:',
-              potions: 'Potions craft:',
-              food: 'Food craft:',
+              ITEMS: 'Сrafting materials into equipment:',
+              RESOURCES: 'Сrafting resources into materials:',
+              POTIONS: 'Potions craft:',
+              FOOD: 'Food craft:',
             },
             metrics: 'un.',
             labelResourceAmount: 'Resource quantity: ',

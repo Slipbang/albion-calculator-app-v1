@@ -12,15 +12,7 @@ const defineMaterials = (selectedItem: ICraftItem) => {
     let mainMaterialId: TResourceType | '' = '';
     let subMaterialId: TResourceType | '' = '';
 
-    let matsKeys: TMatsKeys[] = [];
-
-    let itemKeys = Object.keys(selectedItem) as TMatsKeys[];
-
-    itemKeys.forEach(key => {
-        if (key === key.toUpperCase()){
-            matsKeys.push(key)
-        }
-    })
+    let matsKeys: TMatsKeys[] = [...Object.keys(selectedItem).filter(key => key.toUpperCase() === key) as TMatsKeys[]];
 
     matsKeys.forEach(key => {
         if (typeof selectedItem[key] === 'number' && selectedItem[key]! > 0) {

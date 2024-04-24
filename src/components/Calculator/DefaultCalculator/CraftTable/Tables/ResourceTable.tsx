@@ -1,6 +1,6 @@
 import StyledDefaultButton from "../../../StyledComponentsCommon/StyledDefaultButton";
 import {useSelector} from "react-redux";
-import {selectCraftResourcesList, selectSimilarTypeErrors} from "../../../../../store/profit/profit-selectors";
+import {selectCraftList, selectSimilarTypeErrors} from "../../../../../store/profit/profit-selectors";
 import {ISelectedLanguage} from "../../../../../types/languageTypes";
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {ITableData, profitSliceActions} from "../../../../../store/profit/profit-slice";
@@ -22,8 +22,8 @@ const ResourceTable = (props: IResourceTableProps) => {
         deleteLiHandler
     } = props;
     const dispatchAction = useAppDispatch();
-    const craftResourcesList = useSelector(selectCraftResourcesList);
-    const {similarResourceId} = useSelector(selectSimilarTypeErrors);
+    const craftLists = useSelector(selectCraftList);
+    const {RESOURCES: similarResourceId} = useSelector(selectSimilarTypeErrors);
 
     const fetchResourceDataHandler = (item: ITableData) => {
         let {resourceId, mainMatsId, subMatsId} = item.infoTableData;
@@ -49,7 +49,7 @@ const ResourceTable = (props: IResourceTableProps) => {
     }
 
     return <div className={styles.tableStyle} data-notification={craftTableStrings.alert}>
-        {craftResourcesList.length > 0 && <table>
+        {craftLists[calculatorType].length > 0 && <table>
             <thead>
             <tr>
                 <th>{craftTableStrings.materialTier}</th>
@@ -62,7 +62,7 @@ const ResourceTable = (props: IResourceTableProps) => {
             </thead>
 
             <tbody>
-            {craftResourcesList.map((item) => {
+            {(craftLists[calculatorType] as ITableData[]).map((item) => {
                 const {id, mainResourceQuantity, subResourceQuantity, percent} = item.craftTableData;
                 const {resourceId, spentQuantityPerItem, output} = item.infoTableData;
 

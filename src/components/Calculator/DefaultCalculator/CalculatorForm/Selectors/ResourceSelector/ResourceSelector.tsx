@@ -26,7 +26,7 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
 
     const selectedResource = useSelector(selectResource);
     const {resourceId, resourceName, resourceTier} = selectedResource;
-    const {resourcesDivFactor} = useSelector(selectDivFactor);
+    const {RESOURCES: resourcesDivFactor} = useSelector(selectDivFactor);
     const {mainDivFactor, subDivFactor} = resourcesDivFactor;
 
 
@@ -52,7 +52,7 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
             subMaterialId: `T${tierNumber - 1}_${subMaterialId}`,
         }));
         dispatchAction(profitSliceActions.setDivFactor({
-            type: calculatorType,
+            type: calculatorType as Exclude<TCalcProps, 'FOOD' | 'POTIONS'>,
             divFactor: mainMaterialQuantity!,
             subDivFactor: subMaterialQuantity
         }));
@@ -121,13 +121,12 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
                         const {mainDiv, subDiv} = defineDivisionsFactors(item);
 
                         return (!itemId!.includes('T3')) && isMaterial(item) &&
-                            <div className={styles.resourceUnit}>
+                            <div className={styles.resourceUnit} key={itemId}>
                                 <img
                                     className={styles.backgroundSkeleton}
                                     src={`${srcRoute}${itemId}`}
                                     alt=''
                                     title={`${itemName?.[selectedLanguage]} ${itemTier}`}
-                                    key={itemId}
                                     onClick={(event) => {
                                         selectResourceHandler(item);
                                         setIsResourceSelectorShown(false);

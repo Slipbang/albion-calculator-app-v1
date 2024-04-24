@@ -14,10 +14,12 @@ const MarketMenuToggleButton = () => {
     const toggleMarketMenuVisibilityHandler = () => {
         dispatchAction(interfaceSliceActions.toggleMarketMenuShown());
     }
-    return <StyledMarketMenuButton
-        $isMarketMenuShown={isMarketMenuShown}
-        onClick={toggleMarketMenuVisibilityHandler}
-    />
+    return (
+        <StyledMarketMenuButton
+            $isMarketMenuShown={isMarketMenuShown}
+            onClick={toggleMarketMenuVisibilityHandler}
+        />
+    )
 }
 
 export default MarketMenuToggleButton;

@@ -16,19 +16,19 @@ interface ISelector {
 const selectors: ISelector[] = [
     {
         src: 'https://render.albiononline.com/v1/item/T8_POTION_COOLDOWN',
-        type: 'potions',
+        type: 'POTIONS',
     },
     {
         src: 'https://render.albiononline.com/v1/item/T8_MEAL_STEW_AVALON',
-        type: 'food',
+        type: 'FOOD',
     },
     {
         src: 'https://render.albiononline.com/v1/item/T8_METALBAR',
-        type: 'resource',
+        type: 'RESOURCES',
     },
     {
         src: 'https://render.albiononline.com/v1/item/T8_MAIN_SWORD',
-        type: 'items',
+        type: 'ITEMS',
     },
 ]
 
@@ -43,16 +43,14 @@ const CalculatorTypeButtons = () => {
         dispatchAction(interfaceSliceActions.setCalculatorType(calculatorType as TCalcProps));
         dispatchAction(interfaceSliceActions.setIsCraftingFormVisible(false));
 
-        if (calculatorType === 'food' || calculatorType === 'potions') {
-            dispatchAction(profitSliceActions.setSelected({
-                type: calculatorType,
-                selectedConsumable: consumablesSelectorItems[calculatorType as Exclude<TCalcProps, 'items' | 'resource'>]['T4'][0]
-            }))
-        }
+        dispatchAction(profitSliceActions.setSelected({
+            type: calculatorType,
+            selectedConsumable: consumablesSelectorItems[calculatorType]['T4'][0]
+        }))
     }
 
     const toggleGameMode = () => {
-        if (calculatorType === 'items' || calculatorType === 'resource'){
+        if (calculatorType === 'ITEMS' || calculatorType === 'RESOURCES'){
             dispatchAction(interfaceSliceActions.toggleGameMode());
         }
     }
@@ -62,7 +60,7 @@ const CalculatorTypeButtons = () => {
 
             <div className={styles.calculatorTypeButtons}>
                 {selectors.map(({type, src}) => {
-                    if (!!gameMode && (type === 'food' || type === 'potions')) return;
+                    if (!!gameMode && (type === 'FOOD' || type === 'POTIONS')) return;
                     return (
                         <div key={type}>
                             <img
@@ -82,7 +80,7 @@ const CalculatorTypeButtons = () => {
 
                 <div
                     data-mode={gameMode ? 'game' : 'default'}
-                    data-calculatortype-allowed={(calculatorType === 'potions' || calculatorType === 'food') ? 'simplified-only' : 'all-modes'}
+                    data-calculatortype-allowed={(calculatorType === 'POTIONS' || calculatorType === 'FOOD') ? 'simplified-only' : 'all-modes'}
                     className={styles.GMToggleButton}
                     onClick={() => toggleGameMode()}
                 >

@@ -8,7 +8,7 @@ const JournalsBox = (props: {calculatorType: TCalcProps}) => {
     const {calculatorType} = props;
 
     return <>
-        {calculatorType === 'items' && <div
+        {calculatorType === 'ITEMS' && <div
             className={styles.journalPrice}
         >
             <JournalUsageButton />

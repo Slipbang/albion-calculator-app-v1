@@ -4,7 +4,7 @@ import {srcRoute} from "../../../../../store/api/api";
 
 const useDefineSelectorImg = () => {
     const selectedItem = useSelector(selectItem);
-    const {itemDivFactor, resourcesDivFactor} = useSelector(selectDivFactor);
+    const {ITEMS:  itemDivFactor, RESOURCES: resourcesDivFactor} = useSelector(selectDivFactor);
 
     const {selectedItemBodyId, selectedItemTier, selectedItemType, itemName} = selectedItem;
 
