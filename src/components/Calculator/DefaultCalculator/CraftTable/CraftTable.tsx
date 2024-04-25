@@ -15,7 +15,7 @@ import CraftTableButton from "./Buttons/CraftTableButton";
 import {TCalcProps} from "../../../../types/calculatorPropsType";
 import ConsumablesList from "./ConsumablesList/ConsumablesList";
 
-const CraftTable = memo(({calculatorType}: {calculatorType: TCalcProps}) => {
+const CraftTable = memo(({calculatorType}: { calculatorType: TCalcProps }) => {
 
     const dispatchAction = useAppDispatch();
 
@@ -32,26 +32,15 @@ const CraftTable = memo(({calculatorType}: {calculatorType: TCalcProps}) => {
         deleteLiHandler,
     }
 
-    const selectTableType = () => {
-        switch (calculatorType) {
-            case "ITEMS":
-                return <ItemTable {...tableProps} />;
-            case "RESOURCES":
-                return <ResourceTable {...tableProps} />;
-            case 'FOOD':
-            case "POTIONS":
-                return <ConsumablesList {...tableProps} selectedLanguage={selectedLanguage}/>;
-        }
-    }
-
     return <StyledCraftTableWrapper>
-        <CraftTableButton />
+        <CraftTableButton/>
 
         <StyledThumb>
             <div className={styles.craftTableStyles}>
-
-                { selectTableType() }
-
+                {calculatorType === 'ITEMS' && <ItemTable {...tableProps} />}
+                {calculatorType === 'RESOURCES' && <ResourceTable {...tableProps} />}
+                {(calculatorType === 'FOOD' || calculatorType === 'POTIONS') &&
+                    <ConsumablesList {...tableProps} selectedLanguage={selectedLanguage}/>}
             </div>
         </StyledThumb>
     </StyledCraftTableWrapper>

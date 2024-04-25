@@ -68,12 +68,8 @@ export type TConsumablesSelectors = {
     [key: string]: TCities
 }
 
-export type TSelectCityType =
-    'mainMaterialCity'
-    | 'subMaterialCity'
-    | 'artefactCity'
-    | 'journalCity'
-    | 'emptyJournalCity';
+export type TSelectCityType = 'mainMaterialCity' | 'subMaterialCity'
+    | 'artefactCity' | 'journalCity' | 'emptyJournalCity';
 
 export type TSelectedCityStates = {
     [key in TSelectCityType]: TCities
@@ -116,13 +112,13 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
         consumablesNames: TConsumableNames | undefined;
 
     const consumableSelectorsKeys: string[] = [];
-    const consumableSelectorsInitialState: TConsumablesSelectors = {}
+    const consumableSelectorsInitialState: TConsumablesSelectors = {};
 
     if (craftedConsumablesData !== null) {
         ({queryParams: queryConsumableParams, craftedConsumable} = craftedConsumablesData!);
         ({itemId: consumablesItemId} = craftedConsumable);
 
-        consumableResourcesKeys = Object.keys(craftedConsumable).filter(key => key.toUpperCase() === key && !key.includes(craftedConsumable!.itemId));
+        consumableResourcesKeys = Object.keys(craftedConsumable).filter(key => key.toUpperCase() === key);
 
         consumablesNames = {
             [craftedConsumable.itemId]: {...consumablesNamesData![craftedConsumable.itemId]}
@@ -226,7 +222,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
             ownPrice: 0,
             isSelectedOwn: false,
         },
-    })
+    });
 
     const [selectedCities, setSelectedCities] = useState<TSelectedCityStates>({
         mainMaterialCity: 'Fort Sterling',
@@ -240,7 +236,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
     const [foodTax, setFoodTax] = useState(0);
     const [consumableSelectors, setConsumableSelectors] = useState<TConsumablesSelectors>(consumableSelectorsInitialState);
 
-    const {artefactName} = useMemo(() => defineArtefactsName({artefactId: artefactId || ''}), [artefactId])
+    const {artefactName} = useMemo(() => defineArtefactsName({artefactId: artefactId || ''}), [artefactId]);
 
     const closeInfoTableHandler = () => {
         dispatchAction(interfaceSliceActions.setInfoTableVisibility(false));
@@ -380,7 +376,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
 
                     <Tooltip
                         id="info-table-tooltip-data-html"
-                        place="bottom-start"
+                        place="left-start"
                         className={styles.infoTableTooltip}
                         style={{
                             filter: 'drop-shadow(5px 5px 6px black)',

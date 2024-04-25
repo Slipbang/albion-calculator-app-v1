@@ -91,7 +91,7 @@ const ArtefactLiElement = memo((props: IArtefactsDataProps) => {
                     />
                     <ClockLoader
                         className={styles.spinnerStyles}
-                        color='gb(235, 198, 159)'
+                        color='rgb(235, 198, 159)'
                         loading={isArtefactsFetching}
                         size={15}
                         aria-label='Loading Spinner'

@@ -18,7 +18,12 @@ const ItemTierSelector = (props: IItemTierSelectorProps) => {
 
     const dispatchAction = useAppDispatch();
 
-    const {selectorImg, selectedItemType, selectedItemBodyId, selectedItemTier, itemName} = useDefineSelectorImg();
+    const {
+        selectorImg,
+        selectedItemId,
+        selectedItemTier,
+        itemName
+    } = useDefineSelectorImg();
 
     const [isItemTierSelectorShown, setIsItemTierSelectorShown] = useState(false);
     const tierSelectorRef = useRef<HTMLDivElement>(null);
@@ -66,18 +71,13 @@ const ItemTierSelector = (props: IItemTierSelectorProps) => {
                         />
                         <div className={styles.itemTierButtonSelector}>
                             {['T4', 'T5', 'T6', 'T7', 'T8'].map(tier => {
-                                    let itemId: string;
-                                    if ((selectedItemType === 'BAG' && selectedItemBodyId !== 'INSIGHT') || selectedItemType === 'CAPE') {
-                                        itemId = selectedItemBodyId;
-                                    } else {
-                                        itemId = `${selectedItemType}_${selectedItemBodyId}`;
-                                    }
+
                                     return (
                                         <span key={tier}>
                                             <img
                                                 className={styles.backgroundSkeleton}
                                                 title={tier}
-                                                src={`${srcRoute}${tier}_${itemId}`}
+                                                src={`${srcRoute}${tier}_${selectedItemId}`}
                                                 alt=''
                                                 onClick={(event) => {
                                                     event.stopPropagation();

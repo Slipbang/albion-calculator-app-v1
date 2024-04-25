@@ -4,7 +4,7 @@ import styles from './WorkBenchItemSelector.module.scss'
 import {memo, useDeferredValue} from "react";
 import WorkBenchItemsLoader from "../ItemsLoaders/WorkBenchItemsLoader";
 import WorkBenchItem from "./WorkBenchItem/WorkBenchItem";
-import {selectWorkBenchType, selectItemType} from "../../../../../store/GMProfit/gm-profit-selectors";
+import {selectItemType, selectWorkBenchType} from "../../../../../store/GMProfit/gm-profit-selectors";
 import {workBenchSelectorItems} from "../../../../../store/Items/workBenchSelectorItems_marketItems";
 
 const WorkBenchItemSelector = () => {
@@ -17,13 +17,13 @@ const WorkBenchItemSelector = () => {
     return (
         <StyledThumb>
             <div className={styles.wrapper}>
-                {items === deferredCraftingItems && deferredCraftingItems?.map(item => <WorkBenchItem key={item.itemId} item={{...item}} />)}
+                {items === deferredCraftingItems && deferredCraftingItems?.map(item => <WorkBenchItem key={item.itemId} item={{...item}}/>)}
 
-                {items !== deferredCraftingItems && Array.from({length: 10}).map((_, index) => (
+                {items !== deferredCraftingItems && Array.from({length: 10}).map((_, index) =>
                     <div key={index} style={{margin: '10px 0 10px 0',}}>
                         <WorkBenchItemsLoader/>
                     </div>
-                ))}
+                )}
             </div>
         </StyledThumb>
     )

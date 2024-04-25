@@ -42,17 +42,15 @@ const ItemTable = (props: TItemTableProps) => {
             materials.push(`${mainMatsId}_LEVEL${enchantmentLvl}@${enchantmentLvl}`);
         });
 
-        const queryItemsParams = items.join(',');
-        const queryMatsParams = materials.join(',');
-        const queryJournalsParams = journals;
+        const tableQueryParams = {
+            queryItemsParams: items.join(','),
+            queryMatsParams: materials.join(','),
+            queryJournalsParams: journals,
+        }
 
         dispatchAction(profitSliceActions.setCraftedItem({
             ...item,
-            tableQueryParams: {
-                queryMatsParams,
-                queryItemsParams,
-                queryJournalsParams
-            }
+            tableQueryParams,
         }));
         dispatchAction(interfaceSliceActions.setInfoTableVisibility(true));
     }

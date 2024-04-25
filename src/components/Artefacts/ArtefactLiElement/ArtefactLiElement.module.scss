@@ -10,6 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 
   transition: 0.5s ease border-radius, 1s ease background-color, 1s ease border;
 
@@ -49,8 +50,8 @@
 
     p {
       position: absolute;
-      margin-top: -39px;
-      margin-left: 44px;
+      left: 49px;
+      bottom: 5px;
       color: rgb(235, 198, 159);
     }
   }
@@ -58,8 +59,9 @@
 
 .spinnerStyles{
   position: absolute;
-  margin-top: -30px;
-  margin-left: 44px;
+  z-index: 9999;
+  left: 44px;
+  bottom: 30px;
 }
 
 [data-checked='checked']{

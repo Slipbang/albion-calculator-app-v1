@@ -6,17 +6,18 @@ const useDefineSelectorImg = () => {
     const selectedItem = useSelector(selectItem);
     const {ITEMS:  itemDivFactor, RESOURCES: resourcesDivFactor} = useSelector(selectDivFactor);
 
-    const {selectedItemBodyId, selectedItemTier, selectedItemType, itemName} = selectedItem;
+    const {
+        selectedItemTier,
+        itemName,
+        selectedItemId,
+    } = selectedItem;
 
-    const selectorImg = ((selectedItemType === 'BAG' && selectedItemBodyId !== 'INSIGHT') || selectedItemType === 'CAPE')
-        ? `${srcRoute}${selectedItemTier}_${selectedItemBodyId}`
-        : `${srcRoute}${selectedItemTier}_${selectedItemType}_${selectedItemBodyId}`;
+    const selectorImg = `${srcRoute}${selectedItemTier}_${selectedItemId}`;
 
     return {
         itemName,
-        selectedItemBodyId,
         selectedItemTier,
-        selectedItemType,
+        selectedItemId,
         selectorImg,
         itemDivFactor,
         resourcesDivFactor,

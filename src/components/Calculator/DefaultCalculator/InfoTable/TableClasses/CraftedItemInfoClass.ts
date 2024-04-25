@@ -55,7 +55,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
     }
 
     getSellPriceMinDate = (itemId: string, selectedCity: TCities) => {
-        return this.materialsData?.find(matItem => matItem.itemId === itemId && matItem.location === selectedCity)?.sellPriceMinDate || 0
+        return this.materialsData?.find(matItem => matItem.itemId === itemId && matItem.location === selectedCity)?.sellPriceMinDate || 0;
     }
 
     get averageItemPrice() {
@@ -118,7 +118,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
 
     mainMatsPricePerItem = Math.floor(+this.mainMaterialPrice * +this.itemData!.spentQuantityPerItem!.mainMatsQuantity);
 
-    multiplication = (!!this.itemData!.resourceId && this.itemData!.resourceId?.includes('STONEBLOCK') && this.enchantment !== '') ? Math.pow(2, +this.enchantment) : 1
+    multiplication = (!!this.itemData!.resourceId && this.itemData!.resourceId?.includes('STONEBLOCK') && this.enchantment !== '') ? Math.pow(2, +this.enchantment) : 1;
 
     subMatsQuantity = +this.itemData!.spentQuantityPerItem!.subMatsQuantity! * this.multiplication;
 

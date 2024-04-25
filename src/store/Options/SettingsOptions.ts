@@ -25,13 +25,13 @@ export const serverOptions: IOptions[] = [
         },
         value: 'aod_west',
     },
-    // {
-    //     labelName: {
-    //         ru: 'Европа (AOD)',
-    //         en: 'Europe (AOD)'
-    //     },
-    //     value: 'creating',
-    // },
+    {
+        labelName: {
+            ru: 'Европа (AOD)',
+            en: 'Europe (AOD)'
+        },
+        value: 'aod_europe',
+    },
     {
         labelName: {
             ru: 'Азия (AOD)',

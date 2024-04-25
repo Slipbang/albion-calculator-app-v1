@@ -99,7 +99,7 @@ const PercentInput = (props: IPercentInputProps) => {
             focusHandler();
         } else {
             setIsOwnPercent(false);
-            dispatchAction(profitSliceActions.setPercent(15.2))
+            dispatchAction(profitSliceActions.setPercent(15.2));
         }
     }
 

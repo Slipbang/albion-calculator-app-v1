@@ -29,7 +29,6 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
     const {RESOURCES: resourcesDivFactor} = useSelector(selectDivFactor);
     const {mainDivFactor, subDivFactor} = resourcesDivFactor;
 
-
     const resourceSelectorRef = useRef<HTMLDivElement>(null);
 
     const [isResourceSelectorShown, setIsResourceSelectorShown] = useState(false);
@@ -52,7 +51,7 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
             subMaterialId: `T${tierNumber - 1}_${subMaterialId}`,
         }));
         dispatchAction(profitSliceActions.setDivFactor({
-            type: calculatorType as Exclude<TCalcProps, 'FOOD' | 'POTIONS'>,
+            type: calculatorType as Extract<TCalcProps, 'ITEMS' | 'RESOURCES'>,
             divFactor: mainMaterialQuantity!,
             subDivFactor: subMaterialQuantity
         }));
@@ -120,7 +119,7 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
 
                         const {mainDiv, subDiv} = defineDivisionsFactors(item);
 
-                        return (!itemId!.includes('T3')) && isMaterial(item) &&
+                        return (!itemId!.includes('T3')) && isMaterial(item) && (
                             <div className={styles.resourceUnit} key={itemId}>
                                 <img
                                     className={styles.backgroundSkeleton}
@@ -137,6 +136,7 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
                                     <p>{mainDiv}/{subDiv}</p>
                                 </div>
                             </div>
+                        )
                     })}
                 </div>
             </div>

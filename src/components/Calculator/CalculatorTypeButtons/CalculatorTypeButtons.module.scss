@@ -42,6 +42,10 @@
       left: -78px;
       top: 50px;
       filter: drop-shadow(3px 3px 6px black);
+      animation-duration: 0.4s;
+      animation-iteration-count: 1;
+      animation-direction: normal;
+      animation-fill-mode: none;
     }
 
     .gmText {
@@ -62,11 +66,7 @@
 
     .removeSword{
       animation-name: swordRemoveAnimation;
-      animation-duration: 0.4s;
       animation-timing-function: ease-out;
-      animation-iteration-count: 1;
-      animation-direction: normal;
-      animation-fill-mode: none;
       transform: translate(400px,0);
     }
 
@@ -82,11 +82,7 @@
 
     .applySword{
       animation-name: swordApplyAnimation;
-      animation-duration: 0.4s;
       animation-timing-function: ease-in;
-      animation-iteration-count: 1;
-      animation-direction: normal;
-      animation-fill-mode: none;
       transform: translate(0,0);
     }
 

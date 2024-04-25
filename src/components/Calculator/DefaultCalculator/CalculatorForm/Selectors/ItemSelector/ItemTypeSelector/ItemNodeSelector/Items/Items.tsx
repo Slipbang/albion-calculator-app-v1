@@ -57,12 +57,16 @@ const Items = (props: IItemsProps) => {
 
         dispatchAction(interfaceSliceActions.toggleItemSelectorVisibility(false));
 
+        const selectedItemId = ((itemType === 'BAG' && itemId !== 'INSIGHT') || itemType === 'CAPE')
+            ? itemId!
+            : `${itemType}_${itemId}`;
+
         dispatchAction(profitSliceActions.setSelected({
             type: calculatorType,
             selectedItem: {
                 selectedItemType: itemType,
+                selectedItemId,
                 foodConsumption: foodConsumption!,
-                selectedItemBodyId: itemId!,
                 journalId,
                 emptyJournalId,
                 artefactId: artefactItemId,
@@ -83,9 +87,9 @@ const Items = (props: IItemsProps) => {
             subMaterialId
         }));
         dispatchAction(profitSliceActions.setDivFactor({
-            type: calculatorType as Exclude<TCalcProps,'FOOD' | 'POTIONS'>,
+            type: calculatorType as Extract<TCalcProps, 'ITEMS' | 'RESOURCES'>,
             divFactor: mainMaterialQuantity,
-            subDivFactor: subMaterialQuantity
+            subDivFactor: subMaterialQuantity,
         }));
     }
 

@@ -1,5 +1,4 @@
 import {IItemsData, TCities} from "../../../../../types/InfoTableTypes";
-//import {IConsumableTableData} from "../../../../../store/profit/profit-slice";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
 import {TConsumableNames} from "../../../../../store/Items/consumablesNamesData";
 import {TConsumablesSelectors} from "../InfoTable";
@@ -74,7 +73,7 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
         })
 
         const profitPerItem = (+consumableItemPrice * craftedConsumable.amountCrafted - totalCost) || this.infoTableStrings.noData;
-        const profitPerItemTitle = `${consumableItemPrice.toLocaleString('en')} * ${craftedConsumable.amountCrafted} - ${totalCost.toLocaleString('en')} = ${profitPerItem.toLocaleString('en')}`
+        const profitPerItemTitle = `${consumableItemPrice.toLocaleString('en')} * ${craftedConsumable.amountCrafted} - ${totalCost.toLocaleString('en')} = ${profitPerItem.toLocaleString('en')}`;
         const totalProfit = +profitPerItem * infoTableData.quantity;
 
         return {
@@ -93,7 +92,7 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
     totalProfit = this.resourcePricesCalculation().totalProfit || this.infoTableStrings.noData;
     profitPerItemTitle = `${this.infoTableStrings.profitPerItem} ${this.resourcePricesCalculation().profitPerItemTitle}`;
 
-    totalProfitTitle = `${this.infoTableStrings.total} ${this.profitPerItem} * ${this.infoTableData.quantity} = ${this.totalProfit.toLocaleString('en')}`
+    totalProfitTitle = `${this.infoTableStrings.total} ${this.profitPerItem} * ${this.infoTableData.quantity} = ${this.totalProfit.toLocaleString('en')}`;
     title = `${this.foodTaxTitle}<hr><br>
              ${this.itemPriceTitle}<hr><br>
              ${this.resourcesPricesTitle}

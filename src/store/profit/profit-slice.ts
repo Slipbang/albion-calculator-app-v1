@@ -1,19 +1,17 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {v4 as uuidv4} from 'uuid';
 import {TCalcProps} from "../../types/calculatorPropsType";
-import {
-    TCraftItemType,
-    TItemNode,
-    TResourceType,
-    TTier
-} from "../../types/craftItemsType";
+import {TCraftItemType, TItemNode, TResourceType, TTier} from "../../types/craftItemsType";
 import {calculateJQ_DFC} from "../utils/calculateJQ_DFC";
 import {IConsumableObject} from "../../types/consumableTypes";
 import {
     IConsumableTableData,
-    IInfoTableData, ISelectedItem, ISelectedResource,
+    IInfoTableData,
+    ISelectedItem,
+    ISelectedResource,
     ITableData,
-    TCraftedLists, TDivFactor,
+    TCraftedLists,
+    TDivFactor,
     TSimilarErrors
 } from "../../types/defaultCalculatorTypes";
 
@@ -52,7 +50,6 @@ interface IInitialState {
     itemsMaterials: {
         mainMaterialId: TResourceType | string;
         subMaterialId: TResourceType | string;
-        materialsTier: TTier;
     }
 
     selected: {
@@ -108,7 +105,6 @@ const initialState: IInitialState = {
     itemsMaterials: {
         mainMaterialId: 'METALBAR',
         subMaterialId: 'LEATHER',
-        materialsTier: 'T4',
     },
 
     itemSelector: {
@@ -130,7 +126,7 @@ const initialState: IInitialState = {
         selectedItem: {
             selectedItemType: 'MAIN',
             selectedItemTier: 'T4',
-            selectedItemBodyId: 'SWORD',
+            selectedItemId: 'MAIN_SWORD',
             foodConsumption: 43.2,
             journalId: 'JOURNAL_WARRIOR_FULL',
             emptyJournalId: 'JOURNAL_WARRIOR_EMPTY',
@@ -160,7 +156,6 @@ const profitSlice = createSlice({
         },
         setSelectedItemTier(state, action: PayloadAction<TTier>) {
             state.selected.selectedItem.selectedItemTier = action.payload;
-            state.itemsMaterials.materialsTier = action.payload;
         },
         setSelectedType(state, action: PayloadAction<TCraftItemType>) {
             state.itemSelector.itemType = action.payload;
@@ -269,30 +264,27 @@ const profitSlice = createSlice({
                     return {isSimilar, similarItemId};
                 }
 
-                const {
-                    journalsQuantity,
-                    defaultFoodConsumption
-                } = calculateJQ_DFC(state.selected.selectedItem.selectedItemType, state.selected.selectedItem.selectedItemTier);
-
-                let itemId = (state.selected.selectedItem.selectedItemType === 'BAG' && state.selected.selectedItem.selectedItemBodyId !== 'INSIGHT')
-                || state.selected.selectedItem.selectedItemType === 'CAPE'
-                    ? `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.selectedItemBodyId}`
-                    : `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.selectedItemType}_${state.selected.selectedItem.selectedItemBodyId}`;
-
                 const spentQuantityPerItem = {
                     mainMatsQuantity: divFactor - (divFactor * (percent / 100)),
                     subMatsQuantity: subDivFactor - (subDivFactor * (percent / 100)),
                 }
 
-                const infoTableData: IInfoTableData | undefined = (action.payload.calculatorType === 'ITEMS')
-                    ? {
+                let infoTableData: IInfoTableData | undefined = undefined;
+
+                if (action.payload.calculatorType === 'ITEMS') {
+                    const {
+                        defaultFoodConsumption,
+                        journalsQuantity
+                    } = calculateJQ_DFC(state.selected.selectedItem.selectedItemType, state.selected.selectedItem.selectedItemTier);
+
+                    infoTableData = {
                         output,
                         foodConsumption: state.selected.selectedItem.foodConsumption,
+                        itemId: `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.selectedItemId}`,
                         defaultFoodConsumption,
-                        itemId,
                         journalsQuantity,
-                        mainMatsId: `${state.itemsMaterials.materialsTier}_${state.itemsMaterials.mainMaterialId}`,
-                        subMatsId: !!state.itemsMaterials.subMaterialId ? `${state.itemsMaterials.materialsTier}_${state.itemsMaterials.subMaterialId}` : undefined,
+                        mainMatsId: `${state.selected.selectedItem.selectedItemTier}_${state.itemsMaterials.mainMaterialId}`,
+                        subMatsId: !!state.itemsMaterials.subMaterialId ? `${state.selected.selectedItem.selectedItemTier}_${state.itemsMaterials.subMaterialId}` : undefined,
                         journalId: `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.journalId}`,
                         emptyJournalId: `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.emptyJournalId}`,
                         itemName: state.selected.selectedItem.itemName,
@@ -302,18 +294,21 @@ const profitSlice = createSlice({
                             : undefined,
                         spentQuantityPerItem,
                     }
-                    : (action.payload.calculatorType === 'RESOURCES')
-                        ? {
-                            output,
-                            foodConsumption: state.selected.selectedResource.foodConsumption,
-                            defaultFoodConsumption: state.selected.selectedResource.defaultFoodConsumption,
-                            resourceId: state.selected.selectedResource.resourceId,
-                            mainMatsId: state.resourceMaterials.mainMaterialId,
-                            subMatsId: state.resourceMaterials.subMaterialId,
-                            itemName: state.selected.selectedResource.resourceName,
-                            tier: state.selected.selectedResource.resourceTier,
-                            spentQuantityPerItem,
-                        } : undefined;
+                }
+
+                if (action.payload.calculatorType === 'RESOURCES') {
+                    infoTableData = {
+                        output,
+                        foodConsumption: state.selected.selectedResource.foodConsumption,
+                        defaultFoodConsumption: state.selected.selectedResource.defaultFoodConsumption,
+                        resourceId: state.selected.selectedResource.resourceId,
+                        mainMatsId: state.resourceMaterials.mainMaterialId,
+                        subMatsId: state.resourceMaterials.subMaterialId,
+                        itemName: state.selected.selectedResource.resourceName,
+                        tier: state.selected.selectedResource.resourceTier,
+                        spentQuantityPerItem,
+                    }
+                }
 
                 const usableItem = {
                     craftTableData: {
@@ -325,12 +320,9 @@ const profitSlice = createSlice({
                     infoTableData,
                 } as ITableData;
 
-                const {
-                    isSimilar,
-                    similarItemId
-                } = hasSimilarItems(
+                const {isSimilar, similarItemId} = hasSimilarItems(
                     state.craftLists[action.payload.calculatorType] as ITableData[],
-                    (action.payload.calculatorType === "ITEMS") ? itemId : state.selected.selectedResource.resourceId,
+                    (action.payload.calculatorType === "ITEMS") ? state.selected.selectedItem.selectedItemId : state.selected.selectedResource.resourceId,
                     percent,
                     output
                 );

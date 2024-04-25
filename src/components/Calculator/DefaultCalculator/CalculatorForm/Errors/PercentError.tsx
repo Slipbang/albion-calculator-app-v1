@@ -9,7 +9,7 @@ interface IPercentErrorProps {
 }
 
 const PercentError = (props: IPercentErrorProps) => {
-    const {errorStyles ,calculatorFormStrings} = props;
+    const {errorStyles, calculatorFormStrings} = props;
 
     const {percentError} = useSelector(selectErrors);
 

@@ -1,6 +1,5 @@
 import {craftItems} from "../../../../../../../../store/Items/craftItems";
 import {arrowDown} from "../../../../../DefaultCalculatorImgReexports/DefaultCalculatorImgReexports";
-import React from "react";
 import {TCraftObjectTypes, TItemNode} from "../../../../../../../../types/craftItemsType";
 import styles from './ItemNodeSelector.module.scss';
 import {profitSliceActions} from "../../../../../../../../store/profit/profit-slice";
@@ -41,7 +40,7 @@ const ItemNodeSelector = (props: IItemNodeSelectorProps) => {
                         if ((itemTypeKey === 'BAG' && itemForNodeSelect.itemId !== 'INSIGHT') || itemTypeKey === 'CAPE') {
                             itemBodyId = itemForNodeSelect.itemId!;
                         } else {
-                            itemBodyId = `${itemTypeKey}_${itemForNodeSelect.itemId}`
+                            itemBodyId = `${itemTypeKey}_${itemForNodeSelect.itemId}`;
                         }
 
                         return typeOfTypeSelector === itemForNodeSelect.itemType && !!itemForNodeSelect.itemExample && (

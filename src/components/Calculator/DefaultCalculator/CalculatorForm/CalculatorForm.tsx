@@ -11,17 +11,23 @@ import PercentInput from "./Inputs/PercentInput/PercentInput";
 import ItemTierSelector from "./Selectors/ItemTierSelector/ItemTierSelector";
 import ResourceSelector from "./Selectors/ResourceSelector/ResourceSelector";
 import ItemSelector from "./Selectors/ItemSelector/ItemSelector";
-import React from 'react';
+import {memo} from 'react';
 import PercentError from "./Errors/PercentError";
 import AmountError from "./Errors/AmountError";
 import MainResourceInput from "./Inputs/MainResourceInput/MainResourceInput";
 import ConsumablesSelector from "./Selectors/ConsumableSelector/ConsumablesSelector";
 import {TCalcProps} from "../../../../types/calculatorPropsType";
 
-const CalculatorForm = React.memo(({calculatorType}: {calculatorType: TCalcProps}) => {
+const CalculatorForm = memo(({calculatorType}: {calculatorType: TCalcProps}) => {
 
     const {language, selectedLanguage} = useSelector(selectLanguage);
     const {calculatorFormStrings} = language;
+
+    const selectorsProps = {
+        calculatorFormStrings,
+        selectedLanguage,
+        calculatorType,
+    }
 
     return (
         <StyledCalculatorFormWrapper>
@@ -30,31 +36,12 @@ const CalculatorForm = React.memo(({calculatorType}: {calculatorType: TCalcProps
 
                 {calculatorType === 'ITEMS' && (
                     <>
-                        <ItemSelector
-                            calculatorFormStrings={calculatorFormStrings}
-                            selectedLanguage={selectedLanguage}
-                        />
-                        <ItemTierSelector
-                            calculatorFormStrings={calculatorFormStrings}
-                            selectedLanguage={selectedLanguage}
-                        />
+                        <ItemSelector {...selectorsProps}/>
+                        <ItemTierSelector {...selectorsProps}/>
                     </>
                 )}
 
-                {calculatorType === 'RESOURCES' && (
-                    <ResourceSelector
-                        calculatorType={calculatorType}
-                        calculatorFormStrings={calculatorFormStrings}
-                        selectedLanguage={selectedLanguage}
-                    />
-                )}
-
-                {(calculatorType === 'FOOD' || calculatorType === 'POTIONS') && (
-                    <ConsumablesSelector
-                        calculatorFormStrings={calculatorFormStrings}
-                        selectedLanguage={selectedLanguage}
-                    />
-                )}
+                {calculatorType === 'RESOURCES' && <ResourceSelector {...selectorsProps}/>}
 
                 {(calculatorType === 'ITEMS' || calculatorType === 'RESOURCES') && (
                     <>
@@ -69,6 +56,8 @@ const CalculatorForm = React.memo(({calculatorType}: {calculatorType: TCalcProps
                         />
                     </>
                 )}
+
+                {(calculatorType === 'FOOD' || calculatorType === 'POTIONS') && <ConsumablesSelector {...selectorsProps}/>}
 
                 <PercentInput calculatorFormStrings={calculatorFormStrings} />
 

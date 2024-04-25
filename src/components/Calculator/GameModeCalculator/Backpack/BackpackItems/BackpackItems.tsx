@@ -43,8 +43,8 @@ const BackpackItems = () => {
 
                     return (
                         <BackpackCell
-                            itemName={itemName!}
                             key={index}
+                            itemName={itemName!}
                             itemQuantity={itemQuantity!}
                             itemImage={itemImage}
                             selectedLanguage={selectedLanguage}

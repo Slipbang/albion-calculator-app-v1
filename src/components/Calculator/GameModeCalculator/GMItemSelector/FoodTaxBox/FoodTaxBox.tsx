@@ -20,7 +20,8 @@ const FoodTaxBox = () => {
                     $width={23}
                     $height={23}
                     $image={silver}
-                    $position={'static'} $hasDropShadow={false}
+                    $position={'static'}
+                    $hasDropShadow={false}
                 />
                 <FoodTaxInput />
             </div>

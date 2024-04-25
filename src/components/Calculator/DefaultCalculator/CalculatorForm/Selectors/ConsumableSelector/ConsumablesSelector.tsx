@@ -12,14 +12,14 @@ import {consumablesNamesData} from "../../../../../../store/Items/consumablesNam
 import {interfaceSliceActions} from "../../../../../../store/interface/interface-slice";
 import ConsumableItemImage from "../../../CraftTable/ConsumableItemImage/ConsumableItemImage";
 
+const tiers: Exclude<TTier, 'T3'>[] = ['T4', 'T5', 'T6', 'T7', 'T8'];
+
+const extraKeys = ['T1_FISHSAUCE_LEVEL', 'T1_ALCHEMY_EXTRACT_LEVEL'];
+
 interface IFoodSelectorProps {
     calculatorFormStrings: ISelectedLanguage['calculatorFormStrings'];
     selectedLanguage: TSelectedLanguage;
 }
-
-const tiers: Exclude<TTier, 'T3'>[] = ['T4', 'T5', 'T6', 'T7', 'T8'];
-
-const extraKeys = ['T1_FISHSAUCE_LEVEL', 'T1_ALCHEMY_EXTRACT_LEVEL'];
 
 const ConsumablesSelector = (props: IFoodSelectorProps) => {
     const {calculatorFormStrings, selectedLanguage} = props;
@@ -164,41 +164,42 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
                 </div>
             )}
 
-            {!isSelectorVisible && <div className={styles.resources}>
-                {resourceKeys.map(key => {
+            {!isSelectorVisible && (
+                <div className={styles.resources}>
+                    {resourceKeys.map(key => {
 
-                    const resourceQuantity = resourcesWithReturnPercent(key);
+                        const resourceQuantity = resourcesWithReturnPercent(key);
 
-                    return (
-                        <div key={key}>
-                            <ConsumableItemImage
-                                resourceKeys={key}
-                                selectedLanguage={selectedLanguage}
-                                extraResourceStyles={styles.extraResource}
-                            />
-
-                            <div
-                                style={{marginTop: `${!extraKeys.includes(key) ? -30 : -26}px`}}
-                                className={styles.resourceQuantity}>
-                                <p>{selectedConsumable![key] || 0}</p>
-                            </div>
-                            <div
-                                style={{marginTop: `${!extraKeys.includes(key) ? 0 : 4}px`}}
-                                className={styles.quantityInput}
-                            >
-                                <input
-                                    type="number"
-                                    value={resourceQuantityInput[key] || 0}
-                                    min={initialResources[key]}
-                                    step={initialResources[key]}
-                                    onChange={(event) => changeInputsHandler(+event.target.value, key, initialResources[key])}
+                        return (
+                            <div key={key}>
+                                <ConsumableItemImage
+                                    resourceKeys={key}
+                                    selectedLanguage={selectedLanguage}
+                                    extraResourceStyles={styles.extraResource}
                                 />
+                                <div
+                                    style={{marginTop: `${!extraKeys.includes(key) ? -30 : -26}px`}}
+                                    className={styles.resourceQuantity}>
+                                    <p>{selectedConsumable![key] || 0}</p>
+                                </div>
+                                <div
+                                    style={{marginTop: `${!extraKeys.includes(key) ? 0 : 4}px`}}
+                                    className={styles.quantityInput}
+                                >
+                                    <input
+                                        type="number"
+                                        value={resourceQuantityInput[key] || 0}
+                                        min={initialResources[key]}
+                                        step={initialResources[key]}
+                                        onChange={(event) => changeInputsHandler(+event.target.value, key, initialResources[key])}
+                                    />
+                                </div>
+                                <div className={styles.totalQuantity}>{resourceQuantity || 0}</div>
                             </div>
-                            <div className={styles.totalQuantity}>{resourceQuantity || 0}</div>
-                        </div>
-                    )
-                })}
-            </div>}
+                        )
+                    })}
+                </div>
+            )}
         </div>
     )
 }

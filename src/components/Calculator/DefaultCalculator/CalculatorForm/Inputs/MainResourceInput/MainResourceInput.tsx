@@ -8,7 +8,12 @@ import {useSelector} from "react-redux";
 import {selectDivFactor, selectInitialQuantity} from "../../../../../../store/profit/profit-selectors";
 import {ISelectedLanguage} from "../../../../../../types/languageTypes";
 
-const MainResourceInput = (props: {calculatorType: Exclude<TCalcProps, 'FOOD' | 'POTIONS'>, calculatorFormStrings: ISelectedLanguage['calculatorFormStrings']}) => {
+interface TMainResourceInputProps {
+    calculatorType: Extract<TCalcProps, 'ITEMS' | 'RESOURCES'>;
+    calculatorFormStrings: ISelectedLanguage['calculatorFormStrings'];
+}
+
+const MainResourceInput = (props: TMainResourceInputProps) => {
     const {calculatorType, calculatorFormStrings} = props;
 
     const dispatchAction = useAppDispatch();

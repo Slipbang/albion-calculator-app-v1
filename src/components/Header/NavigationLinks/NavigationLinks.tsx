@@ -22,7 +22,6 @@ const NavigationLinks = () => {
 
         <ul>
             {links.map(({link, linkName}) =>
-
                 <li key={link}>
                     <NavLink
                         className={({isActive}) => isActive ? styles.activeLink : styles.link}

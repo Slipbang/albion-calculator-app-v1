@@ -27,7 +27,7 @@ const ConsumablesNode = ({tier, selectedLanguage}: IConsumablesNodeProps) => {
 
     return (
         <div style={{display: "flex"}}>
-            {consumablesSelectorItems[calculatorType as Exclude<TCalcProps, 'items' | 'resource'>][tier].map(item => {
+            {consumablesSelectorItems[calculatorType as Extract<TCalcProps, 'FOOD' | 'POTIONS'>][tier].map(item => {
                 const {itemId, amountCrafted} = item;
 
                 return (

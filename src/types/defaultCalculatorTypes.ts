@@ -54,8 +54,8 @@ export interface IConsumableTableData {
 export interface ISelectedItem {
     selectedItemType: TCraftObjectTypes;
     selectedItemTier: TTier;
+    selectedItemId: string;
     foodConsumption: number,
-    selectedItemBodyId: string;
     journalId: string;
     emptyJournalId: string;
     artefactId?: string;
@@ -85,7 +85,7 @@ export type TCraftedLists = {
 }
 
 export type TDivFactor = {
-    [key in Exclude<TCalcProps, 'FOOD' | 'POTIONS'>]: {
+    [key in Extract<TCalcProps, 'ITEMS' | 'RESOURCES'>]: {
         mainDivFactor: number;
         subDivFactor: number;
     }
