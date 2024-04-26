@@ -26,10 +26,6 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         super(currentDate);
     }
 
-    test = () => {
-        const {} = this.itemData!;
-    }
-
     itemTierNum = +this.itemData!.tier!.split('T')[1];
 
     subMatsTier = (!!this.itemData!.resourceId) ? `T${this.itemTierNum - 1}` : this!.itemData!.tier;

@@ -1,39 +1,28 @@
-import {ICraftItem, TResourceType} from "../../../types/craftItemsType";
-
-type TMatsKeys = keyof ICraftItem;
+import {ICraftItem} from "../../../types/craftItemsType";
 
 const defineMaterials = (selectedItem: ICraftItem) => {
-    let cachedQuant: number = 0;
-    let cachedMatId: TResourceType | '' = '';
-
     let mainMaterialQuantity: number = 0;
     let subMaterialQuantity: number = 0;
 
-    let mainMaterialId: TResourceType | '' = '';
-    let subMaterialId: TResourceType | '' = '';
+    let mainMaterialId: string | '' = '';
+    let subMaterialId: string | '' = '';
 
-    let matsKeys: TMatsKeys[] = [...Object.keys(selectedItem).filter(key => key.toUpperCase() === key) as TMatsKeys[]];
+    const materialEntries = Object.entries(selectedItem).filter(item => item[0].toUpperCase() === item[0]);
 
-    matsKeys.forEach(key => {
-        if (typeof selectedItem[key] === 'number' && selectedItem[key]! > 0) {
-            subMaterialQuantity = selectedItem[key] as number;
-            subMaterialId = key as TResourceType;
+    materialEntries.some((entry, index) => {
+        if (materialEntries.length < 2) {
+            [mainMaterialId, mainMaterialQuantity] = entry;
+        } else {
+            if (materialEntries[index][1] >= materialEntries[index + 1][1]) {
+                [mainMaterialId, mainMaterialQuantity] = materialEntries[index];
+                [subMaterialId, subMaterialQuantity] = materialEntries[index + 1];
 
-            if (mainMaterialQuantity > selectedItem[key]!) {
-                return;
-            }
+                return true;
+            } else {
+                [mainMaterialId, mainMaterialQuantity] = materialEntries[index + 1];
+                [subMaterialId, subMaterialQuantity] = materialEntries[index];
 
-            if (mainMaterialQuantity < selectedItem[key]!) {
-                cachedQuant = mainMaterialQuantity;
-                cachedMatId = mainMaterialId;
-
-                mainMaterialQuantity = subMaterialQuantity;
-                mainMaterialId = subMaterialId;
-
-                subMaterialQuantity = cachedQuant;
-                subMaterialId = cachedMatId;
-
-                return;
+                return true;
             }
         }
     })

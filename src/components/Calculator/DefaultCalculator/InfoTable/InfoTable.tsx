@@ -87,29 +87,30 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
     const craftedConsumablesData = useSelector(selectCraftedConsumablesData);
 
     let tableQueryParams: ITableQueryParams | undefined,
-        infoTableData: IInfoTableData | undefined,
+        infoTableData: IInfoTableData,
         itemId: string | undefined,
         artefactId: string | undefined,
         resourceId: string | undefined,
-        mainMatsId: string | undefined,
+        mainMatsId: string,
         subMatsId: string | undefined,
         journalId: string | undefined,
         emptyJournalId: string | undefined,
         queryItemsParams: string | undefined,
         queryJournalsParams: string | undefined,
-        queryMatsParams: string | undefined;
+        queryMatsParams: string;
 
     if (craftedItem !== null) {
         ({tableQueryParams, infoTableData} = craftedItem!);
         ({queryItemsParams, queryJournalsParams, queryMatsParams} = tableQueryParams!);
         ({itemId, artefactId, resourceId, mainMatsId, subMatsId, journalId, emptyJournalId} = infoTableData!);
+
     }
 
-    let queryConsumableParams: string | undefined,
-        craftedConsumable: IConsumableObject | undefined,
-        consumablesItemId: string | undefined,
-        consumableResourcesKeys: string[] | undefined,
-        consumablesNames: TConsumableNames | undefined;
+    let queryConsumableParams: string,
+        craftedConsumable: IConsumableObject,
+        consumablesItemId: string,
+        consumableResourcesKeys: string[],
+        consumablesNames: TConsumableNames;
 
     const consumableSelectorsKeys: string[] = [];
     const consumableSelectorsInitialState: TConsumablesSelectors = {};
@@ -199,7 +200,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
         if (calculatorType === 'FOOD' || calculatorType === 'POTIONS') {
             fetchConsumables({itemsParams: queryConsumableParams!, isBlackMarket: false, serverId});
         }
-    }, [queryItemsParams, queryMatsParams, queryJournalsParams, artefactId, serverId, itemId])
+    }, [queryItemsParams, queryMatsParams!, queryJournalsParams, artefactId, serverId, itemId])
 
     const dispatchAction = useAppDispatch();
 
@@ -248,7 +249,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
     const craftInfoParams: ICraftItemInfoTuple | ICraftConsumableInfoTuple =
         (calculatorType === 'ITEMS' || calculatorType === 'RESOURCES')
             ? [
-                infoTableData,
+                infoTableData!,
                 artefactName,
                 selectedLanguage,
                 infoTableStrings,
@@ -267,7 +268,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                 consumablesData!,
                 consumableResourcesKeys!,
                 selectedLanguage!,
-                consumablesNames,
+                consumablesNames!,
                 infoTableStrings,
                 consumableSelectors,
                 foodTax,
@@ -311,7 +312,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                             artefactName={artefactName}
                             foodTax={foodTax}
                             selectedLanguage={selectedLanguage}
-                            selectedCities={selectedCities}
+                            selectedCities={selectedCities!}
                         />
                     )}
 

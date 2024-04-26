@@ -322,7 +322,9 @@ const profitSlice = createSlice({
 
                 const {isSimilar, similarItemId} = hasSimilarItems(
                     state.craftLists[action.payload.calculatorType] as ITableData[],
-                    (action.payload.calculatorType === "ITEMS") ? state.selected.selectedItem.selectedItemId : state.selected.selectedResource.resourceId,
+                    (action.payload.calculatorType === "ITEMS")
+                        ? `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.selectedItemId}`
+                        : state.selected.selectedResource.resourceId,
                     percent,
                     output
                 );
