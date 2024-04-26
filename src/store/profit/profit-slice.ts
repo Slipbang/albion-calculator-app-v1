@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {v4 as uuidv4} from 'uuid';
 import {TCalcProps} from "../../types/calculatorPropsType";
-import {TCraftItemType, TItemNode, TResourceType, TTier} from "../../types/craftItemsType";
+import {TCraftItemType, TItemNode, TTier} from "../../types/craftItemsType";
 import {calculateJQ_DFC} from "../utils/calculateJQ_DFC";
 import {IConsumableObject} from "../../types/consumableTypes";
 import {
@@ -11,10 +11,9 @@ import {
     ISelectedResource,
     ITableData,
     TCraftedLists,
-    TDivFactor,
+    TDivFactor, TMaterials,
     TSimilarErrors
 } from "../../types/defaultCalculatorTypes";
-
 
 interface IInitialState {
     craftLists: TCraftedLists;
@@ -42,15 +41,7 @@ interface IInitialState {
         itemType: TCraftItemType;
     }
 
-    resourceMaterials: {
-        mainMaterialId: string | '';
-        subMaterialId: string | '';
-    }
-
-    itemsMaterials: {
-        mainMaterialId: TResourceType | string;
-        subMaterialId: TResourceType | string;
-    }
+    materials: TMaterials;
 
     selected: {
         selectedResource: ISelectedResource,
@@ -97,14 +88,15 @@ const initialState: IInitialState = {
         }
     },
 
-    resourceMaterials: {
-        mainMaterialId: 'T4_ORE',
-        subMaterialId: 'T3_METALBAR',
-    },
-
-    itemsMaterials: {
-        mainMaterialId: 'METALBAR',
-        subMaterialId: 'LEATHER',
+    materials: {
+        ITEMS: {
+            mainMaterialId: 'T4_METALBAR',
+            subMaterialId: 'T4_LEATHER',
+        },
+        RESOURCES: {
+            mainMaterialId: 'T4_ORE',
+            subMaterialId: 'T3_METALBAR',
+        },
     },
 
     itemSelector: {
@@ -126,7 +118,7 @@ const initialState: IInitialState = {
         selectedItem: {
             selectedItemType: 'MAIN',
             selectedItemTier: 'T4',
-            selectedItemId: 'MAIN_SWORD',
+            selectedItemId: 'T4_MAIN_SWORD',
             foodConsumption: 43.2,
             journalId: 'JOURNAL_WARRIOR_FULL',
             emptyJournalId: 'JOURNAL_WARRIOR_EMPTY',
@@ -156,6 +148,13 @@ const profitSlice = createSlice({
         },
         setSelectedItemTier(state, action: PayloadAction<TTier>) {
             state.selected.selectedItem.selectedItemTier = action.payload;
+            state.materials.ITEMS = {
+                mainMaterialId: `${action.payload}_${state.materials.ITEMS.mainMaterialId.split(/T\d_/)[1]}`,
+                subMaterialId: !!state.materials.ITEMS.subMaterialId ? `${action.payload}_${state.materials.ITEMS.subMaterialId.split(/T\d_/)[1]}` : undefined,
+            }
+
+            const itemBodyId = `${state.selected.selectedItem.selectedItemId}`.split(/T\d_/)[1];
+            state.selected.selectedItem.selectedItemId = `${action.payload}_${itemBodyId}`;
         },
         setSelectedType(state, action: PayloadAction<TCraftItemType>) {
             state.itemSelector.itemType = action.payload;
@@ -184,14 +183,10 @@ const profitSlice = createSlice({
                 }
             }
         },
-        setSelectedMaterials(state, action: PayloadAction<{ type: TCalcProps, mainMaterialId: TResourceType | string; subMaterialId: TResourceType | string }>) {
-            if (action.payload.type === 'ITEMS') {
-                state.itemsMaterials.mainMaterialId = action.payload.mainMaterialId;
-                state.itemsMaterials.subMaterialId = action.payload.subMaterialId;
-            }
-            if (action.payload.type === 'RESOURCES') {
-                state.resourceMaterials.mainMaterialId = action.payload.mainMaterialId;
-                state.resourceMaterials.subMaterialId = action.payload.subMaterialId;
+        setSelectedMaterials(state, action: PayloadAction<{ calculatorType: Extract<TCalcProps, 'ITEMS' | 'RESOURCES'>, mainMaterialId: string; subMaterialId?: string }>) {
+            state.materials[action.payload.calculatorType] = {
+                mainMaterialId: action.payload.mainMaterialId,
+                subMaterialId: action.payload.subMaterialId,
             }
         },
         setCraftedItem(state, action: PayloadAction<ITableData>) {
@@ -219,7 +214,7 @@ const profitSlice = createSlice({
         setConsumptionItemQueryParams(state, action: PayloadAction<string>) {
             state.consumptionItemQueryParams = action.payload;
         },
-        getResourceProfitHandler(state, action: PayloadAction<{ calculatorType: TCalcProps }>) {
+        getProfitHandler(state, action: PayloadAction<{ calculatorType: TCalcProps }>) {
             let id = uuidv4();
             let percent: number = +state.percent;
             let divFactor: number = 0;
@@ -269,6 +264,11 @@ const profitSlice = createSlice({
                     subMatsQuantity: subDivFactor - (subDivFactor * (percent / 100)),
                 }
 
+                const materials = {
+                    mainMatsId: state.materials[action.payload.calculatorType].mainMaterialId,
+                    subMatsId: state.materials[action.payload.calculatorType].subMaterialId,
+                }
+
                 let infoTableData: IInfoTableData | undefined = undefined;
 
                 if (action.payload.calculatorType === 'ITEMS') {
@@ -279,12 +279,12 @@ const profitSlice = createSlice({
 
                     infoTableData = {
                         output,
-                        foodConsumption: state.selected.selectedItem.foodConsumption,
-                        itemId: `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.selectedItemId}`,
                         defaultFoodConsumption,
                         journalsQuantity,
-                        mainMatsId: `${state.selected.selectedItem.selectedItemTier}_${state.itemsMaterials.mainMaterialId}`,
-                        subMatsId: !!state.itemsMaterials.subMaterialId ? `${state.selected.selectedItem.selectedItemTier}_${state.itemsMaterials.subMaterialId}` : undefined,
+                        ...materials,
+                        spentQuantityPerItem,
+                        foodConsumption: state.selected.selectedItem.foodConsumption,
+                        itemId: state.selected.selectedItem.selectedItemId,
                         journalId: `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.journalId}`,
                         emptyJournalId: `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.emptyJournalId}`,
                         itemName: state.selected.selectedItem.itemName,
@@ -292,21 +292,19 @@ const profitSlice = createSlice({
                         artefactId: !!state.selected.selectedItem.artefactId
                             ? `${!state.selected.selectedItem.artefactId.includes('T4_SKILLBOOK_STANDARD') ? `${state.selected.selectedItem.selectedItemTier}_` : ''}${state.selected.selectedItem.artefactId}`
                             : undefined,
-                        spentQuantityPerItem,
                     }
                 }
 
                 if (action.payload.calculatorType === 'RESOURCES') {
                     infoTableData = {
                         output,
+                        ...materials,
+                        spentQuantityPerItem,
                         foodConsumption: state.selected.selectedResource.foodConsumption,
                         defaultFoodConsumption: state.selected.selectedResource.defaultFoodConsumption,
                         resourceId: state.selected.selectedResource.resourceId,
-                        mainMatsId: state.resourceMaterials.mainMaterialId,
-                        subMatsId: state.resourceMaterials.subMaterialId,
                         itemName: state.selected.selectedResource.resourceName,
                         tier: state.selected.selectedResource.resourceTier,
-                        spentQuantityPerItem,
                     }
                 }
 
@@ -323,12 +321,11 @@ const profitSlice = createSlice({
                 const {isSimilar, similarItemId} = hasSimilarItems(
                     state.craftLists[action.payload.calculatorType] as ITableData[],
                     (action.payload.calculatorType === "ITEMS")
-                        ? `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.selectedItemId}`
+                        ? state.selected.selectedItem.selectedItemId
                         : state.selected.selectedResource.resourceId,
                     percent,
                     output
                 );
-
 
                 state.errors.similarError[action.payload.calculatorType] = similarItemId;
                 if (isSimilar) return;

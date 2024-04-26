@@ -76,6 +76,13 @@ export interface ISelectedResource {
     }
 }
 
+export type TMaterials = {
+    [key in Extract<TCalcProps, 'ITEMS' | 'RESOURCES'>]: {
+        mainMaterialId: string;
+        subMaterialId?: string;
+    }
+}
+
 export type TSimilarErrors = {
     [key in TCalcProps]: string | null;
 }

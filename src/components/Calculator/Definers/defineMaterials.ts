@@ -1,31 +1,27 @@
 import {ICraftItem} from "../../../types/craftItemsType";
 
 const defineMaterials = (selectedItem: ICraftItem) => {
-    let mainMaterialQuantity: number = 0;
+    let mainMaterialQuantity: number;
     let subMaterialQuantity: number = 0;
 
-    let mainMaterialId: string | '' = '';
-    let subMaterialId: string | '' = '';
+    let mainMaterialId: string;
+    let subMaterialId: string | undefined = undefined;
 
     const materialEntries = Object.entries(selectedItem).filter(item => item[0].toUpperCase() === item[0]);
 
-    materialEntries.some((entry, index) => {
-        if (materialEntries.length < 2) {
-            [mainMaterialId, mainMaterialQuantity] = entry;
+    if (materialEntries.length < 2) {
+        [mainMaterialId, mainMaterialQuantity] = materialEntries[0];
+    } else {
+        const [firstEntry, secondEntry] = materialEntries;
+
+        if (firstEntry[1] > secondEntry[1]) {
+            [mainMaterialId, mainMaterialQuantity] = firstEntry;
+            [subMaterialId, subMaterialQuantity] = secondEntry;
         } else {
-            if (materialEntries[index][1] >= materialEntries[index + 1][1]) {
-                [mainMaterialId, mainMaterialQuantity] = materialEntries[index];
-                [subMaterialId, subMaterialQuantity] = materialEntries[index + 1];
-
-                return true;
-            } else {
-                [mainMaterialId, mainMaterialQuantity] = materialEntries[index + 1];
-                [subMaterialId, subMaterialQuantity] = materialEntries[index];
-
-                return true;
-            }
+            [mainMaterialId, mainMaterialQuantity] = secondEntry;
+            [subMaterialId, subMaterialQuantity] = firstEntry;
         }
-    })
+    }
 
     return {
         mainMaterialQuantity,

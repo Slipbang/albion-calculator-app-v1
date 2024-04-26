@@ -14,10 +14,12 @@ const CraftTableButton = () => {
         dispatchAction(interfaceSliceActions.toggleCraftTableVisibility());
     }
 
-    return <StyledCraftTableButton
-        $isCraftTableShown={isCraftTableShown}
-        onClick={() => toggleCraftTableVisibilityHandler()}
-    />
+    return (
+        <StyledCraftTableButton
+            $isCraftTableShown={isCraftTableShown}
+            onClick={() => toggleCraftTableVisibilityHandler()}
+        />
+    )
 }
 
 export default CraftTableButton;

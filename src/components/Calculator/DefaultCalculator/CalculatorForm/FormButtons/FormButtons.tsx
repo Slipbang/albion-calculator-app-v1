@@ -15,7 +15,7 @@ const FormButtons = (props: IFormButtonProps) => {
     const dispatchAction = useAppDispatch();
 
     const calculateProfitHandler = () => {
-        dispatchAction(profitSliceActions.getResourceProfitHandler({calculatorType}));
+        dispatchAction(profitSliceActions.getProfitHandler({calculatorType}));
         dispatchAction(interfaceSliceActions.toggleCraftTableVisibility(true));
     }
 

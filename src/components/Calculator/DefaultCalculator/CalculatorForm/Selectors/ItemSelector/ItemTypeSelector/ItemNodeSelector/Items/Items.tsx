@@ -58,8 +58,8 @@ const Items = (props: IItemsProps) => {
         dispatchAction(interfaceSliceActions.toggleItemSelectorVisibility(false));
 
         const selectedItemId = ((itemType === 'BAG' && itemId !== 'INSIGHT') || itemType === 'CAPE')
-            ? itemId!
-            : `${itemType}_${itemId}`;
+            ? `${selectedItemTier}_${itemId}`
+            : `${selectedItemTier}_${itemType}_${itemId}`;
 
         dispatchAction(profitSliceActions.setSelected({
             type: calculatorType,
@@ -82,9 +82,9 @@ const Items = (props: IItemsProps) => {
         } = defineMaterials(item);
 
         dispatchAction(profitSliceActions.setSelectedMaterials({
-            type: calculatorType,
-            mainMaterialId,
-            subMaterialId
+            calculatorType: calculatorType as Extract<TCalcProps, 'ITEMS' | 'RESOURCES'>,
+            mainMaterialId: `${selectedItemTier}_${mainMaterialId}`,
+            subMaterialId: `${selectedItemTier}_${subMaterialId}`,
         }));
         dispatchAction(profitSliceActions.setDivFactor({
             type: calculatorType as Extract<TCalcProps, 'ITEMS' | 'RESOURCES'>,

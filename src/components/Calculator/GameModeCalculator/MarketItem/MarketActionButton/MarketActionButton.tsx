@@ -53,10 +53,10 @@ const MarketActionButton = () => {
             className={styles.buyButton}
             disabled={isNaN(totalPrice) || typeof totalPrice !== "number"}
             onClick={() => {
-                if (marketAction === 'buy'){
+                if (marketAction === 'buy') {
                     buyMaterialHandler();
                 }
-                if (marketAction === 'sell'){
+                if (marketAction === 'sell') {
                     sellItemsHandler(itemIndex!, itemInputQuantity);
                 }
             }}

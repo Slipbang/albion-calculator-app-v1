@@ -46,7 +46,7 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
         } = defineMaterials(selectedItem);
 
         dispatchAction(profitSliceActions.setSelectedMaterials({
-            type: calculatorType,
+            calculatorType: calculatorType as Extract<TCalcProps, 'ITEMS' | 'RESOURCES'>,
             mainMaterialId: `${resourceTier}_${mainMaterialId}`,
             subMaterialId: `T${tierNumber - 1}_${subMaterialId}`,
         }));

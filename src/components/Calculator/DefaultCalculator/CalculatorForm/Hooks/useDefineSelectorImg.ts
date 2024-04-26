@@ -12,7 +12,7 @@ const useDefineSelectorImg = () => {
         selectedItemId,
     } = selectedItem;
 
-    const selectorImg = `${srcRoute}${selectedItemTier}_${selectedItemId}`;
+    const selectorImg = `${srcRoute}${selectedItemId}`;
 
     return {
         itemName,

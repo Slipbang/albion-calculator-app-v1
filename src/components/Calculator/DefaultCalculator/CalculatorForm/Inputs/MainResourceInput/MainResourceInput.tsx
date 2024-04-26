@@ -51,7 +51,7 @@ const MainResourceInput = (props: TMainResourceInputProps) => {
                         onKeyDown={event => {
                             if (event.key === 'Enter') {
                                 event.preventDefault();
-                                dispatchAction(profitSliceActions.getResourceProfitHandler({calculatorType}))
+                                dispatchAction(profitSliceActions.getProfitHandler({calculatorType}))
                             }
                         }}
                         onChange={event => changeQuantityHandler(event)}

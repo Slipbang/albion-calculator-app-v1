@@ -77,7 +77,7 @@ export type TSelectedCityStates = {
 
 export type TArtefactName = TArtefactData['artefactName'] | undefined;
 
-export const infoCityOptions: TCities[] = ['Brecilien', "Caerleon", "Fort Sterling", "Bridgewatch", 'Martlock', 'Thetford', 'Lymhurst', 'Black Market'];
+export const infoCityOptions: TCities[] = ['Brecilien', 'Caerleon', 'Fort Sterling', 'Bridgewatch', 'Martlock', 'Thetford', 'Lymhurst', 'Black Market'];
 
 const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
 

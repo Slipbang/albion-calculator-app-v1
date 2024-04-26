@@ -77,7 +77,7 @@ const ItemTierSelector = (props: IItemTierSelectorProps) => {
                                             <img
                                                 className={styles.backgroundSkeleton}
                                                 title={tier}
-                                                src={`${srcRoute}${tier}_${selectedItemId}`}
+                                                src={`${srcRoute}${tier}_${selectedItemId.split(/T\d_/)[1]}`}
                                                 alt=''
                                                 onClick={(event) => {
                                                     event.stopPropagation();
