@@ -84,7 +84,7 @@ const Items = (props: IItemsProps) => {
         dispatchAction(profitSliceActions.setSelectedMaterials({
             calculatorType: calculatorType as Extract<TCalcProps, 'ITEMS' | 'RESOURCES'>,
             mainMaterialId: `${selectedItemTier}_${mainMaterialId}`,
-            subMaterialId: `${selectedItemTier}_${subMaterialId}`,
+            subMaterialId: !!subMaterialId ? `${selectedItemTier}_${subMaterialId}` : undefined,
         }));
         dispatchAction(profitSliceActions.setDivFactor({
             type: calculatorType as Extract<TCalcProps, 'ITEMS' | 'RESOURCES'>,
