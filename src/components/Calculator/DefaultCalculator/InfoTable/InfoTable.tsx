@@ -103,7 +103,6 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
         ({tableQueryParams, infoTableData} = craftedItem!);
         ({queryItemsParams, queryJournalsParams, queryMatsParams} = tableQueryParams!);
         ({itemId, artefactId, resourceId, mainMatsId, subMatsId, journalId, emptyJournalId} = infoTableData!);
-
     }
 
     let queryConsumableParams: string,

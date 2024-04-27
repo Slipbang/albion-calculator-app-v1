@@ -330,7 +330,10 @@ const profitSlice = createSlice({
                 state.errors.similarError[action.payload.calculatorType] = similarItemId;
                 if (isSimilar) return;
 
-                (state.craftLists[action.payload.calculatorType] as ITableData[]).unshift(usableItem);
+                (state.craftLists[action.payload.calculatorType] as ITableData[]) = [usableItem, ...(state.craftLists[action.payload.calculatorType] as ITableData[])];
+                //В RTK используется библиотека Immer, которая оборачивает состояние в прокси и на основе мутаций которые мы пишем в коде она создает новое состояние,
+                //поэтому в RTK immutable way не обязателен и зависит от политики руководителей.
+                //(state.craftLists[action.payload.calculatorType] as ITableData[]).unshift(usableItem);
             }
 
             // food and potions calculation ----------------------------------------------------------------------------------------------------------------
@@ -370,20 +373,25 @@ const profitSlice = createSlice({
                 state.errors.similarError[action.payload.calculatorType] = similarItemId;
                 if (isSimilar) return;
 
-                (state.craftLists[action.payload.calculatorType] as IConsumableTableData[]).unshift(craftedConsumableItem);
+                (state.craftLists[action.payload.calculatorType] as IConsumableTableData[]) = [craftedConsumableItem, ...(state.craftLists[action.payload.calculatorType] as IConsumableTableData[])];
+                //(state.craftLists[action.payload.calculatorType] as IConsumableTableData[]).unshift(craftedConsumableItem);
             }
 
             if (state.craftLists[action.payload.calculatorType].length > 8) {
-                state.craftLists[action.payload.calculatorType].pop();
+                const poppedCraftList = [...state.craftLists[action.payload.calculatorType]];
+                poppedCraftList.pop();
+                state.craftLists[action.payload.calculatorType] = [...poppedCraftList] as IConsumableTableData[] | ITableData[];
+
+                //state.craftLists[action.payload.calculatorType].pop();
             }
         },
         deleteLiFunction(state, action: PayloadAction<{ calculatorType: TCalcProps; id: string }>) {
             if (action.payload.calculatorType === "ITEMS" || action.payload.calculatorType === "RESOURCES") {
-                state.craftLists[action.payload.calculatorType] = (state.craftLists[action.payload.calculatorType] as ITableData[]).filter(item => item.craftTableData.id !== action.payload.id);
+                state.craftLists[action.payload.calculatorType] = [...(state.craftLists[action.payload.calculatorType] as ITableData[])].filter(item => item.craftTableData.id !== action.payload.id);
             }
 
             if (action.payload.calculatorType === 'FOOD' || action.payload.calculatorType === 'POTIONS') {
-                state.craftLists[action.payload.calculatorType] = (state.craftLists[action.payload.calculatorType] as IConsumableTableData[]).filter(item => item.id !== action.payload.id);
+                state.craftLists[action.payload.calculatorType] = [...(state.craftLists[action.payload.calculatorType] as IConsumableTableData[])].filter(item => item.id !== action.payload.id);
             }
         },
     }

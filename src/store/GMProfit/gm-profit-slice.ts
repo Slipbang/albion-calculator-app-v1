@@ -92,36 +92,44 @@ const GMProfitSlice = createSlice({
             state.foodTax = action.payload;
         },
         calculateBagSilver(state, action: PayloadAction<number>){
-            state.backpackSilver += action.payload
+            state.backpackSilver += action.payload;
         },
         buyMaterials(state, action: PayloadAction<IBagCell>){
 
-            const addMaterial = (materialQuantity: number) => {
-                const similarMaterial = state.backpackItems.find(item => item.itemId === action.payload.itemId && item.itemQuantity! < 999) as IBagCell;
+            const addMaterial = (materialQuantity: number, backpackItems: IBagCell[]) => {
+                const bufferedBackPack = [...backpackItems];
+
+                const similarMaterial = bufferedBackPack.find(item => item.itemId === action.payload.itemId && item.itemQuantity! < 999) as IBagCell;
 
                 if (!!similarMaterial) {
                     const {itemQuantity: similarMatsQuantity} = similarMaterial;
                     let checkSum = similarMatsQuantity! + materialQuantity;
                     if (checkSum <= 999) {
                         similarMaterial.itemQuantity! += materialQuantity;
+
+                        state.backpackItems = [...bufferedBackPack];
                     } else {
                         let rest = (similarMatsQuantity! + materialQuantity - 999);
                         similarMaterial.itemQuantity = 999;
-                        addMaterial(rest);
+                        addMaterial(rest, bufferedBackPack);
                     }
 
                 } else {
-                    state.backpackItems.some((item, index) => {
+                    bufferedBackPack.some((item, index) => {
                         if (item.itemId === null) {
-                            state.backpackItems[index] = {...action.payload, itemQuantity: materialQuantity};
+                            bufferedBackPack[index] = {
+                                ...action.payload,
+                                itemQuantity: materialQuantity,
+                            };
 
                             return true;
                         }
                     })
+                    state.backpackItems = [...bufferedBackPack];
                 }
             }
 
-            addMaterial(action.payload.itemQuantity!)
+            addMaterial(action.payload.itemQuantity!, state.backpackItems);
         },
         craftItems(state, action: PayloadAction<{craftedItems: IBagCell, materialsInfo: TMaterialsInfo }>){
 
@@ -130,23 +138,25 @@ const GMProfitSlice = createSlice({
                 materialApiId,
             } = action.payload.materialsInfo;
 
-            const consumeMaterials = (itemId: string, consumedMaterialQuantity: number) => {
-                state.backpackItems.some((item,index) => {
+            const consumeMaterials = (itemId: string, consumedMaterialQuantity: number, backpackItems: IBagCell[]) => {
+                const bufferedBackPack = [...backpackItems];
+
+                bufferedBackPack.some((item,index) => {
                     if (item.itemId === itemId){
                         if (item.itemQuantity! > consumedMaterialQuantity){
                             item.itemQuantity = item.itemQuantity! - consumedMaterialQuantity;
 
+                            state.backpackItems = [...bufferedBackPack];
                             return true;
                         } else {
                             let rest = consumedMaterialQuantity - item.itemQuantity!;
-                            state.backpackItems[index] = {...emptyBagCell};
+                            bufferedBackPack[index] = {...emptyBagCell};
 
-                            consumeMaterials(itemId, rest);
+                            consumeMaterials(itemId, rest, bufferedBackPack);
 
                             return true;
                         }
                     }
-
                 })
             }
 
@@ -154,82 +164,112 @@ const GMProfitSlice = createSlice({
             for(const CMKey in consumedMaterials) {
                 for(const MAIdKey in materialApiId){
                     if (!!consumedMaterials[CMKey as keyof TMaterialsInfo['consumedMaterials']] && CMKey.includes(MAIdKey.split('ApiId')[0])){
-                        consumeMaterials(materialApiId[MAIdKey as keyof TMaterialsInfo['materialApiId']]!, consumedMaterials[CMKey as keyof TMaterialsInfo['consumedMaterials']]!)
+                        consumeMaterials(materialApiId[MAIdKey as keyof TMaterialsInfo['materialApiId']]!, consumedMaterials[CMKey as keyof TMaterialsInfo['consumedMaterials']]!, state.backpackItems);
                     }
                 }
             }
 
-            const addItem = (itemQuantity: number) => {
-                const similarItem = state.backpackItems.find(item => item.itemId === action.payload.craftedItems.itemId && item.itemQuantity! < 999);
+            const addItem = (itemQuantity: number, backpackItems: IBagCell[]) => {
+                const bufferedBackPack = [...backpackItems];
+
+                const similarItem = bufferedBackPack.find(item => item.itemId === action.payload.craftedItems.itemId && item.itemQuantity! < 999);
 
                 if (!!similarItem){
                     const {itemQuantity: similarItemQuantity} = similarItem;
                     let checkSum = similarItemQuantity! + itemQuantity;
                     if (checkSum <= 999){
                         similarItem.itemQuantity! += itemQuantity;
+
+                        state.backpackItems = [...bufferedBackPack];
                     } else {
                         let rest = (similarItemQuantity! + itemQuantity - 999);
+
                         similarItem.itemQuantity! = 999;
-                        addItem(rest);
+
+                        addItem(rest, bufferedBackPack);
                     }
                 } else {
                     if (itemQuantity <= 999){
-                        state.backpackItems.some((item,index) => {
+                        bufferedBackPack.some((item,index) => {
                             if (item.itemId === null){
-                                state.backpackItems[index] = {...action.payload.craftedItems, itemQuantity}
+                                bufferedBackPack[index] = {...action.payload.craftedItems, itemQuantity};
 
                                 return true;
                             }
                         })
+                        state.backpackItems = [...bufferedBackPack];
                     } else {
                         const rest = itemQuantity - 999;
-                        state.backpackItems.some((item, index) => {
+                        bufferedBackPack.some((item, index) => {
                             if (item.itemId === null){
-                                state.backpackItems[index] = {...action.payload.craftedItems, itemQuantity: 999}
+                                bufferedBackPack[index] = {...action.payload.craftedItems, itemQuantity: 999}
 
                                 return true;
                             }
                         })
 
-                        addItem(rest);
+                        addItem(rest, bufferedBackPack);
                     }
                 }
             }
 
-            addItem(action.payload.craftedItems.itemQuantity!)
+            addItem(action.payload.craftedItems.itemQuantity!, state.backpackItems);
         },
         sellBagItems(state, action: PayloadAction<{index: number, quantity: number}>){
             if (state.backpackItems[action.payload.index].itemQuantity! !== action.payload.quantity && state.backpackItems[action.payload.index].itemQuantity! > 0) {
-                state.backpackItems[action.payload.index].itemQuantity! -= action.payload.quantity
+
+                state.backpackItems = state.backpackItems.map((item, itemIndex) => {
+                    if(itemIndex === action.payload.index){
+                        return {
+                            ...item,
+                            itemQuantity: item.itemQuantity! - action.payload.quantity
+                        }
+                    } else {
+                        return item;
+                    }
+                }) as IBagCell[];
+
+                state.backpackItems[action.payload.index].itemQuantity! -= action.payload.quantity;
+
                 return;
             }
 
-            state.backpackItems[action.payload.index] = {...emptyBagCell};
+            state.backpackItems = state.backpackItems.map((item, itemIndex) => {
+                if (itemIndex === action.payload.index) {
+                    return emptyBagCell;
+                } else {
+                    return item;
+                }
+            })
         },
         swapItems(state, action: PayloadAction<{dragItemIndex: number, dropItemIndex: number, isShiftPressed: boolean}>){
             let buffer: IBagCell = {...state.backpackItems[action.payload.dragItemIndex]};
             let itemQuantity = Number(buffer.itemQuantity!);
             let checkSum = Number(state.backpackItems[action.payload.dragItemIndex].itemQuantity! + state.backpackItems[action.payload.dropItemIndex].itemQuantity!);
 
+            const bufferedBackPack = [...state.backpackItems];
+
             if (action.payload.dragItemIndex === action.payload.dropItemIndex) return;
 
-            if (state.backpackItems[action.payload.dragItemIndex].itemId !== state.backpackItems[action.payload.dropItemIndex].itemId){
+            if (bufferedBackPack[action.payload.dragItemIndex].itemId !== bufferedBackPack[action.payload.dropItemIndex].itemId){
 
                 if (!action.payload.isShiftPressed) {
 
-                    state.backpackItems[action.payload.dragItemIndex]! = {...state.backpackItems[action.payload.dropItemIndex]};
-                    state.backpackItems[action.payload.dropItemIndex] = {...buffer};
+                    bufferedBackPack[action.payload.dragItemIndex]! = {...bufferedBackPack[action.payload.dropItemIndex]};
+                    bufferedBackPack[action.payload.dropItemIndex] = {...buffer};
 
                 } else {
 
-                    if (state.backpackItems[action.payload.dropItemIndex].itemId !== null){
+                    if (bufferedBackPack[action.payload.dropItemIndex].itemId !== null){
                         return;
 
                     } else {
-                        state.backpackItems[action.payload.dragItemIndex]!.itemQuantity = Math.ceil(Number(itemQuantity) / 2);
+                        bufferedBackPack[action.payload.dragItemIndex]!.itemQuantity = Math.ceil(Number(itemQuantity) / 2);
 
-                        state.backpackItems[action.payload.dropItemIndex] = {...buffer};
-                        state.backpackItems[action.payload.dropItemIndex].itemQuantity = Math.floor(Number(itemQuantity) / 2);
+                        bufferedBackPack[action.payload.dropItemIndex] = {
+                            ...buffer,
+                            itemQuantity: Math.floor(Number(itemQuantity) / 2)
+                        }
                     }
 
                 }
@@ -237,40 +277,44 @@ const GMProfitSlice = createSlice({
                 if (!action.payload.isShiftPressed){
 
                     if(checkSum <= 999){
-                        state.backpackItems[action.payload.dropItemIndex].itemQuantity! += state.backpackItems[action.payload.dragItemIndex].itemQuantity!;
-                        state.backpackItems[action.payload.dragItemIndex] = {...emptyBagCell};
+                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity! += bufferedBackPack[action.payload.dragItemIndex].itemQuantity!;
+                        bufferedBackPack[action.payload.dragItemIndex] = {...emptyBagCell};
                     }
 
                     if (checkSum > 999){
-                        state.backpackItems[action.payload.dropItemIndex].itemQuantity! = 999;
-                        state.backpackItems[action.payload.dragItemIndex].itemQuantity! = checkSum - 999;
+                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity! = 999;
+                        bufferedBackPack[action.payload.dragItemIndex].itemQuantity! = checkSum - 999;
                     }
 
                 } else {
 
-                    if (state.backpackItems[action.payload.dropItemIndex].itemQuantity! + Math.floor(+state.backpackItems[action.payload.dragItemIndex].itemQuantity! / 2) <= 999){
-                        state.backpackItems[action.payload.dropItemIndex].itemQuantity! += Math.floor(+state.backpackItems[action.payload.dragItemIndex].itemQuantity! / 2);
-                        state.backpackItems[action.payload.dragItemIndex].itemQuantity! = Math.ceil(+state.backpackItems[action.payload.dragItemIndex].itemQuantity! / 2);
+                    if (bufferedBackPack[action.payload.dropItemIndex].itemQuantity! + Math.floor(+bufferedBackPack[action.payload.dragItemIndex].itemQuantity! / 2) <= 999){
+
+                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity! += Math.floor(+bufferedBackPack[action.payload.dragItemIndex].itemQuantity! / 2);
+                        bufferedBackPack[action.payload.dragItemIndex].itemQuantity! = Math.ceil(+bufferedBackPack[action.payload.dragItemIndex].itemQuantity! / 2);
 
                     } else {
-                        state.backpackItems[action.payload.dropItemIndex].itemQuantity! = 999;
-                        state.backpackItems[action.payload.dragItemIndex].itemQuantity! = checkSum - 999;
+                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity! = 999;
+                        bufferedBackPack[action.payload.dragItemIndex].itemQuantity! = checkSum - 999;
                     }
                 }
-
             }
+
+            state.backpackItems = [...bufferedBackPack];
         },
         addJournals(state,action: PayloadAction<{journalsQuantity: number, journalId: string, journalPrice: number}>){
 
-            const fillJournals = (journalsQuantity: number) => {
-                const similarFilledJournal = state.backpackItems.find(item => item.itemId === `${action.payload.journalId}_FULL` && item.itemQuantity! < 999);
-                const similarPartiallyFullJournal = state.backpackItems.find(item => item.itemId === action.payload.journalId);
+            const fillJournals = (journalsQuantity: number, backpackItems: IBagCell[]) => {
+                const bufferedBackPack = [...backpackItems];
+
+                const similarFilledJournal = bufferedBackPack.find(item => item.itemId === `${action.payload.journalId}_FULL` && item.itemQuantity! < 999);
+                const similarPartiallyFilledJournal = bufferedBackPack.find(item => item.itemId === action.payload.journalId);
                 let quantity = +journalsQuantity;
 
-                if(!!similarPartiallyFullJournal){
-                    quantity += +similarPartiallyFullJournal.itemQuantity!;
+                if(!!similarPartiallyFilledJournal){
+                    quantity += +similarPartiallyFilledJournal.itemQuantity!;
 
-                    Object.assign(similarPartiallyFullJournal, emptyBagCell)
+                    Object.assign(similarPartiallyFilledJournal, emptyBagCell);
                 }
 
                 let roundedQuantity = Math.floor(+quantity);
@@ -278,17 +322,17 @@ const GMProfitSlice = createSlice({
                 const nonIntegerRestQuantity = +quantity - +roundedQuantity;
 
                 if (nonIntegerRestQuantity !== 0){
-                    state.backpackItems.some(item => {
+                    bufferedBackPack.some(item => {
                         if (item.itemId === null){
                             item.itemId = action.payload.journalId;
                             item.itemQuantity = +nonIntegerRestQuantity.toFixed(2);
-                            item.itemImage = `${srcRoute}${action.payload.journalId}`
+                            item.itemImage = `${srcRoute}${action.payload.journalId}`;
 
                             return true;
                         }
                     })
 
-                    if (!similarPartiallyFullJournal){
+                    if (!similarPartiallyFilledJournal){
                         state.backpackSilver -= +action.payload.journalPrice;
                     }
                 }
@@ -300,8 +344,9 @@ const GMProfitSlice = createSlice({
 
                         similarFilledJournal.itemQuantity! += +roundedQuantity;
 
-                        state.backpackSilver -= (+roundedQuantity - ((!nonIntegerRestQuantity && roundedQuantity > journalsQuantity) ? 1 : 0)) * +action.payload.journalPrice;
+                        state.backpackItems = [...backpackItems];
 
+                        state.backpackSilver -= (+roundedQuantity - ((!nonIntegerRestQuantity && roundedQuantity > journalsQuantity) ? 1 : 0)) * +action.payload.journalPrice;
                     } else {
                         const integerQuantityRest = roundedQuantity - 999;
 
@@ -309,13 +354,13 @@ const GMProfitSlice = createSlice({
 
                         state.backpackSilver -= (999 - ((!nonIntegerRestQuantity && roundedQuantity > journalsQuantity) ? 1 : 0)) * +action.payload.journalPrice;
 
-                        fillJournals(integerQuantityRest);
+                        fillJournals(integerQuantityRest, bufferedBackPack);
                     }
 
                 } else {
                     if (roundedQuantity <= 999){
                         if (roundedQuantity >= 1){
-                            state.backpackItems.some(item => {
+                            bufferedBackPack.some(item => {
                                 if (item.itemId === null){
                                     item.itemId = `${action.payload.journalId}_FULL`;
                                     item.itemQuantity! = roundedQuantity;
@@ -323,6 +368,9 @@ const GMProfitSlice = createSlice({
                                     return true;
                                 }
                             })
+
+                            state.backpackItems = [...backpackItems];
+
                             state.backpackSilver -= +roundedQuantity * +action.payload.journalPrice;
                         }
                     } else {
@@ -330,7 +378,7 @@ const GMProfitSlice = createSlice({
 
                         state.backpackSilver -= 999 * +action.payload.journalPrice;
 
-                        state.backpackItems.some(item => {
+                        bufferedBackPack.some(item => {
                             if (item.itemId === null){
                                 item.itemId = `${action.payload.journalId}_FULL`;
                                 item.itemQuantity = 999;
@@ -340,19 +388,19 @@ const GMProfitSlice = createSlice({
                             }
                         })
 
-                        fillJournals(integerQuantityRest);
+                        fillJournals(integerQuantityRest, bufferedBackPack);
                     }
                 }
             };
 
-            fillJournals(action.payload.journalsQuantity);
+            fillJournals(action.payload.journalsQuantity, state.backpackItems);
         },
         sortBackpackItems(state){
-            state.backpackItems = state.backpackItems.sort((item1, item2) => {
+            state.backpackItems = [...state.backpackItems].sort((item1, item2) => {
                 if (item1.itemId! < item2.itemId!) return -1;
                 if (item1.itemId! > item2.itemId!) return 1;
 
-                if (item1.itemQuantity! > item2.itemQuantity!) return -1
+                if (item1.itemQuantity! > item2.itemQuantity!) return -1;
                 if (item1.itemQuantity! < item2.itemQuantity!) return 1;
 
                 return 0;
@@ -361,10 +409,12 @@ const GMProfitSlice = createSlice({
         gatherBackpackItems(state){
             const items: IBagCell[] = [];
 
-            state.backpackItems.filter(item => item.itemId !== null && item.itemQuantity! <= 999).forEach(item => {
+            const bufferedBackPack = [...state.backpackItems];
+
+            bufferedBackPack.filter(item => item.itemId !== null && item.itemQuantity! <= 999).forEach(item => {
                 const id = item.itemId;
 
-                if (!items.find(item => item.itemId === id)){
+                if (!items.find(item => item.itemId === id)) {
                     items.push({...item});
                 } else {
                     items.find(item => item.itemId === id)!.itemQuantity! += +item.itemQuantity!;
@@ -377,9 +427,9 @@ const GMProfitSlice = createSlice({
                 if (item.itemQuantity! > 999){
                     const rest = Number(item.itemQuantity!) - 999;
 
-                    state.backpackItems.some((item1, index) => {
+                    bufferedBackPack.some((item1, index) => {
                         if (item1.itemId === item.itemId && item1.itemQuantity! < 999){
-                            state.backpackItems[index] = {...item, itemQuantity: 999}
+                            bufferedBackPack[index] = {...item, itemQuantity: 999}
 
                             return true;
                         }
@@ -390,9 +440,9 @@ const GMProfitSlice = createSlice({
                         itemQuantity: +rest,
                     })
                 } else {
-                    state.backpackItems.some((item1, index) => {
+                    bufferedBackPack.some((item1, index) => {
                         if (item1.itemId === item.itemId && item1.itemQuantity! < 999){
-                            state.backpackItems[index] = {...item};
+                            bufferedBackPack[index] = {...item};
 
                             return true;
                         }
@@ -403,11 +453,13 @@ const GMProfitSlice = createSlice({
             items.forEach(item => {
                 addItem({...item});
             })
-            state.backpackItems.forEach((item,index) => {
+            bufferedBackPack.forEach((item,index) => {
                 if (item.itemQuantity === 0){
-                    state.backpackItems[index] = {...emptyBagCell}
+                    bufferedBackPack[index] = {...emptyBagCell}
                 }
             })
+
+            state.backpackItems = [...bufferedBackPack];
         },
         resetBackpack(state){
             state.backpackItems = initialState.backpackItems;
