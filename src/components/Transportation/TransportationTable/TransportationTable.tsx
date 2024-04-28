@@ -18,21 +18,14 @@ const TransportationTable = () => {
     const theme = useSelector(selectTheme);
     const isDark = theme === 'dark';
 
-    const {
-        from,
-        to,
-        count,
-        skip,
-        serverId,
-        profitSort,
-        checkSort
-    } = useSelector(selectTransportationQueryParams);
+    const queryParams = useSelector(selectTransportationQueryParams);
+    const {from, to} = queryParams;
 
     const {
         isFetching,
         isError,
         data,
-    } = useGetTransportationsDataQuery({from, to, skip, serverId, count, profitSort, checkSort}, {
+    } = useGetTransportationsDataQuery({...queryParams}, {
         refetchOnReconnect: true,
     });
 

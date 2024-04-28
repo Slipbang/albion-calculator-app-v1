@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(albionApi.middleware)
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(albionApi.middleware)
 })
 
 setupListeners(store.dispatch); // для refetchOnFocus!!!
