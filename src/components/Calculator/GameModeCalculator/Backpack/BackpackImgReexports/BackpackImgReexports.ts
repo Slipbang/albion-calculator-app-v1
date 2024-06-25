@@ -11,6 +11,8 @@ import sortButtonHoveredClicked from '../../../../../images/craftingAssets/backp
 import backpackReset from '../../../../../images/craftingAssets/backpackAssets/backpackReset.png';
 import backpackResetHovered from '../../../../../images/craftingAssets/backpackAssets/backpackResetHovered.png';
 import backpackResetClicked from '../../../../../images/craftingAssets/backpackAssets/backpackResetClicked.png';
+import backpackFastSell from '../../../../../images/craftingAssets/backpackAssets/backpackFastSell.png';
+import backpackFastSellHovered from '../../../../../images/craftingAssets/backpackAssets/backpackFastSellHovered.png';
 
 export {
     backpack,
@@ -26,4 +28,6 @@ export {
     backpackReset,
     backpackResetHovered,
     backpackResetClicked,
+    backpackFastSell,
+    backpackFastSellHovered,
 }

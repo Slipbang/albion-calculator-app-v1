@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 interface IStyledBackpackButtonProps {
     $image: string;
-    $clickedImage: string;
     $hoveredImage: string;
 }
 
@@ -14,18 +13,18 @@ const StyledBackpackButton = styled.button<IStyledBackpackButtonProps>`
   background-size: cover;
   cursor: pointer;
   z-index: 9999;
-  width: 71px;
-  height: 25px;
+  width: 86px;
+  height: 20px;
   filter: drop-shadow(1px 1px 2px black);
   background-image: ${props => `url(${props.$image})`};
+  color: rgb(96, 67, 47);
+  font-weight: 600;
   
   &:hover{
     background-image: ${props => `url(${props.$hoveredImage})`};
+    color: wheat;
   }
-
-  &:active{
-    background-image: ${props => `url(${props.$clickedImage})`};
-  }
+  
 `
 
 export default StyledBackpackButton;

@@ -228,7 +228,7 @@ const GMProfitSlice = createSlice({
                     }
                 }) as IBagCell[];
 
-                state.backpackItems[action.payload.index].itemQuantity! -= action.payload.quantity;
+                //state.backpackItems[action.payload.index].itemQuantity! -= action.payload.quantity;
 
                 return;
             }

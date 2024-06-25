@@ -3,29 +3,31 @@ import React from "react";
 import styles from './BackpackCell.module.scss';
 import {TSelectedLanguage} from "../../../../../../types/languageTypes";
 import {TItemName} from "../../../../../../types/craftItemsType";
+import {IBagCell} from "../../../../../../store/Items/workBenchSelectorItems_marketItems";
+import {ITooltipData} from "../BackpackItems";
 
 interface IBackpackCellProps {
-    index: number,
+    index: number;
+    item: IBagCell;
     handleDragStart: (event: React.DragEvent<HTMLDivElement>, dragItemIndex: number) => void;
     handleDrag: (event: React.DragEvent<HTMLDivElement>) => void;
     onDrop: (event: React.DragEvent<HTMLDivElement>, dropItemIndex: number, isShiftPressed: boolean) => void;
-    itemName?: TItemName;
     selectedLanguage: TSelectedLanguage;
-    itemQuantity: number;
-    itemImage: string;
+    setTooltipData: React.Dispatch<React.SetStateAction<ITooltipData>>;
 }
 
 const BackpackCell = React.memo((props: IBackpackCellProps) => {
     const {
-        itemQuantity,
-        itemName,
-        itemImage,
+        item,
         index,
         handleDragStart,
         handleDrag,
         onDrop,
-        selectedLanguage
+        selectedLanguage,
+        setTooltipData,
     } = props;
+
+    const {itemQuantity, itemName, itemImage, itemId} = item;
 
     return (
         <StyledBackpackCell
@@ -40,16 +42,22 @@ const BackpackCell = React.memo((props: IBackpackCellProps) => {
                 onDrop(event, index, !!event.shiftKey);
             }}
         >
-            <div className={styles.itemBox}>
-                {!!itemImage && <img
-                    title={itemName?.[selectedLanguage]}
-                    src={itemImage}
-                    alt=''
-                />}
-                {(itemQuantity! > 0) && <div className={styles.itemQuantity}>
-                    <p>{itemQuantity!}</p>
-                </div>}
-            </div>
+            {!!itemId && (
+                <div
+                    className={styles.itemBox}
+                    data-tooltip-id="backpack-item-tooltip-data-html"
+                    onMouseEnter={() => setTooltipData({item, index})}
+                >
+                    <img
+                        // title={itemName?.[selectedLanguage]}
+                        src={itemImage}
+                        alt=''
+                    />
+                    {(itemQuantity! > 0) && <div className={styles.itemQuantity}>
+                        <p>{itemQuantity!}</p>
+                    </div>}
+                </div>
+            )}
         </StyledBackpackCell>
     )
 })

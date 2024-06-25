@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {backpack} from "../BackpackImgReexports/BackpackImgReexports";
 
-const StyledBackpack = styled.div`
+const StyledBackpackWrapper = styled.div`
   user-select: none;
   position: absolute;
   bottom: 15px;
@@ -18,4 +18,4 @@ const StyledBackpack = styled.div`
   background-image: url(${backpack});
 `
 
-export default StyledBackpack;
+export default StyledBackpackWrapper;
