@@ -1,0 +1,84 @@
+.tierLabel {
+  top: 4px;
+  left: 5px;
+  position: absolute;
+  width: 128px;
+  background-color: rgb(169,169,169);
+  height: 16px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 3px;
+}
+
+.enchantmentLabel {
+  top: 4px;
+  left: 159px;
+  position: absolute;
+  width: 127px;
+  background-color: rgb(169,169,169);
+  height: 16px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 3px;
+}
+
+.selectQualityStyle {
+  z-index: 9999;
+  border-radius: 10px;
+  position: relative;
+  top: 4px;
+  left: 312px;
+  border: 2px solid transparent;
+  width: 130px;
+  height: 14px;
+  cursor: var(--selector-cursor);
+  background-color: var(--selector-background-color);
+  font-size: 14px;
+
+  .qualitySelector {
+    margin-left: -3px;
+    width: 133px;
+    margin-top: -3px;
+    background-color: rgb(242, 190, 147);
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 4px solid rgb(183, 144, 108);
+  }
+}
+
+.selectQualityStyle:hover{
+  border-color: var(--selector-border-color);
+}
+
+.customOption {
+  padding: 5px 5px 5px 10px;
+}
+
+.customOption:hover {
+  background-color: rgb(145, 105, 72);
+  color: white;
+}
+
+.customOptionSelected {
+  padding: 5px 5px 5px 10px;
+  background-color: rgb(183, 144, 108);
+}
+
+.customOptionSelected:hover {
+  background-color: rgb(145, 105, 72);
+  color: white;
+}
+
+[data-type='equipment'] {
+  --selector-background-color: rgb(242, 190, 147);
+  --selector-cursor: pointer;
+  --selector-border-color: white;
+}
+
+[data-type='resource'] {
+  --selector-background-color: rgb(169,169,169);
+  --selector-cursor: initial;
+  --selector-border-color: transparent;
+}

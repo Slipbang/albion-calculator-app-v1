@@ -4,7 +4,11 @@ import styles from './MaxItemQuantity.module.scss';
 const MaxItemQuantity = () => {
     const {maxQuantity} = useMaxQuantityCalculation()
 
-    return <p className={styles.maxItemQuantity}>{maxQuantity}</p>
+    return (
+        <div className={styles.maxItemQuantity}>
+            <p>{maxQuantity}</p>
+        </div>
+    )
 }
 
 export default MaxItemQuantity;

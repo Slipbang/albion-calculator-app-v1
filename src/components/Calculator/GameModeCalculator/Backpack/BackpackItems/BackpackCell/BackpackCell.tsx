@@ -12,7 +12,6 @@ interface IBackpackCellProps {
     handleDragStart: (event: React.DragEvent<HTMLDivElement>, dragItemIndex: number) => void;
     handleDrag: (event: React.DragEvent<HTMLDivElement>) => void;
     onDrop: (event: React.DragEvent<HTMLDivElement>, dropItemIndex: number, isShiftPressed: boolean) => void;
-    selectedLanguage: TSelectedLanguage;
     setTooltipData: React.Dispatch<React.SetStateAction<ITooltipData>>;
 }
 
@@ -23,11 +22,10 @@ const BackpackCell = React.memo((props: IBackpackCellProps) => {
         handleDragStart,
         handleDrag,
         onDrop,
-        selectedLanguage,
         setTooltipData,
     } = props;
 
-    const {itemQuantity, itemName, itemImage, itemId} = item;
+    const {itemQuantity, itemImage, itemId} = item;
 
     return (
         <StyledBackpackCell
@@ -49,7 +47,6 @@ const BackpackCell = React.memo((props: IBackpackCellProps) => {
                     onMouseEnter={() => setTooltipData({item, index})}
                 >
                     <img
-                        // title={itemName?.[selectedLanguage]}
                         src={itemImage}
                         alt=''
                     />

@@ -11,6 +11,7 @@ interface ICustomItemSelectorProps {
     setSelectedParams: Dispatch<SetStateAction<IOptions>> | ((option: IOptions) => void);
     paramsOptions: IOptions[];
     paramState: IOptions;
+    disabled?: boolean;
 }
 
 const CustomItemSelector = (props: ICustomItemSelectorProps) => {
@@ -22,6 +23,7 @@ const CustomItemSelector = (props: ICustomItemSelectorProps) => {
         customOptionClass,
         customOptionSelectedClass,
         setSelectedParams,
+        disabled,
     } = props;
 
     const {selectedLanguage} = useSelector(selectLanguage);
@@ -30,6 +32,12 @@ const CustomItemSelector = (props: ICustomItemSelectorProps) => {
 
     const [selectedOptionParams,setSelectedOptionParams] = useState('');
     const [isSelectorVisible, setIsSelectorVisible] = useState(false);
+
+    const setVisibility = (disabled: boolean | undefined) => {
+        if (disabled === false || disabled === undefined) {
+            setIsSelectorVisible(prevState => !prevState)
+        }
+    }
 
     useEffect(() => {
         const clickOutsideSelectorHandler = (event: MouseEvent) => {
@@ -51,7 +59,7 @@ const CustomItemSelector = (props: ICustomItemSelectorProps) => {
             ref={inputRef}
             className={selectInputClass}
         >
-            <p onClick={() => setIsSelectorVisible(prevState => !prevState)}>{paramState.labelName[selectedLanguage]}</p>
+            <p onClick={() => setVisibility(disabled)}>{paramState.labelName[selectedLanguage]}</p>
             {!!isSelectorVisible && <div className={paramsSelectorClass}>
                 <div style={{paddingTop: '15px'}}>
                     {paramsOptions.map(({value, params, labelName}, index) => {

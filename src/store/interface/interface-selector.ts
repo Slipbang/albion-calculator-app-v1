@@ -39,3 +39,4 @@ export const selectItemQuantityMI = (state: RootState) => state.interface.Market
 export const selectPriceFetchedState = (state: RootState) => state.interface.MarketItem.isPriceFetchedMI;
 export const selectOwnItemPriceMI = (state: RootState) => state.interface.MarketItem.ownItemPriceMI;
 export const selectItemPriceMI = (state: RootState) => state.interface.MarketItem.itemPriceMI;
+export const selectItemQualityMI = (state: RootState) => state.interface.MarketItem.itemQualityMI;

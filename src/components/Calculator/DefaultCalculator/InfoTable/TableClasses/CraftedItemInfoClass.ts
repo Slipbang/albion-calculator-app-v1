@@ -22,6 +22,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         public selectedCities: TSelectedCityStates,
         public isJournalsUsed: boolean,
         public currentDate: Date,
+        public quality: number,
     ) {
         super(currentDate);
     }
@@ -60,7 +61,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         let itemPrice: number;
 
         if (!!itemId) {
-            itemPrice = itemsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(itemId, enchantment) && itemElem.location === city)?.buyPriceMax || 0;
+            itemPrice = itemsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(itemId, enchantment) && itemElem.location === city && itemElem.quality === this.quality)?.buyPriceMax || 0;
         }
 
         if (!!resourceId) {

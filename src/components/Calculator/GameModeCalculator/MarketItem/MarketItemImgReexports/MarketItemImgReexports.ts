@@ -10,6 +10,10 @@ import actionButton from '../../../../../images/craftingAssets/marketItemAssets/
 import actionButtonHovered from '../../../../../images/craftingAssets/marketItemAssets/actionButtonHovered.png';
 import selectedActionButton from '../../../../../images/craftingAssets/marketItemAssets/selectedActionButton.png';
 import selectedActionButtonHovered from '../../../../../images/craftingAssets/marketItemAssets/selectedActionButtonHovered.png';
+import itemQualitySelector from '../../../../../images/craftingAssets/marketItemAssets/itemQualitySelector.png';
+import resetQualityButton from '../../../../../images/craftingAssets/marketItemAssets/resetQualityButton.png';
+import resetQualityButtonPressed from '../../../../../images/craftingAssets/marketItemAssets/resetQualityButtonPressed.png';
+import resetQualityButtonHovered from '../../../../../images/craftingAssets/marketItemAssets/resetQualityButtonHovered.png';
 
 export {
     marketItem,
@@ -24,4 +28,8 @@ export {
     actionButtonHovered,
     selectedActionButton,
     selectedActionButtonHovered,
+    itemQualitySelector,
+    resetQualityButton,
+    resetQualityButtonPressed,
+    resetQualityButtonHovered,
 }

@@ -6,7 +6,11 @@ import StyledInputPrice from "../../MarketItemSC/StyledInputPrice";
 import StyledDecreasePriceButton from "../../MarketItemSC/StyledDecreasePriceButton";
 import StyledIncreasePriceButton from "../../MarketItemSC/StyledIncreasePriceButton";
 import {useSelector} from "react-redux";
-import {selectOwnItemPriceMI, selectPriceFetchedState} from "../../../../../../store/interface/interface-selector";
+import {
+    selectItemQualityMI,
+    selectOwnItemPriceMI,
+    selectPriceFetchedState
+} from "../../../../../../store/interface/interface-selector";
 import {useEffect, useRef} from "react";
 import {useLazyGetItemsDataQuery} from "../../../../../../store/api/api";
 import {selectMarketAction, selectMarketItem} from "../../../../../../store/GMProfit/gm-profit-selectors";
@@ -15,17 +19,19 @@ import {interfaceSliceActions} from "../../../../../../store/interface/interface
 import styles from './ItemPriceSelector.module.scss'
 import {selectLanguage} from "../../../../../../store/language/language-selector";
 import {selectServerId} from "../../../../../../store/queryParams/query-params-selectors";
+import {isTypeResource} from "../../../FunctionUtils/defineType";
 
 const ItemPriceSelector = () => {
     const dispatchAction = useAppDispatch();
 
     const {language} = useSelector(selectLanguage);
     const {marketItemStings} = language;
+    const selectedQuality = useSelector(selectItemQualityMI);
     const isPriceFetched = useSelector(selectPriceFetchedState);
     const marketAction = useSelector(selectMarketAction);
     const ownItemPrice = useSelector(selectOwnItemPriceMI);
     const selectedMarketItem = useSelector(selectMarketItem);
-    const {itemId} = selectedMarketItem;
+    const {itemId, itemNode} = selectedMarketItem;
     const serverId = useSelector(selectServerId);
 
     const itemOwnPriceInputRef = useRef<HTMLInputElement>(null)
@@ -43,7 +49,8 @@ const ItemPriceSelector = () => {
     }] = useLazyGetItemsDataQuery();
 
     const fetchDataHandler = () => {
-        fetchItemsData({itemsParams: itemId!, isBlackMarket: (marketAction === 'sell' && itemId !== null), serverId});
+        console.log(itemNode)
+        fetchItemsData({itemsParams: itemId!, isBlackMarket: (marketAction === 'sell' && itemId !== null), serverId, isEquipment: !isTypeResource(itemNode!)});
     }
 
     const setItemPriceHandler = (value: number) => {
@@ -72,6 +79,7 @@ const ItemPriceSelector = () => {
                                 cityListStyles={styles.cityList}
                                 setFunction={setItemPriceHandler}
                                 itemsData={itemsData!}
+                                quality={+selectedQuality.value}
                             />}
                         {!!isDataFetching && <p className={styles.loaderStyles}>loading...</p>}
                         {!!isItemsHasError && <p className={styles.loaderStyles}>error!</p>}
@@ -90,8 +98,8 @@ const ItemPriceSelector = () => {
                         $image={silver}
                         $height={23}
                         $width={23}
-                        $left={150}
-                        $top={149}
+                        $left={152}
+                        $top={120}
                     />
                     <input
                         id='MIItemPriceInput'

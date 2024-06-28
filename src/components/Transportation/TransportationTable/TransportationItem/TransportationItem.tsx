@@ -6,8 +6,8 @@ import {TransportationData, TTransportationItemTypes} from "../../../../types/tr
 
 import {transportationItems} from "../../../../store/Items/transportationItems";
 import {srcRoute} from "../../../../store/api/api";
-import {IItemName} from "../../../../store/profit/profit-slice";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../types/languageTypes";
+import {TItemName} from "../../../../types/craftItemsType";
 
 interface ITransportationItemProps {
     transportationData: TransportationData;
@@ -45,7 +45,7 @@ const TransportationItem = ({transportationData, language, selectedLanguage}: IT
         const itemIdMain = reservedItemTo.split(`${itemType}_`);
 
         const itemIdBody = itemIdMain[1];
-        let itemName: IItemName | undefined;
+        let itemName: TItemName | undefined;
 
         const allowedTypes =
             ['2H', 'MAIN', 'BAG', 'CAPE', 'CAPEITEM', 'ARMOR', 'HEAD', 'SHOES', 'OFF',

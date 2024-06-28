@@ -25,6 +25,7 @@ export interface IQueryItemsParams {
     itemsParams: string;
     isBlackMarket: boolean;
     serverId: string;
+    isEquipment: boolean;
 }
 
 export const albionApi = createApi({
@@ -39,8 +40,8 @@ export const albionApi = createApi({
             }),
         }),
         getItemsData: build.query<IItemsData[], IQueryItemsParams>({
-            query: ({itemsParams, isBlackMarket, serverId}) => ({
-                url: `data?items=${itemsParams}&locations=${!!isBlackMarket ? 'Black%20Market,' : ''}Thetford,Bridgewatch,Lymhurst,Caerleon,Martlock,Fort%20Sterling,Brecilien&serverId=${serverId}`,
+            query: ({itemsParams, isBlackMarket, serverId, isEquipment}) => ({
+                url: `data?items=${itemsParams}&locations=${!!isBlackMarket ? 'Black%20Market,' : ''}Thetford,Bridgewatch,Lymhurst,Caerleon,Martlock,Fort%20Sterling,Brecilien&${isEquipment ? 'qualities=1,2,3,4,5&' : ''}serverId=${serverId}`,
             })
         }),
     })

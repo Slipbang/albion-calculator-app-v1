@@ -5,7 +5,6 @@ import {useSelector} from "react-redux";
 import {selectBackpackItems} from "../../../../../store/GMProfit/gm-profit-selectors";
 import {GMProfitSliceActions} from "../../../../../store/GMProfit/gm-profit-slice";
 import styles from './BackpackItems.module.scss';
-import {selectLanguage} from "../../../../../store/language/language-selector";
 import BackpackCell from "./BackpackCell/BackpackCell";
 import {Tooltip} from "react-tooltip";
 import {IBagCell} from "../../../../../store/Items/workBenchSelectorItems_marketItems";
@@ -23,7 +22,6 @@ const BackpackItems = () => {
     const dispatchAction = useAppDispatch();
 
     const backpackItems = useSelector(selectBackpackItems);
-    const {selectedLanguage} = useSelector(selectLanguage);
 
     const [touchedItemIndex, setTouchedItemIndex] = useState<number | null>(null);
     const [tooltipData, setTooltipData] = useState<ITooltipData>({item: null, index: null})
@@ -66,7 +64,6 @@ const BackpackItems = () => {
                         <BackpackCell
                             key={index}
                             item={item}
-                            selectedLanguage={selectedLanguage}
                             index={index}
                             handleDragStart={handleDragStart}
                             handleDrag={handleDrag}

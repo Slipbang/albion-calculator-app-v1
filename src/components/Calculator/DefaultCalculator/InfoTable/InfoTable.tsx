@@ -39,6 +39,7 @@ export type ICraftItemInfoTuple = [
     selectedCities: TSelectedCityStates,
     isJournalsUsed: boolean,
     currentDate: Date,
+    quality: number,
 ];
 
 export type ICraftConsumableInfoTuple = [
@@ -184,20 +185,20 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
 
     useEffect(() => {
         if (calculatorType === 'ITEMS') {
-            fetchItems({itemsParams: queryItemsParams!, isBlackMarket: true, serverId});
-            fetchJournals({itemsParams: queryJournalsParams!, isBlackMarket: false, serverId})
+            fetchItems({itemsParams: queryItemsParams!, isBlackMarket: true, serverId, isEquipment: true});
+            fetchJournals({itemsParams: queryJournalsParams!, isBlackMarket: false, serverId, isEquipment: false})
 
             if (!!artefactId) {
-                fetchArtefacts({itemsParams: artefactId!, isBlackMarket: false, serverId});
+                fetchArtefacts({itemsParams: artefactId!, isBlackMarket: false, serverId, isEquipment: false});
             }
         }
 
         if (calculatorType === 'RESOURCES' || calculatorType === 'ITEMS') {
-            fetchMaterials({itemsParams: queryMatsParams!, isBlackMarket: false, serverId});
+            fetchMaterials({itemsParams: queryMatsParams!, isBlackMarket: false, serverId, isEquipment: false});
         }
 
         if (calculatorType === 'FOOD' || calculatorType === 'POTIONS') {
-            fetchConsumables({itemsParams: queryConsumableParams!, isBlackMarket: false, serverId});
+            fetchConsumables({itemsParams: queryConsumableParams!, isBlackMarket: false, serverId, isEquipment: false});
         }
     }, [queryItemsParams, queryMatsParams!, queryJournalsParams, artefactId, serverId, itemId])
 
@@ -235,6 +236,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
     const [isJournalsUsed, setIsJournalsUsed] = useState(false);
     const [foodTax, setFoodTax] = useState(0);
     const [consumableSelectors, setConsumableSelectors] = useState<TConsumablesSelectors>(consumableSelectorsInitialState);
+    const [quality, setQuality] = useState(1);
 
     const {artefactName} = useMemo(() => defineArtefactsName({artefactId: artefactId || ''}), [artefactId]);
 
@@ -261,6 +263,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                 selectedCities,
                 isJournalsUsed,
                 currentDate,
+                quality,
             ] as ICraftItemInfoTuple
             : [
                 craftedConsumablesData!,
@@ -312,6 +315,8 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                             foodTax={foodTax}
                             selectedLanguage={selectedLanguage}
                             selectedCities={selectedCities!}
+                            setQuality={setQuality}
+                            quality={quality}
                         />
                     )}
 

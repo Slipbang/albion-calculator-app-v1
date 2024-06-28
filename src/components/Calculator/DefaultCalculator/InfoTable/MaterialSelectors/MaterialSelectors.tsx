@@ -11,6 +11,7 @@ import {
 } from "../InfoTable";
 import {cityOptions} from "../../../../../store/Options/CityOptions";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
+import {qualityOptions} from "../../../../../store/Options/CustomSelecrorsOptions";
 
 interface IMaterialSelectorsProps {
     mainMatsId: string;
@@ -31,6 +32,8 @@ interface IMaterialSelectorsProps {
     setSelectedCities: Dispatch<SetStateAction<TSelectedCityStates>>;
     setOwnPrices: Dispatch<SetStateAction<TOwnPriceStates>>;
     ownPrices: TOwnPriceStates;
+    setQuality: Dispatch<SetStateAction<number>>;
+    quality: number;
 }
 
 const MaterialSelectors = (props: IMaterialSelectorsProps) => {
@@ -53,6 +56,8 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
         foodTax,
         selectedLanguage,
         selectedCities,
+        setQuality,
+        quality
     } = props;
 
     const journalInputRef = useRef<HTMLInputElement>(null);
@@ -272,6 +277,17 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
                         })}
                     </select>
                 </div>}
+
+            {!!journalId && <div>
+                <p>Качество:</p>
+                <select
+                    id="ITQuality"
+                    onChange={(event) => setQuality(+event.target.value)}
+                    value={quality}
+                >
+                    {qualityOptions.map(opt => <option value={opt.value}>{opt.labelName[selectedLanguage]}</option>)}
+                </select>
+            </div>}
 
             <div>
                 <p>{infoTableStrings.tax}</p>

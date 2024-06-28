@@ -13,7 +13,7 @@ const useArtefactsQuery = () => {
         isError: isErrorArtefacts,
         data: artefactsPriceData,
         refetch: reFetchFunction,
-    } = useGetItemsDataQuery({itemsParams: artefactsQueryParams, isBlackMarket: false, serverId}, {
+    } = useGetItemsDataQuery({itemsParams: artefactsQueryParams, isBlackMarket: false, serverId, isEquipment: false}, {
         refetchOnReconnect: true,
     });
 

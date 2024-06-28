@@ -1,5 +1,12 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {enchantmentOptions, IOptions, nodeOptions, tierOptions, typeOptions} from "../Options/CustomSelecrorsOptions";
+import {
+    enchantmentOptions,
+    IOptions,
+    nodeOptions,
+    qualityOptions,
+    tierOptions,
+    typeOptions
+} from "../Options/CustomSelecrorsOptions";
 import {TCalcProps} from "../../types/calculatorPropsType";
 import {dummyEnchantmentButtons, IEnchantmentButton} from "./DummyEnchantmentButtons/DummyEnchantmentButtons";
 
@@ -57,6 +64,7 @@ interface IInitialState {
     };
 
     MarketItem: {
+        itemQualityMI: IOptions;
         itemQuantityMI: number;
         isPriceFetchedMI: boolean;
         ownItemPriceMI: number;
@@ -125,6 +133,7 @@ const initialState: IInitialState = {
     },
 
     MarketItem: {
+        itemQualityMI: qualityOptions[0],
         itemQuantityMI: 1,
         isPriceFetchedMI: false,
         ownItemPriceMI: 0,
@@ -276,6 +285,9 @@ const interfaceSlice = createSlice({
         },
         setItemQuantityMI(state, action: PayloadAction<number>) {
             state.MarketItem.itemQuantityMI = action.payload;
+        },
+        setItemQualityMI(state, action: PayloadAction<IOptions>) {
+            state.MarketItem.itemQualityMI = action.payload;
         },
         setIsPriceFetchedMI(state, action: PayloadAction<boolean | undefined>) {
             if (action?.payload === undefined) {

@@ -53,7 +53,7 @@ const ArtefactsBox = () => {
     }] = useLazyGetItemsDataQuery();
 
     const fetchArtefactsDataHandler = () => {
-        fetchArtefactsData({itemsParams: artefactItemId!, isBlackMarket: false, serverId});
+        fetchArtefactsData({itemsParams: artefactItemId!, isBlackMarket: false, serverId, isEquipment: false});
     }
 
     const setIsArtefactPriceFetchedHandler = () => {

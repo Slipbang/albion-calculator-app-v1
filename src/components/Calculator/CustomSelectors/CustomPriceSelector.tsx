@@ -9,6 +9,7 @@ interface ICustomPriceSelectorProps {
     selectedCityStyles: string;
     optionsStyles: string;
     cityListStyles: string;
+    quality?: number;
 }
 
 const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
@@ -19,6 +20,7 @@ const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
         selectedCityStyles,
         optionsStyles,
         cityListStyles,
+        quality,
     } = props;
 
     const [selectedCity, setSelectedCity] = useState(cityOptions[0]);
@@ -40,8 +42,8 @@ const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
         }
     }, []);
 
-    const getPrice = (city: string) => {
-        return itemsData?.find(item => item.location === city)?.sellPriceMin;
+    const getPrice = (city: string, quality: number | undefined) => {
+        return itemsData?.find(item => item.location === city && item.quality === (quality || 1))?.sellPriceMin;
     }
 
     const getDate = (city: string) => {
@@ -62,7 +64,7 @@ const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
     }
 
     useEffect(() => {
-        setItemPriceHandler(getPrice(selectedCity)!)
+        setItemPriceHandler(getPrice(selectedCity, quality)!)
     }, [])
 
     return <div
@@ -71,7 +73,7 @@ const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
         onClick={() => setIsCityOptionsVisible(prevState => !prevState)}
     >
         <div className={selectedCityStyles}>
-            <p>{selectedCity}: {getPrice(selectedCity)?.toLocaleString('en') || 0}</p>
+            <p>{selectedCity}: {getPrice(selectedCity, quality)?.toLocaleString('en') || 0}</p>
         </div>
         {isCityOptionsVisible && <div
             onClick={(event) => {
@@ -88,10 +90,10 @@ const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
                         onClick={() => {
                             setSelectedCity(cityOptions[index]);
                             setIsCityOptionsVisible(false);
-                            setItemPriceHandler(getPrice(city)!)
+                            setItemPriceHandler(getPrice(city, quality)!)
                         }}
                     >
-                        <p>{city}: {getPrice(city)?.toLocaleString('en') || 0} {getDate(city)}</p>
+                        <p>{city}: {getPrice(city, quality)?.toLocaleString('en') || 0} {getDate(city)}</p>
                     </div>
                 )
             })}

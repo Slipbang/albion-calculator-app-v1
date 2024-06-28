@@ -46,7 +46,7 @@ const JournalsSelectors = () => {
     }] = useLazyGetItemsDataQuery();
 
     const fetchJournalsDataHandler = () => {
-        fetchJournalsData({itemsParams: emptyJournalId, isBlackMarket: false, serverId});
+        fetchJournalsData({itemsParams: emptyJournalId, isBlackMarket: false, serverId, isEquipment: false});
     }
 
     const setIsJournalPriceFetchedHandler = () => {

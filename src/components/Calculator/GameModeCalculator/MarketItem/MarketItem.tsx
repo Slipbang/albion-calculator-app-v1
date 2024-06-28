@@ -10,6 +10,8 @@ import MarketItemImage from "./MarketItemImage/MarketItemImage";
 import MaxItemQuantity from "./MaxItemQuantity/MaxItemQuantity";
 import ItemName from "./ItemName/ItemName";
 import MarketItemForm from "./MarketItemForm/MarketItemForm";
+import ItemQualitySelector from "./ItemQualitySelector/ItemQualitySelector";
+import {qualityOptions} from "../../../../store/Options/CustomSelecrorsOptions";
 
 const MarketItem = () => {
     const dispatchAction = useAppDispatch();
@@ -17,6 +19,7 @@ const MarketItem = () => {
     const closeMarketItemHandler = () => {
         dispatchAction(interfaceSliceActions.setMarketItemVisibility(false));
         dispatchAction(interfaceSliceActions.setIsPriceFetchedMI(false));
+        dispatchAction(interfaceSliceActions.setItemQualityMI(qualityOptions[0]));
     }
 
     return (
@@ -24,6 +27,8 @@ const MarketItem = () => {
             <StyledCloseButton onClick={() => closeMarketItemHandler()} />
 
             <MarketItemImage />
+
+            <ItemQualitySelector />
 
             <OwnPriceButtonBox />
 

@@ -10,6 +10,8 @@ const StyledResetButton = styled.button<IStyledResetButtonProps>`
   position: absolute;
   top: ${props => `${props.$top}px`};
   right: ${props => `${props.$right}px`};
+  width: 15px;
+  height: 15px;
   z-index: 9999;
   background-color: transparent;
   border: none;
@@ -17,8 +19,6 @@ const StyledResetButton = styled.button<IStyledResetButtonProps>`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  width: 15px;
-  height: 15px;
   cursor: pointer;
 
   &:hover {

@@ -10,12 +10,51 @@ export interface IOptions {
 }
 
 export type TSelectTierOptions = IOptions[];
+export type TSelectQualityOptions = IOptions[];
 
 export type TSelectClassOptions = {
     [key in ICraftingItemClass]: {
         [key in TItemTypeSelected]?: IOptions[]
     }
 }
+
+export const qualityOptions: TSelectQualityOptions = [
+    {
+        labelName: {
+            ru: 'Обычное',
+            en: 'Normal',
+        },
+        value: '1',
+    },
+    {
+        labelName: {
+            ru: 'Хорошее',
+            en: 'Good',
+        },
+        value: '2',
+    },
+    {
+        labelName: {
+            ru: 'Выдающееся',
+            en: 'Outstanding',
+        },
+        value: '3',
+    },
+    {
+        labelName: {
+            ru: 'Отличное',
+            en: 'Excellent',
+        },
+        value: '4',
+    },
+    {
+        labelName: {
+            ru: 'Шедевр',
+            en: 'Masterpiece',
+        },
+        value: '5',
+    },
+]
 
 export const tierOptions: TSelectTierOptions = [
     {
