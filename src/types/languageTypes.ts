@@ -112,6 +112,8 @@ interface IMarketItemStings {
     priceLabel: string;
     totalPriceLabel: string;
     tax: string;
+    tier: string;
+    enchantment: string;
 }
 interface IMarketMenuStrings {
     marketHeader: string;

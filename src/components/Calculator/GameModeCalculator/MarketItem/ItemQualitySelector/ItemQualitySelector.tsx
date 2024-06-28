@@ -10,16 +10,18 @@ import StyledResetQualityButton from "../MarketItemSC/StyledResetQualityButton";
 import {selectMarketItem} from "../../../../../store/GMProfit/gm-profit-selectors";
 import {TItemNode} from "../../../../../types/craftItemsType";
 import {isTypeResource} from "../../FunctionUtils/defineType";
+import {selectLanguage} from "../../../../../store/language/language-selector";
 
 const ItemQualitySelector = () => {
     const selectedQuality = useSelector(selectItemQualityMI);
     const dispatchAction = useAppDispatch();
 
     const selectedMarketItem = useSelector(selectMarketItem);
+    const {language} = useSelector(selectLanguage);
+    const {marketItemStings} = language;
     const {itemTier, itemEnchantmentNum, itemNode} = selectedMarketItem;
 
     const defineItemData = (itemTier: string, itemEnchantmentNum: string, itemNode: TItemNode) => {
-        console.log(selectedMarketItem)
         return {
             isDisabled: isTypeResource(itemNode),
             tier: itemTier.split('T')[1],
@@ -36,8 +38,8 @@ const ItemQualitySelector = () => {
         <StyledItemQualitySelector
             data-type={isDisabled ? 'resource' : 'equipment'}
         >
-            <p className={styles.tierLabel}>Уровень {tier}</p>
-            <p className={styles.enchantmentLabel}>Зачарование {enchantment}</p>
+            <p className={styles.tierLabel}>{marketItemStings.tier} {tier}</p>
+            <p className={styles.enchantmentLabel}>{marketItemStings.enchantment} {enchantment}</p>
             <CustomItemSelector
                 disabled={isDisabled}
                 selectInputClass={styles.selectQualityStyle}

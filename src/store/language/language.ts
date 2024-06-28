@@ -108,7 +108,9 @@ const language: TLanguage = {
             amountLabel: 'Количество:',
             priceLabel: 'Цена:',
             totalPriceLabel: 'Всего:',
-            tax: 'Налог на продажу 6.5%'
+            tax: 'Налог на продажу 6.5%',
+            tier: 'Уровень',
+            enchantment: 'Зачарование',
         },
         marketMenuStrings: {
             marketHeader: 'Рынок',
@@ -266,7 +268,9 @@ const language: TLanguage = {
             amountLabel: 'Amount:',
             priceLabel: 'Price:',
             totalPriceLabel: 'Total:',
-            tax: 'Sales tax 6.5%'
+            tax: 'Sales tax 6.5%',
+            tier: 'Tier',
+            enchantment: 'Enchantment'
         },
         marketMenuStrings: {
             marketHeader: 'Marketplace',
