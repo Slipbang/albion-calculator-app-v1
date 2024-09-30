@@ -277,6 +277,10 @@ const profitSlice = createSlice({
                         journalsQuantity
                     } = calculateJQ_DFC(state.selected.selectedItem.selectedItemType, state.selected.selectedItem.selectedItemTier);
 
+                    const artefactId = !!state.selected.selectedItem.artefactId
+                        ? `${!state.selected.selectedItem.artefactId.includes('T4_SKILLBOOK_STANDARD') ? `${state.selected.selectedItem.selectedItemTier}_` : ''}${state.selected.selectedItem.artefactId}`
+                        : undefined;
+
                     infoTableData = {
                         output,
                         defaultFoodConsumption,
@@ -289,9 +293,7 @@ const profitSlice = createSlice({
                         emptyJournalId: `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.emptyJournalId}`,
                         itemName: state.selected.selectedItem.itemName,
                         tier: state.selected.selectedItem.selectedItemTier,
-                        artefactId: !!state.selected.selectedItem.artefactId
-                            ? `${!state.selected.selectedItem.artefactId.includes('T4_SKILLBOOK_STANDARD') ? `${state.selected.selectedItem.selectedItemTier}_` : ''}${state.selected.selectedItem.artefactId}`
-                            : undefined,
+                        artefactId,
                     }
                 }
 
@@ -331,8 +333,6 @@ const profitSlice = createSlice({
                 if (isSimilar) return;
 
                 (state.craftLists[action.payload.calculatorType] as ITableData[]) = [usableItem, ...(state.craftLists[action.payload.calculatorType] as ITableData[])];
-                //В RTK используется библиотека Immer, которая оборачивает состояние в прокси и на основе мутаций которые мы пишем в коде она создает новое состояние,
-                //поэтому в RTK immutable way не обязателен и зависит от политики руководителей.
                 //(state.craftLists[action.payload.calculatorType] as ITableData[]).unshift(usableItem);
             }
 
