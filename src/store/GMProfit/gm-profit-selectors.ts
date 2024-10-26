@@ -1,7 +1,6 @@
 import {RootState} from "../index";
 
 export const selectMarketItem = (state: RootState) => state.GMProfit.selectedMarketItem;
-export const selectMarketItems = (state: RootState) => state.GMProfit.marketItems;
 export const selectWorkBenchItem = (state: RootState) => state.GMProfit.selectedWorkBenchItem;
 export const selectBackpackItems = (state: RootState) => state.GMProfit.backpackItems;
 export const selectFoodTax = (state: RootState) => state.GMProfit.foodTax;

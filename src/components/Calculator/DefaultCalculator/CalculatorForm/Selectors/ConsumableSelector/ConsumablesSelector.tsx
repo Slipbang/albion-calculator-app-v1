@@ -8,9 +8,11 @@ import {TTier} from "../../../../../../types/craftItemsType";
 import ConsumablesNode from "./ConsumablesNode/ConsumablesNode";
 import {useAppDispatch} from "../../../../../../store";
 import {profitSliceActions} from "../../../../../../store/profit/profit-slice";
-import {consumablesNamesData} from "../../../../../../store/Items/consumablesNamesData";
+
 import {interfaceSliceActions} from "../../../../../../store/interface/interface-slice";
 import ConsumableItemImage from "../../../CraftTable/ConsumableItemImage/ConsumableItemImage";
+
+import {selectInterfaceConsumableNamesData} from "../../../../../../store/interface/interface-selector";
 
 const tiers: Exclude<TTier, 'T3'>[] = ['T4', 'T5', 'T6', 'T7', 'T8'];
 
@@ -30,6 +32,7 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
     const {itemId, amountCrafted} = selectedConsumable!;
     const itemQuantityInput = useSelector(selectConsumableItemQuantity)
     const returnPercent = useSelector(selectPercent);
+    const consumableNamesData = useSelector(selectInterfaceConsumableNamesData);
 
     const consumableItemSelectorRef = useRef<HTMLImageElement>(null)
 
@@ -128,7 +131,7 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
                             setIsSelectorVisible(prevState => !prevState)
                             dispatchAction(interfaceSliceActions.toggleCraftTableVisibility(true));
                         }}
-                        title={consumablesNamesData[itemId][selectedLanguage] || 'name is not found'}
+                        title={consumableNamesData[itemId][selectedLanguage] || 'name is not found'}
                     >
                         <img
                             src={`${srcRoute}${itemId}`}
@@ -176,6 +179,7 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
                                     resourceKeys={key}
                                     selectedLanguage={selectedLanguage}
                                     extraResourceStyles={styles.extraResource}
+                                    consumableNamesData={consumableNamesData}
                                 />
                                 <div
                                     style={{marginTop: `${!extraKeys.includes(key) ? -30 : -26}px`}}

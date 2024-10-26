@@ -27,9 +27,9 @@ import {
     selectFoodTax,
     selectWorkBenchItem
 } from "../../../../../store/GMProfit/gm-profit-selectors";
-import {IBagCell} from "../../../../../store/Items/workBenchSelectorItems_marketItems";
 import {srcRoute} from "../../../../../store/api/api";
 import {TMaterialsInfo} from "../../../../../types/craftItemsType";
+import {IBagCell} from "../../../../../store/Items/emptyBagCell";
 
 const CraftingButton = (props: { calculatorType: TCalcProps }) => {
     const {calculatorType} = props;

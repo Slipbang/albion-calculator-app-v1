@@ -3,7 +3,7 @@ import styles from './WorkBenchItem.module.scss';
 import {useSelector} from "react-redux";
 import {
     selectCalculatorType,
-    selectInputIS,
+    selectInputIS, selectInterfaceArtefact,
     selectNodeIS,
     selectTierIS
 } from "../../../../../../store/interface/interface-selector";
@@ -32,6 +32,7 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
     const selectedNode = useSelector(selectNodeIS);
     const selectedTier = useSelector(selectTierIS);
     const calculatorType = useSelector(selectCalculatorType);
+    const artefacts = useSelector(selectInterfaceArtefact);
     const {selectedLanguage} = useSelector(selectLanguage);
     const dispatchAction = useAppDispatch();
 
@@ -81,7 +82,7 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
         return artefactsQuantity;
     }
 
-    const {artefactName} = defineArtefactsName({artefactId: artefactItemId!});
+    const {artefactName} = defineArtefactsName({artefactId: artefactItemId!, artefacts});
     const artefactsQuantity = calculateArtefactsQuantityHandler(artefactItemId!, itemNode!, itemTier);
 
     const itemKeys = Object.keys(item) as TCraftItemsKeys[];
@@ -95,12 +96,12 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
     })
 
     const resetEnchantmentHandler = (itemId: string, enchantment: string) => {
-        if (calculatorType === 'resource' && !itemId!.includes('STONEBLOCK')) {
+        if (calculatorType === 'RESOURCES' && !itemId!.includes('STONEBLOCK')) {
             dispatchAction(interfaceSliceActions.setMaterialEnchantmentCF(enchantment!));
             dispatchAction(interfaceSliceActions.setItemEnchantmentCF(''));
             dispatchAction(interfaceSliceActions.setEnchantmentNumCF(enchantment?.split('@')[1]!));
         }
-        if (calculatorType === 'items' || (calculatorType === 'resource' && itemId!.includes('STONEBLOCK'))) {
+        if (calculatorType === 'ITEMS' || (calculatorType === 'RESOURCES' && itemId!.includes('STONEBLOCK'))) {
             dispatchAction(interfaceSliceActions.setEnchantmentButtons(dummyEnchantmentButtons))
             dispatchAction(interfaceSliceActions.setMaterialEnchantmentCF(''));
             dispatchAction(interfaceSliceActions.setItemEnchantmentCF(''));

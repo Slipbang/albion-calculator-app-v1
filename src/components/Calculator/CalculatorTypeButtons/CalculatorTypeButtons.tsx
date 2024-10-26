@@ -1,12 +1,16 @@
 import {interfaceSliceActions} from "../../../store/interface/interface-slice";
 import {useSelector} from "react-redux";
-import {selectCalculatorType, selectGameMode, selectTheme} from "../../../store/interface/interface-selector";
+import {
+    selectCalculatorType,
+    selectGameMode,
+    selectInterfaceConsumablesSelectorItems,
+    selectTheme
+} from "../../../store/interface/interface-selector";
 import {useAppDispatch} from "../../../store";
 import {TCalcProps} from "../../../types/calculatorPropsType";
 import styles from './CalculatorTypeButtons.module.scss';
 import {memo} from "react";
 import {profitSliceActions} from "../../../store/profit/profit-slice";
-import {consumablesSelectorItems} from "../../../store/Items/consumablesSelectorItems";
 
 interface ISelector {
     src: string;
@@ -38,6 +42,7 @@ const CalculatorTypeButtons = () => {
     const theme = useSelector(selectTheme);
     const calculatorType = useSelector(selectCalculatorType);
     const gameMode = useSelector(selectGameMode);
+    const consumablesSelectorItems = useSelector(selectInterfaceConsumablesSelectorItems);
 
     const selectCalculatorTypeHandler = (calculatorType: TCalcProps) => {
         dispatchAction(interfaceSliceActions.setCalculatorType(calculatorType as TCalcProps));

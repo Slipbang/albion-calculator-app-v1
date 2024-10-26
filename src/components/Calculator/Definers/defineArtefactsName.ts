@@ -1,8 +1,8 @@
-import {TArtefactData} from "../../../types/artefactTypes";
-import artefacts from "../../../store/Items/artefacts";
+import {TArtefactData, TArtefacts} from "../../../types/artefactTypes";
 import {TArtefactName} from "../DefaultCalculator/InfoTable/InfoTable";
+//import {artefacts} from "../../../store/Items/currentConfigurationItems";
 
-const defineArtefactsName = ({artefactId}: {artefactId?: string}) => {
+const defineArtefactsName = ({artefactId, artefacts}: {artefactId?: string, artefacts: TArtefacts}) => {
     let artefactName: TArtefactName = {
         ru: '',
         en: ''

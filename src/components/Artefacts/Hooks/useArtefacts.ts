@@ -1,6 +1,5 @@
 import {useSelector} from "react-redux";
 import {
-    selectArtefacts,
     selectArtefactsClass,
     selectArtefactsSort,
     selectArtefactsTier,
@@ -11,12 +10,13 @@ import {TArtefactData} from "../../../types/artefactTypes";
 import {artefactActions, artefactsClassesKeys} from "../../../store/artefacts/artefact-slice";
 import {useCallback, useEffect, useMemo} from "react";
 import {useAppDispatch} from "../../../store";
+import {selectInterfaceArtefact} from "../../../store/interface/interface-selector";
 
 const useArtefacts = () => {
 
     const dispatchAction = useAppDispatch();
 
-    const artefacts = useSelector(selectArtefacts);
+    const artefacts = useSelector(selectInterfaceArtefact);
     const selectedType = useSelector(selectArtefactsType);
     const selectedClass = useSelector(selectArtefactsClass);
     const selectedTier = useSelector(selectArtefactsTier);

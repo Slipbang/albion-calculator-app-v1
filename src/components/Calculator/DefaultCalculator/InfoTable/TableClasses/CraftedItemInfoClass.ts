@@ -1,9 +1,9 @@
 import {IItemsData, TCities} from "../../../../../types/InfoTableTypes";
-import {materials} from "../../../../../store/Items/materials";
 import {TArtefactName, TOwnPriceStates, TSelectedCityStates} from "../InfoTable";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
 import {UtilsMethodsClass} from "./UtilsMethodsClass";
 import {IInfoTableData} from "../../../../../types/defaultCalculatorTypes";
+import {ICraftItem} from "../../../../../types/craftItemsType";
 
 export class CraftedItemInfoClass extends UtilsMethodsClass{
     constructor(
@@ -23,6 +23,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         public isJournalsUsed: boolean,
         public currentDate: Date,
         public quality: number,
+        public materials: ICraftItem[],
     ) {
         super(currentDate);
     }
@@ -31,9 +32,9 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
 
     subMatsTier = (!!this.itemData!.resourceId) ? `T${this.itemTierNum - 1}` : this!.itemData!.tier;
 
-    mainMatsName = materials.find(elem => elem.itemId === this.itemData!.mainMatsId)!.itemName?.[this.selectedLanguage];
+    mainMatsName = this.materials.find(elem => elem.itemId === this.itemData!.mainMatsId)!.itemName?.[this.selectedLanguage];
 
-    subMatsName = materials.find(elem => elem.itemId === this.itemData!.subMatsId)?.itemName?.[this.selectedLanguage] || '';
+    subMatsName = this.materials.find(elem => elem.itemId === this.itemData!.subMatsId)?.itemName?.[this.selectedLanguage] || '';
 
     getMatPrice = (itemId: string, selectedCity: TCities) => {
         return this.materialsData?.find(matItem => matItem.itemId === itemId && matItem.location === selectedCity)?.sellPriceMin || 0;

@@ -19,10 +19,10 @@ const ArtefactButton = (props: IArtefactButtonProps) => {
 
     const defineType = (): boolean => {
         switch (type) {
-            case 'RUNES':
-            case 'SOULS':
-            case "RELICTS":
-            case "AVALONIANSHARDS":
+            case 'RUNE':
+            case 'SOUL':
+            case "RELIC":
+            case "AVALONIAN":
                 return true;
             default:
                 return false;

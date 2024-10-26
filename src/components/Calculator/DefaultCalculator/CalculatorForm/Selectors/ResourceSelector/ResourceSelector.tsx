@@ -1,5 +1,5 @@
 import {arrowRight} from "../../../DefaultCalculatorImgReexports/DefaultCalculatorImgReexports";
-import {materials} from "../../../../../../store/Items/materials";
+//import {materials} from "../../../../../../store/Items/materials";
 import React, {useEffect, useRef, useState} from "react";
 import {profitSliceActions} from "../../../../../../store/profit/profit-slice";
 import {TCalcProps} from "../../../../../../types/calculatorPropsType";
@@ -12,6 +12,7 @@ import {ICraftItem, TTier} from "../../../../../../types/craftItemsType";
 import {defineMaterials} from "../../../../Definers/defineMaterials";
 import {srcRoute} from "../../../../../../store/api/api";
 import {defineDivisionsFactors} from "../../../../Definers/defineDivisionsFactors";
+import {selectInterfaceMaterials} from "../../../../../../store/interface/interface-selector";
 
 interface IResourceSelectorProps {
     calculatorType: TCalcProps;
@@ -25,6 +26,7 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
     const dispatchAction = useAppDispatch();
 
     const selectedResource = useSelector(selectResource);
+    const materials = useSelector(selectInterfaceMaterials);
     const {resourceId, resourceName, resourceTier} = selectedResource;
     const {RESOURCES: resourcesDivFactor} = useSelector(selectDivFactor);
     const {mainDivFactor, subDivFactor} = resourcesDivFactor;

@@ -116,7 +116,7 @@ export const nodeOptions: TSelectClassOptions = {
                     ru: 'Все категории',
                     en: 'All Categories',
                 },
-                value: 'sword shield axe mace warGloves crossbow hammer',
+                value: 'sword shield axe mace knuckles crossbow hammer',
             },
             {
                 labelName: {
@@ -151,7 +151,7 @@ export const nodeOptions: TSelectClassOptions = {
                     ru: 'Боевые перчатки',
                     en: 'War Gloves',
                 },
-                value: 'warGloves',
+                value: 'knuckles',
             },
             {
                 labelName: {
@@ -174,28 +174,28 @@ export const nodeOptions: TSelectClassOptions = {
                     ru: 'Все категории',
                     en: 'All Categories',
                 },
-                value: 'plateHelmet plateArmor plateShoes',
+                value: 'plate_helmet plate_armor plate_shoes',
             },
             {
                 labelName: {
                     ru: 'Латный шлем',
                     en: 'Plate Helmet',
                 },
-                value: 'plateHelmet',
+                value: 'plate_helmet',
             },
             {
                 labelName: {
                     ru: 'Латная броня',
                     en: 'Plate Armor',
                 },
-                value: 'plateArmor',
+                value: 'plate_armor',
             },
             {
                 labelName: {
                     ru: 'Латная обувь',
                     en: 'Plate Shoes',
                 },
-                value: 'plateShoes',
+                value: 'plate_shoes',
             },
         ],
     },
@@ -206,7 +206,7 @@ export const nodeOptions: TSelectClassOptions = {
                     ru: 'Все категории',
                     en: 'All Categories',
                 },
-                value: 'bow spear natureStaff dagger quarterstaff torch horn',
+                value: 'bow spear naturestaff dagger quarterstaff torch horn',
             },
             {
                 labelName: {
@@ -227,7 +227,7 @@ export const nodeOptions: TSelectClassOptions = {
                     ru: 'Древесный',
                     en: 'Nature Staff',
                 },
-                value: 'natureStaff',
+                value: 'naturestaff',
             },
             {
                 labelName: {
@@ -264,28 +264,28 @@ export const nodeOptions: TSelectClassOptions = {
                     ru: 'Все категории',
                     en: 'All Categories',
                 },
-                value: 'leatherHelmet leatherArmor leatherShoes',
+                value: 'leather_helmet leather_armor leather_shoes',
             },
             {
                 labelName: {
                     ru: 'Кожаный шлем',
                     en: 'Leather Helmet',
                 },
-                value: 'leatherHelmet',
+                value: 'leather_helmet',
             },
             {
                 labelName: {
                     ru: 'Кожаная броня',
                     en: 'Leather Armor',
                 },
-                value: 'leatherArmor',
+                value: 'leather_armor',
             },
             {
                 labelName: {
                     ru: 'Кожаная обувь',
                     en: 'Leather Shoes',
                 },
-                value: 'leatherShoes',
+                value: 'leather_shoes',
             },
         ],
     },
@@ -296,42 +296,42 @@ export const nodeOptions: TSelectClassOptions = {
                     ru: 'Все категории',
                     en: 'All Categories',
                 },
-                value: 'fireStaff book arcaneStaff holyStaff cursedStaff frostStaff orb totem torch',
+                value: 'firestaff book arcanestaff holystaff cursestaff froststaff orb totem torch',
             },
             {
                 labelName: {
                     ru: 'Огненный',
                     en: 'Fire Staff',
                 },
-                value: 'fireStaff',
+                value: 'firestaff',
             },
             {
                 labelName: {
                     ru: 'Мистический',
                     en: 'Arcane Staff',
                 },
-                value: 'arcaneStaff',
+                value: 'arcanestaff',
             },
             {
                 labelName: {
                     ru: 'Священный',
                     en: 'Holy Staff',
                 },
-                value: 'holyStaff',
+                value: 'holystaff',
             },
             {
                 labelName: {
                     ru: 'Проклятый',
                     en: 'Cursed Staff',
                 },
-                value: 'cursedStaff',
+                value: 'cursestaff',
             },
             {
                 labelName: {
                     ru: 'Морозный',
                     en: 'Frost Staff',
                 },
-                value: 'frostStaff',
+                value: 'froststaff',
             },
             {
                 labelName: {
@@ -368,28 +368,28 @@ export const nodeOptions: TSelectClassOptions = {
                     ru: 'Все категории',
                     en: 'All Categories',
                 },
-                value: 'clothHelmet clothArmor clothShoes',
+                value: 'cloth_helmet cloth_armor cloth_shoes',
             },
             {
                 labelName: {
                     ru: 'Тканевый шлем',
                     en: 'Cloth Helmet',
                 },
-                value: 'clothHelmet',
+                value: 'cloth_helmet',
             },
             {
                 labelName: {
                     ru: 'Тканевая броня',
                     en: 'Cloth Armor',
                 },
-                value: 'clothArmor',
+                value: 'cloth_armor',
             },
             {
                 labelName: {
                     ru: 'Тканевая обувь',
                     en: 'Cloth Shoes',
                 },
-                value: 'clothShoes',
+                value: 'cloth_shoes',
             },
         ],
     },
@@ -401,7 +401,7 @@ export const nodeOptions: TSelectClassOptions = {
                     ru: 'Все категории',
                     en: 'All Categories',
                 },
-                value: 'pickaxe toolAxe skinningKnife stoneHammer sickle demolitionHammer fishingRod',
+                value: 'pickaxe woodaxe skinningknife stonehammer sickle demolitionhammer fishing',
             },
             {
                 labelName: {
@@ -415,21 +415,21 @@ export const nodeOptions: TSelectClassOptions = {
                     ru: 'Топоры дровосека',
                     en: 'Wood Axe',
                 },
-                value: 'toolAxe',
+                value: 'woodaxe',
             },
             {
                 labelName: {
                     ru: 'Ножи свежевателя',
                     en: 'Skinning Knife',
                 },
-                value: 'skinningKnife',
+                value: 'skinningknife',
             },
             {
                 labelName: {
                     ru: 'Кувалды камен.',
                     en: 'Stone Hammer',
                 },
-                value: 'stoneHammer',
+                value: 'stonehammer',
             },
             {
                 labelName: {
@@ -443,14 +443,14 @@ export const nodeOptions: TSelectClassOptions = {
                     ru: 'Осандные молоты',
                     en: 'Demolition Hammer',
                 },
-                value: 'demolitionHammer',
+                value: 'demolitionhammer',
             },
             {
                 labelName: {
                     ru: 'Удочка рыбака',
                     en: 'Fishing Rod',
                 },
-                value: 'fishingRod',
+                value: 'fishing',
             },
         ],
         'armor': [
@@ -459,133 +459,134 @@ export const nodeOptions: TSelectClassOptions = {
                     ru: 'Все категории',
                     en: 'All Categories',
                 },
-                value: 'harvesterCap harvesterGarb harvesterWorkboots skinnerCap skinnerGarb skinnerWorkboots minerCap minerGarb minerWorkboots quarrierCap quarrierGarb quarrierWorkboots lumberjackCap lumberjackGarb lumberjackWorkboots fishermanCap fishermanGarb fishermanWorkboots',
+                value: 'fibergatherer_helmet fibergatherer_armor fibergatherer_shoes hidegatherer_helmet hidegatherer_armor hidegatherer_shoes oregatherer_helmet oregatherer_armor oregatherer_shoes rockgatherer_helmet rockgatherer_armor rockgatherer_shoes woodgatherer_helmet woodgatherer_armor woodgatherer_shoes fishgatherer_helmet fishgatherer_armor fishgatherer_shoes',
             },
+
             {
                 labelName: {
                     ru: 'Шапка жнеца',
                     en: 'Harvester Cap',
                 },
-                value: 'harvesterCap ',
+                value: 'fibergatherer_helmet',
             },
             {
                 labelName: {
                     ru: 'Одежда жнеца',
                     en: 'Harvester Garb',
                 },
-                value: 'harvesterGarb',
+                value: 'fibergatherer_armor',
             },
             {
                 labelName: {
                     ru: 'Сапоги жнеца',
                     en: 'Harvester Workboots',
                 },
-                value: 'harvesterWorkboots',
+                value: 'fibergatherer_shoes',
             },
             {
                 labelName: {
                     ru: 'Шапка свежеват.',
                     en: 'Skinner Cap',
                 },
-                value: 'skinnerCap',
+                value: 'hidegatherer_helmet',
             },
             {
                 labelName: {
                     ru: 'Одежда свежеват.',
                     en: 'Skinner Garb',
                 },
-                value: 'skinnerGarb',
+                value: 'hidegatherer_armor',
             },
             {
                 labelName: {
                     ru: 'Сапоги свежеват.',
                     en: 'Skinner Workboots',
                 },
-                value: 'skinnerWorkboots',
+                value: 'hidegatherer_shoes',
             },
             {
                 labelName: {
                     ru: 'Шапка шахтера',
                     en: 'Miner Cap',
                 },
-                value: 'minerCap',
+                value: 'oregatherer_helmet',
             },
             {
                 labelName: {
                     ru: 'Одежда шахтера',
                     en: 'Miner Garb',
                 },
-                value: 'minerGarb',
+                value: 'oregatherer_armor',
             },
             {
                 labelName: {
                     ru: 'Сапоги шахтера',
                     en: 'Miner Workboots',
                 },
-                value: 'minerWorkboots',
+                value: 'oregatherer_shoes',
             },
             {
                 labelName: {
                     ru: 'Шапка каменол.',
                     en: 'Quarrier Cap',
                 },
-                value: 'quarrierCap',
+                value: 'rockgatherer_helmet',
             },
             {
                 labelName: {
                     ru: 'Одежда каменол.',
                     en: 'Quarrier Garb',
                 },
-                value: 'quarrierGarb',
+                value: 'rockgatherer_armor',
             },
             {
                 labelName: {
                     ru: 'Сапоги каменол.',
                     en: 'Quarrier Workboots',
                 },
-                value: 'quarrierWorkboots',
+                value: 'rockgatherer_shoes',
             },
             {
                 labelName: {
                     ru: 'Шапка дровосека',
                     en: 'Lumberjack Cap',
                 },
-                value: 'lumberjackCap',
+                value: 'rockgatherer_helmet',
             },
             {
                 labelName: {
                     ru: 'Одежда дровосека',
                     en: 'Lumberjack Garb',
                 },
-                value: 'lumberjackGarb',
+                value: 'woodgatherer_armor',
             },
             {
                 labelName: {
                     ru: 'Сапоги дровосека',
                     en: 'Lumberjack Workboots',
                 },
-                value: 'lumberjackWorkboots',
+                value: 'woodgatherer_shoes',
             },
             {
                 labelName: {
                     ru: 'Шапка рыбака',
                     en: 'Fisherman Cap',
                 },
-                value: 'fishermanCap',
+                value: 'fishgatherer_helmet',
             },
             {
                 labelName: {
                     ru: 'Одежда рыбака',
                     en: 'Fisherman Garb',
                 },
-                value: 'fishermanGarb',
+                value: 'fishgatherer_armor',
             },
             {
                 labelName: {
                     ru: 'Сапоги рыбака',
                     en: 'Fisherman Workboots',
                 },
-                value: 'fishermanWorkboots',
+                value: 'fishgatherer_shoes',
             },
         ],
         'accessories': [
@@ -761,70 +762,70 @@ export const typeOptions: IOptions[] = [
             ru: 'Броня',
             en: 'Armor',
         },
-        value: 'clothArmor clothHelmet clothShoes leatherArmor leatherHelmet leatherShoes plateArmor plateHelmet plateShoes',
+        value: 'cloth_armor cloth_helmet cloth_shoes leather_armor leather_helmet leather_shoes plate_armor plate_helmet plate_shoes',
         params: [
             {
                 labelName: {
                     ru: 'Тканевая броня',
                     en: 'Cloth Armor',
                 },
-                value: 'clothArmor',
+                value: 'cloth_armor',
             },
             {
                 labelName: {
                     ru: 'Тканевый шлем',
                     en: 'Cloth Helmet',
                 },
-                value: 'clothHelmet',
+                value: 'cloth_helmet',
             },
             {
                 labelName: {
                     ru: 'Тканевая обувь',
                     en: 'Cloth Shoes',
                 },
-                value: 'clothShoes',
+                value: 'cloth_shoes',
             },
             {
                 labelName: {
                     ru: 'Кожаная броня',
                     en: 'Leather Armor',
                 },
-                value: 'leatherArmor',
+                value: 'leather_armor',
             },
             {
                 labelName: {
                     ru: 'Кожаный шлем',
                     en: 'Leather Helmet',
                 },
-                value: 'leatherHelmet',
+                value: 'leather_helmet',
             },
             {
                 labelName: {
                     ru: 'Кожаная обувь',
                     en: 'Leather Shoes',
                 },
-                value: 'leatherShoes',
+                value: 'leather_shoes',
             },
             {
                 labelName: {
                     ru: 'Латная броня',
                     en: 'Plate Armor',
                 },
-                value: 'plateArmor',
+                value: 'plate_armor',
             },
             {
                 labelName: {
                     ru: 'Латный шлем',
                     en: 'Plate Helmet',
                 },
-                value: 'plateHelmet',
+                value: 'plate_helmet',
             },
             {
                 labelName: {
                     ru: 'Латная обувь',
                     en: 'Plate Shoes',
                 },
-                value: 'plateShoes',
+                value: 'plate_shoes',
             },
         ]
     },
@@ -833,7 +834,7 @@ export const typeOptions: IOptions[] = [
             ru: 'Ближний бой',
             en: 'Melee',
         },
-        value: 'axe dagger hammer warGloves mace quarterstaff spear sword',
+        value: 'axe dagger hammer knuckles mace quarterstaff spear sword',
         params: [
             {
                 labelName: {
@@ -861,7 +862,7 @@ export const typeOptions: IOptions[] = [
                     ru: 'Боевые перчатки',
                     en: 'War Gloves',
                 },
-                value: 'warGloves',
+                value: 'knuckles',
             },
             {
                 labelName: {
@@ -921,49 +922,49 @@ export const typeOptions: IOptions[] = [
             ru: 'Магия',
             en: 'Magic',
         },
-        value: 'arcaneStaff cursedStaff fireStaff frostStaff holyStaff natureStaff',
+        value: 'arcanestaff cursestaff firestaff froststaff holystaff naturestaff',
         params: [
             {
                 labelName: {
                     ru: 'Мистический',
                     en: 'Arcane Staff',
                 },
-                value: 'arcaneStaff',
+                value: 'arcanestaff',
             },
             {
                 labelName: {
                     ru: 'Проклятый',
                     en: 'Cursed Staff',
                 },
-                value: 'cursedStaff',
+                value: 'cursestaff',
             },
             {
                 labelName: {
                     ru: 'Огненный',
                     en: 'Fire Staff',
                 },
-                value: 'fireStaff',
+                value: 'firestaff',
             },
             {
                 labelName: {
                     ru: 'Морозный',
                     en: 'Frost Staff',
                 },
-                value: 'frostStaff',
+                value: 'froststaff',
             },
             {
                 labelName: {
                     ru: 'Священный',
                     en: 'Holy Staff',
                 },
-                value: 'holyStaff',
+                value: 'holystaff',
             },
             {
                 labelName: {
                     ru: 'Древесный',
                     en: 'Nature Staff',
                 },
-                value: 'natureStaff',
+                value: 'naturestaff',
             },
         ]
     }

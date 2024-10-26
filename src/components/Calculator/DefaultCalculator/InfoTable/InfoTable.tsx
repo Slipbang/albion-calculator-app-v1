@@ -16,14 +16,20 @@ import {srcRoute, useLazyGetItemsDataQuery} from "../../../../store/api/api";
 import {selectServerId} from "../../../../store/queryParams/query-params-selectors";
 import {PulseLoader} from "react-spinners";
 import ErrorNotification from "../ErrorNotification/ErrorNotification";
-import {selectTheme} from "../../../../store/interface/interface-selector";
+import {
+    selectInterfaceArtefact,
+    selectInterfaceConsumableNamesData, selectInterfaceMaterials,
+    selectTheme
+} from "../../../../store/interface/interface-selector";
 import TableTdElement from "./TableTdElement/TableTdElement";
 import StyledCloseButton from "../../StyledComponentsCommon/StyledCloseButton";
 import {IConsumableObject} from "../../../../types/consumableTypes";
-import {consumablesNamesData, TConsumableNames} from "../../../../store/Items/consumablesNamesData";
+
 import ConsumablesPriceSelectors from "./ConsumablesPriceSelectors/ConsumablesPriceSelectors";
 import {TCalcProps} from "../../../../types/calculatorPropsType";
 import {IConsumableTableData, IInfoTableData, ITableQueryParams} from "../../../../types/defaultCalculatorTypes";
+import {ICraftItem} from "../../../../types/craftItemsType";
+import {TConsumableNames} from "../../../../types/ConsumableNamesType";
 
 export type ICraftItemInfoTuple = [
     itemData: IInfoTableData | undefined,
@@ -40,6 +46,7 @@ export type ICraftItemInfoTuple = [
     isJournalsUsed: boolean,
     currentDate: Date,
     quality: number,
+    materials: ICraftItem[],
 ];
 
 export type ICraftConsumableInfoTuple = [
@@ -86,6 +93,9 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
     const serverId = useSelector(selectServerId);
 
     const craftedConsumablesData = useSelector(selectCraftedConsumablesData);
+    const artefacts = useSelector(selectInterfaceArtefact);
+    const materials = useSelector(selectInterfaceMaterials);
+    const consumableNamesData = useSelector(selectInterfaceConsumableNamesData);
 
     let tableQueryParams: ITableQueryParams | undefined,
         infoTableData: IInfoTableData,
@@ -122,13 +132,13 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
         consumableResourcesKeys = Object.keys(craftedConsumable).filter(key => key.toUpperCase() === key);
 
         consumablesNames = {
-            [craftedConsumable.itemId]: {...consumablesNamesData![craftedConsumable.itemId]}
+            [craftedConsumable.itemId]: {...consumableNamesData![craftedConsumable.itemId]}
         };
 
         consumableSelectorsKeys.push(...[...consumableResourcesKeys].filter(key => !key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')));
 
         consumableResourcesKeys.forEach(key => {
-            consumablesNames![key] = {...consumablesNamesData![key]};
+            consumablesNames![key] = {...consumableNamesData![key]};
         });
 
         [1, 2, 3].forEach(enchantment => {
@@ -139,7 +149,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                         ? 'T1_ALCHEMY_EXTRACT_LEVEL'
                         : '';
 
-            consumablesNames![`${extraResourceKey}${enchantment}`] = {...consumablesNamesData![`${extraResourceKey}${enchantment}`]};
+            consumablesNames![`${extraResourceKey}${enchantment}`] = {...consumableNamesData![`${extraResourceKey}${enchantment}`]};
 
             consumableSelectorsInitialState[`${extraResourceKey}${enchantment}`] = 'Fort Sterling';
             consumableSelectorsKeys.push(`${extraResourceKey}${enchantment}`);
@@ -150,7 +160,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
         })
     }
 
-    //если объединить запрос в один, то в инстансах классов будет слишком длинный проход по одному большому объекту при поиске цен,
+    // если объединить запрос в один, то в инстансах классов будет слишком длинный проход по одному большому объекту при поиске цен,
     // использовать кэширование в случае Albion Online Data Project смысла нет тк данные меняются ежесекундно.
 
     const [fetchItems, {
@@ -238,7 +248,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
     const [consumableSelectors, setConsumableSelectors] = useState<TConsumablesSelectors>(consumableSelectorsInitialState);
     const [quality, setQuality] = useState(1);
 
-    const {artefactName} = useMemo(() => defineArtefactsName({artefactId: artefactId || ''}), [artefactId]);
+    const {artefactName} = useMemo(() => defineArtefactsName({artefactId: artefactId || '', artefacts}), [artefactId]);
 
     const closeInfoTableHandler = () => {
         dispatchAction(interfaceSliceActions.setInfoTableVisibility(false));
@@ -264,6 +274,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                 isJournalsUsed,
                 currentDate,
                 quality,
+                materials,
             ] as ICraftItemInfoTuple
             : [
                 craftedConsumablesData!,
@@ -317,6 +328,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                             selectedCities={selectedCities!}
                             setQuality={setQuality}
                             quality={quality}
+                            materials={materials}
                         />
                     )}
 

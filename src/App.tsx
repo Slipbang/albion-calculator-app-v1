@@ -7,8 +7,16 @@ import Theme from "./components/Theme/Theme";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import FAQPage from "./pages/FAQPage";
+import {useAppDispatch} from "./store";
+import {useEffect} from "react";
+import {itemsHttpRequests} from "./store/interface/interface-slice";
 
 function App() {
+    const dispatchAction = useAppDispatch();
+
+    useEffect(() => {
+        dispatchAction(itemsHttpRequests());
+    }, [])
 
     return (
         <>

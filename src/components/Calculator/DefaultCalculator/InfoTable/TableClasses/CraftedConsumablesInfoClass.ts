@@ -1,9 +1,9 @@
 import {IItemsData, TCities} from "../../../../../types/InfoTableTypes";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
-import {TConsumableNames} from "../../../../../store/Items/consumablesNamesData";
 import {TConsumablesSelectors} from "../InfoTable";
 import {UtilsMethodsClass} from "./UtilsMethodsClass";
 import {IConsumableTableData} from "../../../../../types/defaultCalculatorTypes";
+import {TConsumableNames} from "../../../../../types/ConsumableNamesType";
 
 export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
     constructor(

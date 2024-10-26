@@ -4,5 +4,4 @@ export const selectArtefactsClass = (state: RootState) => state.artefacts.select
 export const selectArtefactsType = (state: RootState) => state.artefacts.selectedType;
 export const selectArtefactsSort = (state: RootState) => state.artefacts.selectedSort;
 export const selectArtefactsTier = (state: RootState) => state.artefacts.selectedTier;
-export const selectArtefacts = (state: RootState) => state.artefacts.artefacts;
 export const selectArtefactsParams = (state: RootState) => state.artefacts.artefactsParams;

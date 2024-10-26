@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {
     enchantmentOptions,
     IOptions,
@@ -9,6 +9,13 @@ import {
 } from "../Options/CustomSelecrorsOptions";
 import {TCalcProps} from "../../types/calculatorPropsType";
 import {dummyEnchantmentButtons, IEnchantmentButton} from "./DummyEnchantmentButtons/DummyEnchantmentButtons";
+import axios from "axios";
+import {ICraftItem, TItems} from "../../types/craftItemsType";
+import {TConsumable} from "../../types/consumableTypes";
+
+import {TArtefacts} from "../../types/artefactTypes";
+import {defineCurrentConfigurationItems, ICurrentConfigurationItems} from "../utils/defineCurrentConfigurationItems";
+import {TConsumableNames} from "../../types/ConsumableNamesType";
 
 export interface ICount {
     left: number;
@@ -16,6 +23,39 @@ export interface ICount {
 }
 
 export type TTheme = 'dark' | 'light';
+
+export type TConsumableCraftItems = {
+    cooked: TConsumable;
+    potion: TConsumable;
+}
+
+interface IItemsConfigurationData {
+    craftItems: TItems;
+    consumableCraftItems: TConsumableCraftItems;
+    consumableNamesData: TConsumableNames;
+    artefacts: TArtefacts;
+    materials: ICraftItem[];
+}
+
+const configurationItemsUrl = `https://albion-online-data-server.onrender.com/data`
+
+export const itemsHttpRequests = createAsyncThunk<IItemsConfigurationData>(
+    '@interface/fetchConfigurationItems',
+    async (_, thunkAPI) => {
+        const items = localStorage.getItem('appConfigurationItems');
+        if (items) {
+            return thunkAPI.rejectWithValue('LOCALSTORAGE_IS_NOT_EMPTY');
+        }
+
+        const {data} = await axios.get<IItemsConfigurationData>(configurationItemsUrl);
+
+        if (!('craftItems' in data)) {
+            return thunkAPI.rejectWithValue('EMPTY_OBJECT');
+        }
+
+        return data;
+    }
+)
 
 interface IInitialState {
     global: {
@@ -70,11 +110,13 @@ interface IInitialState {
         ownItemPriceMI: number;
         itemPriceMI: number;
     };
+    items: ICurrentConfigurationItems;
+    status: 'loading' | 'error' | 'success';
 }
 
 const defineTheme = (): TTheme => {
     const themeStorage = localStorage.getItem('AT-web-interface-theme');
-    if (themeStorage === 'dark' || themeStorage === 'light'){
+    if (themeStorage === 'dark' || themeStorage === 'light') {
         return themeStorage as TTheme;
     }
 
@@ -93,7 +135,7 @@ const initialState: IInitialState = {
         isCraftTableShown: false,
         isInfoTableShown: false,
         isItemSelectorShown: false,
-        theme: theme,
+        theme,
     },
 
     DefaultCalculator: {
@@ -139,14 +181,17 @@ const initialState: IInitialState = {
         ownItemPriceMI: 0,
         itemPriceMI: 0,
     },
+
+    items: defineCurrentConfigurationItems(),
+    status: 'loading',
 }
 
 const interfaceSlice = createSlice({
-    name: '@profit',
+    name: '@interface',
     initialState,
     reducers: {
-        setTheme(state){
-            switch (state.global.theme){
+        setTheme(state) {
+            switch (state.global.theme) {
                 case 'dark':
                     state.global.theme = "light";
                     break;
@@ -194,7 +239,7 @@ const interfaceSlice = createSlice({
         setInfoTableVisibility(state, action: PayloadAction<boolean>) {
             state.global.isInfoTableShown = action.payload;
         },
-        toggleGameMode(state, action: PayloadAction<{isGame?: boolean} | undefined>) {
+        toggleGameMode(state, action: PayloadAction<{ isGame?: boolean } | undefined>) {
             state.global.isCraftingFormVisible = initialState.global.isCraftingFormVisible;
             state.global.isMarketItemVisible = initialState.global.isMarketItemVisible;
             state.global.isMarketMenuShown = initialState.global.isMarketMenuShown;
@@ -303,6 +348,23 @@ const interfaceSlice = createSlice({
             state.MarketItem.itemPriceMI = action.payload;
         }
     },
+    extraReducers: (builder) => {
+        builder.addCase(itemsHttpRequests.pending, (state: IInitialState) => {
+            state.status = 'loading';
+        })
+        builder.addCase(itemsHttpRequests.fulfilled, (state: IInitialState, action: PayloadAction<IItemsConfigurationData>) => {
+            state.status = 'success';
+            localStorage.setItem('appConfigurationItems', JSON.stringify(action.payload));
+            state.items = defineCurrentConfigurationItems();
+        })
+        builder.addCase(itemsHttpRequests.rejected, (state: IInitialState, action) => {
+            if (action.payload === 'EMPTY_OBJECT') {
+                state.status = 'error';
+            } else if (action.payload === 'LOCALSTORAGE_IS_NOT_EMPTY') {
+                state.status = 'success';
+            }
+        })
+    }
 })
 
 export const interfaceSliceActions = interfaceSlice.actions;

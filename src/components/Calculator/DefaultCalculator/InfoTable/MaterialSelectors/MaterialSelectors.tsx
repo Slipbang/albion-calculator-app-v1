@@ -1,7 +1,6 @@
 import {IItemsData, TCities} from "../../../../../types/InfoTableTypes";
 import React, {ChangeEvent, Dispatch, SetStateAction, useRef} from "react";
 import styles from './MaterialSelectors.module.scss';
-import {materials} from "../../../../../store/Items/materials";
 import {
     TArtefactName,
     TOnwPriceType,
@@ -12,6 +11,7 @@ import {
 import {cityOptions} from "../../../../../store/Options/CityOptions";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
 import {qualityOptions} from "../../../../../store/Options/CustomSelecrorsOptions";
+import {ICraftItem} from "../../../../../types/craftItemsType";
 
 interface IMaterialSelectorsProps {
     mainMatsId: string;
@@ -34,6 +34,7 @@ interface IMaterialSelectorsProps {
     ownPrices: TOwnPriceStates;
     setQuality: Dispatch<SetStateAction<number>>;
     quality: number;
+    materials: ICraftItem[],
 }
 
 const MaterialSelectors = (props: IMaterialSelectorsProps) => {
@@ -57,7 +58,8 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
         selectedLanguage,
         selectedCities,
         setQuality,
-        quality
+        quality,
+        materials,
     } = props;
 
     const journalInputRef = useRef<HTMLInputElement>(null);

@@ -17,7 +17,7 @@ export const mainNodesItems: IMainNodesItems[] = [
     },
     {
         itemId: 'MAIN_FIRESTAFF',
-        itemNode: 'fireStaff',
+        itemNode: 'firestaff',
         itemType: 'mageWeapon',
         itemClass: 'mage',
         itemExample: true,
@@ -36,7 +36,7 @@ export const mainNodesItems: IMainNodesItems[] = [
     },
     {
         itemId: 'ARMOR_PLATE_SET1',
-        itemNode: 'plateArmor',
+        itemNode: 'plate_armor',
         itemType: 'armor',
         itemClass: 'warrior',
         itemExample: true,
@@ -46,7 +46,7 @@ export const mainNodesItems: IMainNodesItems[] = [
     },
     {
         itemId: 'HEAD_PLATE_SET1',
-        itemNode: 'plateHelmet',
+        itemNode: 'plate_helmet',
         itemType: 'helmet',
         itemClass: 'warrior',
         itemExample: true,
@@ -56,7 +56,7 @@ export const mainNodesItems: IMainNodesItems[] = [
     },
     {
         itemId: 'SHOES_PLATE_SET1',
-        itemNode: 'plateShoes',
+        itemNode: 'plate_shoes',
         itemType: 'shoes',
         itemClass: 'warrior',
         itemExample: true,

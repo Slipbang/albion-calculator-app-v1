@@ -4,17 +4,17 @@ import {useSelector} from "react-redux";
 import {
     selectBackpackItems,
     selectMarketAction,
-    selectMarketItems
 } from "../../../../../store/GMProfit/gm-profit-selectors";
 import styles from './MarketMenuItemList.module.scss';
 import {useDeferredValue} from "react";
 import MarketItemLoader from "../../GMItemSelector/ItemsLoaders/MarketItemLoader";
 import MarketMenuItem from "./MarketMenuItem/MarketMenuItem";
+import {selectInterfaceMarketItems} from "../../../../../store/interface/interface-selector";
 
 const MarketMenuItemList = () => {
 
     const marketActionSelected = useSelector(selectMarketAction);
-    const selectedMarketItems = useSelector(marketActionSelected === 'buy' ? selectMarketItems : selectBackpackItems);
+    const selectedMarketItems = useSelector(marketActionSelected === 'buy' ? selectInterfaceMarketItems : selectBackpackItems);
     const deferredMarketItems = useDeferredValue(selectedMarketItems);
     const {language, selectedLanguage} = useSelector(selectLanguage);
     const {marketMenuStrings} = language;

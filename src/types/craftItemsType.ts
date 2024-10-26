@@ -6,19 +6,20 @@ export type TResourceType = 'METALBAR' | 'LEATHER' | 'CLOTH' | 'PLANKS' | 'STONE
 
 export type TTier = 'T3' | 'T4' | 'T5' | 'T6' | 'T7' | 'T8';
 
-export type TItemNode = 'axe' | 'dagger' | 'hammer' | 'warGloves' | 'mace'
-    | 'quarterstaff' | 'spear' | 'sword' | 'arcaneStaff' | 'cursedStaff'
-    | 'fireStaff' | 'frostStaff' | 'holyStaff' | 'natureStaff' | 'bag'
-    | 'cape' | 'clothArmor' | 'leatherArmor' | 'plateArmor' | 'clothHelmet'
-    | 'leatherHelmet' | 'plateHelmet' | 'clothShoes' | 'leatherShoes'
-    | 'plateShoes' | 'bow' | 'crossbow' | 'book' | 'torch' | 'shield'
-    | 'horn' | 'totem' | 'orb' | 'skinningKnife' | 'sickle' | 'pickaxe'
-    | 'demolitionHammer' | 'fishingRod' | 'toolAxe' | 'stoneHammer' | 'harvesterGarb'
-    | 'fishermanGarb' | 'skinnerGarb' | 'minerGarb' | 'quarrierGarb'
-    | 'lumberjackGarb' | 'harvesterCap' | 'fishermanCap' | 'skinnerCap'
-    | 'minerCap' | 'quarrierCap' | 'lumberjackCap'
-    | 'harvesterWorkboots' | 'fishermanWorkboots' | 'skinnerWorkboots'
-    | 'minerWorkboots' | 'quarrierWorkboots' | 'lumberjackWorkboots'
+export type TItemNode = 'axe' | 'dagger' | 'hammer' | 'knuckles' | 'mace'
+    | 'quarterstaff' | 'spear' | 'sword' | 'arcanestaff' | 'cursestaff'
+    | 'firestaff' | 'froststaff' | 'holystaff' | 'naturestaff' | 'bag'
+    | 'cape' | 'cloth_armor' | 'leather_armor' | 'plate_armor' | 'cloth_helmet'
+    | 'leather_helmet' | 'plate_helmet' | 'cloth_shoes' | 'leather_shoes'
+    | 'plate_shoes' | 'bow' | 'crossbow' | 'book' | 'torch' | 'shield'
+    | 'horn' | 'totem' | 'orb' | 'skinningknife' | 'sickle' | 'pickaxe'
+    | 'demolitionhammer' | 'fishing' | 'woodaxe' | 'stonehammer'
+    | 'fibergatherer_armor' | 'fibergatherer_helmet' | 'fibergatherer_shoes'
+    | 'fishgatherer_armor' | 'fishgatherer_helmet' | 'fishgatherer_shoes'
+    | 'hidegatherer_armor' | 'hidegatherer_helmet' | 'hidegatherer_shoes'
+    | 'oregatherer_armor' | 'oregatherer_helmet' | 'oregatherer_shoes'
+    | 'rockgatherer_armor' | 'rockgatherer_helmet' | 'rockgatherer_shoes'
+    | 'woodgatherer_armor' | 'woodgatherer_helmet' | 'woodgatherer_shoes'
     | 'CLOTH' | 'LEATHER' | 'METALBAR' | 'PLANKS' | 'STONEBLOCK'
     | 'ORE' | 'WOOD' | 'HIDE' | 'FIBER' | 'ROCK' | '';
 

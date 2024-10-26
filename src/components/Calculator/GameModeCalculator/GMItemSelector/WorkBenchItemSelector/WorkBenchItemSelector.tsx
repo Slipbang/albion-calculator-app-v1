@@ -5,12 +5,13 @@ import {memo, useDeferredValue} from "react";
 import WorkBenchItemsLoader from "../ItemsLoaders/WorkBenchItemsLoader";
 import WorkBenchItem from "./WorkBenchItem/WorkBenchItem";
 import {selectItemType, selectWorkBenchType} from "../../../../../store/GMProfit/gm-profit-selectors";
-import {workBenchSelectorItems} from "../../../../../store/Items/workBenchSelectorItems_marketItems";
+import {selectInterfaceWorkBenchSelectorItems} from "../../../../../store/interface/interface-selector";
 
 const WorkBenchItemSelector = () => {
 
     const selectedWorkBenchType = useSelector(selectWorkBenchType);
     const selectedItemType = useSelector(selectItemType);
+    const workBenchSelectorItems = useSelector(selectInterfaceWorkBenchSelectorItems);
     const items = workBenchSelectorItems[selectedWorkBenchType][selectedItemType];
     const deferredCraftingItems = useDeferredValue(items);
 

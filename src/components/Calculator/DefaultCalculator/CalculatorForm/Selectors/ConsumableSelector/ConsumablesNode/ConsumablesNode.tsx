@@ -5,10 +5,11 @@ import {IConsumableObject} from "../../../../../../../types/consumableTypes";
 import {useAppDispatch} from "../../../../../../../store";
 import {profitSliceActions} from "../../../../../../../store/profit/profit-slice";
 import {useSelector} from "react-redux";
-import {selectCalculatorType} from "../../../../../../../store/interface/interface-selector";
-import {consumablesSelectorItems} from "../../../../../../../store/Items/consumablesSelectorItems";
+import {
+    selectCalculatorType,
+    selectInterfaceConsumableNamesData, selectInterfaceConsumablesSelectorItems
+} from "../../../../../../../store/interface/interface-selector";
 import {TCalcProps} from "../../../../../../../types/calculatorPropsType";
-import {consumablesNamesData} from "../../../../../../../store/Items/consumablesNamesData";
 import {TSelectedLanguage} from "../../../../../../../types/languageTypes";
 
 interface IConsumablesNodeProps {
@@ -20,6 +21,8 @@ const ConsumablesNode = ({tier, selectedLanguage}: IConsumablesNodeProps) => {
 
     const dispatchAction = useAppDispatch();
     const calculatorType = useSelector(selectCalculatorType);
+    const consumableNamesData = useSelector(selectInterfaceConsumableNamesData);
+    const consumablesSelectorItems = useSelector(selectInterfaceConsumablesSelectorItems);
 
     const selectConsumableItemHandler = (item: IConsumableObject) => {
         dispatchAction(profitSliceActions.setSelected({type: calculatorType, selectedConsumable: item}));
@@ -39,7 +42,7 @@ const ConsumablesNode = ({tier, selectedLanguage}: IConsumablesNodeProps) => {
                         <img
                             src={`${srcRoute}${itemId}`}
                             alt=""
-                            title={consumablesNamesData[itemId][selectedLanguage] || 'name is not found'}
+                            title={consumableNamesData[itemId][selectedLanguage] || 'name is not found'}
                         />
 
                         <div className={styles.resourceQuantity}>

@@ -1,4 +1,3 @@
-import {craftItems} from "../../../../../../../../store/Items/craftItems";
 import {arrowDown} from "../../../../../DefaultCalculatorImgReexports/DefaultCalculatorImgReexports";
 import {TCraftObjectTypes, TItemNode} from "../../../../../../../../types/craftItemsType";
 import styles from './ItemNodeSelector.module.scss';
@@ -8,8 +7,7 @@ import Items from "./Items/Items";
 import {useSelector} from "react-redux";
 import {selectItemType} from "../../../../../../../../store/profit/profit-selectors";
 import {srcRoute} from "../../../../../../../../store/api/api";
-
-const objectTypeKeys = Object.keys(craftItems) as TCraftObjectTypes[];
+import {selectInterfaceCraftItems} from "../../../../../../../../store/interface/interface-selector";
 
 interface IItemNodeSelectorProps {
     typeOfTypeSelector: string;
@@ -21,6 +19,9 @@ const ItemNodeSelector = (props: IItemNodeSelectorProps) => {
     const dispatchAction = useAppDispatch();
 
     const itemType = useSelector(selectItemType);
+    const craftItems = useSelector(selectInterfaceCraftItems);
+
+    const objectTypeKeys = Object.keys(craftItems) as TCraftObjectTypes[];
 
     const selectItemNodeHandler = (selectedNode: TItemNode) => {
         dispatchAction(profitSliceActions.setSelectedNode(selectedNode))
@@ -65,6 +66,8 @@ const ItemNodeSelector = (props: IItemNodeSelectorProps) => {
                                     imgLoaderBackground={styles.imgLoaderBackground}
                                     itemNodeOfNodeSelector={itemForNodeSelect.itemNode!}
                                     selectedItemTier={selectedItemTier}
+                                    craftItems={craftItems}
+                                    objectTypeKeys={objectTypeKeys}
                                 />
                             </div>
                         )

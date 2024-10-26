@@ -5,8 +5,10 @@ import {
     tannerAvatar,
     tannerWorkerAvatar
 } from "../../components/Calculator/GameModeCalculator/GMItemSelector/GMItemSelectorImgReexports/GMItemSelectorImgReexports";
-import {emptyBagCell, IBagCell, IGMCraftItem, marketItems} from "../Items/workBenchSelectorItems_marketItems";
+
 import {srcRoute} from "../api/api";
+import {emptyBagCell, IBagCell} from "../Items/emptyBagCell";
+import {IGMCraftItem} from "../utils/createWorkBenchSelectorItems";
 
 export interface ISelectedWorkBenchItem extends IGMCraftItem {
     artefactsQuantity?: number;
@@ -22,7 +24,6 @@ interface IInitialState {
     itemTypeSelected: TItemTypeSelected;
     selectedWorkBenchItem: ISelectedWorkBenchItem;
     selectedMarketItem: IBagCell,
-    marketItems: IBagCell[];
     marketActionSelected: TMarketActions;
     foodTax: number;
     backpackSilver: number;
@@ -61,7 +62,6 @@ const initialState: IInitialState = {
         itemEnchantmentNum: '',
         itemEnchantment: '',
     },
-    marketItems: marketItems,
     marketActionSelected: 'buy',
     foodTax: 0,
     backpackSilver: 0,

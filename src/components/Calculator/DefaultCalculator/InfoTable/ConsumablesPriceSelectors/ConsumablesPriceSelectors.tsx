@@ -1,10 +1,10 @@
 import {cityOptions} from "../../../../../store/Options/CityOptions";
-import {TConsumableNames} from "../../../../../store/Items/consumablesNamesData";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
 import {IItemsData, TCities} from "../../../../../types/InfoTableTypes";
 import {Dispatch, SetStateAction, useState} from "react";
 import {TConsumablesSelectors} from "../InfoTable";
 import styles from './ConsumablesPriceSelectors.module.scss';
+import {TConsumableNames} from "../../../../../types/ConsumableNamesType";
 
 interface IConsumablesSelectorsProps {
     consumableSelectorsKeys: string[];

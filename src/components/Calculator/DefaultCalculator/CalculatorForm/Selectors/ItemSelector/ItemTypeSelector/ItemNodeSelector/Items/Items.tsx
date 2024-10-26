@@ -1,12 +1,13 @@
-import {craftItems} from "../../../../../../../../../store/Items/craftItems";
 import React from "react";
-import {ICraftItem, TCraftObjectTypes, TItemNode} from "../../../../../../../../../types/craftItemsType";
+import {ICraftItem, TCraftObjectTypes, TItemNode, TItems} from "../../../../../../../../../types/craftItemsType";
 import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../../../../../../../store/language/language-selector";
 import {profitSliceActions} from "../../../../../../../../../store/profit/profit-slice";
 import {defineMaterials} from "../../../../../../../Definers/defineMaterials";
 import {useAppDispatch} from "../../../../../../../../../store";
-import {selectCalculatorType} from "../../../../../../../../../store/interface/interface-selector";
+import {
+    selectCalculatorType,
+} from "../../../../../../../../../store/interface/interface-selector";
 import {selectItemNode, selectItemType} from "../../../../../../../../../store/profit/profit-selectors";
 import {arrowRight} from "../../../../../../DefaultCalculatorImgReexports/DefaultCalculatorImgReexports";
 import {interfaceSliceActions} from "../../../../../../../../../store/interface/interface-slice";
@@ -15,16 +16,16 @@ import {srcRoute} from "../../../../../../../../../store/api/api";
 import {defineDivisionsFactors} from "../../../../../../../Definers/defineDivisionsFactors";
 import {TCalcProps} from "../../../../../../../../../types/calculatorPropsType";
 
-const objectTypeKeys = Object.keys(craftItems) as TCraftObjectTypes[];
-
 interface IItemsProps {
     selectedItemTier: string;
     itemNodeOfNodeSelector: TItemNode;
     imgLoaderBackground: string;
+    craftItems: TItems;
+    objectTypeKeys: TCraftObjectTypes[]
 }
 
 const Items = (props: IItemsProps) => {
-    const {selectedItemTier, itemNodeOfNodeSelector, imgLoaderBackground} = props;
+    const {selectedItemTier, itemNodeOfNodeSelector, imgLoaderBackground, craftItems, objectTypeKeys} = props;
     const dispatchAction = useAppDispatch();
 
     const {selectedLanguage} = useSelector(selectLanguage);

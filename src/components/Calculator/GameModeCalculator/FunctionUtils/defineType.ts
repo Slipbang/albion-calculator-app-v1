@@ -12,13 +12,13 @@ const isTypeResource = (itemNode: TItemNode) => {
         case 'FIBER':
         case 'ROCK':
         case 'WOOD':
-        case 'stoneHammer':
-        case 'skinningKnife':
+        case 'stonehammer':
+        case 'skinningknife':
         case 'sickle':
         case 'pickaxe':
-        case 'demolitionHammer':
-        case 'fishingRod':
-        case 'toolAxe':
+        case 'demolitionhammer':
+        case 'fishing':
+        case 'woodaxe':
         case '':
             return true;
         default:

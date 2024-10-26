@@ -1,14 +1,11 @@
-import {createAsyncThunk, createSlice, Observable, PayloadAction} from "@reduxjs/toolkit";
-import artefacts from "../Items/artefacts";
-import {TArtefactClass, TArtefactData, TArtefacts, TArtefactTypes} from "../../types/artefactTypes";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {TArtefactClass, TArtefactTypes} from "../../types/artefactTypes";
 import {TTier} from "../../types/craftItemsType";
-import {IItemsData} from "../../types/InfoTableTypes";
-
 
 export type TExtendedTClass = TArtefactClass | 'allClasses';
 
 export const artefactsClassesKeys = ['WARRIOR', 'HUNTER', "MAGE"] as TArtefactClass[];
-export const artefactsTypesKeys = ['RUNES', "RELICTS", 'AVALONIANSHARDS'] as TArtefactTypes[];
+export const artefactsTypesKeys = ['RUNE', 'SOUL', "RELICT", 'AVALONIAN'] as TArtefactTypes[];
 
 export type TArtefactsTier = Exclude<TTier, 'T3'>
 
@@ -18,16 +15,14 @@ interface IInitialState {
     selectedType: TArtefactTypes;
     selectedSort: 'descending' | 'ascending';
     selectedTier: TArtefactsTier;
-    artefacts: TArtefacts;
     artefactsParams: string;
 }
 
 const initialState: IInitialState = {
     selectedClass: 'WARRIOR',
-    selectedType: 'RUNES',
+    selectedType: 'RUNE',
     selectedSort: 'descending',
     selectedTier: 'T6',
-    artefacts: JSON.parse(JSON.stringify(artefacts)),
     artefactsParams: '',
 };
 

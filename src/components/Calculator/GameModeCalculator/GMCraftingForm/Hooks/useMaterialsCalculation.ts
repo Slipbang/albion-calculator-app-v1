@@ -1,7 +1,7 @@
 import {TMaterialsInfo, TResourceType} from "../../../../../types/craftItemsType";
 import {TExtractedMaterialsKeys} from "../GMCraftingForm";
 import {ISelectedWorkBenchItem} from "../../../../../store/GMProfit/gm-profit-slice";
-import {IBagCell} from "../../../../../store/Items/workBenchSelectorItems_marketItems";
+import {IBagCell} from "../../../../../store/Items/emptyBagCell";
 
 export type TBackpackMatsQuantity = {
     [key in TResourceType as `backpack${Capitalize<string & key>}Quantity`]: number | null;
