@@ -7,10 +7,10 @@ import {GMProfitSliceActions} from "../../../../../store/GMProfit/gm-profit-slic
 import styles from './BackpackItems.module.scss';
 import BackpackCell from "./BackpackCell/BackpackCell";
 import {Tooltip} from "react-tooltip";
-import {IBagCell} from "../../../../../store/Items/workBenchSelectorItems_marketItems";
 import {interfaceSliceActions} from "../../../../../store/interface/interface-slice";
 import StyledBackpackButton from "../BackpackSC/StyledBackpackButton";
 import {backpackFastSell, backpackFastSellHovered} from "../BackpackImgReexports/BackpackImgReexports";
+import {IBagCell} from "../../../../../store/Items/emptyBagCell";
 
 export interface ITooltipData {
     item: null | IBagCell;

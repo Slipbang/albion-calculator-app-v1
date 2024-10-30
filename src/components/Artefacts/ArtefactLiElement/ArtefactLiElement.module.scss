@@ -19,6 +19,10 @@
     margin: 10px;
   }
 
+  p:not(:last-child) {
+    font-size: var(--text-fs);
+  }
+
   p {
     padding: 5px;
     cursor: pointer;
@@ -72,3 +76,9 @@
   --filter-paragraph: none;
 }
 
+[data-text='short'] {
+  --text-fs: 13px;
+}
+[data-text='long'] {
+  --text-fs: 16px;
+}

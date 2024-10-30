@@ -1,10 +1,8 @@
 import StyledBackpackCell from "../../BackpackSC/StyledBackpackCell";
 import React from "react";
 import styles from './BackpackCell.module.scss';
-import {TSelectedLanguage} from "../../../../../../types/languageTypes";
-import {TItemName} from "../../../../../../types/craftItemsType";
-import {IBagCell} from "../../../../../../store/Items/workBenchSelectorItems_marketItems";
 import {ITooltipData} from "../BackpackItems";
+import {IBagCell} from "../../../../../../store/Items/emptyBagCell";
 
 interface IBackpackCellProps {
     index: number;

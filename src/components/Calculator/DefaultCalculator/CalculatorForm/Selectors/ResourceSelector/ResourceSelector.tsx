@@ -1,5 +1,4 @@
 import {arrowRight} from "../../../DefaultCalculatorImgReexports/DefaultCalculatorImgReexports";
-//import {materials} from "../../../../../../store/Items/materials";
 import React, {useEffect, useRef, useState} from "react";
 import {profitSliceActions} from "../../../../../../store/profit/profit-slice";
 import {TCalcProps} from "../../../../../../types/calculatorPropsType";
@@ -12,7 +11,10 @@ import {ICraftItem, TTier} from "../../../../../../types/craftItemsType";
 import {defineMaterials} from "../../../../Definers/defineMaterials";
 import {srcRoute} from "../../../../../../store/api/api";
 import {defineDivisionsFactors} from "../../../../Definers/defineDivisionsFactors";
-import {selectInterfaceMaterials} from "../../../../../../store/interface/interface-selector";
+import {
+    selectInterfaceLanguageData,
+    selectInterfaceMaterials
+} from "../../../../../../store/interface/interface-selector";
 
 interface IResourceSelectorProps {
     calculatorType: TCalcProps;
@@ -27,16 +29,20 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
 
     const selectedResource = useSelector(selectResource);
     const materials = useSelector(selectInterfaceMaterials);
-    const {resourceId, resourceName, resourceTier} = selectedResource;
+    const {resourceId} = selectedResource;
     const {RESOURCES: resourcesDivFactor} = useSelector(selectDivFactor);
     const {mainDivFactor, subDivFactor} = resourcesDivFactor;
+
+    const languageData = useSelector(selectInterfaceLanguageData);
+    const getResourceName = (itemId: string) => languageData?.[itemId]?.[selectedLanguage] || '';
+    const resourceName = getResourceName(resourceId);
 
     const resourceSelectorRef = useRef<HTMLDivElement>(null);
 
     const [isResourceSelectorShown, setIsResourceSelectorShown] = useState(false);
 
     const selectResourceHandler = (selectedItem: ICraftItem) => {
-        const {itemId, itemName} = selectedItem;
+        const {itemId} = selectedItem;
         const resourceTier = itemId!.split('_')[0] as TTier;
         const tierNumber = +resourceTier.split('T')[1];
 
@@ -62,7 +68,6 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
             selectedResource: {
                 resourceId: itemId!,
                 resourceTier,
-                resourceName: itemName!,
             },
         }));
     }
@@ -94,7 +99,7 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
             >
                 <img
                     className={styles.backgroundSkeleton}
-                    title={`${resourceName?.[selectedLanguage]!} ${resourceTier}`}
+                    title={resourceName}
                     src={`${srcRoute}${resourceId}`}
                     alt=""
                 />
@@ -116,8 +121,9 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
                 <div className={!!isResourceSelectorShown ? styles.resourceButtonSelector : styles.resourceButtonSelectorHidden}>
 
                     {materials.map((item) => {
-                        const {itemId, itemName} = item;
-                        const itemTier = itemId!.split('_')[0];
+                        const {itemId} = item;
+
+                        const itemName = getResourceName(itemId!);
 
                         const {mainDiv, subDiv} = defineDivisionsFactors(item);
 
@@ -127,7 +133,7 @@ const ResourceSelector = (props: IResourceSelectorProps) => {
                                     className={styles.backgroundSkeleton}
                                     src={`${srcRoute}${itemId}`}
                                     alt=''
-                                    title={`${itemName?.[selectedLanguage]} ${itemTier}`}
+                                    title={itemName}
                                     onClick={(event) => {
                                         selectResourceHandler(item);
                                         setIsResourceSelectorShown(false);

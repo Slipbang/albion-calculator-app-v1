@@ -1,24 +1,22 @@
 import styles from './InfoTable.module.scss'
 import {IItemsData, TCities} from "../../../../types/InfoTableTypes";
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../../store/language/language-selector";
 import {Tooltip} from 'react-tooltip';
-import {TArtefactData} from "../../../../types/artefactTypes";
 import {selectCraftedConsumablesData, selectCraftedItemData} from "../../../../store/profit/profit-selectors";
 import {useAppDispatch} from "../../../../store";
 import {interfaceSliceActions} from "../../../../store/interface/interface-slice";
 import {profitSliceActions} from "../../../../store/profit/profit-slice";
-import {defineArtefactsName} from "../../Definers/defineArtefactsName";
 import MaterialSelectors from "./MaterialSelectors/MaterialSelectors";
-import {ISelectedLanguage, TSelectedLanguage} from "../../../../types/languageTypes";
+import {ISelectedLanguage, TLanguageData, TSelectedLanguage} from "../../../../types/languageTypes";
 import {srcRoute, useLazyGetItemsDataQuery} from "../../../../store/api/api";
 import {selectServerId} from "../../../../store/queryParams/query-params-selectors";
 import {PulseLoader} from "react-spinners";
 import ErrorNotification from "../ErrorNotification/ErrorNotification";
 import {
-    selectInterfaceArtefact,
-    selectInterfaceConsumableNamesData, selectInterfaceMaterials,
+    selectInterfaceLanguageData,
+    selectInterfaceMaterials,
     selectTheme
 } from "../../../../store/interface/interface-selector";
 import TableTdElement from "./TableTdElement/TableTdElement";
@@ -33,7 +31,6 @@ import {TConsumableNames} from "../../../../types/ConsumableNamesType";
 
 export type ICraftItemInfoTuple = [
     itemData: IInfoTableData | undefined,
-    artefactName: TArtefactName,
     selectedLanguage: TSelectedLanguage,
     infoTableStrings: ISelectedLanguage['infoTableStrings'],
     materialsData: IItemsData[] | undefined,
@@ -47,6 +44,7 @@ export type ICraftItemInfoTuple = [
     currentDate: Date,
     quality: number,
     materials: ICraftItem[],
+    languageData: TLanguageData,
 ];
 
 export type ICraftConsumableInfoTuple = [
@@ -83,8 +81,6 @@ export type TSelectedCityStates = {
     [key in TSelectCityType]: TCities
 }
 
-export type TArtefactName = TArtefactData['artefactName'] | undefined;
-
 export const infoCityOptions: TCities[] = ['Brecilien', 'Caerleon', 'Fort Sterling', 'Bridgewatch', 'Martlock', 'Thetford', 'Lymhurst', 'Black Market'];
 
 const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
@@ -93,9 +89,8 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
     const serverId = useSelector(selectServerId);
 
     const craftedConsumablesData = useSelector(selectCraftedConsumablesData);
-    const artefacts = useSelector(selectInterfaceArtefact);
     const materials = useSelector(selectInterfaceMaterials);
-    const consumableNamesData = useSelector(selectInterfaceConsumableNamesData);
+    const languageData = useSelector(selectInterfaceLanguageData);
 
     let tableQueryParams: ITableQueryParams | undefined,
         infoTableData: IInfoTableData,
@@ -132,13 +127,13 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
         consumableResourcesKeys = Object.keys(craftedConsumable).filter(key => key.toUpperCase() === key);
 
         consumablesNames = {
-            [craftedConsumable.itemId]: {...consumableNamesData![craftedConsumable.itemId]}
+            [craftedConsumable.itemId]: {...languageData[craftedConsumable.itemId]!}
         };
 
         consumableSelectorsKeys.push(...[...consumableResourcesKeys].filter(key => !key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')));
 
         consumableResourcesKeys.forEach(key => {
-            consumablesNames![key] = {...consumableNamesData![key]};
+            consumablesNames![key] = {...languageData[key]!};
         });
 
         [1, 2, 3].forEach(enchantment => {
@@ -149,7 +144,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                         ? 'T1_ALCHEMY_EXTRACT_LEVEL'
                         : '';
 
-            consumablesNames![`${extraResourceKey}${enchantment}`] = {...consumableNamesData![`${extraResourceKey}${enchantment}`]};
+            consumablesNames![`${extraResourceKey}${enchantment}`] = {...languageData[`${extraResourceKey}${enchantment}`]!};
 
             consumableSelectorsInitialState[`${extraResourceKey}${enchantment}`] = 'Fort Sterling';
             consumableSelectorsKeys.push(`${extraResourceKey}${enchantment}`);
@@ -248,8 +243,6 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
     const [consumableSelectors, setConsumableSelectors] = useState<TConsumablesSelectors>(consumableSelectorsInitialState);
     const [quality, setQuality] = useState(1);
 
-    const {artefactName} = useMemo(() => defineArtefactsName({artefactId: artefactId || '', artefacts}), [artefactId]);
-
     const closeInfoTableHandler = () => {
         dispatchAction(interfaceSliceActions.setInfoTableVisibility(false));
         dispatchAction(profitSliceActions.resetData());
@@ -261,7 +254,6 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
         (calculatorType === 'ITEMS' || calculatorType === 'RESOURCES')
             ? [
                 infoTableData!,
-                artefactName,
                 selectedLanguage,
                 infoTableStrings,
                 materialsData,
@@ -275,6 +267,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                 currentDate,
                 quality,
                 materials,
+                languageData,
             ] as ICraftItemInfoTuple
             : [
                 craftedConsumablesData!,
@@ -308,6 +301,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                 <div className={styles.wrapper} data-theme={theme}>
                     {(calculatorType === 'RESOURCES' || calculatorType === 'ITEMS') && (
                         <MaterialSelectors
+                            languageData={languageData}
                             mainMatsId={mainMatsId!}
                             subMatsId={subMatsId!}
                             emptyJournalId={emptyJournalId!}
@@ -322,13 +316,11 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                             isJournalsUsed={isJournalsUsed}
                             setIsJournalsUsed={setIsJournalsUsed}
                             setSelectedCities={setSelectedCities}
-                            artefactName={artefactName}
                             foodTax={foodTax}
                             selectedLanguage={selectedLanguage}
                             selectedCities={selectedCities!}
                             setQuality={setQuality}
                             quality={quality}
-                            materials={materials}
                         />
                     )}
 

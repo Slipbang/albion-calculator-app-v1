@@ -15,7 +15,6 @@ import {TConsumable} from "../../types/consumableTypes";
 
 import {TArtefacts} from "../../types/artefactTypes";
 import {defineCurrentConfigurationItems, ICurrentConfigurationItems} from "../utils/defineCurrentConfigurationItems";
-import {TConsumableNames} from "../../types/ConsumableNamesType";
 
 export interface ICount {
     left: number;
@@ -32,28 +31,40 @@ export type TConsumableCraftItems = {
 interface IItemsConfigurationData {
     craftItems: TItems;
     consumableCraftItems: TConsumableCraftItems;
-    consumableNamesData: TConsumableNames;
     artefacts: TArtefacts;
     materials: ICraftItem[];
+    languageData: [string, object];
 }
 
-const configurationItemsUrl = `https://albion-online-data-server.onrender.com/data`
+const configurationItemsUrl = `https://albion-online-data-server.onrender.com/data`;
+const githubApiUrl = 'https://api.github.com/repos/ao-data/ao-bin-dumps/commits';
 
 export const itemsHttpRequests = createAsyncThunk<IItemsConfigurationData>(
     '@interface/fetchConfigurationItems',
     async (_, thunkAPI) => {
-        const items = localStorage.getItem('appConfigurationItems');
-        if (items) {
-            return thunkAPI.rejectWithValue('LOCALSTORAGE_IS_NOT_EMPTY');
+        const jsonItems = localStorage.getItem('appConfigurationItems');
+        let appDate = null;
+        let githubCommitDate = null;
+
+        if (jsonItems) {
+            const items = JSON.parse(jsonItems);
+            appDate = items.date;
+
+            const {data: githubData} = await axios.get(githubApiUrl);
+            githubCommitDate = githubData[0]['commit']['author']['date'];
+
+            if (!!appDate && !!githubCommitDate && (githubCommitDate === appDate)) {
+                return thunkAPI.rejectWithValue('LOCALSTORAGE_IS_NOT_EMPTY');
+            }
         }
 
-        const {data} = await axios.get<IItemsConfigurationData>(configurationItemsUrl);
+        const {data: ATData} = await axios.get<IItemsConfigurationData>(configurationItemsUrl);
 
-        if (!('craftItems' in data)) {
+        if (!('craftItems' in ATData)) {
             return thunkAPI.rejectWithValue('EMPTY_OBJECT');
         }
 
-        return data;
+        return ATData;
     }
 )
 

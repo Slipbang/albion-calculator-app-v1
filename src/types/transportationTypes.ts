@@ -1,5 +1,3 @@
-import {TItemName} from "./craftItemsType";
-
 export interface TransportationData {
     from: AODItemData,
     to: AODItemData,
@@ -29,7 +27,6 @@ export type TTransportationItemTypes = '2H' | 'MAIN' | 'BAG' | 'CAPE'
 
 export interface IItemType {
     itemId: string;
-    itemName: TItemName;
 }
 
 export type TTransportationItemsInfo = {

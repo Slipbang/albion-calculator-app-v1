@@ -2,12 +2,12 @@ import {useState} from "react";
 
 import styles from "./TransportationItem.module.scss";
 
-import {TransportationData, TTransportationItemTypes} from "../../../../types/transportationTypes";
+import {TransportationData} from "../../../../types/transportationTypes";
 
-import {transportationItems} from "../../../../store/Items/transportationItems";
 import {srcRoute} from "../../../../store/api/api";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../types/languageTypes";
-import {TItemName} from "../../../../types/craftItemsType";
+import {useSelector} from "react-redux";
+import {selectInterfaceLanguageData} from "../../../../store/interface/interface-selector";
 
 interface ITransportationItemProps {
     transportationData: TransportationData;
@@ -28,41 +28,7 @@ const TransportationItem = ({transportationData, language, selectedLanguage}: IT
     } = transportationData.to;
 
     const [wasCopied, setWasCopied] = useState(false);
-
-    function searchName(itemIdTo: string) {
-
-        const splitItemIdTo = itemIdTo.split('_');
-        const itemEnchantment = itemIdTo.includes('@') ? itemIdTo.split('@')[1] : '0';
-
-        let reservedItemTo = itemIdTo.includes('@') ? itemIdTo.split('@')[0] : itemIdTo;
-
-        let itemTier = reservedItemTo.split('_')[0];
-        let itemType = reservedItemTo.split('_')[1] as TTransportationItemTypes;
-
-        if (splitItemIdTo.length < 3) {
-            reservedItemTo += `_${reservedItemTo.split('_')[1]}`;
-        }
-        const itemIdMain = reservedItemTo.split(`${itemType}_`);
-
-        const itemIdBody = itemIdMain[1];
-        let itemName: TItemName | undefined;
-
-        const allowedTypes =
-            ['2H', 'MAIN', 'BAG', 'CAPE', 'CAPEITEM', 'ARMOR', 'HEAD', 'SHOES', 'OFF',
-                'LEATHER', 'CLOTH', 'METALBAR', 'PLANKS', 'STONEBLOCK', 'FIBER', 'HIDE',
-                'ORE', 'ROCK', 'WOOD', 'BACKPACK', 'SKILLBOOK', 'FACTION', 'RUNE', 'SOUL',
-                'RELIC', 'SHARD', 'JOURNAL' ];
-
-        if (allowedTypes.includes(itemType)) {
-            itemName = transportationItems[itemType]?.find(elem => elem.itemId === itemIdBody)?.itemName;
-        }
-
-        if (itemName !== undefined) {
-            return `${itemName[selectedLanguage]} ${itemTier}.${itemEnchantment}`;
-        }
-
-        return 'Can\'t find name :(';
-    }
+    const languageData = useSelector(selectInterfaceLanguageData);
 
     const getDate = (date: string) => {
         const currentDate = new Date();
@@ -78,7 +44,7 @@ const TransportationItem = ({transportationData, language, selectedLanguage}: IT
         navigator.clipboard.writeText(title).then(() => setWasCopied(true)).then(() => setTimeout(() => setWasCopied(false), 1000));
     }
 
-    const itemName = searchName(itemIdTo);
+    const itemName = languageData[itemIdTo]?.[selectedLanguage] || 'no name found';
     const profit = Math.floor((normalizedPriceTo - normalizedPriceTo * 0.065) - +normalizedPriceFrom);
 
     return (

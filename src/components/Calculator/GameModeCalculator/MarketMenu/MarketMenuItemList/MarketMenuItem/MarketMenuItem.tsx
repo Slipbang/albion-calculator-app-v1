@@ -4,7 +4,7 @@ import {useAppDispatch} from "../../../../../../store";
 import {useSelector} from "react-redux";
 import {
     selectEnchantmentMM,
-    selectInputMM,
+    selectInputMM, selectInterfaceLanguageData,
     selectItemTypeMM,
     selectTierMM
 } from "../../../../../../store/interface/interface-selector";
@@ -12,7 +12,7 @@ import {selectMarketAction} from "../../../../../../store/GMProfit/gm-profit-sel
 import {GMProfitSliceActions} from "../../../../../../store/GMProfit/gm-profit-slice";
 import {interfaceSliceActions} from "../../../../../../store/interface/interface-slice";
 import {TSelectedLanguage} from "../../../../../../types/languageTypes";
-import {IBagCell} from "../../../../../../store/Items/workBenchSelectorItems_marketItems";
+import {IBagCell} from "../../../../../../store/Items/emptyBagCell";
 
 interface IMarketMenuItemProps {
     item: IBagCell;
@@ -21,7 +21,7 @@ interface IMarketMenuItemProps {
 }
 
 const MarketMenuItem = ({item, index, selectedLanguage}: IMarketMenuItemProps) => {
-    const {itemId, itemImage, itemTier, itemNode, itemEnchantmentNum, itemEnchantment, itemName, itemQuantity} = item;
+    const {itemId, itemImage, itemTier, itemNode, itemEnchantmentNum, itemEnchantment, itemQuantity} = item;
     const dispatchAction = useAppDispatch();
 
     const selectedTier = useSelector(selectTierMM);
@@ -30,6 +30,8 @@ const MarketMenuItem = ({item, index, selectedLanguage}: IMarketMenuItemProps) =
     const inputSearch = useSelector(selectInputMM);
     const marketActionSelected = useSelector(selectMarketAction);
     const isRuSelected = selectedLanguage === 'ru';
+    const languageData = useSelector(selectInterfaceLanguageData);
+    const itemName = languageData[itemId!]?.[selectedLanguage];
 
     const setMarketItemHandler = (selectedMarketItem: IBagCell) => {
         dispatchAction(GMProfitSliceActions.setSelectedMarketItem(selectedMarketItem));
@@ -46,17 +48,17 @@ const MarketMenuItem = ({item, index, selectedLanguage}: IMarketMenuItemProps) =
     return (
         <div
             className={styles.materialItem}
-            style={validateItemHandler(itemNode!, itemEnchantmentNum, itemTier, itemName?.[selectedLanguage]!) ? {display: 'flex'} : {display: 'none'}}
+            style={validateItemHandler(itemNode!, itemEnchantmentNum, itemTier, itemName) ? {display: 'flex'} : {display: 'none'}}
         >
             <div
-                title={itemName?.[selectedLanguage]}
+                title={itemName}
                 className={styles.itemImg}
             >
                 <img
                     className={styles.backgroundSkeleton}
                     draggable={false}
                     src={itemImage}
-                    alt={itemName?.['en']}
+                    alt={itemName}
                 />
                 <div className={styles.itemQuantity}>
                     <p>{itemQuantity}</p>
@@ -65,9 +67,9 @@ const MarketMenuItem = ({item, index, selectedLanguage}: IMarketMenuItemProps) =
 
             <div
                 className={styles.itemName}
-                style={{fontSize: `${(itemName![selectedLanguage]!.length) < 17 ? 15 : 12}px`}}
+                style={{fontSize: `${(itemName.length || 0) < 17 ? 15 : 12}px`}}
             >
-                <p>{itemName?.[selectedLanguage]}</p>
+                <p>{itemName}</p>
             </div>
 
             <StyledMarketActionButton
@@ -76,7 +78,6 @@ const MarketMenuItem = ({item, index, selectedLanguage}: IMarketMenuItemProps) =
                 onClick={() =>
                     setMarketItemHandler({
                         itemQuantity,
-                        itemName,
                         itemImage,
                         itemId,
                         itemTier,

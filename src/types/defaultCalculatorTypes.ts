@@ -1,4 +1,4 @@
-import {TCraftObjectTypes, TItemName, TTier} from "./craftItemsType";
+import {TCraftObjectTypes, TTier} from "./craftItemsType";
 import {IConsumableObject} from "./consumableTypes";
 import {TCalcProps} from "./calculatorPropsType";
 
@@ -19,7 +19,6 @@ export interface IInfoTableData {
     journalId?: string,
     emptyJournalId?: string;
     journalsQuantity?: number;
-    itemName?: TItemName;
     tier: string
     artefactId?: string;
 }
@@ -59,10 +58,6 @@ export interface ISelectedItem {
     journalId: string;
     emptyJournalId: string;
     artefactId?: string;
-    itemName: {
-        ru: string,
-        en: string,
-    }
 }
 
 export interface ISelectedResource {
@@ -70,10 +65,6 @@ export interface ISelectedResource {
     resourceTier: TTier,
     foodConsumption: 1.8, // всегда 1.8
     defaultFoodConsumption: 1.8; // всегда 1.8
-    resourceName: {
-        ru: string,
-        en: string,
-    }
 }
 
 export type TMaterials = {

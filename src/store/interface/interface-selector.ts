@@ -44,7 +44,7 @@ export const selectItemQualityMI = (state: RootState) => state.interface.MarketI
 export const selectInterfaceCraftItems = (stata: RootState) => stata.interface.items.craftItems;
 export const selectInterfaceArtefact = (stata: RootState) => stata.interface.items.artefacts;
 export const selectInterfaceMaterials = (stata: RootState) => stata.interface.items.materials;
-export const selectInterfaceConsumableNamesData = (stata: RootState) => stata.interface.items.consumableNamesData;
+export const selectInterfaceLanguageData = (stata: RootState) => stata.interface.items.languageData;
 export const selectInterfaceConsumablesSelectorItems = (stata: RootState) => stata.interface.items.consumablesSelectorItems;
 export const selectInterfaceMarketItems = (stata: RootState) => stata.interface.items.marketItems;
 export const selectInterfaceWorkBenchSelectorItems = (stata: RootState) => stata.interface.items.workBenchSelectorItems;

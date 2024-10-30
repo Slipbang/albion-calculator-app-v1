@@ -11,8 +11,7 @@ import {profitSliceActions} from "../../../../../../store/profit/profit-slice";
 
 import {interfaceSliceActions} from "../../../../../../store/interface/interface-slice";
 import ConsumableItemImage from "../../../CraftTable/ConsumableItemImage/ConsumableItemImage";
-
-import {selectInterfaceConsumableNamesData} from "../../../../../../store/interface/interface-selector";
+import {selectInterfaceLanguageData} from "../../../../../../store/interface/interface-selector";
 
 const tiers: Exclude<TTier, 'T3'>[] = ['T4', 'T5', 'T6', 'T7', 'T8'];
 
@@ -32,7 +31,9 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
     const {itemId, amountCrafted} = selectedConsumable!;
     const itemQuantityInput = useSelector(selectConsumableItemQuantity)
     const returnPercent = useSelector(selectPercent);
-    const consumableNamesData = useSelector(selectInterfaceConsumableNamesData);
+
+    const languageData = useSelector(selectInterfaceLanguageData);
+    const itemName = languageData[itemId];
 
     const consumableItemSelectorRef = useRef<HTMLImageElement>(null)
 
@@ -131,7 +132,7 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
                             setIsSelectorVisible(prevState => !prevState)
                             dispatchAction(interfaceSliceActions.toggleCraftTableVisibility(true));
                         }}
-                        title={consumableNamesData[itemId][selectedLanguage] || 'name is not found'}
+                        title={itemName?.[selectedLanguage] || 'name is not found'}
                     >
                         <img
                             src={`${srcRoute}${itemId}`}
@@ -179,7 +180,7 @@ const ConsumablesSelector = (props: IFoodSelectorProps) => {
                                     resourceKeys={key}
                                     selectedLanguage={selectedLanguage}
                                     extraResourceStyles={styles.extraResource}
-                                    consumableNamesData={consumableNamesData}
+                                    languageData={languageData}
                                 />
                                 <div
                                     style={{marginTop: `${!extraKeys.includes(key) ? -30 : -26}px`}}

@@ -2,5 +2,12 @@
   position: absolute;
   top: 18px;
   left: 115px;
-  font-size: 22px;
+  font-size: var(--text-fs-MI);
+}
+
+[data-text='short'] {
+  --text-fs-MI: 22px;
+}
+[data-text='long'] {
+  --text-fs-MI: 17px;
 }

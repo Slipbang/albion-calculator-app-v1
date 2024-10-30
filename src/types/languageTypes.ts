@@ -193,3 +193,9 @@ export type TSelectedLanguage = 'ru' | 'en';
 export type TLanguage = {
     [key in TSelectedLanguage]: ISelectedLanguage;
 }
+
+export type TLanguageData = {
+    [key: string] : {
+        [key in TSelectedLanguage]: string;
+    }
+}

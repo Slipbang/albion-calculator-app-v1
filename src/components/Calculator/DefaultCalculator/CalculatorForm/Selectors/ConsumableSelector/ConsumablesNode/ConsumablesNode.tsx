@@ -7,7 +7,7 @@ import {profitSliceActions} from "../../../../../../../store/profit/profit-slice
 import {useSelector} from "react-redux";
 import {
     selectCalculatorType,
-    selectInterfaceConsumableNamesData, selectInterfaceConsumablesSelectorItems
+    selectInterfaceConsumablesSelectorItems, selectInterfaceLanguageData
 } from "../../../../../../../store/interface/interface-selector";
 import {TCalcProps} from "../../../../../../../types/calculatorPropsType";
 import {TSelectedLanguage} from "../../../../../../../types/languageTypes";
@@ -21,7 +21,8 @@ const ConsumablesNode = ({tier, selectedLanguage}: IConsumablesNodeProps) => {
 
     const dispatchAction = useAppDispatch();
     const calculatorType = useSelector(selectCalculatorType);
-    const consumableNamesData = useSelector(selectInterfaceConsumableNamesData);
+    const languageData = useSelector(selectInterfaceLanguageData);
+    const getItemTranslations = (itemId: string) => languageData[itemId];
     const consumablesSelectorItems = useSelector(selectInterfaceConsumablesSelectorItems);
 
     const selectConsumableItemHandler = (item: IConsumableObject) => {
@@ -32,7 +33,7 @@ const ConsumablesNode = ({tier, selectedLanguage}: IConsumablesNodeProps) => {
         <div style={{display: "flex"}}>
             {consumablesSelectorItems[calculatorType as Extract<TCalcProps, 'FOOD' | 'POTIONS'>][tier].map(item => {
                 const {itemId, amountCrafted} = item;
-
+                const itemName = getItemTranslations(itemId)?.[selectedLanguage] || 'name is not found';
                 return (
                     <div
                         style={{cursor: 'pointer'}}
@@ -42,7 +43,7 @@ const ConsumablesNode = ({tier, selectedLanguage}: IConsumablesNodeProps) => {
                         <img
                             src={`${srcRoute}${itemId}`}
                             alt=""
-                            title={consumableNamesData[itemId][selectedLanguage] || 'name is not found'}
+                            title={itemName}
                         />
 
                         <div className={styles.resourceQuantity}>

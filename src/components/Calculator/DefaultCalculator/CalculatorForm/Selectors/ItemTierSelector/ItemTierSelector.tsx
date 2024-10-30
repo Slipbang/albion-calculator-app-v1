@@ -7,6 +7,8 @@ import {useDefineSelectorImg} from "../../Hooks/useDefineSelectorImg";
 import styles from './ItemTierSelector.module.scss'
 import {TTier} from "../../../../../../types/craftItemsType";
 import {srcRoute} from "../../../../../../store/api/api";
+import {useSelector} from "react-redux";
+import {selectInterfaceLanguageData} from "../../../../../../store/interface/interface-selector";
 
 interface IItemTierSelectorProps {
     calculatorFormStrings: ISelectedLanguage['calculatorFormStrings'];
@@ -17,13 +19,15 @@ const ItemTierSelector = (props: IItemTierSelectorProps) => {
     const {calculatorFormStrings, selectedLanguage} = props;
 
     const dispatchAction = useAppDispatch();
+    const languageData = useSelector(selectInterfaceLanguageData);
 
     const {
         selectorImg,
         selectedItemId,
         selectedItemTier,
-        itemName
     } = useDefineSelectorImg();
+
+    const itemName = languageData[`${selectedItemTier}_${selectedItemId}`];
 
     const [isItemTierSelectorShown, setIsItemTierSelectorShown] = useState(false);
     const tierSelectorRef = useRef<HTMLDivElement>(null);
@@ -58,7 +62,7 @@ const ItemTierSelector = (props: IItemTierSelectorProps) => {
                 <img
                     style={{marginLeft: 20}}
                     className={styles.backgroundSkeleton}
-                    title={`${itemName?.[selectedLanguage]} ${selectedItemTier}`}
+                    title={`${itemName?.[selectedLanguage] || ''} ${selectedItemTier}`}
                     src={selectorImg}
                     alt=""
                 />

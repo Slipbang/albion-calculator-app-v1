@@ -10,12 +10,20 @@
   }
 
   p {
+    width: 270px;
     position: fixed;
     top: 20px;
     left: 140px;
     z-index: 9999;
-    font-size: 18px;
+    font-size: var(--text-fs-CF);
     font-weight: 700;
     color: rgb(89, 60, 40);
   }
+}
+
+[data-text='short'] {
+  --text-fs-CF: 18px;
+}
+[data-text='long'] {
+  --text-fs-CF: 12px;
 }

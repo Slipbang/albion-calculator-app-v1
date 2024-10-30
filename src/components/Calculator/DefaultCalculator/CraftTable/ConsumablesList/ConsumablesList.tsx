@@ -13,6 +13,7 @@ import {useAppDispatch} from "../../../../../store";
 import ConsumableItemImage from "../ConsumableItemImage/ConsumableItemImage";
 import {IConsumableTableData} from "../../../../../types/defaultCalculatorTypes";
 import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
+import {selectInterfaceLanguageData} from "../../../../../store/interface/interface-selector";
 
 interface TConsumablesTableProps {
     deleteLiHandler: (type: TCalcProps, id: string) => void;
@@ -28,6 +29,7 @@ const ConsumablesList = (props: TConsumablesTableProps) => {
 
     const craftLists = useSelector(selectCraftList);
     const similarError = useSelector(selectSimilarTypeErrors);
+    const languageData = useSelector(selectInterfaceLanguageData);
     const similarItemId = similarError[calculatorType];
 
     const resourcesWithReturnPercent = (craftedFood: IConsumableObject, key: string, returnPercent: number, totalQuantity: number) => {
@@ -65,6 +67,7 @@ const ConsumablesList = (props: TConsumablesTableProps) => {
                                         resourceKeys={key}
                                         selectedLanguage={selectedLanguage}
                                         extraResourceStyles={styles.extraResource}
+                                        languageData={languageData}
                                     />
 
                                     <div style={{marginTop: `${(!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? -30 : -26}px`}} className={styles.resourceQuantity}>

@@ -110,10 +110,6 @@ const initialState: IInitialState = {
             resourceTier: 'T4',
             foodConsumption: 1.8,
             defaultFoodConsumption: 1.8,
-            resourceName: {
-                ru: 'Слиток стали',
-                en: 'Steel Bar',
-            }
         },
         selectedItem: {
             selectedItemType: 'MAIN',
@@ -123,10 +119,6 @@ const initialState: IInitialState = {
             journalId: 'JOURNAL_WARRIOR_FULL',
             emptyJournalId: 'JOURNAL_WARRIOR_EMPTY',
             artefactId: undefined,
-            itemName: {
-                ru: 'Палаш',
-                en: 'Broadsword',
-            }
         },
         selectedConsumable: null,
     },
@@ -162,7 +154,7 @@ const profitSlice = createSlice({
         setSelectedNode(state, action: PayloadAction<TItemNode>) {
             state.itemSelector.itemNode = action.payload;
         },
-        setSelected(state, action: PayloadAction<{ type: TCalcProps; selectedItem?: Omit<ISelectedItem, 'selectedItemTier'>; selectedResource?: Pick<ISelectedResource, 'resourceId' | 'resourceTier' | 'resourceName'>; selectedConsumable?: IConsumableObject }>) {
+        setSelected(state, action: PayloadAction<{ type: TCalcProps; selectedItem?: Omit<ISelectedItem, 'selectedItemTier'>; selectedResource?: Pick<ISelectedResource, 'resourceId' | 'resourceTier'>; selectedConsumable?: IConsumableObject }>) {
             if (action.payload.type === 'RESOURCES') {
                 state.selected.selectedResource = {
                     ...state.selected.selectedResource,
@@ -291,7 +283,6 @@ const profitSlice = createSlice({
                         itemId: state.selected.selectedItem.selectedItemId,
                         journalId: `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.journalId}`,
                         emptyJournalId: `${state.selected.selectedItem.selectedItemTier}_${state.selected.selectedItem.emptyJournalId}`,
-                        itemName: state.selected.selectedItem.itemName,
                         tier: state.selected.selectedItem.selectedItemTier,
                         artefactId,
                     }
@@ -305,7 +296,6 @@ const profitSlice = createSlice({
                         foodConsumption: state.selected.selectedResource.foodConsumption,
                         defaultFoodConsumption: state.selected.selectedResource.defaultFoodConsumption,
                         resourceId: state.selected.selectedResource.resourceId,
-                        itemName: state.selected.selectedResource.resourceName,
                         tier: state.selected.selectedResource.resourceTier,
                     }
                 }

@@ -30,7 +30,7 @@ const SwipeButton = (props: ISwipeButtonProps) => {
         dispatchAction(profitSliceActions.setSelectedNode(selectedNode));
     }
 
-    const handle = () => {
+    const swipeHandler = () => {
         if (isLeft ? left > 0 : left < 3){
             dispatchAction(interfaceSliceActions.setSwiperCount({isLeft}));
 
@@ -51,7 +51,7 @@ const SwipeButton = (props: ISwipeButtonProps) => {
             style={{height: '50px', width: '11px', marginBottom: '7px'}}
             onClick={(event) => {
                 event.stopPropagation();
-                handle();
+                swipeHandler();
             }}
         />
     )

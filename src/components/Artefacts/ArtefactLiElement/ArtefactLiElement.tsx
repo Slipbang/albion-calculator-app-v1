@@ -11,6 +11,7 @@ import {artefactsPrices} from "./artefactsPricesClass";
 import {ISelectedLanguage} from "../../../types/languageTypes";
 import {srcRoute} from "../../../store/api/api";
 import {useArtefactsQuery} from "../Hooks/useArtefactsQuery";
+import {selectInterfaceLanguageData} from "../../../store/interface/interface-selector";
 
 type artefactsArgsTuple = [
     artefactsStrings: ISelectedLanguage['artefactsStrings'],
@@ -34,15 +35,17 @@ const ArtefactLiElement = memo((props: IArtefactsDataProps) => {
         artefactData,
         selectedTier,
     } = props;
-    const {id, itemValue, artefactId, artefactName} = artefactData;
+    const {id, itemValue, artefactId} = artefactData;
 
     const [isChecked, setIsChecked] = useState(false);
     const [wasCopied, setWasCopied] = useState(false);
 
     const {language, selectedLanguage} = useSelector(selectLanguage);
     const {artefactsStrings} = language;
+    const languageData = useSelector(selectInterfaceLanguageData);
 
     const fullArtefactId = `${selectedTier}_${artefactId}`;
+    const artefactName = languageData[fullArtefactId]?.[selectedLanguage] || '';
 
     const copyTextHandler = (title: string) => {
         navigator.clipboard.writeText(title).then(() => {
@@ -78,6 +81,7 @@ const ArtefactLiElement = memo((props: IArtefactsDataProps) => {
                 key={id}
                 className={styles.listElem}
                 data-checked={isChecked ? 'checked' : 'non-checked'}
+                data-text={artefactName.length <= 34 ? 'long' : 'short'}
             >
                 <div
                     className={styles.imageBox}
@@ -99,9 +103,8 @@ const ArtefactLiElement = memo((props: IArtefactsDataProps) => {
                     />
                     {!isArtefactsFetching && !isErrorArtefacts && <p>ℹ</p>}
                 </div>
-                <p
-                    onClick={() => copyTextHandler(artefactName[selectedLanguage])}
-                >{!wasCopied ? (artefactName[selectedLanguage]) : (artefactsStrings.copyState)}</p>
+                <p onClick={() => copyTextHandler(artefactName)}
+                >{!wasCopied ? (artefactName) : (artefactsStrings.copyState)}</p>
                 <StyledCompleteResetButton
                     onClick={() => setIsChecked(false)}
                     title={artefactsStrings.resetButtonTitle}

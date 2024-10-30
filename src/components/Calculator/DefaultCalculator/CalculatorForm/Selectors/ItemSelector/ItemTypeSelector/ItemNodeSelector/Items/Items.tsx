@@ -6,7 +6,7 @@ import {profitSliceActions} from "../../../../../../../../../store/profit/profit
 import {defineMaterials} from "../../../../../../../Definers/defineMaterials";
 import {useAppDispatch} from "../../../../../../../../../store";
 import {
-    selectCalculatorType,
+    selectCalculatorType, selectInterfaceLanguageData,
 } from "../../../../../../../../../store/interface/interface-selector";
 import {selectItemNode, selectItemType} from "../../../../../../../../../store/profit/profit-selectors";
 import {arrowRight} from "../../../../../../DefaultCalculatorImgReexports/DefaultCalculatorImgReexports";
@@ -25,7 +25,7 @@ interface IItemsProps {
 }
 
 const Items = (props: IItemsProps) => {
-    const {selectedItemTier, itemNodeOfNodeSelector, imgLoaderBackground, craftItems, objectTypeKeys} = props;
+    const {selectedItemTier, itemNodeOfNodeSelector, imgLoaderBackground, craftItems, objectTypeKeys,} = props;
     const dispatchAction = useAppDispatch();
 
     const {selectedLanguage} = useSelector(selectLanguage);
@@ -34,8 +34,11 @@ const Items = (props: IItemsProps) => {
     const itemNode = useSelector(selectItemNode);
     const itemType = useSelector(selectItemType);
 
+    const languageData = useSelector(selectInterfaceLanguageData);
+    const getItemName = (itemId: string) => languageData[itemId];
+
     const selectItemHandler = ({itemType, item}: { itemType: TCraftObjectTypes, item: ICraftItem }) => {
-        const {itemId, artefactItemId, foodConsumption, itemClass, itemName} = item;
+        const {itemId, artefactItemId, foodConsumption, itemClass} = item;
 
         let journalBodyId = '';
 
@@ -71,7 +74,6 @@ const Items = (props: IItemsProps) => {
                 journalId,
                 emptyJournalId,
                 artefactId: artefactItemId,
-                itemName: itemName!,
             },
         }));
 
@@ -110,12 +112,14 @@ const Items = (props: IItemsProps) => {
                     {objectTypeKeys.map(itemTypeKey => craftItems[itemTypeKey].map(itemToSelect => {
                         const {mainDiv, subDiv} = defineDivisionsFactors(itemToSelect);
 
-                        let imgHref: string;
+                        let completedItemId: string;
                         if ((itemTypeKey === 'BAG' && itemToSelect.itemId !== 'INSIGHT') || itemTypeKey === 'CAPE') {
-                            imgHref = itemToSelect.itemId!;
+                            completedItemId = itemToSelect.itemId!;
                         } else {
-                            imgHref = `${itemTypeKey}_${itemToSelect.itemId}`;
+                            completedItemId = `${itemTypeKey}_${itemToSelect.itemId}`;
                         }
+
+                        const itemName = getItemName(`${selectedItemTier}_${completedItemId}`)
 
                         return itemToSelect.itemNode === itemNode && itemToSelect.itemType === itemType && !itemToSelect.itemId!.includes('ROYAL') && (
                             <div
@@ -130,9 +134,9 @@ const Items = (props: IItemsProps) => {
                                 }}
                             >
                                 <img
-                                    title={itemToSelect.itemName?.[selectedLanguage]}
+                                    title={itemName?.[selectedLanguage]}
                                     className={imgLoaderBackground}
-                                    src={`${srcRoute}${selectedItemTier}_${imgHref}`}
+                                    src={`${srcRoute}${selectedItemTier}_${completedItemId}`}
                                     alt=""
                                 />
                                 <div>

@@ -3,7 +3,8 @@ import styles from './WorkBenchItem.module.scss';
 import {useSelector} from "react-redux";
 import {
     selectCalculatorType,
-    selectInputIS, selectInterfaceArtefact,
+    selectInputIS,
+    selectInterfaceLanguageData,
     selectNodeIS,
     selectTierIS
 } from "../../../../../../store/interface/interface-selector";
@@ -14,10 +15,9 @@ import {
 } from "../../../../../../store/interface/DummyEnchantmentButtons/DummyEnchantmentButtons";
 import {useAppDispatch} from "../../../../../../store";
 import {GMProfitSliceActions, ISelectedWorkBenchItem} from "../../../../../../store/GMProfit/gm-profit-slice";
-import {defineArtefactsName} from "../../../../Definers/defineArtefactsName";
 import TotalFoodTax from "./TotalFoodTax/TotalFoodTax";
 import {srcRoute} from "../../../../../../store/api/api";
-import {IGMCraftItem} from "../../../../../../store/Items/workBenchSelectorItems_marketItems";
+import {IGMCraftItem} from "../../../../../../store/utils/createWorkBenchSelectorItems";
 
 type TCraftItemsKeys = keyof Omit<IGMCraftItem, 'itemName'>;
 
@@ -26,14 +26,15 @@ interface IWorkBenchItemProps {
 }
 
 const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
-    const {itemId, itemTier, itemNode, itemImage, artefactItemId, itemName, enchantment, foodConsumption} = item;
+    const {itemId, itemTier, itemNode, itemImage, artefactItemId, enchantment, foodConsumption} = item;
 
     const inputSearch = useSelector(selectInputIS);
     const selectedNode = useSelector(selectNodeIS);
     const selectedTier = useSelector(selectTierIS);
     const calculatorType = useSelector(selectCalculatorType);
-    const artefacts = useSelector(selectInterfaceArtefact);
     const {selectedLanguage} = useSelector(selectLanguage);
+    const languageData = useSelector(selectInterfaceLanguageData);
+    const itemName = languageData[itemId!];
     const dispatchAction = useAppDispatch();
 
     const selectItemHandler = (selectedItem: ISelectedWorkBenchItem) => {
@@ -60,7 +61,7 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
     }
 
     const defineFontSize = (itemName: string) => {
-        return itemName.length > 18 ? 10 : itemName.length > 14 ? 12 : 16
+        return itemName.length > 18 ? 9 : itemName.length > 14 ? 12 : 16
     }
 
     const calculateArtefactsQuantityHandler = (artefactItemId: string, itemNode: string, itemTier: number) => {
@@ -82,7 +83,7 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
         return artefactsQuantity;
     }
 
-    const {artefactName} = defineArtefactsName({artefactId: artefactItemId!, artefacts});
+    const artefactName = languageData[artefactItemId || ''];
     const artefactsQuantity = calculateArtefactsQuantityHandler(artefactItemId!, itemNode!, itemTier);
 
     const itemKeys = Object.keys(item) as TCraftItemsKeys[];
@@ -175,8 +176,8 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
 
             <p
                 className={styles.itemName}
-                style={{fontSize: `${defineFontSize(itemName?.[selectedLanguage]!)}px`}}
-            >{`${itemName?.[selectedLanguage]} T${itemTier}`}</p>
+                style={{fontSize: `${defineFontSize(itemName?.[selectedLanguage] || '')}px`}}
+            >{itemName?.[selectedLanguage]}</p>
             <hr className={styles.hrStyles}/>
         </div>
     )

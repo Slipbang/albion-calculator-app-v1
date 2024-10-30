@@ -1,4 +1,4 @@
-import {TSelectedLanguage} from "./languageTypes";
+//import {TSelectedLanguage} from "./languageTypes";
 
 export type TCraftObjectTypes = '2H' | 'MAIN' | 'BAG' | 'CAPE' | 'ARMOR' | 'HEAD' | 'SHOES' | 'OFF';
 
@@ -37,13 +37,13 @@ export type TResources = {
     [key in TResourceType]?: number | null;
 }
 
-export type TItemName = {
-    [key in TSelectedLanguage]: string;
-}
+// export type TItemName = {
+//     [key in TSelectedLanguage]: string;
+// }
 
 export interface ICraftItem extends TResources{
     itemId: string | null;
-    itemName?: TItemName;
+    //itemName?: TItemName;
     itemNode?: TItemNode;
     itemExample?: boolean;
     itemClass?: ICraftingItemClass | '';

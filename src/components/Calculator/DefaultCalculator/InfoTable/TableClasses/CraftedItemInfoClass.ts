@@ -1,6 +1,6 @@
 import {IItemsData, TCities} from "../../../../../types/InfoTableTypes";
-import {TArtefactName, TOwnPriceStates, TSelectedCityStates} from "../InfoTable";
-import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
+import {TOwnPriceStates, TSelectedCityStates} from "../InfoTable";
+import {ISelectedLanguage, TLanguageData, TSelectedLanguage} from "../../../../../types/languageTypes";
 import {UtilsMethodsClass} from "./UtilsMethodsClass";
 import {IInfoTableData} from "../../../../../types/defaultCalculatorTypes";
 import {ICraftItem} from "../../../../../types/craftItemsType";
@@ -10,7 +10,6 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         public city: TCities,
         public enchantment: string,
         public itemData: IInfoTableData | undefined,
-        public artefactName: TArtefactName,
         public selectedLanguage: TSelectedLanguage,
         public infoTableStrings: ISelectedLanguage['infoTableStrings'],
         public materialsData: IItemsData[] | undefined,
@@ -24,6 +23,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         public currentDate: Date,
         public quality: number,
         public materials: ICraftItem[],
+        public languageData: TLanguageData,
     ) {
         super(currentDate);
     }
@@ -32,9 +32,10 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
 
     subMatsTier = (!!this.itemData!.resourceId) ? `T${this.itemTierNum - 1}` : this!.itemData!.tier;
 
-    mainMatsName = this.materials.find(elem => elem.itemId === this.itemData!.mainMatsId)!.itemName?.[this.selectedLanguage];
-
-    subMatsName = this.materials.find(elem => elem.itemId === this.itemData!.subMatsId)?.itemName?.[this.selectedLanguage] || '';
+    itemName = this.languageData[this.itemData?.itemId!];
+    mainMatsName = this.languageData[this.itemData!.mainMatsId]?.[this.selectedLanguage];
+    subMatsName = this.languageData[this.itemData!.subMatsId || '']?.[this.selectedLanguage] || '';
+    artefactName = this.languageData[this.itemData!.artefactId || '']?.[this.selectedLanguage] || '';
 
     getMatPrice = (itemId: string, selectedCity: TCities) => {
         return this.materialsData?.find(matItem => matItem.itemId === itemId && matItem.location === selectedCity)?.sellPriceMin || 0;
@@ -140,11 +141,11 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
     units = (this.itemData!.resourceId?.includes('STONEBLOCK') && this.enchantment !== '') ? ` (${Math.pow(2, +this.enchantment)}${this.infoTableStrings.un})` : '';
     journalsQuantityString = `${this.infoTableStrings.journalQuantity} ${this.totalJournalsQuantity}`;
     journalsProfitPerItemSting = `${this.infoTableStrings.journalProfit} (${this.journalPrice} - ${this.emptyJournalsPrice}) * ${this.totalJournalsQuantity} = ${this.journalsProfitPerItem}`;
-    itemTitleString = `${this.itemData!.tier}${this.enchantmentString(this.itemData!.itemId! || this.itemData!.resourceId!)} ${this.itemData!.itemName![this.selectedLanguage]}(-6.5%):  ${this.averageItemPrice?.toLocaleString('en')}${this.units} ${this.itemWasUpdate}`;
+    itemTitleString = `${this.itemData!.tier}${this.enchantmentString(this.itemData!.itemId! || this.itemData!.resourceId!)} ${this.itemName![this.selectedLanguage]}(-6.5%):  ${this.averageItemPrice?.toLocaleString('en')}${this.units} ${this.itemWasUpdate}`;
     mainMatsTitleString = `${this.itemData!.tier}${this.enchantmentString(this.itemData!.mainMatsId)} ${this.mainMatsName}: ${this.itemData!.spentQuantityPerItem!.mainMatsQuantity} * ${this.mainMaterialPrice} = ${this.mainMatsPricePerItem.toLocaleString('en')} ${this.mainMatsWasUpdate}`;
     totalFoodFeeSting = `${this.infoTableStrings.taxPerOneItem} ${this.totalFoodFee}`;
     subMatsTitleString = `${this.subMatsTier}${this.enchantmentString(this.itemData!.subMatsId!)} ${this.subMatsName}: ${this.subMatsQuantity} * ${this.subMaterialPrice} = ${this.subMatsPricePerItem?.toLocaleString('en')} ${this.subMatsWasUpdate}`;
-    artefactString = `${this.itemData!.tier} ${this.artefactName?.[this.selectedLanguage]}: ${this.artefactPrice.toLocaleString('en')} ${this.artefactWasUpdate}`;
+    artefactString = `${this.itemData!.tier} ${this.artefactName}: ${this.artefactPrice.toLocaleString('en')} ${this.artefactWasUpdate}`;
     profitPerItemTitle = `${this.infoTableStrings.profitPerItem} ${this.averageItemPrice?.toLocaleString('en')}${this.isJournalsUsed ? ` + ${this.journalsProfitPerItem}` : ''} - (${this.mainMatsPricePerItem.toLocaleString('en')} ${!!this.itemData!.subMatsId ? `+ ${this.subMatsPricePerItem!.toLocaleString('en')}` : ''}${this.totalFoodFee ? ` + ${this.totalFoodFee.toLocaleString('en')}` : ''}${!!this.itemData!.artefactId ? ` + ${this.artefactPrice.toLocaleString('en')}` : ''}) = ${this.profitPerItem.toLocaleString('en')}`;
     totalProfitTitle = `${this.infoTableStrings.total} ${this.itemData!.output} * ${this.profitPerItem.toLocaleString('en')} = ${this.totalProfit.toLocaleString('en')}`;
 

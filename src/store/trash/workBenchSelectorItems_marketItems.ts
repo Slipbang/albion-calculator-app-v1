@@ -1,12 +1,12 @@
-import {
-    ICraftingItemClass,
-    ICraftItem,
-    TCraftObjectTypes,
-    TItemNode,
-    TItemTypeSelected
-} from "../../types/craftItemsType";
-//import {craftItems,} from "./craftItems";
-import {calculateJQ_DFC} from "../utils/calculateJQ_DFC";
+// import {
+//     ICraftingItemClass,
+//     ICraftItem,
+//     TCraftObjectTypes,
+//     TItemNode,
+//     TItemTypeSelected
+// } from "../../types/craftItemsType";
+// import {craftItems,} from "./craftItems";
+// import {calculateJQ_DFC} from "../utils/calculateJQ_DFC";
 
 // export interface IGMCraftItem extends ICraftItem{
 //     itemTier: number;

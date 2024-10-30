@@ -4,7 +4,7 @@ import {useAppDispatch} from "../../../../../../store";
 import {interfaceSliceActions} from "../../../../../../store/interface/interface-slice";
 import styles from './ReturnRateInput.module.scss';
 import {selectLanguage} from "../../../../../../store/language/language-selector";
-import {useEffect, useRef} from "react";
+import {useRef} from "react";
 
 const ReturnRateInput = () => {
     const dispatchAction = useAppDispatch();

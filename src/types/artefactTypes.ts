@@ -1,9 +1,5 @@
 export type TArtefactData = {
     id: string;
-    artefactName: {
-        ru: string,
-        en: string,
-    }
     equipmentImg: string;
     itemValue: number[];
     artefactId: string;

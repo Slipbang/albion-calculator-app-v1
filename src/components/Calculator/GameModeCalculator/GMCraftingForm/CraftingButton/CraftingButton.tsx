@@ -96,7 +96,6 @@ const CraftingButton = (props: { calculatorType: TCalcProps }) => {
 
     const {
         itemId,
-        itemName,
         itemTier,
         itemNode,
     } = selectedWorkBenchItem;
@@ -114,10 +113,6 @@ const CraftingButton = (props: { calculatorType: TCalcProps }) => {
 
         const craftedItems: IBagCell = {
             itemId: `${itemId}${itemEnchantment}` as string,
-            itemName: {
-                ru: `${itemName?.['ru']} T${itemTier}${itemId?.includes('STONEBLOCK') ? '' : !!enchantmentNum ? `.${enchantmentNum}` : ''}`,
-                en: `${itemName?.['en']} T${itemTier}${itemId?.includes('STONEBLOCK') ? '' : !!enchantmentNum ? `.${enchantmentNum}` : ''}`,
-            },
             itemTier: `T${itemTier}`,
             itemQuantity: Math.floor(itemsQuantity! * (itemId!.includes('STONEBLOCK') && +enchantmentNum > 0 ? Math.pow(2, +enchantmentNum) : 1)),
             itemImage: `${srcRoute}${itemId}${itemEnchantment}`,

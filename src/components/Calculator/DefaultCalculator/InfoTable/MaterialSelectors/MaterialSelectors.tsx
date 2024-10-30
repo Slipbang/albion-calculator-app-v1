@@ -2,18 +2,17 @@ import {IItemsData, TCities} from "../../../../../types/InfoTableTypes";
 import React, {ChangeEvent, Dispatch, SetStateAction, useRef} from "react";
 import styles from './MaterialSelectors.module.scss';
 import {
-    TArtefactName,
     TOnwPriceType,
     TOwnPriceStates,
     TSelectCityType,
     TSelectedCityStates,
 } from "../InfoTable";
 import {cityOptions} from "../../../../../store/Options/CityOptions";
-import {ISelectedLanguage, TSelectedLanguage} from "../../../../../types/languageTypes";
+import {ISelectedLanguage, TLanguageData, TSelectedLanguage} from "../../../../../types/languageTypes";
 import {qualityOptions} from "../../../../../store/Options/CustomSelecrorsOptions";
-import {ICraftItem} from "../../../../../types/craftItemsType";
 
 interface IMaterialSelectorsProps {
+    languageData: TLanguageData;
     mainMatsId: string;
     subMatsId: string;
     emptyJournalId: string;
@@ -25,7 +24,6 @@ interface IMaterialSelectorsProps {
     journalsData: IItemsData[];
     isJournalsUsed: boolean;
     setIsJournalsUsed: Dispatch<SetStateAction<boolean>>;
-    artefactName: TArtefactName;
     foodTax: number;
     setFoodTax: Dispatch<SetStateAction<number>>;
     selectedCities: TSelectedCityStates;
@@ -34,11 +32,11 @@ interface IMaterialSelectorsProps {
     ownPrices: TOwnPriceStates;
     setQuality: Dispatch<SetStateAction<number>>;
     quality: number;
-    materials: ICraftItem[],
 }
 
 const MaterialSelectors = (props: IMaterialSelectorsProps) => {
     const {
+        languageData,
         mainMatsId,
         subMatsId,
         emptyJournalId,
@@ -53,13 +51,11 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
         isJournalsUsed,
         setIsJournalsUsed,
         setSelectedCities,
-        artefactName,
         foodTax,
         selectedLanguage,
         selectedCities,
         setQuality,
         quality,
-        materials,
     } = props;
 
     const journalInputRef = useRef<HTMLInputElement>(null);
@@ -69,8 +65,9 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
 
     const {emptyJournal, journal, artefact} = ownPrices;
 
-    const mainMatsName = materials.find(elem => elem.itemId === mainMatsId);
-    const subMatsName = materials.find(elem => elem.itemId === subMatsId);
+    const mainMatsName = languageData[mainMatsId];
+    const subMatsName = languageData[subMatsId];
+    const artefactName = languageData[artefactId];
 
     const changeFoodTaxHandler = (value: number) => {
         if (value >= 0 && value <= 9999) {
@@ -240,7 +237,7 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
             </div>}
 
             <div>
-                <p>{mainMatsName!.itemName![selectedLanguage]}{infoTableStrings.from}</p>
+                <p>{mainMatsName?.[selectedLanguage] || ''}{infoTableStrings.from}</p>
                 <select
                     id='ITMainMatsCitySelect'
                     onChange={(event) => selectCityHandler(event.target.value as TCities, 'mainMaterialCity')}
@@ -261,7 +258,7 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
 
             {!!subMatsId &&
                 <div>
-                    <p>{subMatsName!.itemName?.[selectedLanguage]}{infoTableStrings.from}</p>
+                    <p>{subMatsName?.[selectedLanguage]}{infoTableStrings.from}</p>
                     <select
                         id='ITSubMatsCitySelect'
                         onChange={(event) => selectCityHandler(event.target.value as TCities, 'subMaterialCity')}
