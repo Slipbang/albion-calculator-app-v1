@@ -15,6 +15,7 @@ import {TConsumable} from "../../types/consumableTypes";
 
 import {TArtefacts} from "../../types/artefactTypes";
 import {defineCurrentConfigurationItems, ICurrentConfigurationItems} from "../utils/defineCurrentConfigurationItems";
+import {TLanguageData} from "../../types/languageTypes";
 
 export interface ICount {
     left: number;
@@ -33,7 +34,7 @@ interface IItemsConfigurationData {
     consumableCraftItems: TConsumableCraftItems;
     artefacts: TArtefacts;
     materials: ICraftItem[];
-    languageData: [string, object];
+    languageData: TLanguageData;
 }
 
 const configurationItemsUrl = `https://albion-online-data-server.onrender.com/data`;
