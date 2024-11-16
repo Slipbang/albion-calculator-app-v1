@@ -37,7 +37,7 @@ interface IItemsConfigurationData {
     languageData: TLanguageData;
 }
 
-const configurationItemsUrl = `https://albion-online-data-server.onrender.com/data`;
+export const serverUrl = 'https://albion-online-data-server.onrender.com';
 const githubApiUrl = 'https://api.github.com/repos/ao-data/ao-bin-dumps/commits';
 
 export const itemsHttpRequests = createAsyncThunk<IItemsConfigurationData>(
@@ -59,7 +59,7 @@ export const itemsHttpRequests = createAsyncThunk<IItemsConfigurationData>(
             }
         }
 
-        const {data: ATData} = await axios.get<IItemsConfigurationData>(configurationItemsUrl);
+        const {data: ATData} = await axios.get<IItemsConfigurationData>(`${serverUrl}/data`);
 
         if (!('craftItems' in ATData)) {
             return thunkAPI.rejectWithValue('EMPTY_OBJECT');
@@ -195,7 +195,7 @@ const initialState: IInitialState = {
     },
 
     items: defineCurrentConfigurationItems(),
-    status: 'loading',
+    status: 'success',
 }
 
 const interfaceSlice = createSlice({

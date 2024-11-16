@@ -9,13 +9,17 @@ import NotFoundPage from "./pages/NotFoundPage";
 import FAQPage from "./pages/FAQPage";
 import {useAppDispatch} from "./store";
 import {useEffect} from "react";
-import {itemsHttpRequests} from "./store/interface/interface-slice";
+import {initSSE} from "./store/interface/initSSE";
 
 function App() {
     const dispatchAction = useAppDispatch();
 
     useEffect(() => {
-        dispatchAction(itemsHttpRequests());
+        const serverConnection = initSSE(dispatchAction);
+
+        return () => {
+            serverConnection.close();
+        }
     }, [])
 
     return (
