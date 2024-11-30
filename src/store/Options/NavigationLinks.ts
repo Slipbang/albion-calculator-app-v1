@@ -21,7 +21,7 @@ export const links: TLinks = [
     {
         linkName: {
             ru: 'Артефакты',
-            en: 'Artefacts'
+            en: 'Artifacts'
         },
         link: 'artefacts',
     },

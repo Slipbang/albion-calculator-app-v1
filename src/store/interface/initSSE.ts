@@ -1,6 +1,7 @@
 import {itemsHttpRequests, serverUrl} from "./interface-slice";
 import {AppDispatch} from "../index";
 
+//const test = 'http://localhost:4000';
 export const initSSE = (dispatch: AppDispatch) => {
     const jsonItems = localStorage.getItem('appConfigurationItems');
     let appDate = '';
