@@ -49,7 +49,6 @@ const ItemPriceSelector = () => {
     }] = useLazyGetItemsDataQuery();
 
     const fetchDataHandler = () => {
-        console.log(itemNode)
         fetchItemsData({itemsParams: itemId!, isBlackMarket: (marketAction === 'sell' && itemId !== null), serverId, isEquipment: !isTypeResource(itemNode!)});
     }
 

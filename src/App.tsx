@@ -18,7 +18,7 @@ function App() {
         const serverConnection = initSSE(dispatchAction);
 
         return () => {
-            serverConnection.close();
+            serverConnection?.close();
         }
     }, [])
 

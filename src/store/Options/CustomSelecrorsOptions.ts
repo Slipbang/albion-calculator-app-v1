@@ -62,7 +62,7 @@ export const tierOptions: TSelectTierOptions = [
             ru: 'Все тиры',
             en: 'All Tiers',
         },
-        value: 'Т3 T4 T5 T6 T7 T8',
+        value: 'T3 T4 T5 T6 T7 T8',
     },
     {
         labelName: {

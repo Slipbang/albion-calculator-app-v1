@@ -64,27 +64,28 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
         return itemName.length > 18 ? 9 : itemName.length > 14 ? 12 : 16
     }
 
-    const calculateArtefactsQuantityHandler = (artefactItemId: string, itemNode: string, itemTier: number) => {
-        let artefactsQuantity: number = 1;
-
-        if (artefactItemId?.includes('QUESTITEM_TOKEN_ROYAL')) {
-            switch (itemNode) {
-                case 'leatherArmor':
-                case 'clothArmor':
-                case 'plateArmor':
-                    artefactsQuantity = itemTier >= 6 ? 16 : itemTier === 5 ? 8 : 4;
-                    break;
-                default:
-                    artefactsQuantity = itemTier >= 6 ? 8 : itemTier === 5 ? 4 : 2;
-                    break;
-            }
-        }
-
-        return artefactsQuantity;
-    }
+    // royal equipment removed
+    // const calculateArtefactsQuantityHandler = (artefactItemId: string, itemNode: string, itemTier: number) => {
+    //     let artefactsQuantity: number = 1;
+    //
+    //     if (artefactItemId?.includes('QUESTITEM_TOKEN_ROYAL')) {
+    //         switch (itemNode) {
+    //             case 'leatherArmor':
+    //             case 'clothArmor':
+    //             case 'plateArmor':
+    //                 artefactsQuantity = itemTier >= 6 ? 16 : itemTier === 5 ? 8 : 4;
+    //                 break;
+    //             default:
+    //                 artefactsQuantity = itemTier >= 6 ? 8 : itemTier === 5 ? 4 : 2;
+    //                 break;
+    //         }
+    //     }
+    //
+    //     return artefactsQuantity;
+    // }
+    // const artefactsQuantity = calculateArtefactsQuantityHandler(artefactItemId!, itemNode!, itemTier);
 
     const artefactName = languageData[artefactItemId || ''];
-    const artefactsQuantity = calculateArtefactsQuantityHandler(artefactItemId!, itemNode!, itemTier);
 
     const itemKeys = Object.keys(item) as TCraftItemsKeys[];
 
@@ -116,7 +117,7 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
             className={styles.itemBox}
             style={validateItemHandler(itemTier, itemNode!, itemName?.[selectedLanguage]!) ? {display: 'grid'} : {display: 'none'}}
             onClick={() => {
-                selectItemHandler({...item, artefactsQuantity: artefactsQuantity})
+                selectItemHandler({...item, artefactsQuantity: 1})
                 resetEnchantmentHandler(itemId!, enchantment!)
             }}
         >
@@ -170,7 +171,7 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
                                 title={artefactName?.[selectedLanguage] || ''}
                                 alt=''
                             />
-                            <p>{artefactsQuantity}</p>
+                            <p>1</p>
                     </span>}
             </div>
 

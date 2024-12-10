@@ -104,8 +104,8 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
         }))
     }
 
-    const artefactPrice = (city: TCities) => artefactsData?.find(artefact => artefact.location === city)?.buyPriceMax || 0;
-    const emptyJournalPrice = (city: TCities) => journalsData?.find(journal => journal.location === city && journal.itemId === emptyJournalId)?.buyPriceMax || 0;
+    const artefactPrice = (city: TCities) => artefactsData?.find(artefact => artefact.location === city)?.sellPriceMin || 0;
+    const emptyJournalPrice = (city: TCities) => journalsData?.find(journal => journal.location === city && journal.itemId === emptyJournalId)?.sellPriceMin || 0;
     const journalPrice = (city: TCities) => journalsData?.find(journal => journal.location === city && journal.itemId === journalId)?.sellPriceMin || 0;
 
 

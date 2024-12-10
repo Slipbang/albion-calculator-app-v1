@@ -1,34 +1,48 @@
 import {itemsHttpRequests, serverUrl} from "./interface-slice";
 import {AppDispatch} from "../index";
 
-//const test = 'http://localhost:4000';
 export const initSSE = (dispatch: AppDispatch) => {
     const jsonItems = localStorage.getItem('appConfigurationItems');
-    let appDate = '';
+    let currentAppDate = '';
+    let currentAppVersion = '';
 
     if (jsonItems) {
-        const items = JSON.parse(jsonItems);
-        appDate = items.date;
+        try {
+            ({githubCommitDate: currentAppDate, appVersion: currentAppVersion } = JSON.parse(jsonItems));
+        } catch (error) {
+            console.error('Ошибка парсинга данных:', error);
+            return;
+        }
     }
 
-    const eventSource = new EventSource(`${serverUrl}/date`);
+    const eventSource = new EventSource(`${serverUrl}/ctrlinfo`);
 
     eventSource.onopen = () => {
         console.log('SSE соединение установлено');
     };
 
-    eventSource.onmessage = async (event) => {
-        const date = await event.data;
+    eventSource.onmessage = (event) => {
+        let githubCommitDate, appVersion;
 
-        if ((!appDate || date !== appDate) && date) {
-            dispatch(itemsHttpRequests());
-            appDate = date;
-        } else if (appDate && date && date === appDate){
-            console.log('date is valid')
-        } else if (!date) {
-            console.log('no date fetched, server error');
+        try {
+            ({ githubCommitDate, appVersion } = JSON.parse(event.data));
+        } catch (error) {
+            console.error('Ошибка парсинга данных:', error);
+            return;
         }
 
+        if (!githubCommitDate || !appVersion) {
+            console.log('No date/version fetched, server error');
+            return;
+        }
+
+        if (githubCommitDate !== currentAppDate || appVersion !== currentAppVersion) {
+            dispatch(itemsHttpRequests());
+            currentAppDate = githubCommitDate;
+            currentAppVersion = appVersion;
+        } else {
+            console.log('githubCommitDate and appVersion are valid');
+        }
     }
 
     eventSource.onerror = () => {
