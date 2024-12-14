@@ -149,13 +149,13 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
     profitPerItemTitle = `${this.infoTableStrings.profitPerItem} ${this.averageItemPrice?.toLocaleString('en')}${this.isJournalsUsed ? ` + ${this.journalsProfitPerItem}` : ''} - (${this.mainMatsPricePerItem.toLocaleString('en')} ${!!this.itemData!.subMatsId ? `+ ${this.subMatsPricePerItem!.toLocaleString('en')}` : ''}${this.totalFoodFee ? ` + ${this.totalFoodFee.toLocaleString('en')}` : ''}${!!this.itemData!.artefactId ? ` + ${this.artefactPrice.toLocaleString('en')}` : ''}) = ${this.profitPerItem.toLocaleString('en')}`;
     totalProfitTitle = `${this.infoTableStrings.total} ${this.itemData!.output} * ${this.profitPerItem.toLocaleString('en')} = ${this.totalProfit.toLocaleString('en')}`;
 
-    title = `${this.totalFoodFeeSting}<hr><br>
-             ${this.isJournalsUsed ? `${this.journalsQuantityString}<hr><br>` : ''}
-             ${this.itemTitleString}<hr><br>
-             ${this.isJournalsUsed ? `${this.journalsProfitPerItemSting}<hr><br>` : ''}
-             ${this.mainMatsTitleString}<hr><br>
-             ${!!this.subMatsName ? `${this.subMatsTitleString}<hr><br>` : ''}
-             ${!!this.itemData!.artefactId ? `${this.artefactString}<hr><br>` : ''}
-             ${this.profitPerItemTitle}<hr><br>
-             ${this.totalProfitTitle}<hr>`;
+    title = `<div>${this.totalFoodFeeSting}</div><hr>
+             ${this.isJournalsUsed ? `<div>${this.journalsQuantityString}<div><hr>` : ''}
+             <div>${this.itemTitleString}</div><hr>
+             ${this.isJournalsUsed ? `<div>${this.journalsProfitPerItemSting}</div><hr>` : ''}
+             <div>${this.mainMatsTitleString}</div><hr>
+             ${!!this.subMatsName ? `<div>${this.subMatsTitleString}</div><hr>` : ''}
+             ${!!this.itemData!.artefactId ? `<div>${this.artefactString}</div><hr>` : ''}
+             <div>${this.profitPerItemTitle}</div><hr>
+             <div>${this.totalProfitTitle}</div><hr>`;
 }

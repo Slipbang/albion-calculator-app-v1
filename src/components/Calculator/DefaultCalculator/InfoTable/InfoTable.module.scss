@@ -53,14 +53,17 @@
 }
 
 .infoTableTooltip {
+  div {
+    padding-top: 15px;
+  }
   hr{
     border: none;
     height: 1px;
     background-color: var(--color-table-text);
     margin-top: 5px;
   }
-  hr:not(hr:last-child) {
-    margin-bottom: -10px;
-  }
+  //hr:not(hr:last-child) {
+  //  margin-bottom: -10px;
+  //}
 }
 

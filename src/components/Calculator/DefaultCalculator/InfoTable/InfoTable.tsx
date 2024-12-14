@@ -393,7 +393,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
                             backgroundColor: `${isDark ? 'rgb(58,58,58)' : 'wheat'}`,
                             color: `${isDark ? 'white' : 'black'}`,
                             fontSize: 'inherit',
-                            zIndex: 9999
+                            zIndex: 9999,
                         }}
                     />
                 </div>

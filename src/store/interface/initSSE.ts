@@ -15,7 +15,7 @@ export const initSSE = (dispatch: AppDispatch) => {
         }
     }
 
-    const eventSource = new EventSource(`${serverUrl}/ctrlinfo`);
+    const eventSource = new EventSource(`${serverUrl}/api/ctrlinfo`);
 
     eventSource.onopen = () => {
         console.log('SSE соединение установлено');

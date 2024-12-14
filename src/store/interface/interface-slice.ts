@@ -42,24 +42,7 @@ export const serverUrl = 'https://albion-online-data-server.onrender.com';
 export const itemsHttpRequests = createAsyncThunk<IItemsConfigurationData>(
     '@interface/fetchConfigurationItems',
     async (_, thunkAPI) => {
-        // const jsonItems = localStorage.getItem('appConfigurationItems');
-        // let appDate = null;
-        // let githubCommitDate = null;
-        //
-        // const githubApiUrl = 'https://api.github.com/repos/ao-data/ao-bin-dumps/commits';
-        // if (jsonItems) {
-        //     const items = JSON.parse(jsonItems);
-        //     appDate = items.date;
-        //
-        //     const {data: githubData} = await axios.get(githubApiUrl);
-        //     githubCommitDate = githubData[0]['commit']['author']['date'];
-        //
-        //     if (!!appDate && !!githubCommitDate && (githubCommitDate === appDate)) {
-        //         return thunkAPI.rejectWithValue('LOCALSTORAGE_IS_NOT_EMPTY');
-        //     }
-        // }
-
-        const {data: ATData} = await axios.get<IItemsConfigurationData>(`${serverUrl}/data`);
+        const {data: ATData} = await axios.get<IItemsConfigurationData>(`${serverUrl}/api/data`);
 
         if (!('craftItems' in ATData)) {
             return thunkAPI.rejectWithValue('EMPTY_OBJECT');
@@ -373,9 +356,6 @@ const interfaceSlice = createSlice({
             if (action.payload === 'EMPTY_OBJECT') {
                 state.status = 'error';
             }
-            // else if (action.payload === 'LOCALSTORAGE_IS_NOT_EMPTY') {
-            //     state.status = 'success';
-            // }
         })
     }
 })
