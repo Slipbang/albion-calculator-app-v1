@@ -9,6 +9,7 @@ const CloseButton = () => {
     const closeCraftingFormHandler = () => {
         dispatchAction(interfaceSliceActions.setIsCraftingFormVisible(false));
         dispatchAction(interfaceSliceActions.setIsJournalsUsedCF(false));
+        dispatchAction(interfaceSliceActions.setIsJournalPriceFetchedCF(false));
         dispatchAction(interfaceSliceActions.setIsArtefactPriceFetchedCF(false));
     };
 
