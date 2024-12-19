@@ -8,7 +8,10 @@ export const selectMarketItemVisibility = (state: RootState) => state.interface.
 export const selectCraftTableVisibility = (state: RootState) => state.interface.global.isCraftTableShown;
 export const selectInfoTableVisibility = (state: RootState) => state.interface.global.isInfoTableShown;
 export const selectItemSelectorVisibility = (state: RootState) => state.interface.global.isItemSelectorShown;
+export const selectDemoMode = (state: RootState) => state.interface.global.isDemo;
 export const selectTheme = (state: RootState) => state.interface.global.theme;
+export const selectItemsDataLoading = (state: RootState) => state.interface.global.isItemsDataLoading;
+export const selectIsNextButtonDisabled = (state: RootState) => state.interface?.Guide.isNextButtonDisabled;
 
 export const selectSwiperCount = (state: RootState) => state.interface.DefaultCalculator.swiperCount;
 
@@ -48,3 +51,5 @@ export const selectInterfaceLanguageData = (stata: RootState) => stata.interface
 export const selectInterfaceConsumablesSelectorItems = (stata: RootState) => stata.interface.items.consumablesSelectorItems;
 export const selectInterfaceMarketItems = (stata: RootState) => stata.interface.items.marketItems;
 export const selectInterfaceWorkBenchSelectorItems = (stata: RootState) => stata.interface.items.workBenchSelectorItems;
+
+export const selectGuide = (stata: RootState) => stata.interface.Guide;

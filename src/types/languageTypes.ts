@@ -170,6 +170,10 @@ interface IFAQStrings {
     description3: string;
 }
 
+interface IGuideStrings {
+    [key: string]: string;
+}
+
 export interface ISelectedLanguage {
     craftTableStrings: ICraftTableStrings;
     calculatorFormStrings: ICalculatorFormStrings;
@@ -186,6 +190,7 @@ export interface ISelectedLanguage {
     notFoundStings: INotFoundStings;
     homeStrings: IHomeStrings;
     FAQStrings: IFAQStrings;
+    guideStrings: IGuideStrings;
 }
 
 export type TSelectedLanguage = 'ru' | 'en';

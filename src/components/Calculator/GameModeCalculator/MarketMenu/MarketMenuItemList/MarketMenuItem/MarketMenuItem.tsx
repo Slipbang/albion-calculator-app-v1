@@ -3,7 +3,8 @@ import StyledMarketActionButton from "../../MarketMenuSC/StyledMarketActionButto
 import {useAppDispatch} from "../../../../../../store";
 import {useSelector} from "react-redux";
 import {
-    selectEnchantmentMM,
+    selectDemoMode,
+    selectEnchantmentMM, selectGuide,
     selectInputMM, selectInterfaceLanguageData,
     selectItemTypeMM,
     selectTierMM
@@ -13,11 +14,25 @@ import {GMProfitSliceActions} from "../../../../../../store/GMProfit/gm-profit-s
 import {interfaceSliceActions} from "../../../../../../store/interface/interface-slice";
 import {TSelectedLanguage} from "../../../../../../types/languageTypes";
 import {IBagCell} from "../../../../../../store/Items/emptyBagCell";
+import {escapeRegex} from "../../../FunctionUtils/escapeRegex";
+import {useEffect, useRef} from "react";
 
 interface IMarketMenuItemProps {
     item: IBagCell;
     index: number;
     selectedLanguage: TSelectedLanguage;
+}
+
+type TScenario = {
+    [key: string]: string;
+}
+
+//каждому шагу сценария (4/20/22) соответствует свой itemId, который мы потом сверяем в объекте по ключам заданными этими же номерами шагов,
+//когда scenario[script] совпадает с айдишником, происходит инициирование нажатия кнопки
+const scenario: TScenario = {
+    '4': 'T6_LEATHER_LEVEL1@1',
+    '20': 'T6_ARMOR_LEATHER_MORGANA@1',
+    '22': 'T6_JOURNAL_HUNTER_FULL'
 }
 
 const MarketMenuItem = ({item, index, selectedLanguage}: IMarketMenuItemProps) => {
@@ -32,6 +47,10 @@ const MarketMenuItem = ({item, index, selectedLanguage}: IMarketMenuItemProps) =
     const isRuSelected = selectedLanguage === 'ru';
     const languageData = useSelector(selectInterfaceLanguageData);
     const itemName = languageData[itemId!]?.[selectedLanguage];
+    const {script} = useSelector(selectGuide);
+    const isDemo = useSelector(selectDemoMode);
+
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     const setMarketItemHandler = (selectedMarketItem: IBagCell) => {
         dispatchAction(GMProfitSliceActions.setSelectedMarketItem(selectedMarketItem));
@@ -39,11 +58,17 @@ const MarketMenuItem = ({item, index, selectedLanguage}: IMarketMenuItemProps) =
     }
 
     const validateItemHandler = (type: string, enchantment: string, tier: string, title: string) => {
+        const fixedInputSearch = escapeRegex(inputSearch);
+
         return (selectedItemType.value !== '' ? selectedItemType.value.includes(type) : true)
             && selectedEnchantment.value.includes(enchantment || '0')
             && selectedTier.value.includes(tier)
-            && title.toLowerCase().match(inputSearch.toLowerCase());
+            && title.toLowerCase().match(fixedInputSearch.toLowerCase());
     }
+
+    useEffect(() => {
+        if (scenario?.[script] === itemId) buttonRef.current?.click();
+    }, [script])
 
     return (
         <div
@@ -73,9 +98,11 @@ const MarketMenuItem = ({item, index, selectedLanguage}: IMarketMenuItemProps) =
             </div>
 
             <StyledMarketActionButton
+                $isDemo={isDemo}
                 $isActionBuy={marketActionSelected === 'buy'}
                 $isRuSelected={isRuSelected}
-                onClick={() =>
+                ref={Object.values(scenario).includes(itemId!) ? buttonRef : null}
+                onClick={() => {
                     setMarketItemHandler({
                         itemQuantity,
                         itemImage,
@@ -86,7 +113,7 @@ const MarketMenuItem = ({item, index, selectedLanguage}: IMarketMenuItemProps) =
                         itemEnchantmentNum,
                         itemEnchantment,
                     })
-                }
+                }}
             />
         </div>
     )

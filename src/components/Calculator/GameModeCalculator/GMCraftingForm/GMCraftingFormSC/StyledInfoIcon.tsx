@@ -12,7 +12,7 @@ const StyledInfoIcon = styled.div`
   margin-left: 10px;
   cursor: pointer;
   
-  &:hover{
+  &:hover {
     background-image: url(${informationIconHovered});
   }
 `

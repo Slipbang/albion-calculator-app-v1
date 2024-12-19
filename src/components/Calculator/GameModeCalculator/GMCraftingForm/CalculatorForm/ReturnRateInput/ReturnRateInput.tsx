@@ -1,10 +1,10 @@
 import {useSelector} from "react-redux";
-import {selectReturnPercentCF} from "../../../../../../store/interface/interface-selector";
+import {selectGuide, selectReturnPercentCF} from "../../../../../../store/interface/interface-selector";
 import {useAppDispatch} from "../../../../../../store";
 import {interfaceSliceActions} from "../../../../../../store/interface/interface-slice";
 import styles from './ReturnRateInput.module.scss';
 import {selectLanguage} from "../../../../../../store/language/language-selector";
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 
 const ReturnRateInput = () => {
     const dispatchAction = useAppDispatch();
@@ -14,6 +14,7 @@ const ReturnRateInput = () => {
     const returnPercent = useSelector(selectReturnPercentCF);
     const {language} = useSelector(selectLanguage);
     const {GMCraftingFormStrings} = language;
+    const {script} = useSelector(selectGuide);
 
     const setReturnPercentHandler = (value: number) => {
         dispatchAction(interfaceSliceActions.setReturnPercentCF(value));
@@ -22,6 +23,13 @@ const ReturnRateInput = () => {
     const isInputValid = (value: number) => {
         return value >= 15.2 && value <= 70;
     }
+
+    useEffect(() => {
+        if (script === 16) {
+            setReturnPercentHandler(47.9);
+            returnPercentInputRef.current?.focus();
+        }
+    }, [script])
 
     return (
         <div className={styles.returnRateInput} data-isinputvalid={isInputValid(returnPercent) ? 'valid' : 'nonValid'}>

@@ -5,8 +5,8 @@ import {useSelector} from "react-redux";
 import {
     selectArtefactPriceCF,
     selectArtefactPriceFetchedStateCF,
-    selectEnchantmentNumCF,
-    selectItemEnchantmentCF,
+    selectEnchantmentNumCF, selectGuide,
+    selectItemEnchantmentCF, selectItemsDataLoading,
     selectItemsQuantityCF,
     selectJournalPriceCF,
     selectJournalPriceFetchedStateCF,
@@ -30,11 +30,14 @@ import {
 import {srcRoute} from "../../../../../store/api/api";
 import {TMaterialsInfo} from "../../../../../types/craftItemsType";
 import {IBagCell} from "../../../../../store/Items/emptyBagCell";
+import { useEffect, useRef } from "react";
+import {interfaceSliceActions} from "../../../../../store/interface/interface-slice";
 
 const CraftingButton = (props: { calculatorType: TCalcProps }) => {
     const {calculatorType} = props;
 
     const dispatchAction = useAppDispatch();
+    const buttonRef = useRef<HTMLButtonElement>(null)
 
     const foodTax = useSelector(selectFoodTax);
     const isJournalUsed = useSelector(selectJournalUsageCF);
@@ -51,6 +54,8 @@ const CraftingButton = (props: { calculatorType: TCalcProps }) => {
     const isArtefactPriceFetched = useSelector(selectArtefactPriceFetchedStateCF);
     const fetchedArtefactPrice = useSelector(selectArtefactPriceCF);
     const ownArtefactPrice = useSelector(selectOwnArtefactPriceCF);
+    const {script} = useSelector(selectGuide);
+    const isItemsDataLoading = useSelector(selectItemsDataLoading);
 
     const {selectedLanguage} = useSelector(selectLanguage);
     const isRuSelected = selectedLanguage === 'ru';
@@ -148,8 +153,29 @@ const CraftingButton = (props: { calculatorType: TCalcProps }) => {
         return value >= 15.2 && value <= 70;
     }
 
+    const isButtonDisabled = () => {
+        return !maxQuantity || backpackIsOverflowed || !isReturnPercentInputValid(returnPercent) || isItemsDataLoading;
+    }
+
+    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+    const craftExample = async () => {
+        dispatchAction(interfaceSliceActions.setIsNextButtonDisabled(true));
+        while (!buttonRef.current?.disabled) {
+            buttonRef.current?.click();
+            buttonRef.current?.focus();
+            await sleep(700);
+        }
+        dispatchAction(interfaceSliceActions.setIsNextButtonDisabled(false));
+    }
+
+    useEffect(() => {
+        if(script === 18) craftExample();
+    },[script])
+
     return (
         <StyledCraftingButton
+            ref={buttonRef}
             onDragStart={event => event.preventDefault()}
             onDragOver={event => event.preventDefault()}
             onDrag={event => event.preventDefault()}
@@ -158,8 +184,7 @@ const CraftingButton = (props: { calculatorType: TCalcProps }) => {
 
             draggable={true}
             $isRuSelected={isRuSelected}
-            $isActive={!!maxQuantity && !backpackIsOverflowed && isReturnPercentInputValid(returnPercent)}
-            disabled={!maxQuantity || backpackIsOverflowed || !isReturnPercentInputValid(returnPercent)}
+            disabled={isButtonDisabled()}
             onClick={craftItemsHandler}
         />
     )

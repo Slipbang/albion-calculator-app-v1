@@ -19,10 +19,10 @@ type TSelectedWorkBenchItemKeys =  keyof ISelectedWorkBenchItem;
 
 export type TExtractedMaterialsKeys = Extract<TSelectedWorkBenchItemKeys, 'PLANKS' | 'METALBAR' | 'CLOTH' | 'LEATHER' | 'STONEBLOCK' | 'WOOD' | 'ORE' | 'ROCK' | 'FIBER' | 'HIDE'>;
 
-const GMCraftingForm = () => {
+const GMCraftingForm = ({script}: {script: number}) => {
     const calculatorType = useSelector(selectCalculatorType);
 
-    const [position, setPosition] = useState<{ x: number | string, y: number | string }>({x: '50%', y: '52%'});
+    const [position, setPosition] = useState<{ x: number | string, y: number | string }>({x: `calc(50% + ${script === 12 ? '45px' : '0px'})`, y: '52%'});
 
     const dummyImg = new Image();
 
@@ -38,6 +38,8 @@ const GMCraftingForm = () => {
 
     return (
         <StyledCraftingForm
+            $zIndex={[12,13,14,15,16,17,18].includes(script) ? 4 : 3}
+            $hasPointersEvents={[12,13,14,15,16,17,18].includes(script)}
             style={{
                 top: position.y,
                 left: position.x,

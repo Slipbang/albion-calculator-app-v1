@@ -1,6 +1,8 @@
 import {useEffect, useRef, useState} from "react";
 import {IItemsData} from "../../../types/InfoTableTypes";
 import {cityOptions} from "../../../store/Options/CityOptions";
+import {useSelector} from "react-redux";
+import {selectGuide} from "../../../store/interface/interface-selector";
 
 interface ICustomPriceSelectorProps {
     itemsData: IItemsData[],
@@ -25,7 +27,7 @@ const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
 
     const [selectedCity, setSelectedCity] = useState(cityOptions[0]);
     const [isCityOptionsVisible, setIsCityOptionsVisible] = useState(false);
-
+    const {script} = useSelector(selectGuide);
     const inputRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -37,10 +39,16 @@ const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
 
         document.body.addEventListener('click', clickOutsideSelectorHandler);
 
+        setItemPriceHandler(getPrice(selectedCity, quality)!)
+
+        if ([5,14,17].includes(script)) {
+            setTimeout(() => inputRef.current?.click(), 200);
+        }
+
         return () => {
             document.body.removeEventListener('click', clickOutsideSelectorHandler);
         }
-    }, []);
+    }, [script]);
 
     const getPrice = (city: string, quality: number | undefined) => {
         return itemsData?.find(item => item.location === city && item.quality === (quality || 1))?.sellPriceMin;
@@ -62,10 +70,6 @@ const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
     const setItemPriceHandler = (value: number) => {
         setFunction(value);
     }
-
-    useEffect(() => {
-        setItemPriceHandler(getPrice(selectedCity, quality)!)
-    }, [])
 
     return <div
         ref={inputRef}

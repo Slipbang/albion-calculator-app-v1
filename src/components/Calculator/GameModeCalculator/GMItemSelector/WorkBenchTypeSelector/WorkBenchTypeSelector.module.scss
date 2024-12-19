@@ -17,13 +17,21 @@
   }
 }
 
-.workBenchTypeSelector:hover {
+@mixin hoverMixin {
   width: var(--width-button-box);
 
   button {
     position: initial;
     filter: drop-shadow(3px 3px 3px black);
   }
+}
+
+.workBenchTypeSelector:hover {
+  @include hoverMixin;
+}
+
+.workBenchTypeSelectorHoverImitation {
+  @include hoverMixin;
 }
 
 [data-selected='ITEMS'] {

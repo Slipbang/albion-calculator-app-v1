@@ -1,7 +1,5 @@
 import { TLanguage} from "../../types/languageTypes";
 
-//
-
 const language: TLanguage = {
     ru:{
         craftTableStrings: {
@@ -162,6 +160,33 @@ const language: TLanguage = {
             description2: 'Вся загружаемые цены берутся с баз данных сайта',
             description3: 'По вопросам можно обратиться в',
         },
+        guideStrings: {
+            0: 'В этом гайде будут показаны основные функции Game Mode калькулятора. В Game Mode калькуляторе почти весь функционал полностью скопирован из Albion Online, лишь некоторые моменты являются или условным дополнением или условным сокращением.',
+            1: 'В инвентаре так же как и в игре хранятся ресурсы/предметы, которые мы "купили" или "создали", предметы так же можно переносить из ячейки в ячейку, разделять пополам количество с зажатым "shift" + перенос, сортировать, собирать в стопки и сбрасывать до начального состояния (кнопками внизу).',
+            2: 'В секции "Рынок" можно сделать условную покупку материала, требуемого для создания предмета или материала (или ресурса для создания материала), а так же продать созданный предмет или материал.',
+            3: 'С помощью секции селекторов можно найти нужный предмет по названию, типу, тиру, уровню зачарования. Селектора работают только на отсечение невалидных предметов.',
+            4: 'В окне покупки (или продажи) можно получить цену предмета с сервера (кнопка помечена соответствующим названием), выбрать требуемое количество, ввести собственную цену или выбрать цену в выпадающем списке в случае, если получение цены с сервера включено.',
+            5: 'После того как мы получили цены, можно нажать на селектор, чтобы раскрыть список и выбрать подходящую нам цену. Рядом с каждой ценой в скобках указано как давно она была обновлена.',
+            6: 'В случае если нас все устраивает, нажимаем на кнопку "купить", после чего предмет будет помещен в "инвентарь".',
+            7: 'В секции имитирующей станок, можно выбрать предмет или материал для крафта.',
+            8: 'Набор предметов зависит от выбранного типа станка.',
+            9: 'Справа так же как и в игре кнопки выбора типа предметов.',
+            10: 'Там где цифра налога, находится поле ввода. Кликаем на него и вводим требуемое значение.',
+            11: 'Секция селекторов работает так же, как и секции селекторов "Рынка".',
+            12: 'Секция крафта достаточно сильно отличается от игрового. Чтобы не перегружать предметами "инвентарь", в нее были добавлены выбор использования журналов и их цены. А так же артефакты с их ценами, в случае если для крафта предмета требуется артефакт.',
+            13: 'Для использования журналов кликните на кнопку с соответствующим описанием.',
+            14: 'Далее можно ввести свою цену, или получить цену с сервера.',
+            15: 'Выбираем требуемое зачарование.',
+            16: 'Так же как и в случае с налогов, где находится процент возврата ресурсов находится поле ввода, кликаем на число и вводим процент возврата от 15.2% до 70%.',
+            17: 'В разделе с артефактами либо вводим свое число, либо запрашиваем цены с сервера и выбираем подходящую цену.',
+            18: 'Нажимаем на кнопку "Изготовить". Так же как и в игре, сначала создаются предметы, потом происходит возврат материалов, и так по кругу пока материалы не закончатся. В гайде этот процесс сокращен.',
+            19: 'Предметы и заполненные журналы помещены в "инвентарь", теперь нужно выбрать вкладку продажи.',
+            20: 'Нажимаем на кнопку "продать" в списке предметов и переходим в окно продажи предметов. Так же как и при покупке, мы можем ввести свою цену, либо получить цену с сервера. В случае если предмет обладает качеством, мы можем его выбрать от обычного до шедевра в выпадающем списке (в нашем случае остается "Обычное" качество).',
+            21: 'Когда мы определились с ценой, качеством и количеством продаваемых предметов, жмем "продать" и переходим к выбору следующего предмета для продажи.',
+            22: 'Снова выбираем требуемую цену и завершаем крафтовый цикл.',
+            23: 'После всех выполненных операций внизу инвентаря у нас получится положительный или отрицательный баланс, исходя из которого мы можем понять, является ли выбранный предмет выгодным для крафта или нет.',
+            24: 'Перед новым крафтом сбрасываем "инвентарь" до начального состояния.\nДанный калькулятор, можно сказать без единой записи куда либо, позволяет +- посчитать прибыльность крафта той или иной вещи, так же можно комбинировать крафт материалов с последующим крафтом из них предметов, что вкупе с базой данных транспортировки доведет ваш игровой доход до максимума.',
+        }
     },
     en:{
         craftTableStrings: {
@@ -322,6 +347,33 @@ const language: TLanguage = {
             description2: 'All downloaded prices are taken from',
             description3: 'If You have questions you can contact',
         },
+        guideStrings: {
+            0: "This guide will show the main functions of the Game Mode calculator. In the Game Mode calculator, almost all functionality is fully copied from Albion Online, with only some aspects being either conditional additions or reductions.",
+            1: "In the inventory, just like in the game, resources/items that we 'bought' or 'created' are stored. Items can also be moved from one slot to another, split in half by holding 'shift' + dragging, sorted, stacked, and reset to their initial state (via buttons at the bottom).",
+            2: "In the 'Market' section, you can conditionally purchase materials needed to create an item or material (or a resource for creating a material), as well as sell a created item or material.",
+            3: "Using the selector section, you can find the desired item by name, type, tier, or enchantment level. The selectors only work to filter out invalid items.",
+            4: "In the purchase (or sale) window, you can fetch the item's price from the server (button labeled accordingly), select the required quantity, enter your own price, or choose a price from the dropdown list if fetching prices from the server is enabled.",
+            5: "Once you have fetched the prices, you can click on the selector to open the list and choose the price that suits you. Next to each price in brackets is how recently it was updated.",
+            6: "If everything suits you, click the 'buy' button, after which the item will be placed in the 'inventory.'",
+            7: "In the section emulating the crafting station, you can select an item or material for crafting.",
+            8: "The set of items depends on the type of crafting station selected.",
+            9: "On the right, just like in the game, are buttons for selecting the type of items.",
+            10: "Where the tax number is, there is an input field. Click on it and enter the required value.",
+            11: "The selector section works the same way as the 'Market' selector section.",
+            12: "The crafting section differs significantly from the in-game one. To avoid overloading the 'inventory' with items, options for using journals and their prices were added, as well as artifacts and their prices in cases where crafting an item requires an artifact.",
+            13: "To use journals, click the button with the corresponding description.",
+            14: "Next, you can enter your price or fetch the price from the server.",
+            15: "Select the desired enchantment level.",
+            16: "Just like with taxes, where the resource return rate is, there is an input field. Click on the number and enter a return rate between 15.2% and 70%.",
+            17: "In the artifact section, either enter your number or request prices from the server and choose the appropriate price.",
+            18: "Click the 'Craft' button. Just like in the game, items are created first, then materials are returned, and the cycle continues until the materials run out. In the guide, this process is simplified.",
+            19: "Items and filled journals are placed in the 'inventory,' and now you need to select the sales tab.",
+            20: "Click the 'sell' button in the list of items to go to the item sale window. Just like with purchases, you can enter your price or fetch the price from the server. If the item has a quality attribute, you can select it from 'Normal' to 'Masterpiece' in the dropdown (in our case, 'Normal' quality remains).",
+            21: "Once you've decided on the price, quality, and quantity of items to sell, press 'sell' and proceed to select the next item for sale.",
+            22: "Again, select the required price and complete the crafting cycle.",
+            23: "After all operations are completed, you will have a positive or negative balance at the bottom of the inventory, which will help you determine whether crafting the selected item is profitable or not.",
+            24: "Before starting new crafting, reset the 'inventory' to its initial state. This calculator allows you to roughly calculate the profitability of crafting a particular item without recording anything elsewhere. You can also combine crafting materials with subsequent crafting of items from them, which, together with the transportation database, will maximize your in-game income."
+        }
     }
 };
 export default language;

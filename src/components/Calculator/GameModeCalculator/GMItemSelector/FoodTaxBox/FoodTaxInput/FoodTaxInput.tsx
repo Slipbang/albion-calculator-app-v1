@@ -1,13 +1,15 @@
-import React, {useRef} from "react";
+import React, {useEffect, useRef} from "react";
 import {GMProfitSliceActions} from "../../../../../../store/GMProfit/gm-profit-slice";
 import {useAppDispatch} from "../../../../../../store";
 import {useSelector} from "react-redux";
 import {selectFoodTax} from "../../../../../../store/GMProfit/gm-profit-selectors";
+import {selectGuide} from "../../../../../../store/interface/interface-selector";
 
 
 const FoodTaxInput = () => {
     const dispatchAction = useAppDispatch();
     const foodTax = useSelector(selectFoodTax);
+    const {script} = useSelector(selectGuide);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -16,6 +18,13 @@ const FoodTaxInput = () => {
             dispatchAction(GMProfitSliceActions.setFoodTax(tax));
         }
     }
+
+    useEffect(() => {
+        if (script === 10) {
+            changeFoodTaxHandler(2000);
+            inputRef.current?.focus();
+        }
+    }, [script])
 
     return (
         <input

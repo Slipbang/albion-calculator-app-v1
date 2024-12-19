@@ -20,6 +20,11 @@ const StyledDefaultButton = styled.button<IStyledDefaultButtonProps>`
   cursor: pointer;
   color: rgb(196,152,58);
   text-align: center;
+  
+  &:disabled {
+    background-image: url(${defaultButtonClicked});
+    color: rgb(129,104,49);
+  }
 
   &:hover {
     background-image: url(${defaultButtonHovered});

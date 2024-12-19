@@ -14,13 +14,22 @@ import {selectLanguage} from "../../../../../store/language/language-selector";
 import {selectWorkBenchItem} from "../../../../../store/GMProfit/gm-profit-selectors";
 import {
     selectArtefactPriceCF,
-    selectArtefactPriceFetchedStateCF, selectItemsQuantityCF,
+    selectArtefactPriceFetchedStateCF,
+    selectDemoMode,
+    selectGuide,
+    selectItemsQuantityCF,
     selectOwnArtefactPriceCF
 } from "../../../../../store/interface/interface-selector";
 import {selectServerId} from "../../../../../store/queryParams/query-params-selectors";
 
 const ArtefactsBox = () => {
     const dispatchAction = useAppDispatch();
+
+    const prevValues = useRef<{ artefactItemId: string | null; serverId: string | null; script: number | null; }>({
+        artefactItemId: null,
+        serverId: null,
+        script: null
+    });
 
     const artefactPriceInputRef = useRef<HTMLInputElement>(null);
 
@@ -30,6 +39,11 @@ const ArtefactsBox = () => {
     const selectedWorkBenchItem = useSelector(selectWorkBenchItem);
     const fetchedArtefactPrice = useSelector(selectArtefactPriceCF);
     const serverId = useSelector(selectServerId);
+
+    const isDemo = useSelector(selectDemoMode);
+    const {script} = useSelector(selectGuide);
+
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     const {artefactItemId} = selectedWorkBenchItem;
 
@@ -69,8 +83,12 @@ const ArtefactsBox = () => {
     }
 
     useEffect(() => {
-        fetchArtefactsDataHandler()
-    }, [artefactItemId, serverId])
+        if (artefactItemId !== prevValues.current.artefactItemId || serverId !== prevValues.current.serverId) fetchArtefactsDataHandler();
+        if (script !== prevValues.current.script && script === 17) {
+            buttonRef.current?.click();
+            buttonRef.current?.focus();
+        }
+    }, [artefactItemId, serverId, script])
 
     return (
         <>
@@ -87,6 +105,8 @@ const ArtefactsBox = () => {
                         <p>{GMCraftingFormStrings.artefactLabel}</p>
                     </div>
                     <StyledCustomCheckButton
+                        $isDemo={isDemo}
+                        ref={buttonRef}
                         $isSelected={isArtefactPriceFetched}
                         onClick={() => {
                             setIsArtefactPriceFetchedHandler();
@@ -132,7 +152,8 @@ const ArtefactsBox = () => {
                         </>
                     )}
 
-                    <StyledInfoIcon title={`${GMCraftingFormStrings.artefactInfoIconText} ${totalArtefactPrice.toLocaleString('en')}`}/>
+                    <StyledInfoIcon
+                        title={`${GMCraftingFormStrings.artefactInfoIconText} ${totalArtefactPrice.toLocaleString('en')}`}/>
                 </div>
             )}
         </>

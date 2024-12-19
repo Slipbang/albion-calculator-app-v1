@@ -18,6 +18,7 @@ import {
 interface IStyledMarketActionButtonProps{
     $isActionBuy: boolean;
     $isRuSelected: boolean;
+    $isDemo?: boolean;
 }
 
 const StyledMarketActionButton = styled.button<IStyledMarketActionButtonProps>`
@@ -39,6 +40,14 @@ const StyledMarketActionButton = styled.button<IStyledMarketActionButtonProps>`
 
   &:active {
     background-image: ${props => props.$isActionBuy ? `url(${props.$isRuSelected ? activeBuyButton : activeBuyButtonEn}` : `url(${props.$isRuSelected ? clickedSellButton : clickedSellButtonEn}`});
+  }
+
+  ${props => props.$isDemo ?
+          `&:focus {
+              outline: 2px solid red;
+              border-radius: 5px;
+          }`
+          : ''
   }
 `;
 

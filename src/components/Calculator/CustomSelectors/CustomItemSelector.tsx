@@ -2,6 +2,7 @@ import React, {Dispatch, SetStateAction, useEffect, useRef, useState} from "reac
 import {IOptions} from "../../../store/Options/CustomSelecrorsOptions";
 import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../store/language/language-selector";
+import {selectGuide} from "../../../store/interface/interface-selector";
 
 interface ICustomItemSelectorProps {
     selectInputClass: string;
@@ -30,6 +31,8 @@ const CustomItemSelector = (props: ICustomItemSelectorProps) => {
 
     const inputRef = useRef<HTMLDivElement>(null)
 
+    const {script} = useSelector(selectGuide);
+
     const [selectedOptionParams,setSelectedOptionParams] = useState('');
     const [isSelectorVisible, setIsSelectorVisible] = useState(false);
 
@@ -46,20 +49,25 @@ const CustomItemSelector = (props: ICustomItemSelectorProps) => {
             }
         }
 
+        if (script === 20) {
+            setTimeout(() => inputRef.current?.click(), 200)
+        }
+
         document.body.addEventListener('click', clickOutsideSelectorHandler);
 
         return () => {
             document.body.removeEventListener('click', clickOutsideSelectorHandler);
         }
-    }, [inputRef])
+    }, [inputRef, script])
 
     return (
         <div
+            onClick={() => setVisibility(disabled)}
             key={paramsOptions[0].value}
             ref={inputRef}
             className={selectInputClass}
         >
-            <p onClick={() => setVisibility(disabled)}>{paramState.labelName[selectedLanguage]}</p>
+            <p>{paramState.labelName[selectedLanguage]}</p>
             {!!isSelectorVisible && <div className={paramsSelectorClass}>
                 <div style={{paddingTop: '15px'}}>
                     {paramsOptions.map(({value, params, labelName}, index) => {

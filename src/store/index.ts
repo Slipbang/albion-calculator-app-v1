@@ -8,6 +8,7 @@ import {setupListeners} from "@reduxjs/toolkit/query";
 import GMProfitSlice from "./GMProfit/gm-profit-slice";
 import interfaceSlice from "./interface/interface-slice";
 import queryParamsSlice from "./queryParams/query-params-slice";
+import {loadingMiddleware} from "./middlewares/loadingMiddleware";
 
 const rootReducer = combineReducers({
     interface: interfaceSlice.reducer,
@@ -21,7 +22,7 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(albionApi.middleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(loadingMiddleware, albionApi.middleware),
 })
 
 setupListeners(store.dispatch); // для refetchOnFocus!!!

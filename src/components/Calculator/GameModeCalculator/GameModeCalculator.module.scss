@@ -19,6 +19,11 @@
   transform: translate(550px,0);
 }
 
+.backpackDemo {
+  z-index: 4;
+  pointer-events: none;
+}
+
 .GMItemSelectorWrapper{
   position: absolute;
   bottom: 10px;
@@ -32,6 +37,10 @@
   transform: translate(-550px,0);
 }
 
+.GMItemSelectorDemo {
+  z-index: 4;
+  pointer-events: none;
+}
 
 .marketMenuWrapper{
   width: 427px;
@@ -43,9 +52,36 @@
   user-select: none;
 }
 
-.marketMenuShown{
+.marketMenuShown {
   transition: all 0.5s ease-in-out;
   transform: translate(-410px,0);
+}
+
+.demoButtonWrapper {
+  z-index: 1;
+  position: absolute;
+  top: 280px;
+  right: 1px;
+  transition: all 0.5s ease-in-out;
+}
+
+.demoButtonHidden {
+  transition: all 0.5s ease-in-out;
+  transform: translate(155px,0);
+}
+
+.guideWrapper {
+  position: absolute;
+  right: var(--guide-right);
+  left: var(--guide-left);
+  top: 50%;
+  transform: translate(var(--guide-transorm-translateX),-50%);
+  transition: all 0.5s ease-in-out;
+  z-index: 6;
+}
+
+.guideHidden {
+  display: none;
 }
 
 @media (max-height: 930px) {
@@ -58,4 +94,20 @@
   .wrapper{
     width: 1150px;
   }
+}
+
+[data-guide='center'] {
+  --guide-right: 50%;
+  --guide-left: initial;
+  --guide-transorm-translateX: 50%;
+}
+[data-guide='right'] {
+  --guide-right: 200px;
+  --guide-left: initial;
+  --guide-transorm-translateX: 50%;
+}
+[data-guide='left'] {
+  --guide-right: initial;
+  --guide-left: 200px;
+  --guide-transorm-translateX: -50%;
 }

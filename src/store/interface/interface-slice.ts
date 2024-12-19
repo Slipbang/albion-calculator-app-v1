@@ -62,6 +62,8 @@ interface IInitialState {
         isCraftTableShown: boolean;
         isInfoTableShown: boolean;
         isItemSelectorShown: boolean;
+        isDemo: boolean;
+        isItemsDataLoading: boolean;
         theme: TTheme;
     };
 
@@ -105,6 +107,12 @@ interface IInitialState {
         ownItemPriceMI: number;
         itemPriceMI: number;
     };
+
+    Guide: {
+        script: number;
+        position: 'left' | 'center';
+        isNextButtonDisabled: boolean;
+    }
     items: ICurrentConfigurationItems;
     status: 'loading' | 'error' | 'success';
 }
@@ -130,6 +138,8 @@ const initialState: IInitialState = {
         isCraftTableShown: false,
         isInfoTableShown: false,
         isItemSelectorShown: false,
+        isDemo: false,
+        isItemsDataLoading: false,
         theme,
     },
 
@@ -175,6 +185,12 @@ const initialState: IInitialState = {
         isPriceFetchedMI: false,
         ownItemPriceMI: 0,
         itemPriceMI: 0,
+    },
+
+    Guide: {
+        script: 0,
+        position: 'center',
+        isNextButtonDisabled: false,
     },
 
     items: defineCurrentConfigurationItems(),
@@ -225,8 +241,12 @@ const interfaceSlice = createSlice({
         setIsCraftingFormVisible(state, action: PayloadAction<boolean>) {
             state.global.isCraftingFormVisible = action.payload;
         },
-        toggleMarketMenuShown(state) {
-            state.global.isMarketMenuShown = !state.global.isMarketMenuShown;
+        toggleMarketMenuShown(state, action: PayloadAction<boolean | undefined>) {
+            if (action?.payload === undefined) {
+                state.global.isMarketMenuShown = !state.global.isMarketMenuShown;
+            } else {
+                state.global.isMarketMenuShown = action.payload;
+            }
         },
         setMarketItemVisibility(state, action: PayloadAction<boolean>) {
             state.global.isMarketItemVisible = action.payload;
@@ -304,8 +324,12 @@ const interfaceSlice = createSlice({
         setOwnJournalPriceCF(state, action: PayloadAction<number>) {
             state.GMCraftingForm.ownJournalPriceCF = action.payload;
         },
-        setIsJournalPriceFetchedCF(state) {
-            state.GMCraftingForm.isJournalPriceFetchedCF = !state.GMCraftingForm.isJournalPriceFetchedCF;
+        setIsJournalPriceFetchedCF(state, action: PayloadAction<boolean | undefined>) {
+            if (action?.payload === undefined) {
+                state.GMCraftingForm.isJournalPriceFetchedCF = !state.GMCraftingForm.isJournalPriceFetchedCF;
+            } else {
+                state.GMCraftingForm.isJournalPriceFetchedCF = action.payload;
+            }
         },
         setIsArtefactPriceFetchedCF(state, action: PayloadAction<boolean | undefined>) {
             if (action?.payload === undefined) {
@@ -341,6 +365,21 @@ const interfaceSlice = createSlice({
         },
         setItemPriceMI(state, action: PayloadAction<number>) {
             state.MarketItem.itemPriceMI = action.payload;
+        },
+        setIsDemo(state, action: PayloadAction<boolean>) {
+            state.global.isDemo = action.payload;
+        },
+        setGuidePosition(state, action: PayloadAction<'left' | 'center'>) {
+            state.Guide.position = action.payload;
+        },
+        setGuideScript(state, action: PayloadAction<number>) {
+            state.Guide.script = action.payload;
+        },
+        setIsItemsDataLoading(state, action: PayloadAction<boolean>) {
+            state.global.isItemsDataLoading = action.payload;
+        },
+        setIsNextButtonDisabled(state, action: PayloadAction<boolean>) {
+            state.Guide.isNextButtonDisabled = action.payload;
         }
     },
     extraReducers: (builder) => {

@@ -2,7 +2,7 @@ import {silver} from "../../../../CommonImgReexports/CommonImgReexports";
 import styles from './WorkBenchItem.module.scss';
 import {useSelector} from "react-redux";
 import {
-    selectCalculatorType,
+    selectCalculatorType, selectGuide,
     selectInputIS,
     selectInterfaceLanguageData,
     selectNodeIS,
@@ -18,6 +18,8 @@ import {GMProfitSliceActions, ISelectedWorkBenchItem} from "../../../../../../st
 import TotalFoodTax from "./TotalFoodTax/TotalFoodTax";
 import {srcRoute} from "../../../../../../store/api/api";
 import {IGMCraftItem} from "../../../../../../store/utils/createWorkBenchSelectorItems";
+import {escapeRegex} from "../../../FunctionUtils/escapeRegex";
+import {useEffect, useRef} from "react";
 
 type TCraftItemsKeys = keyof Omit<IGMCraftItem, 'itemName'>;
 
@@ -35,7 +37,10 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
     const {selectedLanguage} = useSelector(selectLanguage);
     const languageData = useSelector(selectInterfaceLanguageData);
     const itemName = languageData[itemId!];
+    const {script} = useSelector(selectGuide)
     const dispatchAction = useAppDispatch();
+
+    const buttonRef = useRef<HTMLDivElement>(null)
 
     const selectItemHandler = (selectedItem: ISelectedWorkBenchItem) => {
         dispatchAction(interfaceSliceActions.setIsCraftingFormVisible(true));
@@ -55,35 +60,16 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
     }
 
     const validateItemHandler = (itemTier: number, itemNode: string, itemName: string) => {
+        const fixedValue = escapeRegex(inputSearch);
+
         return !!(selectedTier.value.includes(`T${itemTier}`)
             && selectedNode.value.includes(itemNode)
-            && (!!inputSearch.trim() ? itemName.toLowerCase().match(inputSearch.toLowerCase()) : true));
+            && (!!fixedValue.trim() ? itemName.toLowerCase().match(fixedValue.toLowerCase()) : true));
     }
 
     const defineFontSize = (itemName: string) => {
         return itemName.length > 18 ? 9 : itemName.length > 14 ? 12 : 16
     }
-
-    // royal equipment removed
-    // const calculateArtefactsQuantityHandler = (artefactItemId: string, itemNode: string, itemTier: number) => {
-    //     let artefactsQuantity: number = 1;
-    //
-    //     if (artefactItemId?.includes('QUESTITEM_TOKEN_ROYAL')) {
-    //         switch (itemNode) {
-    //             case 'leatherArmor':
-    //             case 'clothArmor':
-    //             case 'plateArmor':
-    //                 artefactsQuantity = itemTier >= 6 ? 16 : itemTier === 5 ? 8 : 4;
-    //                 break;
-    //             default:
-    //                 artefactsQuantity = itemTier >= 6 ? 8 : itemTier === 5 ? 4 : 2;
-    //                 break;
-    //         }
-    //     }
-    //
-    //     return artefactsQuantity;
-    // }
-    // const artefactsQuantity = calculateArtefactsQuantityHandler(artefactItemId!, itemNode!, itemTier);
 
     const artefactName = languageData[artefactItemId || ''];
 
@@ -111,13 +97,21 @@ const WorkBenchItem = ({item}: IWorkBenchItemProps) => {
         }
     }
 
+    useEffect(() => {
+        if (script === 12) {
+            buttonRef.current?.click()
+        }
+    }, [script])
+
     return (
         <div
+            ref={itemId === 'T6_ARMOR_LEATHER_MORGANA' ? buttonRef : null}
             key={itemId}
             className={styles.itemBox}
             style={validateItemHandler(itemTier, itemNode!, itemName?.[selectedLanguage]!) ? {display: 'grid'} : {display: 'none'}}
             onClick={() => {
-                selectItemHandler({...item, artefactsQuantity: 1})
+
+                selectItemHandler({...item, artefactsQuantity: item.artefactItemId ? 1 : 0})
                 resetEnchantmentHandler(itemId!, enchantment!)
             }}
         >

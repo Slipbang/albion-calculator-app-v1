@@ -12,7 +12,8 @@ import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../../../../store/language/language-selector";
 import {selectWorkBenchItem} from "../../../../../../store/GMProfit/gm-profit-selectors";
 import {
-    selectEnchantmentNumCF,
+    selectDemoMode,
+    selectEnchantmentNumCF, selectGuide,
     selectItemsQuantityCF,
     selectJournalPriceFetchedStateCF,
     selectJournalUsageCF,
@@ -27,6 +28,10 @@ const JournalsSelectors = () => {
     const {language} = useSelector(selectLanguage);
     const {GMCraftingFormStrings} = language;
 
+    const {script} = useSelector(selectGuide);
+
+    const buttonRef = useRef<HTMLButtonElement>(null);
+
     const journalPriceInputRef = useRef<HTMLInputElement>(null)
 
     const isJournalUsed = useSelector(selectJournalUsageCF);
@@ -36,6 +41,7 @@ const JournalsSelectors = () => {
     const isJournalPriceFetched = useSelector(selectJournalPriceFetchedStateCF);
     const selectedWorkBenchItem = useSelector(selectWorkBenchItem);
     const serverId = useSelector(selectServerId);
+    const isDemo = useSelector(selectDemoMode);
 
     const {emptyJournalId} = useJournals({isJournalUsed, selectedWorkBenchItem, itemsQuantity, enchantmentNum});
 
@@ -65,6 +71,13 @@ const JournalsSelectors = () => {
         fetchJournalsDataHandler();
     }, [emptyJournalId, serverId])
 
+    useEffect(() => {
+        if (script === 14) {
+            buttonRef.current?.click();
+            buttonRef.current?.focus();
+        }
+    }, [script])
+
     return (
         <>
             {isJournalUsed &&
@@ -78,6 +91,8 @@ const JournalsSelectors = () => {
                 >
                     <p>{GMCraftingFormStrings.price}</p>
                     <StyledCustomCheckButton
+                        $isDemo={isDemo}
+                        ref={buttonRef}
                         $isSelected={isJournalPriceFetched}
                         onClick={() => {
                             setIsJournalPriceFetchedHandler();

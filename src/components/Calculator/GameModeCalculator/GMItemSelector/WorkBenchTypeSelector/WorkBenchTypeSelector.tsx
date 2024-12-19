@@ -48,7 +48,8 @@ import {
 import {TCalcProps} from "../../../../../types/calculatorPropsType";
 import {GMProfitSliceActions,} from "../../../../../store/GMProfit/gm-profit-slice";
 import {ICraftingItemClass, TItemTypeSelected} from "../../../../../types/craftItemsType";
-import {selectCalculatorType} from "../../../../../store/interface/interface-selector";
+import {selectCalculatorType, selectGuide} from "../../../../../store/interface/interface-selector";
+import classNames from "classnames/bind";
 
 interface IWorkBenchButton {
     workBenchType: ICraftingItemClass;
@@ -137,17 +138,11 @@ const workBenchNodeSelectorButtons: TWorkBenchNodeSelectorButtons = {
 
 const WorkBenchTypeSelector = () => {
     const calculatorType = useSelector(selectCalculatorType);
+    const {script} = useSelector(selectGuide);
     const workBenchTypeButtonRef = useRef<HTMLButtonElement>(null);
     const dispatchAction = useAppDispatch();
-
-    useEffect(() => {
-        if (calculatorType === 'RESOURCES' || calculatorType === 'ITEMS'){
-            workBenchTypeButtonRef.current!.click();
-        }
-    }, [calculatorType]);
-
     const workBenchTypeSelected = useSelector(selectWorkBenchType);
-
+    const prevValues = useRef<{calculatorType: string | null; script: number | null;}>({ calculatorType: null, script: null });
 
     const selectWorkBenchTypeHandler = (workBenchType: ICraftingItemClass, workBenchAvatar: string, workBenchWorkerAvatar: string,) => {
         dispatchAction(interfaceSliceActions.setIsCraftingFormVisible(false));
@@ -172,8 +167,30 @@ const WorkBenchTypeSelector = () => {
         dispatchAction(GMProfitSliceActions.setItemTypeSelected(itemType));
     }
 
+    const extendedClassNames = classNames.bind(styles);
+
+    const workBenchTypeSelector = extendedClassNames(styles.workBenchTypeSelector, {
+        [styles.workBenchTypeSelectorHoverImitation]: script === 8,
+    })
+
+    useEffect(() => {
+        if (
+            calculatorType !== prevValues.current.calculatorType &&
+            (calculatorType === 'RESOURCES' || calculatorType === 'ITEMS')
+        ) {
+            workBenchTypeButtonRef.current?.click();
+        }
+
+        if (script !== prevValues.current.script && script === 9) {
+            const { workBenchType, workBenchAvatar, workerAvatar } = workBenchNodeSelectorButtons['ITEMS'][1];
+            selectWorkBenchTypeHandler(workBenchType, workBenchAvatar, workerAvatar);
+        }
+
+        prevValues.current = { calculatorType, script };
+    }, [calculatorType, script]);
+
     return (
-        <div className={styles.workBenchTypeSelector} data-selected={calculatorType}>
+        <div className={workBenchTypeSelector} data-selected={calculatorType}>
             {workBenchNodeSelectorButtons[calculatorType].map((button, index) => {
                 const {
                     workBenchType,

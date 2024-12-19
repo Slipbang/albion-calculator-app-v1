@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import {backpackReset, backpackResetClicked, backpackResetHovered} from "../GameModeCalculator/Backpack/BackpackImgReexports/BackpackImgReexports";
 
-const StyledCompleteResetButton = styled.button`
+interface IStyledCompleteResetButton {
+    $isDemo?: boolean;
+}
+
+const StyledCompleteResetButton = styled.button<IStyledCompleteResetButton>`
   z-index: 5;
   background-color: transparent;
   border: none;
@@ -20,6 +24,14 @@ const StyledCompleteResetButton = styled.button`
 
   &:active {
     background-image: url(${backpackResetClicked});
+  }
+  
+  ${props => props.$isDemo ? 
+          `&:focus {
+              outline: 2px solid red;
+              border-radius: 5px;
+          }`
+          : ''
   }
 `;
 

@@ -12,6 +12,7 @@ const ResetButton = () => {
 
     return (
         <StyledCompleteResetButton
+            $isDemo={false}
             onClick={() => fetchArtefactsHandler()}
         />
     )

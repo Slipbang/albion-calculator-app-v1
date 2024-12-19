@@ -12,14 +12,13 @@ import {
 
 
 interface IStyledCraftingButtonProps{
-    $isActive: boolean;
     $isRuSelected: boolean;
 }
 
 const StyledCraftingButton = styled.button<IStyledCraftingButtonProps>`
   background-color: transparent;
   border: none;
-  background-image: ${props => props.$isActive ? `url(${props.$isRuSelected ? craftingButton : craftingButtonEn});` : `url(${props.$isRuSelected ? nonActiveCraftingButton : nonActiveCraftingButtonEn});`};
+  background-image: ${props => `url(${props.$isRuSelected ? craftingButton : craftingButtonEn});`};
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -30,13 +29,22 @@ const StyledCraftingButton = styled.button<IStyledCraftingButtonProps>`
   position: fixed;
   bottom: 58px;
   right: 45px;
-
-  &:hover {
-    ${props => props.$isActive ? `background-image: url(${props.$isRuSelected ? hoveredCraftingButton : hoveredCraftingButtonEn});` : ''}
+  
+  &:disabled {
+    background-image: ${props => `url(${props.$isRuSelected ? nonActiveCraftingButton : nonActiveCraftingButtonEn});`};
+  }
+  
+  &:hover:not(:disabled) {
+    background-image: ${props => `url(${props.$isRuSelected ? hoveredCraftingButton : hoveredCraftingButtonEn});`}
   }
 
-  &:active {
-    ${props => props.$isActive ? `background-image: url(${props.$isRuSelected ? clickedCraftingButton : clickedCraftingButtonEn});` : ''}
+  &:active:not(:disabled) {
+    background-image: ${props => `url(${props.$isRuSelected ? clickedCraftingButton : clickedCraftingButtonEn});`};
+  }
+
+  &:focus {
+    outline: 2px solid red; 
+    border-radius: 5px;
   }
 `;
 

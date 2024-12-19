@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 interface IStyledEnchantmentButtonsProps{
+    $isDemo: boolean;
     $isSelected: boolean;
     $enchantmentButton: string;
     $hoveredEnchantmentButton: string;
@@ -23,6 +24,14 @@ const StyledEnchantmentButton = styled.button<IStyledEnchantmentButtonsProps>`
 
   &:hover {
     background-image: ${props => props.$isSelected ? `url(${props.$hoveredActiveEnchantmentButton})` : `url(${props.$hoveredEnchantmentButton})`};
+  }
+
+  ${props => props.$isDemo ?
+          `&:focus {
+              outline: 2px solid red;
+              border-radius: 5px;
+          }`
+          : ''
   }
 `;
 

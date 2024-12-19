@@ -1,7 +1,7 @@
 import {interfaceSliceActions} from "../../../store/interface/interface-slice";
 import {useSelector} from "react-redux";
 import {
-    selectCalculatorType,
+    selectCalculatorType, selectDemoMode,
     selectGameMode,
     selectInterfaceConsumablesSelectorItems,
     selectTheme
@@ -9,7 +9,7 @@ import {
 import {useAppDispatch} from "../../../store";
 import {TCalcProps} from "../../../types/calculatorPropsType";
 import styles from './CalculatorTypeButtons.module.scss';
-import {memo} from "react";
+import {memo, useEffect} from "react";
 import {profitSliceActions} from "../../../store/profit/profit-slice";
 
 interface ISelector {
@@ -43,6 +43,7 @@ const CalculatorTypeButtons = () => {
     const calculatorType = useSelector(selectCalculatorType);
     const gameMode = useSelector(selectGameMode);
     const consumablesSelectorItems = useSelector(selectInterfaceConsumablesSelectorItems);
+    const isDemo = useSelector(selectDemoMode);
 
     const selectCalculatorTypeHandler = (calculatorType: TCalcProps) => {
         dispatchAction(interfaceSliceActions.setCalculatorType(calculatorType as TCalcProps));
@@ -59,6 +60,10 @@ const CalculatorTypeButtons = () => {
             dispatchAction(interfaceSliceActions.toggleGameMode());
         }
     }
+
+    useEffect(() => {
+        if (isDemo && gameMode) selectCalculatorTypeHandler('ITEMS');
+    }, [isDemo, gameMode])
 
     return (
         <div className={styles.wrapper} data-theme={theme}>

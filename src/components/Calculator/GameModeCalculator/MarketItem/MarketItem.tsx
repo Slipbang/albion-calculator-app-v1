@@ -13,7 +13,7 @@ import MarketItemForm from "./MarketItemForm/MarketItemForm";
 import ItemQualitySelector from "./ItemQualitySelector/ItemQualitySelector";
 import {qualityOptions} from "../../../../store/Options/CustomSelecrorsOptions";
 
-const MarketItem = () => {
+const MarketItem = ({script}: {script: number}) => {
     const dispatchAction = useAppDispatch();
 
     const closeMarketItemHandler = () => {
@@ -23,7 +23,7 @@ const MarketItem = () => {
     }
 
     return (
-        <StyledMarketItem>
+        <StyledMarketItem $noPointersEvents={[4,5,6,20,22].includes(script)}>
             <StyledCloseButton onClick={() => closeMarketItemHandler()} />
 
             <MarketItemImage />

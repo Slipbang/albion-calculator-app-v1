@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {ownPriceButton,ownPriceButtonActive,ownPriceButtonHovered,ownPriceButtonActiveHovered} from "../CommonImgReexports/CommonImgReexports";
 
 interface IStyledOwnPriceButtonProps{
+    $isDemo?: boolean;
     $isSelected: boolean;
 }
 
@@ -24,6 +25,14 @@ const StyledCustomCheckButton = styled.button<IStyledOwnPriceButtonProps>`
   
   &:active{
     background-image: ${props => props.$isSelected ? `url(${ownPriceButtonActive})` : `url(${ownPriceButton})`};
+  }
+
+  ${props => props.$isDemo ?
+          `&:focus {
+              outline: 2px solid red;
+              border-radius: 5px;
+          }`
+          : ''
   }
 `;
 

@@ -1,0 +1,15 @@
+.guideButton {
+  border: none;
+  width: 150px;
+  height: 48px;
+  background-color: rgb(135,11,11);
+  color: rgb(251,216,159);
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.guideButton:hover {
+  background-color: rgb(181,12,12);
+  color: white;
+}

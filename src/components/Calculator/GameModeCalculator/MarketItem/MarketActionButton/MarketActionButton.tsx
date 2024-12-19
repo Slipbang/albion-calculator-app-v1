@@ -7,12 +7,19 @@ import {useMaxQuantityCalculation} from "../Hooks/useMaxQuantityCalculation";
 import {useTotalPriceCalculation} from "../Hooks/useTotalPriceCalculation";
 import styles from './MarketActionButton.module.scss';
 import {selectLanguage} from "../../../../../store/language/language-selector";
+import {selectDemoMode, selectGuide, selectItemsDataLoading} from "../../../../../store/interface/interface-selector";
+import {useEffect, useRef} from "react";
 
 const MarketActionButton = () => {
     const dispatchAction = useAppDispatch();
 
-    const {selectedLanguage} = useSelector(selectLanguage)
+    const isItemsDataLoading = useSelector(selectItemsDataLoading);
+    const {selectedLanguage} = useSelector(selectLanguage);
+    const {script} = useSelector(selectGuide);
     const isRuSelected = selectedLanguage === 'ru';
+    const isDemo = useSelector(selectDemoMode);
+
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     const {maxQuantity, selectedMarketItem, marketAction, backpackItems} = useMaxQuantityCalculation();
 
@@ -41,17 +48,29 @@ const MarketActionButton = () => {
                 ...selectedMarketItem,
                 itemQuantity: itemInputQuantity,
             }));
-
             dispatchAction(GMProfitSliceActions.calculateBagSilver(-Math.floor(totalPrice)));
         }
     }
 
+    const isButtonDisabled = () => {
+        return isNaN(totalPrice) || typeof totalPrice !== "number" || isItemsDataLoading;
+    }
+
+    useEffect(() => {
+        if ([6, 21,23].includes(script)) {
+            buttonRef.current?.click();
+            buttonRef.current?.focus();
+        }
+    }, [script])
+
     return (
         <StyledMarketActionButton
+            $isDemo={isDemo}
+            ref={buttonRef}
             $isActionBuy={marketAction === 'buy'}
             $isRuSelected={isRuSelected}
             className={styles.buyButton}
-            disabled={isNaN(totalPrice) || typeof totalPrice !== "number"}
+            disabled={isButtonDisabled()}
             onClick={() => {
                 if (marketAction === 'buy') {
                     buyMaterialHandler();

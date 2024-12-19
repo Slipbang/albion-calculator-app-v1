@@ -6,10 +6,15 @@ import {useSelector} from "react-redux";
 import {selectWorkBenchItem} from "../../../../../../store/GMProfit/gm-profit-selectors";
 import styles from './EnchantmentButtons.module.scss';
 import {selectLanguage} from "../../../../../../store/language/language-selector";
-import {selectEnchantmentButtons} from "../../../../../../store/interface/interface-selector";
+import {
+    selectDemoMode,
+    selectEnchantmentButtons,
+    selectGuide
+} from "../../../../../../store/interface/interface-selector";
 import {
     IEnchantmentButton
 } from "../../../../../../store/interface/DummyEnchantmentButtons/DummyEnchantmentButtons";
+import {useEffect, useRef} from "react";
 
 interface IEnchantmentButtonsProps {
     calculatorType: TCalcProps;
@@ -19,9 +24,12 @@ const EnchantmentButtons = ({calculatorType}: IEnchantmentButtonsProps) => {
 
     const selectedWorkBenchItem = useSelector(selectWorkBenchItem);
     const enchantmentButtons = useSelector(selectEnchantmentButtons);
+    const {script} = useSelector(selectGuide);
+    const isDemo = useSelector(selectDemoMode);
     const {itemId} = selectedWorkBenchItem;
     const {language} = useSelector(selectLanguage);
     const {GMCraftingFormStrings} = language;
+    const buttonRef = useRef<HTMLButtonElement>(null)
 
     const dispatchAction = useAppDispatch();
 
@@ -58,6 +66,13 @@ const EnchantmentButtons = ({calculatorType}: IEnchantmentButtonsProps) => {
         dispatchAction(interfaceSliceActions.setEnchantmentNumCF(enchantmentNum));
     }
 
+    useEffect(() => {
+        if (script === 15 ) {
+            buttonRef.current?.click();
+            buttonRef.current?.focus();
+        }
+    }, [script])
+
     return (
         <>
             {(calculatorType === 'ITEMS' || calculatorType === 'RESOURCES' && itemId!.includes('STONEBLOCK')) &&
@@ -81,7 +96,9 @@ const EnchantmentButtons = ({calculatorType}: IEnchantmentButtonsProps) => {
 
                         return (
                             <StyledEnchantmentButton
+                                ref={index === 0 ? buttonRef : null}
                                 key={index}
+                                $isDemo={isDemo}
                                 $isSelected={active}
                                 $enchantmentButton={button}
                                 $hoveredEnchantmentButton={hoveredButton}
