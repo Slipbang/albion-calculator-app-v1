@@ -82,9 +82,7 @@ const CustomItemSelector = (props: ICustomItemSelectorProps) => {
                                         setSelectedParams(paramsOptions[index]);
                                     }}
                                     onMouseEnter={() => {
-                                        if (!!params){
-                                            setSelectedOptionParams(value)
-                                        }
+                                        if (!!params) setSelectedOptionParams(value);
                                     }}
                                 >{labelName[selectedLanguage]}</p>
 
@@ -92,7 +90,8 @@ const CustomItemSelector = (props: ICustomItemSelectorProps) => {
                                     {params.map((param, index1) => {
                                         return <div key={param.value}>
                                             <p
-                                                onClick={() => {
+                                                onClick={(event) => {
+                                                    event.stopPropagation();
                                                     setSelectedParams(paramsOptions[index].params![index1]);
                                                     setIsSelectorVisible(false);
                                                 }}
