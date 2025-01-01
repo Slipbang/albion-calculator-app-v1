@@ -16,6 +16,9 @@ const StyledGuideBoard = styled.div`
 
   p {
     position: absolute;
+    font-weight: 500;
+    font-size: 1.15rem;
+    color: rgb(89, 60, 40);
     left: 20px;
     top: 100px;
     width: 310px;

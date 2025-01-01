@@ -83,7 +83,7 @@ const GameModeGuide = () => {
                 $width={80}
                 $height={30}
                 disabled={isButtonDisabled()}
-            >next</StyledDefaultButton>
+            >Next</StyledDefaultButton>
         </StyledGuideBoard>
     )
 }
