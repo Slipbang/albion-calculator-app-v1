@@ -8,7 +8,7 @@ interface IStyledMarketItem {
 const StyledMarketItem = styled.div<IStyledMarketItem>`
   user-select: none;
   position: absolute;
-  left: calc(50% - ${props => props.$noPointersEvents ? '120px' : '0'});
+  left: calc(50% - ${props => props.$noPointersEvents ? '120px' : '0px'});
   top: 50%;
   transform: translate(-50%,-50%);
   border: none;
