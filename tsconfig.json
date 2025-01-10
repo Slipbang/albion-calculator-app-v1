@@ -1,4 +1,4 @@
-{
+  {
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
@@ -107,13 +107,13 @@
     "skipLibCheck": true,
     /* Skip type checking all .d.ts files. */
     "jsx": "react-jsx",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["src/*"]
+    }
   },
   "include": [
     "declarations.d.ts",
     "src/**/*.ts",
   ],
-  "baseUrl": "./",
-  "paths": {
-    "*": ["src/types/*"]
-  }
 }
