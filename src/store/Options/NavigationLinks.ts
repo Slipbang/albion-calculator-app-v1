@@ -1,4 +1,4 @@
-export type TUrlKeys = 'calculator' | 'artefacts' | 'transportation' | 'FAQ';
+export type TUrlKeys = '/calculator' | '/artefacts' | '/transportation' | '/FAQ';
 
 interface ILink {
     linkName?: {
@@ -16,27 +16,27 @@ export const links: TLinks = [
             ru: 'Калькулятор',
             en: 'Calculator'
         },
-        link: 'calculator',
+        link: '/calculator',
     },
     {
         linkName: {
             ru: 'Артефакты',
             en: 'Artifacts'
         },
-        link: 'artefacts',
+        link: '/artefacts',
     },
     {
         linkName: {
             ru: 'Транспортировка',
             en: 'Transportation'
         },
-        link: 'transportation',
+        link: '/transportation',
     },
     {
         linkName: {
             ru: 'FAQ',
             en: 'FAQ',
         },
-        link: 'FAQ'
+        link: '/FAQ'
     },
 ];

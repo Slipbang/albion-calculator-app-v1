@@ -4,7 +4,6 @@ import ArtefactsSelectors from "./ArtefactsSelectors/ArtefactsSelectors";
 import ArtefactLiElement from "./ArtefactLiElement/ArtefactLiElement";
 import {useArtefacts} from "./Hooks/useArtefacts";
 import {Tooltip} from "react-tooltip";
-import React from "react";
 import {useSelector} from "react-redux";
 import {selectTheme} from "../../store/interface/interface-selector";
 

@@ -21,13 +21,13 @@ import {
 } from "../../../../store/interface/interface-selector";
 import TableTdElement from "./TableTdElement/TableTdElement";
 import StyledCloseButton from "../../StyledComponentsCommon/StyledCloseButton";
-import {IConsumableObject} from "../../../../types/consumableTypes";
+import {IConsumableObject} from "types/consumableTypes";
 
 import ConsumablesPriceSelectors from "./ConsumablesPriceSelectors/ConsumablesPriceSelectors";
-import {TCalcProps} from "../../../../types/calculatorPropsType";
-import {IConsumableTableData, IInfoTableData, ITableQueryParams} from "../../../../types/defaultCalculatorTypes";
-import {ICraftItem} from "../../../../types/craftItemsType";
-import {TConsumableNames} from "../../../../types/ConsumableNamesType";
+import {TCalcProps} from "types/calculatorPropsType";
+import {IConsumableTableData, IInfoTableData, ITableQueryParams} from "types/defaultCalculatorTypes";
+import {ICraftItem} from "types/craftItemsType";
+import {TConsumableNames} from "types/ConsumableNamesType";
 
 export type ICraftItemInfoTuple = [
     itemData: IInfoTableData | undefined,

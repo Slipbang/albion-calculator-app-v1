@@ -6,23 +6,50 @@ import {IConsumableTableData} from "../../../../../types/defaultCalculatorTypes"
 import {TConsumableNames} from "../../../../../types/ConsumableNamesType";
 
 export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
+    public city!: TCities;
+    public enchantment!: string;
+    public infoTableData!: IConsumableTableData;
+    public consumableResourcesData: IItemsData[] | undefined;
+    public consumableResourcesKeys: string[] | undefined;
+    public selectedLanguage!: TSelectedLanguage;
+    public consumablesNames: TConsumableNames | undefined = undefined;
+    public infoTableStrings!: ISelectedLanguage['infoTableStrings'];
+    public consumableSelectors: TConsumablesSelectors | undefined;
+    public foodTax!: number;
+
     constructor(
-        public city: TCities,
-        public enchantment: string,
-        public infoTableData: IConsumableTableData,
-        public consumableResourcesData: IItemsData[] | undefined,
-        public consumableResourcesKeys: string[] | undefined,
-        public selectedLanguage: TSelectedLanguage,
-        public consumablesNames: TConsumableNames | undefined,
-        public infoTableStrings: ISelectedLanguage['infoTableStrings'],
-        public consumableSelectors: TConsumablesSelectors | undefined,
-        public foodTax: number,
-        public currentDate: Date,
+        city: TCities,
+        enchantment: string,
+        infoTableData: IConsumableTableData,
+        consumableResourcesData: IItemsData[] | undefined,
+        consumableResourcesKeys: string[] | undefined,
+        selectedLanguage: TSelectedLanguage,
+        consumablesNames: TConsumableNames | undefined,
+        infoTableStrings: ISelectedLanguage['infoTableStrings'],
+        consumableSelectors: TConsumablesSelectors | undefined,
+        foodTax: number,
+        currentDate: Date,
     ) {
         super(currentDate);
+
+        this.city = city;
+        this.enchantment = enchantment;
+        this.infoTableData = infoTableData;
+        this.consumableResourcesData = consumableResourcesData;
+        this.consumableResourcesKeys = consumableResourcesKeys;
+        this.selectedLanguage = selectedLanguage;
+        this.consumablesNames = consumablesNames;
+        this.infoTableStrings = infoTableStrings;
+        this.consumableSelectors = consumableSelectors;
+        this.foodTax = foodTax;
+        this.currentDate = currentDate;
     }
-    percent = this.infoTableData.percent;
-    consumableItemId = `${this.infoTableData.craftedConsumable.itemId}${!!this.enchantment ? `@${this.enchantment}` : ''}`;
+    get percent() {
+        return this.infoTableData.percent;
+    }
+    get consumableItemId() {
+        return `${this.infoTableData?.craftedConsumable.itemId}${!!this.enchantment ? `@${this.enchantment}` : ''}`;
+    }
 
     consumableResourcePrices = () => {
         const {consumableResourcesKeys, consumableResourcesData,enchantment} = this;
@@ -44,14 +71,26 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
         return {resourcePrices, resourcePricesDates, consumableItemPrice, consumableItemPriceDate};
     }
 
-    prices = this.consumableResourcePrices();
+    get prices() {
+        return this.consumableResourcePrices();
+    }
 
-    totalFoodTax = Math.ceil(this.infoTableData.craftedConsumable.foodConsumption * (this.foodTax/100));
+    get totalFoodTax() {
+        return Math.ceil(this.infoTableData.craftedConsumable.foodConsumption * (this.foodTax/100));
+    }
 
-    resourcePrices = this.prices.resourcePrices;
-    resourcePricesDates = this.prices.resourcePricesDates;
-    consumableItemPrice = Math.floor(this.prices.consumableItemPrice - (this.prices.consumableItemPrice * 0.065)) || this.infoTableStrings.noData;
-    consumableItemPriceDate = this.prices.consumableItemPriceDate;
+    get resourcePrices() {
+        return this.prices.resourcePrices;
+    }
+    get resourcePricesDates() {
+        return this.prices.resourcePricesDates;
+    }
+    get consumableItemPrice() {
+        return Math.floor(this.prices.consumableItemPrice - (this.prices.consumableItemPrice * 0.065)) || this.infoTableStrings.noData;
+    }
+    get consumableItemPriceDate() {
+        return this.prices.consumableItemPriceDate;
+    }
 
     resourcePricesCalculation = () => {
         const {consumableResourcesKeys, infoTableData, percent, consumablesNames, selectedLanguage, resourcePrices, enchantment, consumableItemPrice, totalFoodTax, resourcePricesDates} = this;
@@ -84,18 +123,34 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
         }
     }
 
-    itemPriceTitle = `${this.consumablesNames![this.infoTableData.craftedConsumable.itemId][this.selectedLanguage]}: ${this.consumableItemPrice.toLocaleString('en')} ${this.getTime(this.consumableItemPriceDate)}`;
-    foodTaxTitle = `${this.infoTableStrings.tax} ${this.totalFoodTax}`;
+    get itemPriceTitle() {
+        return `${this.consumablesNames![this.infoTableData.craftedConsumable.itemId][this.selectedLanguage]}: ${this.consumableItemPrice.toLocaleString('en')} ${this.getTime(this.consumableItemPriceDate)}`;
+    }
+    get foodTaxTitle() {
+        return `${this.infoTableStrings.tax} ${this.totalFoodTax}`;
+    }
 
-    resourcesPricesTitle = this.resourcePricesCalculation().resourcesPricesTitle;
-    profitPerItem = this.resourcePricesCalculation().profitPerItem || this.infoTableStrings.noData;
-    totalProfit = this.resourcePricesCalculation().totalProfit || this.infoTableStrings.noData;
-    profitPerItemTitle = `${this.infoTableStrings.profitPerItem} ${this.resourcePricesCalculation().profitPerItemTitle}`;
+    get resourcesPricesTitle() {
+        return this.resourcePricesCalculation().resourcesPricesTitle;
+    }
+    get profitPerItem() {
+        return this.resourcePricesCalculation().profitPerItem || this.infoTableStrings.noData;
+    }
+    get totalProfit() {
+        return this.resourcePricesCalculation().totalProfit || this.infoTableStrings.noData;
+    }
+    get profitPerItemTitle() {
+        return `${this.infoTableStrings.profitPerItem} ${this.resourcePricesCalculation().profitPerItemTitle}`;
+    }
 
-    totalProfitTitle = `${this.infoTableStrings.total} ${this.profitPerItem} * ${this.infoTableData.quantity} = ${this.totalProfit.toLocaleString('en')}`;
-    title = `${this.foodTaxTitle}<hr><br>
+    get totalProfitTitle() {
+        return `${this.infoTableStrings.total} ${this.profitPerItem} * ${this.infoTableData.quantity} = ${this.totalProfit.toLocaleString('en')}`;
+    }
+    get title() {
+        return `${this.foodTaxTitle}<hr><br>
              ${this.itemPriceTitle}<hr><br>
              ${this.resourcesPricesTitle}
              ${this.profitPerItemTitle}<hr><br>
              ${this.totalProfitTitle}<hr><br>`;
+    }
 }

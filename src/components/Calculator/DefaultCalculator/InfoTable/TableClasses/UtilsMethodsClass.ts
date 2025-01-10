@@ -1,5 +1,5 @@
 export class UtilsMethodsClass {
-    constructor(public currentDate: Date,) {}
+    constructor(public currentDate: Date) {}
 
     getTime = (date: string) => {
         if (date === '1970-01-01T00:00:00.000Z') return '';

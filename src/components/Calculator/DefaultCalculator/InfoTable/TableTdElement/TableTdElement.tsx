@@ -38,7 +38,7 @@ const TableTdElement = ({enchantment, craftInfoParams, calculatorType}: ITableTd
                         data-tooltip-html={cityInfo.title}
                         data-div-bg-color={typeof cityInfo.totalProfit === 'number' ? 'valid' : 'nonvalid'}
                     >
-                        <div>{cityInfo.totalProfit.toLocaleString('en')}</div>
+                        <div>{cityInfo.totalProfit?.toLocaleString('en')}</div>
                         {typeof cityInfo.totalProfit === 'number' && (
                             <div>{cityInfo.profitPerItem.toLocaleString('en')}</div>
                         )}
