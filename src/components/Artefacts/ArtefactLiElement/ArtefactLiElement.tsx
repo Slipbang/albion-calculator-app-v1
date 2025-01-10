@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {selectLanguage} from "../../../store/language/language-selector";
 import {TArtefactsTier} from "../../../store/artefacts/artefact-slice";
 import styles from './ArtefactLiElement.module.scss';
-import {memo, useEffect, useState} from "react";
+import {memo, useState} from "react";
 import StyledCompleteResetButton from "../../Calculator/StyledComponentsCommon/StyledСompleteResetButton";
 import {IItemsData} from "../../../types/InfoTableTypes";
 import {ClockLoader} from "react-spinners";
@@ -74,10 +74,6 @@ const ArtefactLiElement = memo((props: IArtefactsDataProps) => {
         ];
 
     const artefactTable = new artefactsPrices(...artefactsArgs);
-
-    useEffect(() => {
-        console.log(artefactTable)
-    }, [artefactsArgs])
 
     return (
         <>
