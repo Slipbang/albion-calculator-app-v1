@@ -11,7 +11,6 @@ import {useAppDispatch} from "./store";
 import {useEffect} from "react";
 import {initSSE} from "./store/interface/initSSE";
 
-
 function App() {
     const dispatchAction = useAppDispatch();
 
