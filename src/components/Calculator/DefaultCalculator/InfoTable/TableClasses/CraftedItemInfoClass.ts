@@ -63,7 +63,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
     }
 
     get itemTierNum() {
-        return +this.itemData?.tier?.split('T')[1]!;
+        return +this.itemData!.tier.split('T')[1]!;
     }
 
     get subMatsTier() {
@@ -113,7 +113,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
     }
 
     getMatPrice = (itemId: string, selectedCity: TCities) => {
-        return this.materialsData?.find(matItem => matItem.itemId === itemId && matItem.location === selectedCity)?.sellPriceMin || 0;
+        return this.materialsData ? this.materialsData.find(matItem => matItem.itemId === itemId && matItem.location === selectedCity)?.sellPriceMin : 0;
     }
 
     itemIdWithEnchantment(id: string, enchantment: string) {
@@ -129,19 +129,26 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
     }
 
     getSellPriceMinDate = (itemId: string, selectedCity: TCities) => {
-        return this.materialsData?.find(matItem => matItem.itemId === itemId && matItem.location === selectedCity)?.sellPriceMinDate || 0;
+        return !!this.materialsData ? this.materialsData.find(matItem => matItem.itemId === itemId && matItem.location === selectedCity)?.sellPriceMinDate : 0;
     }
+
+    customLocaleString(value) {
+        return typeof value === 'number' ? value.toLocaleString('en') : value;
+    }
+
 
     get averageItemPrice() {
         const {multiplication, itemsData, materialsData, enchantment, city, infoTableStrings} = this;
         let itemPrice: number;
 
         if (!!this.itemData?.itemId) {
-            itemPrice = itemsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(this.itemData!.itemId!, enchantment) && itemElem.location === city && itemElem.quality === this.quality)?.buyPriceMax || 0;
+            itemPrice = !!itemsData
+                ? itemsData.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(this.itemData!.itemId!, enchantment) && itemElem.location === city && itemElem.quality === this.quality)?.buyPriceMax
+                : 0;
         }
 
         if (!!this.itemData?.resourceId) {
-            itemPrice = materialsData?.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(this.itemData!.resourceId!, enchantment) && itemElem.location === city)?.buyPriceMax! * multiplication || 0;
+            itemPrice = materialsData ? materialsData.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(this.itemData!.resourceId!, enchantment) && itemElem.location === city)?.buyPriceMax! * multiplication : 0;
         }
         return Math.round((itemPrice! - itemPrice! * 0.065)) || infoTableStrings?.noData;
     }
@@ -153,7 +160,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         return this.enchantment === '' ? this.itemData?.mainMatsId : `${this.itemData?.mainMatsId}_LEVEL${this.enchantment}@${this.enchantment}`;
     }
     get mainMaterialPrice(): number {
-        return  this.getMatPrice(this.mainMaterialId!, this.selectedCities?.mainMaterialCity) || 0;
+        return  this.getMatPrice(this.mainMaterialId!, this.selectedCities!.mainMaterialCity) || 0;
     }
 
     get subMaterialId() {
@@ -168,29 +175,29 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
     }
 
     get subMaterialPrice(): number {
-        return this.getMatPrice?.(this.subMaterialId!, this.selectedCities?.subMaterialCity);
+        return this.getMatPrice ? this.getMatPrice(this.subMaterialId!, this.selectedCities!.subMaterialCity) : 0;
     }
 
     get itemPriceDate() {
         const {enchantment, city, itemsData, materialsData} = this;
 
         if (!!this.itemData?.itemId && !this.itemData?.resourceId) {
-            return itemsData?.find(item => item.itemId === this.itemIdWithEnchantment(this.itemData!.itemId!, enchantment) && item.location === city)?.buyPriceMaxDate || '';
+            return itemsData ? itemsData.find(item => item.itemId === this.itemIdWithEnchantment(this.itemData!.itemId!, enchantment) && item.location === city)?.buyPriceMaxDate : '';
         }
 
         if (!!this.itemData?.resourceId && !this.itemData?.itemId) {
-            return materialsData?.find(item => item.itemId === this.itemIdWithEnchantment(this.itemData!.resourceId!, enchantment) && item.location === city)?.buyPriceMaxDate || '';
+            return materialsData ? materialsData.find(item => item.itemId === this.itemIdWithEnchantment(this.itemData!.resourceId!, enchantment) && item.location === city)?.buyPriceMaxDate : '';
         }
     }
 
     get mainMatsPriceDate() {
-        return this.getSellPriceMinDate(this.mainMaterialId || '', this.selectedCities?.mainMaterialCity) || '';
+        return this.getSellPriceMinDate(this.mainMaterialId || '', this.selectedCities!.mainMaterialCity) || '';
     }
     get subMatsPriceDate() {
-        return this.getSellPriceMinDate(this.subMaterialId!, this.selectedCities?.subMaterialCity) || '';
+        return this.getSellPriceMinDate(this.subMaterialId!, this.selectedCities!.subMaterialCity) || '';
     }
     get artefactPriceDate() {
-        return this.artefactsData?.find(item => item.itemId === this.itemData?.artefactId && item.location === this.selectedCities.artefactCity)?.sellPriceMinDate || '';
+        return this.artefactsData ? this.artefactsData.find(item => item.itemId === this.itemData?.artefactId && item.location === this.selectedCities.artefactCity)?.sellPriceMinDate : '1970-01-01T00:00:00.000Z';
     }
 
     get itemWasUpdate() {
@@ -207,7 +214,11 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
     }
 
     get artefactPrice() {
-        return this.ownPrices?.artefact?.isSelectedOwn ? this.ownPrices?.artefact?.ownPrice : this.artefactsData?.find(artefact => artefact.location === this.selectedCities.artefactCity)?.sellPriceMin || 0;
+        return this.ownPrices?.artefact?.isSelectedOwn
+            ? this.ownPrices?.artefact?.ownPrice
+            : !!this.artefactsData
+                ? this.artefactsData.find(artefact => artefact.location === this.selectedCities.artefactCity)?.sellPriceMin
+                : 0;
     }
 
     get mainMatsPricePerItem() {
@@ -227,10 +238,18 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
     }
 
     get journalPrice() {
-        return this.ownPrices?.journal.isSelectedOwn ? this.ownPrices?.journal.ownPrice : this.journalsData?.find(item => item.location === this.selectedCities.journalCity && item.itemId === this.itemData!.journalId)?.sellPriceMin || 0;
+        return this.ownPrices?.journal.isSelectedOwn
+            ? this.ownPrices?.journal.ownPrice
+            : this.journalsData
+                ? this.journalsData.find(item => item.location === this.selectedCities.journalCity && item.itemId === this.itemData!.journalId)?.sellPriceMin
+                : 0;
     }
     get emptyJournalsPrice() {
-        return this.ownPrices?.emptyJournal.isSelectedOwn ? this.ownPrices?.emptyJournal.ownPrice : this.journalsData?.find(item => item.location === this.selectedCities?.emptyJournalCity && item.itemId === this.itemData?.emptyJournalId)?.buyPriceMax || 0;
+        return this.ownPrices?.emptyJournal.isSelectedOwn
+            ? this.ownPrices?.emptyJournal.ownPrice
+            : this.journalsData
+                ? this.journalsData.find(item => item.location === this.selectedCities?.emptyJournalCity && item.itemId === this.itemData?.emptyJournalId)?.buyPriceMax
+                : 0;
     }
 
     get totalJournalsQuantity() {
@@ -263,7 +282,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         return `${this.infoTableStrings?.journalProfit} (${this.journalPrice} - ${this.emptyJournalsPrice}) * ${this.totalJournalsQuantity} = ${this.journalsProfitPerItem}`;
     }
     get itemTitleString() {
-        return `${this.itemData?.tier}${this.enchantmentString(this.itemData?.itemId! || this.itemData?.resourceId || '')} ${this.itemName?.[this.selectedLanguage]}(-6.5%):  ${this.averageItemPrice?.toLocaleString('en')}${this.units} ${this.itemWasUpdate}`;
+        return `${this.itemData?.tier}${this.enchantmentString(this.itemData?.itemId! || this.itemData?.resourceId || '')} ${this.itemName?.[this.selectedLanguage]}(-6.5%):  ${this.customLocaleString(this.averageItemPrice)}${this.units} ${this.itemWasUpdate}`;
     }
     get mainMatsTitleString() {
         return `${this.itemData?.tier}${this.enchantmentString(this.itemData?.mainMatsId || '')} ${this.mainMatsName}: ${this.itemData?.spentQuantityPerItem?.mainMatsQuantity} * ${this.mainMaterialPrice} = ${this.mainMatsPricePerItem?.toLocaleString('en')} ${this.mainMatsWasUpdate}`;
@@ -278,10 +297,10 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         return `${this.itemData?.tier} ${this.artefactName}: ${this.artefactPrice?.toLocaleString('en')} ${this.artefactWasUpdate}`;
     }
     get profitPerItemTitle() {
-        return `${this.infoTableStrings?.profitPerItem} ${this.averageItemPrice?.toLocaleString('en')}${this.isJournalsUsed ? ` + ${this.journalsProfitPerItem}` : ''} - (${this.mainMatsPricePerItem?.toLocaleString('en')} ${!!this.itemData?.subMatsId ? `+ ${this.subMatsPricePerItem?.toLocaleString('en')}` : ''}${this.totalFoodFee ? ` + ${this.totalFoodFee?.toLocaleString('en')}` : ''}${!!this.itemData?.artefactId ? ` + ${this.artefactPrice?.toLocaleString('en')}` : ''}) = ${this.profitPerItem?.toLocaleString('en')}`;
+        return `${this.infoTableStrings?.profitPerItem} ${this.customLocaleString(this.averageItemPrice)}${this.isJournalsUsed ? ` + ${this.journalsProfitPerItem}` : ''} - (${this.mainMatsPricePerItem?.toLocaleString('en')} ${!!this.itemData?.subMatsId ? `+ ${this.subMatsPricePerItem?.toLocaleString('en')}` : ''}${this.totalFoodFee ? ` + ${this.totalFoodFee?.toLocaleString('en')}` : ''}${!!this.itemData?.artefactId ? ` + ${this.artefactPrice?.toLocaleString('en')}` : ''}) = ${this.customLocaleString(this.profitPerItem)}`;
     }
     get totalProfitTitle() {
-        return `${this.infoTableStrings?.total} ${this.itemData?.output} * ${this.profitPerItem?.toLocaleString('en')} = ${this.totalProfit}`;
+        return `${this.infoTableStrings?.total} ${this.itemData?.output} * ${this.customLocaleString(this.profitPerItem)} = ${this.totalProfit}`;
     }
 
     get title() {

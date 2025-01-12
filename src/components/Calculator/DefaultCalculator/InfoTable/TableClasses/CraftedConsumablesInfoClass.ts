@@ -59,16 +59,20 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
 
         consumableResourcesKeys!.forEach(key => {
             const resourcePricesKey = (!key.includes('FISHSAUCE') && !key.includes('ALCHEMY_EXTRACT')) ? key : `${key}${enchantment}`;
-            const consumableResourceDataObject =  consumableResourcesData?.find(item => item.itemId === resourcePricesKey && item.location === this.consumableSelectors![resourcePricesKey]);
+            const consumableResourceDataObject = !!consumableResourcesData ? consumableResourcesData.find(item => item.itemId === resourcePricesKey && item.location === this.consumableSelectors![resourcePricesKey]) : undefined;
             resourcePrices[resourcePricesKey] = consumableResourceDataObject?.sellPriceMin || 0;
             resourcePricesDates[resourcePricesKey] = consumableResourceDataObject?.sellPriceMinDate || '';
         })
 
-        const consumableItemPriceObject = consumableResourcesData?.find(item => item.itemId === this.consumableItemId && item.location === this.city);
+        const consumableItemPriceObject = !!consumableResourcesData ? consumableResourcesData.find(item => item.itemId === this.consumableItemId && item.location === this.city) : undefined;
         const consumableItemPrice = consumableItemPriceObject?.sellPriceMin || 0;
         const consumableItemPriceDate = consumableItemPriceObject?.sellPriceMinDate || '';
 
         return {resourcePrices, resourcePricesDates, consumableItemPrice, consumableItemPriceDate};
+    }
+
+    customLocaleString(value) {
+        return typeof value === 'number' ? value.toLocaleString('en') : value;
     }
 
     get prices() {
@@ -112,7 +116,7 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
         })
 
         const profitPerItem = (+consumableItemPrice * craftedConsumable.amountCrafted - totalCost) || this.infoTableStrings.noData;
-        const profitPerItemTitle = `${consumableItemPrice.toLocaleString('en')} * ${craftedConsumable.amountCrafted} - ${totalCost.toLocaleString('en')} = ${profitPerItem.toLocaleString('en')}`;
+        const profitPerItemTitle = `${this.customLocaleString(consumableItemPrice)} * ${craftedConsumable.amountCrafted} - ${totalCost.toLocaleString('en')} = ${this.customLocaleString(profitPerItem)}`;
         const totalProfit = +profitPerItem * infoTableData.quantity;
 
         return {
@@ -124,7 +128,7 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
     }
 
     get itemPriceTitle() {
-        return `${this.consumablesNames![this.infoTableData.craftedConsumable.itemId][this.selectedLanguage]}: ${this.consumableItemPrice.toLocaleString('en')} ${this.getTime(this.consumableItemPriceDate)}`;
+        return `${this.consumablesNames![this.infoTableData.craftedConsumable.itemId][this.selectedLanguage]}: ${this.customLocaleString(this.consumableItemPrice)} ${this.getTime(this.consumableItemPriceDate)}`;
     }
     get foodTaxTitle() {
         return `${this.infoTableStrings.tax} ${this.totalFoodTax}`;
@@ -144,7 +148,7 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
     }
 
     get totalProfitTitle() {
-        return `${this.infoTableStrings.total} ${this.profitPerItem} * ${this.infoTableData.quantity} = ${this.totalProfit.toLocaleString('en')}`;
+        return `${this.infoTableStrings.total} ${this.profitPerItem} * ${this.infoTableData.quantity} = ${this.customLocaleString(this.totalProfit)}`;
     }
     get title() {
         return `${this.foodTaxTitle}<hr><br>

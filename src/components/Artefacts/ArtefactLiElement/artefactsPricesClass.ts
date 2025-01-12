@@ -41,8 +41,8 @@ export class artefactsPrices extends UtilsMethodsClass{
     }
 
     getArtefactsData = (city: TCities) => {
-        const sellPriceMin = this.artefactsPriceData?.find(item => item.location === city && item.itemId === this.fullArtefactId)?.sellPriceMin || 0;
-        const sellPriceMinDate = this.artefactsPriceData?.find(item => item.location === city && item.itemId === this.fullArtefactId)?.sellPriceMinDate || '';
+        const sellPriceMin = !!this.artefactsPriceData ? this.artefactsPriceData.find(item => item.location === city && item.itemId === this.fullArtefactId)?.sellPriceMin : 0;
+        const sellPriceMinDate = !!this.artefactsPriceData ? this.artefactsPriceData.find(item => item.location === city && item.itemId === this.fullArtefactId)?.sellPriceMinDate : '';
         return {sellPriceMin,sellPriceMinDate}
     }
 
