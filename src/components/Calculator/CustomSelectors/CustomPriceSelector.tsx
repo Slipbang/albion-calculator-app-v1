@@ -28,11 +28,11 @@ const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
     const [selectedCity, setSelectedCity] = useState(cityOptions[0]);
     const [isCityOptionsVisible, setIsCityOptionsVisible] = useState(false);
     const {script} = useSelector(selectGuide);
-    const inputRef = useRef<HTMLDivElement>(null);
+    const divRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const clickOutsideSelectorHandler = (event: MouseEvent) => {
-            if (!event.composedPath().includes(inputRef.current!)) {
+            if (!event.composedPath().includes(divRef.current!)) {
                 setIsCityOptionsVisible(false);
             }
         }
@@ -42,7 +42,7 @@ const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
         setItemPriceHandler(getPrice(selectedCity, quality)!)
 
         if ([5,14,17].includes(script)) {
-            setTimeout(() => inputRef.current?.click(), 200);
+            setTimeout(() => (divRef.current as HTMLButtonElement)?.click(), 200);
         }
 
         return () => {
@@ -51,7 +51,7 @@ const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
     }, [script]);
 
     const getPrice = (city: string, quality: number | undefined) => {
-        return itemsData?.find(item => item.location === city && item.quality === (quality || 1))?.sellPriceMin;
+        return itemsData?.find(item => item.location === city && item.quality === (quality || 1))?.sellPriceMin ?? 0;
     }
 
     const getDate = (city: string) => {
@@ -72,7 +72,7 @@ const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
     }
 
     return <div
-        ref={inputRef}
+        ref={divRef}
         className={selectorStyles}
         onClick={() => setIsCityOptionsVisible(prevState => !prevState)}
     >
