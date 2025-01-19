@@ -105,7 +105,9 @@ const GMProfitSlice = createSlice({
                     const {itemQuantity: similarMatsQuantity} = similarMaterial;
                     let checkSum = similarMatsQuantity! + materialQuantity;
                     if (checkSum <= 999) {
-                        similarMaterial.itemQuantity += materialQuantity;
+                        if (similarMaterial.itemQuantity) {
+                            similarMaterial.itemQuantity += materialQuantity;
+                        }
 
                         state.backpackItems = [...bufferedBackPack];
                     } else {
@@ -177,7 +179,9 @@ const GMProfitSlice = createSlice({
                     const {itemQuantity: similarItemQuantity} = similarItem;
                     let checkSum = similarItemQuantity! + itemQuantity;
                     if (checkSum <= 999) {
-                        similarItem.itemQuantity += itemQuantity;
+                        if (similarItem.itemQuantity) {
+                            similarItem.itemQuantity += itemQuantity;
+                        }
 
                         state.backpackItems = [...bufferedBackPack];
                     } else {
@@ -275,8 +279,10 @@ const GMProfitSlice = createSlice({
                 if (!action.payload.isShiftPressed) {
 
                     if (checkSum <= 999) {
-                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity += bufferedBackPack[action.payload.dragItemIndex].itemQuantity!;
-                        bufferedBackPack[action.payload.dragItemIndex] = {...emptyBagCell};
+                        if (bufferedBackPack && bufferedBackPack[action.payload.dropItemIndex] && bufferedBackPack[action.payload.dropItemIndex].itemQuantity) {
+                            bufferedBackPack[action.payload.dropItemIndex].itemQuantity = (bufferedBackPack[action.payload.dropItemIndex].itemQuantity ?? 0) + bufferedBackPack[action.payload.dragItemIndex].itemQuantity!;
+                            bufferedBackPack[action.payload.dragItemIndex] = {...emptyBagCell};
+                        }
                     }
 
                     if (checkSum > 999) {
@@ -288,7 +294,7 @@ const GMProfitSlice = createSlice({
 
                     if (bufferedBackPack[action.payload.dropItemIndex].itemQuantity! + Math.floor(+bufferedBackPack[action.payload.dragItemIndex].itemQuantity! / 2) <= 999) {
 
-                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity += Math.floor(+bufferedBackPack[action.payload.dragItemIndex].itemQuantity! / 2);
+                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity = (bufferedBackPack[action.payload.dropItemIndex].itemQuantity ?? 0) + Math.floor(+bufferedBackPack[action.payload.dragItemIndex].itemQuantity! / 2);
                         bufferedBackPack[action.payload.dragItemIndex].itemQuantity = Math.ceil(+bufferedBackPack[action.payload.dragItemIndex].itemQuantity! / 2);
 
                     } else {
@@ -340,7 +346,9 @@ const GMProfitSlice = createSlice({
 
                     if (checkSum <= 999) {
 
-                        similarFilledJournal.itemQuantity += +roundedQuantity;
+                        if (similarFilledJournal.itemQuantity) {
+                            similarFilledJournal.itemQuantity += +roundedQuantity;
+                        }
 
                         state.backpackItems = [...backpackItems];
 
@@ -415,7 +423,11 @@ const GMProfitSlice = createSlice({
                 if (!items.find(item => item.itemId === id)) {
                     items.push({...item});
                 } else {
-                    items.find(item => item.itemId === id)!.itemQuantity += +item.itemQuantity!;
+                    // items.find(item => item.itemId === id).itemQuantity += +item.itemQuantity!;
+                    const foundItem = items.find(item => item.itemId === id);
+                    if (foundItem && foundItem.itemQuantity) {
+                        foundItem.itemQuantity += +item.itemQuantity!;
+                    }
                 }
                 item.itemQuantity = 0;
             });

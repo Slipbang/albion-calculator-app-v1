@@ -142,7 +142,9 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         let itemPrice: number;
 
         if (!!this.itemData?.itemId) {
-            itemPrice = !!itemsData ? itemsData.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(this.itemData!.itemId!, enchantment) && itemElem.location === city && itemElem.quality === this.quality)?.buyPriceMax : 0;
+            itemPrice = !!itemsData
+                ? itemsData.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(this.itemData!.itemId!, enchantment) && itemElem.location === city && itemElem.quality === this.quality)?.buyPriceMax ?? 0
+                : 0;
         }
 
         if (!!this.itemData?.resourceId) {
@@ -217,7 +219,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         return this.ownPrices?.artefact?.isSelectedOwn
             ? this.ownPrices?.artefact?.ownPrice
             : !!this.artefactsData
-                ? this.artefactsData.find(artefact => artefact.location === this.selectedCities.artefactCity)?.sellPriceMin
+                ? this.artefactsData.find(artefact => artefact.location === this.selectedCities.artefactCity)?.sellPriceMin ?? 0
                 : 0;
     }
 
@@ -241,14 +243,14 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         return this.ownPrices?.journal.isSelectedOwn
             ? this.ownPrices?.journal.ownPrice
             : this.journalsData
-                ? this.journalsData.find(item => item.location === this.selectedCities.journalCity && item.itemId === this.itemData!.journalId)?.sellPriceMin
+                ? this.journalsData.find(item => item.location === this.selectedCities.journalCity && item.itemId === this.itemData!.journalId)?.sellPriceMin ?? 0
                 : 0;
     }
     get emptyJournalsPrice() {
         return this.ownPrices?.emptyJournal.isSelectedOwn
             ? this.ownPrices?.emptyJournal.ownPrice
             : this.journalsData
-                ? this.journalsData.find(item => item.location === this.selectedCities?.emptyJournalCity && item.itemId === this.itemData?.emptyJournalId)?.buyPriceMax
+                ? this.journalsData.find(item => item.location === this.selectedCities?.emptyJournalCity && item.itemId === this.itemData?.emptyJournalId)?.buyPriceMax ?? 0
                 : 0;
     }
 
@@ -296,7 +298,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         return `${this.subMatsTier}${this.enchantmentString(this.itemData?.subMatsId || '')} ${this.subMatsName}: ${this.subMatsQuantity} * ${this.subMaterialPrice} = ${this.subMatsPricePerItem?.toLocaleString('en')} ${this.subMatsWasUpdate}`;
     }
     get artefactString() {
-        return `${this.itemData?.tier} ${this.artefactName}: ${this.artefactPrice?.toLocaleString('en')} ${this.artefactWasUpdate}`;
+        return `${this.itemData?.tier} ${this.artefactName}: ${this.customLocaleString(this.artefactPrice)} ${this.artefactWasUpdate}`;
     }
     get profitPerItemTitle() {
         return `${this.infoTableStrings?.profitPerItem} ${this.customLocaleString(this.averageItemPrice)}${this.isJournalsUsed ? ` + ${this.journalsProfitPerItem}` : ''} - (${this.mainMatsPricePerItem?.toLocaleString('en')} ${!!this.itemData?.subMatsId ? `+ ${this.subMatsPricePerItem?.toLocaleString('en')}` : ''}${this.totalFoodFee ? ` + ${this.totalFoodFee?.toLocaleString('en')}` : ''}${!!this.itemData?.artefactId ? ` + ${this.artefactPrice?.toLocaleString('en')}` : ''}) = ${this.customLocaleString(this.profitPerItem)}`;
