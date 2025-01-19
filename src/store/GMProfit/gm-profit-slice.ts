@@ -105,7 +105,7 @@ const GMProfitSlice = createSlice({
                     const {itemQuantity: similarMatsQuantity} = similarMaterial;
                     let checkSum = similarMatsQuantity! + materialQuantity;
                     if (checkSum <= 999) {
-                        similarMaterial.itemQuantity! += materialQuantity;
+                        similarMaterial.itemQuantity += materialQuantity;
 
                         state.backpackItems = [...bufferedBackPack];
                     } else {
@@ -177,13 +177,13 @@ const GMProfitSlice = createSlice({
                     const {itemQuantity: similarItemQuantity} = similarItem;
                     let checkSum = similarItemQuantity! + itemQuantity;
                     if (checkSum <= 999) {
-                        similarItem.itemQuantity! += itemQuantity;
+                        similarItem.itemQuantity += itemQuantity;
 
                         state.backpackItems = [...bufferedBackPack];
                     } else {
                         let rest = (similarItemQuantity! + itemQuantity - 999);
 
-                        similarItem.itemQuantity! = 999;
+                        similarItem.itemQuantity = 999;
 
                         addItem(rest, bufferedBackPack);
                     }
@@ -253,7 +253,7 @@ const GMProfitSlice = createSlice({
             if (bufferedBackPack[action.payload.dragItemIndex].itemId !== bufferedBackPack[action.payload.dropItemIndex].itemId) {
 
                 if (!action.payload.isShiftPressed) {
-                    bufferedBackPack[action.payload.dragItemIndex]! = {...bufferedBackPack[action.payload.dropItemIndex]};
+                    bufferedBackPack[action.payload.dragItemIndex] = {...bufferedBackPack[action.payload.dropItemIndex]};
                     bufferedBackPack[action.payload.dropItemIndex] = {...buffer};
 
                 } else {
@@ -275,25 +275,25 @@ const GMProfitSlice = createSlice({
                 if (!action.payload.isShiftPressed) {
 
                     if (checkSum <= 999) {
-                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity! += bufferedBackPack[action.payload.dragItemIndex].itemQuantity!;
+                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity += bufferedBackPack[action.payload.dragItemIndex].itemQuantity!;
                         bufferedBackPack[action.payload.dragItemIndex] = {...emptyBagCell};
                     }
 
                     if (checkSum > 999) {
-                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity! = 999;
-                        bufferedBackPack[action.payload.dragItemIndex].itemQuantity! = checkSum - 999;
+                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity = 999;
+                        bufferedBackPack[action.payload.dragItemIndex].itemQuantity = checkSum - 999;
                     }
 
                 } else {
 
                     if (bufferedBackPack[action.payload.dropItemIndex].itemQuantity! + Math.floor(+bufferedBackPack[action.payload.dragItemIndex].itemQuantity! / 2) <= 999) {
 
-                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity! += Math.floor(+bufferedBackPack[action.payload.dragItemIndex].itemQuantity! / 2);
-                        bufferedBackPack[action.payload.dragItemIndex].itemQuantity! = Math.ceil(+bufferedBackPack[action.payload.dragItemIndex].itemQuantity! / 2);
+                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity += Math.floor(+bufferedBackPack[action.payload.dragItemIndex].itemQuantity! / 2);
+                        bufferedBackPack[action.payload.dragItemIndex].itemQuantity = Math.ceil(+bufferedBackPack[action.payload.dragItemIndex].itemQuantity! / 2);
 
                     } else {
-                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity! = 999;
-                        bufferedBackPack[action.payload.dragItemIndex].itemQuantity! = checkSum - 999;
+                        bufferedBackPack[action.payload.dropItemIndex].itemQuantity = 999;
+                        bufferedBackPack[action.payload.dragItemIndex].itemQuantity = checkSum - 999;
                     }
                 }
             }
@@ -340,7 +340,7 @@ const GMProfitSlice = createSlice({
 
                     if (checkSum <= 999) {
 
-                        similarFilledJournal.itemQuantity! += +roundedQuantity;
+                        similarFilledJournal.itemQuantity += +roundedQuantity;
 
                         state.backpackItems = [...backpackItems];
 
@@ -348,7 +348,7 @@ const GMProfitSlice = createSlice({
                     } else {
                         const integerQuantityRest = roundedQuantity - 999;
 
-                        similarFilledJournal.itemQuantity! = 999;
+                        similarFilledJournal.itemQuantity = 999;
 
                         state.backpackSilver -= (999 - ((!nonIntegerRestQuantity && roundedQuantity > journalsQuantity) ? 1 : 0)) * +action.payload.journalPrice;
 
@@ -361,7 +361,7 @@ const GMProfitSlice = createSlice({
                             bufferedBackPack.some(item => {
                                 if (item.itemId === null) {
                                     item.itemId = `${action.payload.journalId}_FULL`;
-                                    item.itemQuantity! = roundedQuantity;
+                                    item.itemQuantity = roundedQuantity;
                                     item.itemImage = `${srcRoute}${action.payload.journalId}_FULL`
                                     return true;
                                 }
@@ -415,7 +415,7 @@ const GMProfitSlice = createSlice({
                 if (!items.find(item => item.itemId === id)) {
                     items.push({...item});
                 } else {
-                    items.find(item => item.itemId === id)!.itemQuantity! += +item.itemQuantity!;
+                    items.find(item => item.itemId === id)!.itemQuantity += +item.itemQuantity!;
                 }
                 item.itemQuantity = 0;
             });

@@ -132,7 +132,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         return !!this.materialsData ? this.materialsData.find(matItem => matItem.itemId === itemId && matItem.location === selectedCity)?.sellPriceMinDate : 0;
     }
 
-    customLocaleString(value) {
+    customLocaleString(value: string | number) {
         return typeof value === 'number' ? value.toLocaleString('en') : value;
     }
 
@@ -142,15 +142,13 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         let itemPrice: number;
 
         if (!!this.itemData?.itemId) {
-            itemPrice = !!itemsData
-                ? itemsData.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(this.itemData!.itemId!, enchantment) && itemElem.location === city && itemElem.quality === this.quality)?.buyPriceMax
-                : 0;
+            itemPrice = !!itemsData ? itemsData.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(this.itemData!.itemId!, enchantment) && itemElem.location === city && itemElem.quality === this.quality)?.buyPriceMax : 0;
         }
 
         if (!!this.itemData?.resourceId) {
             itemPrice = materialsData ? materialsData.find(itemElem => itemElem.itemId === this.itemIdWithEnchantment(this.itemData!.resourceId!, enchantment) && itemElem.location === city)?.buyPriceMax! * multiplication : 0;
         }
-        return Math.round((itemPrice! - itemPrice! * 0.065)) || infoTableStrings?.noData;
+        return Math.round((itemPrice! - itemPrice! * 0.065)) || infoTableStrings.noData;
     }
 
     get totalFoodFee() {
@@ -175,7 +173,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
     }
 
     get subMaterialPrice(): number {
-        return this.getMatPrice ? this.getMatPrice(this.subMaterialId!, this.selectedCities!.subMaterialCity) : 0;
+        return this.getMatPrice(this.subMaterialId!, this.selectedCities!.subMaterialCity) ?? 0;
     }
 
     get itemPriceDate() {
@@ -197,7 +195,9 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         return this.getSellPriceMinDate(this.subMaterialId!, this.selectedCities!.subMaterialCity) || '';
     }
     get artefactPriceDate() {
-        return this.artefactsData ? this.artefactsData.find(item => item.itemId === this.itemData?.artefactId && item.location === this.selectedCities.artefactCity)?.sellPriceMinDate : '1970-01-01T00:00:00.000Z';
+        return this.artefactsData
+            ? this.artefactsData.find(item => item.itemId === this.itemData?.artefactId && item.location === this.selectedCities.artefactCity)?.sellPriceMinDate ?? '1970-01-01T00:00:00.000Z'
+            : '1970-01-01T00:00:00.000Z';
     }
 
     get itemWasUpdate() {
@@ -260,7 +260,9 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
     }
 
     get profitPerItem() {
-        return typeof this.averageItemPrice === 'number' ? Math.ceil(this.averageItemPrice + (this.isJournalsUsed ? this.journalsProfitPerItem : 0) - (this.mainMatsPricePerItem + this.subMatsPricePerItem! + this.artefactPrice + this.totalFoodFee)) : this.infoTableStrings?.noData;
+        return (typeof this.averageItemPrice === 'number')
+            ? Math.ceil(this.averageItemPrice + (this.isJournalsUsed ? this.journalsProfitPerItem : 0) - (this.mainMatsPricePerItem + this.subMatsPricePerItem! + this.artefactPrice + this.totalFoodFee))
+            : this.infoTableStrings.noData;
     }
     get totalProfit() {
         return typeof this.averageItemPrice === 'number' ? (+this.profitPerItem * this.itemData!.output) : this.infoTableStrings?.noData;

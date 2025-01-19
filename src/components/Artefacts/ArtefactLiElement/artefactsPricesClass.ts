@@ -61,7 +61,7 @@ export class artefactsPrices extends UtilsMethodsClass{
                 `<tr>
                                      <td>${city}</td>
                                      <td>
-                                         ${(!this.isArtefactsFetching && !this.isErrorArtefacts) ? `${sellPriceMin || '-'} ${this.getTime(sellPriceMinDate) || ''}` : ''}
+                                         ${(!this.isArtefactsFetching && !this.isErrorArtefacts) ? `${sellPriceMin || '-'} ${this.getTime(sellPriceMinDate ?? '1970-01-01T00:00:00.000Z') || ''}` : ''}
                                          ${(this.isArtefactsFetching && !this.isErrorArtefacts) ? 'loading...' : ''}
                                          ${this.isErrorArtefacts ? 'error!' : ''}
                                     </td>

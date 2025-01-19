@@ -71,7 +71,7 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
         return {resourcePrices, resourcePricesDates, consumableItemPrice, consumableItemPriceDate};
     }
 
-    customLocaleString(value) {
+    customLocaleString(value: number | string) {
         return typeof value === 'number' ? value.toLocaleString('en') : value;
     }
 
