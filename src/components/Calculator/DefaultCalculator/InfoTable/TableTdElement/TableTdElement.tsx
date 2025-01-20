@@ -19,7 +19,7 @@ const TableTdElement = ({enchantment, craftInfoParams, calculatorType}: ITableTd
             {infoCityOptions.map(city => {
                 let itemData: IInfoTableData | undefined;
                 if ('output' in craftInfoParams[0]!) {
-                    ([itemData] = craftInfoParams as ICraftItemInfoTuple);
+                    (itemData = craftInfoParams[0] as  IInfoTableData);
                 }
 
                 if (!!itemData?.resourceId && itemData?.resourceId?.includes?.('STONEBLOCK') && enchantment === '4') return;
@@ -38,9 +38,9 @@ const TableTdElement = ({enchantment, craftInfoParams, calculatorType}: ITableTd
                         data-tooltip-html={cityInfo.title}
                         data-div-bg-color={typeof cityInfo.totalProfit === 'number' ? 'valid' : 'nonvalid'}
                     >
-                        <div>{cityInfo.totalProfit?.toLocaleString('en')}</div>
+                        <div>{cityInfo.customLocaleString(cityInfo.totalProfit!)}</div>
                         {typeof cityInfo.totalProfit === 'number' && (
-                            <div>{cityInfo.profitPerItem.toLocaleString('en')}</div>
+                            <div>{cityInfo.customLocaleString(cityInfo.profitPerItem)}</div>
                         )}
                     </td>
                 )

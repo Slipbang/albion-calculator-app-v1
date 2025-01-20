@@ -93,7 +93,7 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
     const languageData = useSelector(selectInterfaceLanguageData);
 
     let tableQueryParams: ITableQueryParams | undefined,
-        infoTableData: IInfoTableData,
+        infoTableData: IInfoTableData | undefined,
         itemId: string | undefined,
         artefactId: string | undefined,
         resourceId: string | undefined,
@@ -106,9 +106,18 @@ const InfoTable = ({calculatorType}: {calculatorType: TCalcProps}) => {
         queryMatsParams: string;
 
     if (craftedItem !== null) {
-        ({tableQueryParams, infoTableData} = craftedItem!);
-        ({queryItemsParams, queryJournalsParams, queryMatsParams} = tableQueryParams!);
-        ({itemId, artefactId, resourceId, mainMatsId, subMatsId, journalId, emptyJournalId} = infoTableData!);
+        tableQueryParams = craftedItem.tableQueryParams;
+        infoTableData = craftedItem.infoTableData;
+        queryItemsParams = tableQueryParams!.queryItemsParams;
+        queryJournalsParams = tableQueryParams!.queryJournalsParams;
+        queryMatsParams = tableQueryParams!.queryMatsParams;
+        itemId = infoTableData.itemId;
+        artefactId = infoTableData.artefactId;
+        resourceId = infoTableData.resourceId;
+        mainMatsId = infoTableData.mainMatsId;
+        subMatsId = infoTableData.subMatsId;
+        journalId = infoTableData.journalId;
+        emptyJournalId = infoTableData.emptyJournalId;
     }
 
     let queryConsumableParams: string,

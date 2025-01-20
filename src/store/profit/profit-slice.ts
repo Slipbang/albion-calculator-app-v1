@@ -230,17 +230,17 @@ const profitSlice = createSlice({
 
                 const hasSimilarItems = (craftResourcesList: ITableData[], itemId: string, percent: number, output: number) => {
                     let isSimilar = false;
-                    let similarItemId = null;
+                    let similarItemId: string | null = null;
                     craftResourcesList.some(item => {
                         const {craftTableData, infoTableData} = item;
                         const {percent: prevPercent, id} = craftTableData;
                         const {output: prevOutput} = infoTableData;
                         let prevId: string;
                         if (!!infoTableData.resourceId) {
-                            ({resourceId: prevId} = infoTableData);
+                            prevId = infoTableData.resourceId;
                         }
                         if (!!infoTableData.itemId) {
-                            ({itemId: prevId} = infoTableData);
+                            prevId = infoTableData.itemId;
                         }
                         if (prevId! === itemId && prevPercent === percent && prevOutput === output) {
                             isSimilar = true;
@@ -342,7 +342,7 @@ const profitSlice = createSlice({
                     const {itemId: newItemId} = craftedConsumable;
 
                     let isSimilar = false;
-                    let similarItemId = null;
+                    let similarItemId: string | null = null;
                     listToCheck.some(item => {
                         const {craftedConsumable, percent: prevPercent, quantity: prevQuantity, id} = item;
                         const {itemId: prevItemId} = craftedConsumable;

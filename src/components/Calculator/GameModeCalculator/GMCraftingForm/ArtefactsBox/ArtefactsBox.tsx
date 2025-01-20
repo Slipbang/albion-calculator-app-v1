@@ -31,7 +31,7 @@ const ArtefactsBox = () => {
         script: null
     });
 
-    const artefactPriceInputRef = useRef<HTMLInputElement>(null);
+    const artefactPriceInputRef = useRef<HTMLInputElement | null>(null);
 
     const itemsQuantity = useSelector(selectItemsQuantityCF);
     const isArtefactPriceFetched = useSelector(selectArtefactPriceFetchedStateCF);
@@ -43,7 +43,7 @@ const ArtefactsBox = () => {
     const isDemo = useSelector(selectDemoMode);
     const {script} = useSelector(selectGuide);
 
-    const buttonRef = useRef<HTMLButtonElement>(null);
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
 
     const {artefactItemId} = selectedWorkBenchItem;
 

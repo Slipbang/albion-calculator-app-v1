@@ -29,7 +29,7 @@ const EnchantmentButtons = ({calculatorType}: IEnchantmentButtonsProps) => {
     const {itemId} = selectedWorkBenchItem;
     const {language} = useSelector(selectLanguage);
     const {GMCraftingFormStrings} = language;
-    const buttonRef = useRef<HTMLButtonElement>(null)
+    const buttonRef = useRef<HTMLButtonElement | null>(null)
 
     const dispatchAction = useAppDispatch();
 

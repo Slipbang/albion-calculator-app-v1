@@ -16,7 +16,7 @@ const MainItemImageBox = (props: {type: TCalcProps}) => {
     const languageData = useSelector(selectInterfaceLanguageData);
     const {itemId} = selectedWorkBenchItem;
 
-    const itemName = languageData[itemId!]?.[selectedLanguage];
+    const itemName = languageData[itemId!]?.[selectedLanguage] ?? [];
 
     return (
         <div className={styles.itemImage} data-text={itemName.length >= 29 ? 'long' : 'short'}>

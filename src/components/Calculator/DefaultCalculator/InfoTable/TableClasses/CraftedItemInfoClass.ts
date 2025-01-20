@@ -73,42 +73,31 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
     get itemName() {
         if (this.itemData?.itemId) {
             return this.languageData[this.itemData?.itemId];
+        } else if (this.itemData?.resourceId) {
+            return this.languageData[this.itemData?.resourceId];
         } else {
-            return {
-                ru: 'no item name fetched',
-                en: 'no item name fetched'
-            };
+            return null;
         }
     }
     get mainMatsName() {
         if (this.itemData?.mainMatsId && this.selectedLanguage) {
             return this.languageData[this.itemData?.mainMatsId]?.[this.selectedLanguage];
         } else {
-            return {
-                ru: 'no main material name fetched',
-                en: 'no main material name fetched'
-            };
+            return null;
         }
     }
     get subMatsName() {
-
         if (this.itemData?.subMatsId && this.selectedLanguage) {
             return this.languageData[this.itemData?.subMatsId]?.[this.selectedLanguage];
         } else {
-            return {
-                ru: 'no name fetched',
-                en: 'no name fetched'
-            };
+            return null;
         }
     }
     get artefactName() {
         if (this.itemData?.artefactId && this.selectedLanguage) {
             return this.languageData[this.itemData?.artefactId]?.[this.selectedLanguage] || '';
         } else {
-            return {
-                ru: 'no artifact name fetched',
-                en: 'no artifact name fetched',
-            };
+            return null;
         }
     }
 
@@ -215,12 +204,8 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         return this.getTime(this.artefactPriceDate);
     }
 
-    get artefactPrice() {
-        return this.ownPrices?.artefact?.isSelectedOwn
-            ? this.ownPrices?.artefact?.ownPrice
-            : !!this.artefactsData
-                ? this.artefactsData.find(artefact => artefact.location === this.selectedCities.artefactCity)?.sellPriceMin ?? 0
-                : 0;
+    get artefactPrice(): number {
+        return this.ownPrices?.artefact?.isSelectedOwn ? this.ownPrices?.artefact?.ownPrice : !!this.artefactsData ? this.artefactsData.find(artefact => artefact.location === this.selectedCities.artefactCity)?.sellPriceMin ?? 0 : 0;
     }
 
     get mainMatsPricePerItem() {
@@ -267,7 +252,7 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
             : this.infoTableStrings.noData;
     }
     get totalProfit() {
-        return typeof this.averageItemPrice === 'number' ? (+this.profitPerItem * this.itemData!.output) : this.infoTableStrings?.noData;
+        return typeof this.averageItemPrice === 'number' ? (+this.profitPerItem * this.itemData!.output) : this.infoTableStrings.noData;
     }
 
     enchantmentString(id: string) {
@@ -289,22 +274,22 @@ export class CraftedItemInfoClass extends UtilsMethodsClass{
         return `${this.itemData?.tier}${this.enchantmentString(this.itemData?.itemId! || this.itemData?.resourceId || '')} ${this.itemName?.[this.selectedLanguage]}(-6.5%):  ${this.customLocaleString(this.averageItemPrice)}${this.units} ${this.itemWasUpdate}`;
     }
     get mainMatsTitleString() {
-        return `${this.itemData?.tier}${this.enchantmentString(this.itemData?.mainMatsId || '')} ${this.mainMatsName}: ${this.itemData?.spentQuantityPerItem?.mainMatsQuantity} * ${this.mainMaterialPrice} = ${this.mainMatsPricePerItem?.toLocaleString('en')} ${this.mainMatsWasUpdate}`;
+        return `${this.itemData?.tier}${this.enchantmentString(this.itemData?.mainMatsId || '')} ${this.mainMatsName}: ${this.itemData?.spentQuantityPerItem?.mainMatsQuantity} * ${this.customLocaleString(this.mainMaterialPrice)} = ${this.customLocaleString(this.mainMatsPricePerItem)} ${this.mainMatsWasUpdate}`;
     }
     get totalFoodFeeSting() {
         return `${this.infoTableStrings?.taxPerOneItem} ${this.totalFoodFee}`;
     }
     get subMatsTitleString() {
-        return `${this.subMatsTier}${this.enchantmentString(this.itemData?.subMatsId || '')} ${this.subMatsName}: ${this.subMatsQuantity} * ${this.subMaterialPrice} = ${this.subMatsPricePerItem?.toLocaleString('en')} ${this.subMatsWasUpdate}`;
+        return `${this.subMatsTier}${this.enchantmentString(this.itemData?.subMatsId || '')} ${this.subMatsName}: ${this.subMatsQuantity} * ${this.customLocaleString(this.subMaterialPrice)} = ${this.customLocaleString(this.subMatsPricePerItem)} ${this.subMatsWasUpdate}`;
     }
     get artefactString() {
         return `${this.itemData?.tier} ${this.artefactName}: ${this.customLocaleString(this.artefactPrice)} ${this.artefactWasUpdate}`;
     }
     get profitPerItemTitle() {
-        return `${this.infoTableStrings?.profitPerItem} ${this.customLocaleString(this.averageItemPrice)}${this.isJournalsUsed ? ` + ${this.journalsProfitPerItem}` : ''} - (${this.mainMatsPricePerItem?.toLocaleString('en')} ${!!this.itemData?.subMatsId ? `+ ${this.subMatsPricePerItem?.toLocaleString('en')}` : ''}${this.totalFoodFee ? ` + ${this.totalFoodFee?.toLocaleString('en')}` : ''}${!!this.itemData?.artefactId ? ` + ${this.artefactPrice?.toLocaleString('en')}` : ''}) = ${this.customLocaleString(this.profitPerItem)}`;
+        return `${this.infoTableStrings?.profitPerItem} ${this.customLocaleString(this.averageItemPrice)}${this.isJournalsUsed ? ` + ${this.journalsProfitPerItem}` : ''} - (${this.mainMatsPricePerItem?.toLocaleString('en')} ${!!this.itemData?.subMatsId ? `+ ${this.customLocaleString(this.subMatsPricePerItem)}` : ''}${this.totalFoodFee ? ` + ${this.customLocaleString(this.totalFoodFee)}` : ''}${!!this.itemData?.artefactId ? ` + ${this.customLocaleString(this.artefactPrice)}` : ''}) = ${this.customLocaleString(this.profitPerItem)}`;
     }
     get totalProfitTitle() {
-        return `${this.infoTableStrings?.total} ${this.itemData?.output} * ${this.customLocaleString(this.profitPerItem)} = ${this.totalProfit}`;
+        return `${this.infoTableStrings?.total} ${this.itemData?.output} * ${this.customLocaleString(this.profitPerItem)} = ${this.customLocaleString(this.totalProfit)}`;
     }
 
     get title() {

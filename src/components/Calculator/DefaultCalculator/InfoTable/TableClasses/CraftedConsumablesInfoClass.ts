@@ -148,7 +148,7 @@ export class CraftedConsumablesInfoClass extends UtilsMethodsClass{
     }
 
     get totalProfitTitle() {
-        return `${this.infoTableStrings.total} ${this.profitPerItem} * ${this.infoTableData.quantity} = ${this.customLocaleString(this.totalProfit)}`;
+        return `${this.infoTableStrings.total} ${this.customLocaleString(this.profitPerItem)} * ${this.infoTableData.quantity} = ${this.customLocaleString(this.totalProfit)}`;
     }
     get title() {
         return `${this.foodTaxTitle}<hr><br>

@@ -15,7 +15,7 @@ const JournalUsageButton = () => {
     const {GMCraftingFormStrings} = language;
     const {script} = useSelector(selectGuide);
     const isDemo = useSelector(selectDemoMode);
-    const buttonRef = useRef<HTMLButtonElement>(null);
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
 
     const dispatchAction = useAppDispatch();
 

@@ -30,9 +30,9 @@ const JournalsSelectors = () => {
 
     const {script} = useSelector(selectGuide);
 
-    const buttonRef = useRef<HTMLButtonElement>(null);
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
 
-    const journalPriceInputRef = useRef<HTMLInputElement>(null)
+    const journalPriceInputRef = useRef<HTMLInputElement | null>(null)
 
     const isJournalUsed = useSelector(selectJournalUsageCF);
     const enchantmentNum = useSelector(selectEnchantmentNumCF);

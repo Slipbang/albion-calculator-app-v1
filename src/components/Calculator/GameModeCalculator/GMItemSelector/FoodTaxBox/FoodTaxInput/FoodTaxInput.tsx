@@ -11,7 +11,7 @@ const FoodTaxInput = () => {
     const foodTax = useSelector(selectFoodTax);
     const {script} = useSelector(selectGuide);
 
-    const inputRef = useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement | null>(null);
 
     const changeFoodTaxHandler = (tax: number) => {
         if (tax >= 0 && tax <= 9999) {

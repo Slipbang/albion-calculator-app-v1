@@ -23,7 +23,7 @@ const QuantityInput = () => {
     const {language} = useSelector(selectLanguage);
     const {GMCraftingFormStrings} = language;
 
-    const inputAmountRef = useRef<HTMLInputElement>(null)
+    const inputAmountRef = useRef<HTMLInputElement | null>(null)
 
     const backpackItems = useSelector(selectBackpackItems);
     const enchantmentNum = useSelector(selectEnchantmentNumCF);

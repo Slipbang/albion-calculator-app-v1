@@ -37,7 +37,7 @@ const CraftingButton = (props: { calculatorType: TCalcProps }) => {
     const {calculatorType} = props;
 
     const dispatchAction = useAppDispatch();
-    const buttonRef = useRef<HTMLButtonElement>(null)
+    const buttonRef = useRef<HTMLButtonElement | null>(null)
 
     const foodTax = useSelector(selectFoodTax);
     const isJournalUsed = useSelector(selectJournalUsageCF);
@@ -121,7 +121,7 @@ const CraftingButton = (props: { calculatorType: TCalcProps }) => {
             itemTier: `T${itemTier}`,
             itemQuantity: Math.floor(itemsQuantity! * (itemId!.includes('STONEBLOCK') && +enchantmentNum > 0 ? Math.pow(2, +enchantmentNum) : 1)),
             itemImage: `${srcRoute}${itemId}${itemEnchantment}`,
-            itemNode,
+            itemNode: itemNode!,
             itemEnchantmentNum: itemId?.includes('STONEBLOCK') ? '' : enchantmentNum,
             itemEnchantment,
         }

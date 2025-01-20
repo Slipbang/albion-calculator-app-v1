@@ -42,7 +42,7 @@ const CustomPriceSelector = (props: ICustomPriceSelectorProps) => {
         setItemPriceHandler(getPrice(selectedCity, quality)!)
 
         if ([5,14,17].includes(script)) {
-            setTimeout(() => (divRef.current as HTMLButtonElement)?.click(), 200);
+            setTimeout(() => divRef.current?.click(), 200);
         }
 
         return () => {

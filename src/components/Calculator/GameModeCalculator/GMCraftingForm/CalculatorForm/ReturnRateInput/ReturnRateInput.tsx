@@ -9,7 +9,7 @@ import {useEffect, useRef} from "react";
 const ReturnRateInput = () => {
     const dispatchAction = useAppDispatch();
 
-    const returnPercentInputRef = useRef<HTMLInputElement>(null)
+    const returnPercentInputRef = useRef<HTMLInputElement | null>(null)
 
     const returnPercent = useSelector(selectReturnPercentCF);
     const {language} = useSelector(selectLanguage);

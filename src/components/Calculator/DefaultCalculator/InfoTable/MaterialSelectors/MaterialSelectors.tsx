@@ -58,10 +58,10 @@ const MaterialSelectors = (props: IMaterialSelectorsProps) => {
         quality,
     } = props;
 
-    const journalInputRef = useRef<HTMLInputElement>(null);
-    const emptyJournalInputRef = useRef<HTMLInputElement>(null);
-    const artefactInputRef = useRef<HTMLInputElement>(null);
-    const foodTaxInputRef = useRef<HTMLInputElement>(null);
+    const journalInputRef = useRef<HTMLInputElement | null>(null);
+    const emptyJournalInputRef = useRef<HTMLInputElement | null>(null);
+    const artefactInputRef = useRef<HTMLInputElement | null>(null);
+    const foodTaxInputRef = useRef<HTMLInputElement | null>(null);
 
     const {emptyJournal, journal, artefact} = ownPrices;
 
